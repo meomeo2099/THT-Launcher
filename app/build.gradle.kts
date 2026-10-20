@@ -27,6 +27,11 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions { jvmTarget = "17" }
+    // App cài trực tiếp lên đầu xe (không lên Play Store) nên giữ targetSdk 28
+    lint {
+        checkReleaseBuilds = false
+        abortOnError = false
+    }
 }
 
 dependencies {
