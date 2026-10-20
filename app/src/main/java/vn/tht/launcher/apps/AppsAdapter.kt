@@ -60,6 +60,7 @@ class AppsAdapter(
         val app = items[position]
         holder.icon.setImageDrawable(app.icon)
         holder.label.text = app.label
+        holder.label.setTextColor(vn.tht.launcher.ui.Palette.text)
         holder.itemView.setOnClickListener { onClick(app) }
         holder.itemView.setOnLongClickListener { onLongClick(app); true }
     }

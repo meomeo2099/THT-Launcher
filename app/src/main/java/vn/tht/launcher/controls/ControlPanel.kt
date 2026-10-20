@@ -1,5 +1,6 @@
 package vn.tht.launcher.controls
 
+import vn.tht.launcher.ui.Palette
 import android.app.AlertDialog
 import android.content.Context
 import android.content.res.ColorStateList
@@ -82,7 +83,7 @@ class ControlPanel(private val context: Context, private val controller: EcarxCo
 
         AlertDialog.Builder(context)
             .setView(ScrollView(context).apply {
-                setBackgroundColor(context.getColor(R.color.card))
+                setBackgroundColor(Palette.card)
                 addView(root)
             })
             .setPositiveButton("Đóng", null)
@@ -120,7 +121,7 @@ class ControlPanel(private val context: Context, private val controller: EcarxCo
     private fun text(s: String, size: Float) = TextView(context).apply {
         text = s
         textSize = size
-        setTextColor(context.getColor(R.color.text))
+        setTextColor(Palette.text)
     }
 
     private fun px(v: Int) = (v * dp).toInt()

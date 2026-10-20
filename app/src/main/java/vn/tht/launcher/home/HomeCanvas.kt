@@ -1,5 +1,6 @@
 package vn.tht.launcher.home
 
+import vn.tht.launcher.ui.Palette
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
@@ -31,6 +32,10 @@ class HomeCanvas(context: Context) : ViewGroup(context) {
 
     var editing = false
         private set
+
+    /** Tỉ lệ giao diện (Cài đặt → 75–150%): phóng to/thu nhỏ nội dung widget, giữ nguyên vị trí. */
+    var uiScale = 1f
+        set(v) { field = v; requestLayout() }
 
     private val density = resources.displayMetrics.density
     private val frames = mutableListOf<WidgetFrame>()
@@ -95,6 +100,10 @@ class HomeCanvas(context: Context) : ViewGroup(context) {
             val x = pxX(f.spec.x)
             val y = pxY(f.spec.y)
             f.layout(x, y, x + f.measuredWidth, y + f.measuredHeight)
+            f.pivotX = 0f
+            f.pivotY = 0f
+            f.scaleX = uiScale
+            f.scaleY = uiScale
         }
     }
 
@@ -120,12 +129,12 @@ class HomeCanvas(context: Context) : ViewGroup(context) {
             textSize = 26f
             gravity = Gravity.CENTER
             setTextColor(Color.WHITE)
-            background = Ui.pill(c, c.getColor(R.color.danger), 22)
+            background = Ui.pill(c, Palette.danger, 22)
             visibility = GONE
             setOnClickListener { this@HomeCanvas.remove(spec); onRemove(spec); onChanged() }
         }
         private val handle = View(c).apply {
-            background = Ui.pill(c, c.getColor(R.color.accent), 14)
+            background = Ui.pill(c, Palette.accent, 14)
             visibility = GONE
         }
         private var downX = 0f

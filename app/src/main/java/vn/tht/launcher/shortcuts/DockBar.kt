@@ -45,7 +45,7 @@ class DockBar(
         container.removeAllViews()
         items.forEachIndexed { i, s -> container.addView(itemView(s, i)) }
         if (items.size < ShortcutStore.MAX) {
-            container.addView(cell(context.getDrawable(android.R.drawable.ic_input_add), "Thêm", 0.6f).apply {
+            container.addView(cell(tinted(R.drawable.ic_add), "Thêm", 0.6f).apply {
                 setOnClickListener { addDialog() }
             })
         }
@@ -60,12 +60,21 @@ class DockBar(
     }
 
     private fun cell(icon: Drawable?, label: String, alpha: Float) = Ui.vbox(context, 6, Gravity.CENTER).apply {
+        val prefs = vn.tht.launcher.settings.Prefs(context)
+        val (iconDp, cellDp) = when (prefs.dockSize) {
+            "compact" -> 40 to 88
+            "large" -> 68 to 132
+            else -> 52 to 108
+        }
+        val labels = prefs.dockLabels
         this.alpha = alpha
         background = context.getDrawable(R.drawable.ripple)
-        addView(ImageView(context).apply { setImageDrawable(icon) }, LinearLayout.LayoutParams(Ui.dp(context, 52), Ui.dp(context, 52)))
-        addView(Ui.text(context, label, 13f).apply { gravity = Gravity.CENTER; maxLines = 1 })
-        layoutParams = LinearLayout.LayoutParams(Ui.dp(context, 108), LinearLayout.LayoutParams.MATCH_PARENT)
+        val size = Ui.dp(context, if (labels) iconDp else iconDp + 12)
+        addView(ImageView(context).apply { setImageDrawable(icon) }, LinearLayout.LayoutParams(size, size))
+        if (labels) addView(Ui.text(context, label, 13f).apply { gravity = Gravity.CENTER; maxLines = 1 })
+        layoutParams = LinearLayout.LayoutParams(Ui.dp(context, cellDp), LinearLayout.LayoutParams.MATCH_PARENT)
     }
+
 
     private fun save() {
         ShortcutStore.save(context, items)
@@ -152,12 +161,12 @@ class DockBar(
 
     private fun iconFor(s: Shortcut): Drawable? {
         when (s.type) {
-            Shortcut.TYPE_CONTROLS -> return context.getDrawable(android.R.drawable.ic_menu_manage)
-            Shortcut.TYPE_APPS -> return context.getDrawable(android.R.drawable.ic_dialog_dialer)
-            Shortcut.TYPE_SETTINGS -> return context.getDrawable(android.R.drawable.ic_menu_preferences)
+            Shortcut.TYPE_CONTROLS -> return tinted(R.drawable.ic_tune)
+            Shortcut.TYPE_APPS -> return tinted(R.drawable.ic_apps)
+            Shortcut.TYPE_SETTINGS -> return tinted(R.drawable.ic_settings)
         }
         val pkg = if (s.type == Shortcut.TYPE_HVAC) s.pkg.ifBlank { HvacOpener.DEFAULT_PACKAGE } else s.pkg
-        if (pkg.isBlank()) return context.getDrawable(android.R.drawable.ic_menu_add)
+        if (pkg.isBlank()) return tinted(R.drawable.ic_add)
         return try {
             if (s.type == Shortcut.TYPE_ACTIVITY && s.activity.isNotBlank()) {
                 val cls = if (s.activity.startsWith(".")) pkg + s.activity else s.activity
@@ -168,10 +177,20 @@ class DockBar(
         }
     }
 
+    private fun tinted(res: Int): Drawable? =
+        context.getDrawable(res)?.mutate()?.apply { setTint(vn.tht.launcher.ui.Palette.text) }
+
     private fun toast(msg: String) = Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
 
     companion object {
         private const val TAG = "DockBar"
+
+        /** Chiều cao dock (dp) theo cài đặt. */
+        fun heightDp(prefs: vn.tht.launcher.settings.Prefs) = when (prefs.dockSize) {
+            "compact" -> 84
+            "large" -> 140
+            else -> 104
+        }
         private val HINTS = listOf("ecarx", "geely", "avm", "camera", "carplay", "setting", "hvac", "climate")
 
         /**

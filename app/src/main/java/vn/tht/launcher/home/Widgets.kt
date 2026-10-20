@@ -1,5 +1,6 @@
 package vn.tht.launcher.home
 
+import vn.tht.launcher.ui.Palette
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.Gravity
@@ -23,6 +24,7 @@ import vn.tht.launcher.vehicle.EcarxFunctions as F
 interface WidgetHost {
     val context: Context
     val controller: EcarxController
+    val prefs: vn.tht.launcher.settings.Prefs
     fun mediaPlayPause()
     fun mediaNext()
     fun mediaPrevious()
@@ -67,16 +69,17 @@ abstract class HomeWidget(protected val host: WidgetHost) {
 class ClockWidget(host: WidgetHost) : HomeWidget(host) {
     private val outside = Ui.text(c, "", 20f, dim = true)
     override val view: View = base().apply {
+        val fmt = if (host.prefs.clock24h) "HH:mm" else "h:mm a"
         addView(TextClock(c).apply {
-            format24Hour = "HH:mm"; format12Hour = "HH:mm"
+            format24Hour = fmt; format12Hour = fmt
             textSize = 72f
-            setTextColor(c.getColor(R.color.text))
+            setTextColor(Palette.text)
             typeface = android.graphics.Typeface.create("sans-serif-light", android.graphics.Typeface.NORMAL)
         })
-        addView(TextClock(c).apply {
+        if (host.prefs.clockShowDate) addView(TextClock(c).apply {
             format24Hour = "EEEE, dd/MM/yyyy"; format12Hour = "EEEE, dd/MM/yyyy"
             textSize = 20f
-            setTextColor(c.getColor(R.color.text_dim))
+            setTextColor(Palette.textDim)
         })
         addView(outside)
     }
@@ -111,8 +114,8 @@ class SpeedWidget(host: WidgetHost) : HomeWidget(host) {
         val g = d?.gearText
         gears.forEach { (k, v) ->
             val on = k == g || (k == "D" && g == "M")
-            v.background = if (on) Ui.pill(c, c.getColor(R.color.accent), 12) else null
-            v.setTextColor(c.getColor(if (on) R.color.text else R.color.text_dim))
+            v.background = if (on) Ui.pill(c, Palette.accent, 12) else null
+            v.setTextColor(if (on) Palette.text else Palette.textDim)
         }
         info.text = when {
             d == null -> c.getString(R.string.no_vehicle)
@@ -125,27 +128,31 @@ class SpeedWidget(host: WidgetHost) : HomeWidget(host) {
 class MediaWidget(host: WidgetHost) : HomeWidget(host) {
     private val art = ImageView(c).apply {
         scaleType = ImageView.ScaleType.CENTER_CROP
-        background = Ui.pill(c, c.getColor(R.color.bg), 16)
+        background = Ui.pill(c, Palette.bg, 16)
         clipToOutline = true
     }
     private val title = Ui.text(c, "", 24f).apply { maxLines = 1; ellipsize = android.text.TextUtils.TruncateAt.END; gravity = Gravity.CENTER }
     private val artist = Ui.text(c, "", 18f, dim = true).apply { maxLines = 1; ellipsize = android.text.TextUtils.TruncateAt.END; gravity = Gravity.CENTER }
-    private val play = icon(android.R.drawable.ic_media_play) { host.mediaPlayPause() }
+    private val play = icon(R.drawable.ic_play) { host.mediaPlayPause() }
 
     override val view: View = base(gravity = Gravity.CENTER_HORIZONTAL).apply {
         addView(art, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f))
         addView(title, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { topMargin = Ui.dp(c, 12) })
         addView(artist, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT))
         addView(Ui.hbox(c, Gravity.CENTER).apply {
-            addView(icon(android.R.drawable.ic_media_previous) { host.mediaPrevious() })
+            addView(icon(R.drawable.ic_prev) { host.mediaPrevious() })
             addView(play)
-            addView(icon(android.R.drawable.ic_media_next) { host.mediaNext() })
+            addView(icon(R.drawable.ic_next) { host.mediaNext() })
         })
         setOnClickListener { if (!host.hasMediaPermission()) host.requestMediaPermission() }
     }
 
     private fun icon(res: Int, onClick: () -> Unit) = ImageButton(c).apply {
         setImageResource(res)
+        imageTintList = android.content.res.ColorStateList.valueOf(Palette.text)
+        scaleType = ImageView.ScaleType.FIT_CENTER
+        val p = Ui.dp(c, 14)
+        setPadding(p, p, p, p)
         background = null
         layoutParams = LinearLayout.LayoutParams(Ui.dp(c, 88), Ui.dp(c, 72))
         setOnClickListener { onClick() }
@@ -156,13 +163,13 @@ class MediaWidget(host: WidgetHost) : HomeWidget(host) {
             title.text = c.getString(if (host.hasMediaPermission()) R.string.no_media else R.string.grant_media)
             artist.text = ""
             art.setImageDrawable(null)
-            play.setImageResource(android.R.drawable.ic_media_play)
+            play.setImageResource(R.drawable.ic_play)
             return
         }
         title.text = np.title ?: ""
         artist.text = np.artist ?: ""
         if (np.art != null) art.setImageBitmap(np.art) else art.setImageDrawable(null)
-        play.setImageResource(if (np.isPlaying) android.R.drawable.ic_media_pause else android.R.drawable.ic_media_play)
+        play.setImageResource(if (np.isPlaying) R.drawable.ic_pause else R.drawable.ic_play)
     }
 }
 
@@ -222,7 +229,7 @@ class FuelWidget(host: WidgetHost) : HomeWidget(host) {
     private val pct = Ui.text(c, "--%", 48f)
     private val bar = ProgressBar(c, null, android.R.attr.progressBarStyleHorizontal).apply {
         max = 100
-        progressTintList = android.content.res.ColorStateList.valueOf(c.getColor(R.color.accent))
+        progressTintList = android.content.res.ColorStateList.valueOf(Palette.accent)
     }
     private val range = Ui.text(c, "", 20f)
     private val odo = Ui.text(c, "", 16f, dim = true)
@@ -239,7 +246,7 @@ class FuelWidget(host: WidgetHost) : HomeWidget(host) {
     override fun onVehicle(d: VehicleData?) {
         val p = d?.fuelPercent ?: d?.batteryPercent
         pct.text = p?.let { "${it.toInt()}%" } ?: "--%"
-        pct.setTextColor(c.getColor(if (d?.fuelLow == true) R.color.danger else R.color.text))
+        pct.setTextColor(if (d?.fuelLow == true) Palette.danger else Palette.text)
         bar.progress = p?.toInt() ?: 0
         range.text = d?.rangeKm?.let { String.format(Locale.US, "Còn đi được %.0f km", it) } ?: ""
         odo.text = d?.odometerKm?.let { String.format(Locale.US, "ODO %,.0f km", it) } ?: ""
@@ -285,7 +292,7 @@ class AppWidget(host: WidgetHost, private val spec: WidgetSpec) : HomeWidget(hos
 
     private fun bind() {
         if (spec.pkg.isBlank()) {
-            icon.setImageResource(android.R.drawable.ic_menu_add)
+            icon.setImageResource(R.drawable.ic_add)
             label.text = "Chọn ứng dụng"
         } else {
             icon.setImageDrawable(host.appIcon(spec.pkg))

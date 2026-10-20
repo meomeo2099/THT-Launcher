@@ -44,6 +44,14 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:exported="false"
+            android:label="Cài đặt THT Launcher"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/Theme.THT"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|uiMode|density" />
+
         <service
             android:name=".media.MediaListenerService"
             android:exported="true"

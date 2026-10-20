@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     android:background="@color/bg">
 
+    <ImageView
+        android:id="@+id/wallpaper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,6 +27,7 @@
 
         <!-- Dock -->
         <HorizontalScrollView
+            android:id="@+id/dock_scroll"
             android:layout_width="match_parent"
             android:layout_height="104dp"
             android:layout_marginHorizontal="16dp"

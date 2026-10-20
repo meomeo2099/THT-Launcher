@@ -70,7 +70,9 @@ class CarPropertySource(
             propertyManager = car!!.javaClass
                 .getMethod("getCarManager", String::class.java)
                 .invoke(car, "property")
-            fuelCapacityMl = float(INFO_FUEL_CAPACITY) ?: profile.fallbackFuelCapacityMl
+            // Ưu tiên dung tích người dùng nhập trong Cài đặt, rồi tới xe báo, cuối cùng là profile
+            val userMl = vn.tht.launcher.settings.Prefs(context).tankLiters * 1000f
+            fuelCapacityMl = userMl.takeIf { it > 0f } ?: float(INFO_FUEL_CAPACITY) ?: profile.fallbackFuelCapacityMl
             handler.post(poll)
         } catch (t: Throwable) {
             Log.w(TAG, "Không lấy được CarPropertyManager: $t")

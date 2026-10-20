@@ -17,13 +17,13 @@ object Ui {
         TextView(c).apply {
             text = s
             textSize = size
-            setTextColor(c.getColor(if (dim) R.color.text_dim else R.color.text))
+            setTextColor(if (dim) Palette.textDim else Palette.text)
             if (bold) typeface = android.graphics.Typeface.create("sans-serif-medium", android.graphics.Typeface.NORMAL)
         }
 
     fun card(c: Context, radiusDp: Int = 20): GradientDrawable = GradientDrawable().apply {
         cornerRadius = dp(c, radiusDp).toFloat()
-        setColor(c.getColor(R.color.card))
+        setColor(Palette.card)
     }
 
     fun pill(c: Context, color: Int, radiusDp: Int = 14) = GradientDrawable().apply {
@@ -48,8 +48,8 @@ object Ui {
         text = label
         textSize = size
         isAllCaps = false
-        setTextColor(c.getColor(R.color.text))
-        background = pill(c, c.getColor(R.color.button))
+        setTextColor(Palette.text)
+        background = pill(c, Palette.button)
         minWidth = dp(c, 64)
         minHeight = dp(c, 56)
         stateListAnimator = null
@@ -58,7 +58,7 @@ object Ui {
 
     fun setActive(b: View, active: Boolean) {
         val c = b.context
-        b.background = pill(c, c.getColor(if (active) R.color.accent else R.color.button))
+        b.background = pill(c, if (active) Palette.accent else Palette.button)
     }
 
     fun weight(w: Float = 1f) = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, w)
