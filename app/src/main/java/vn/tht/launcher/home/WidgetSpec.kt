@@ -16,6 +16,7 @@ enum class WidgetType(val title: String, val defaultW: Int, val defaultH: Int) {
     FUEL("Xăng & quãng đường", 380, 280),
     CAR("Xe: chế độ lái, đèn viền", 380, 280),
     APP("Lối tắt ứng dụng", 200, 200),
+    TRIP("Chuyến đi", 380, 280),
 }
 
 /**

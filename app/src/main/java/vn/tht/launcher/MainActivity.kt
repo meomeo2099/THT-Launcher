@@ -65,6 +65,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private lateinit var hvac: HvacOpener
     override lateinit var prefs: Prefs
     private lateinit var screensaver: Screensaver
+    private lateinit var automation: vn.tht.launcher.automation.AutomationEngine
+    private var todayKmCache = 0f to 0L
     private var appearanceDirty = false
     private var appliedNight: Boolean? = null
     private val prefsListener = android.content.SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
@@ -111,6 +113,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
             }
         }
         controller = EcarxController(ecarx, { lastVehicle?.speedKmh }, { lastVehicle?.gearText })
+        automation = vn.tht.launcher.automation.AutomationEngine(prefs, controller, vn.tht.launcher.automation.AutomationEngine::defaultLog)
+        requestCarPermissions()
         media = MediaWatcher(this) { np ->
             runOnUiThread {
                 lastMedia = np
@@ -186,6 +190,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         carSource.stop()
         ecarx.stop()
         controller.shutdown()
+        automation.stop()
         unregisterReceiver(packageReceiver)
         prefs.sp.unregisterOnSharedPreferenceChangeListener(prefsListener)
         super.onDestroy()
@@ -249,6 +254,10 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private fun onVehicle(data: VehicleData?) {
         val d = data ?: if (vn.tht.launcher.vehicle.DemoCarFunction.enabled(this)) vn.tht.launcher.vehicle.DemoCarFunction.vehicle() else null
         lastVehicle = d
+        val app = application as LauncherApp
+        d?.odometerKm?.let { app.lastOdometerKm = it }
+        app.recorder.onVehicle(d)
+        automation.onVehicle(d)
         widgets.values.forEach { it.onVehicle(d) }
         // Theme "tự động": đổi ngày/đêm theo đèn xe
         if (prefs.themeMode == "auto" && isNight() != appliedNight) applyAppearance()
@@ -369,6 +378,36 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     override fun openControlPanel(tab: Int) = ControlCenter(this, ecarx, controller, tab).show()
     override fun openControls() = openControlPanel()
+
+    override fun openStats() = startActivity(Intent(this, vn.tht.launcher.stats.StatsActivity::class.java))
+
+    override fun currentTrip() = (application as LauncherApp).recorder.current
+
+    /** Quãng đường hôm nay (chuyến đã lưu + chuyến đang chạy); đọc file tối đa 1 lần/phút. */
+    override fun todayKm(): Float {
+        val now = System.currentTimeMillis()
+        if (now - todayKmCache.second > 60_000) {
+            val cal = java.util.Calendar.getInstance().apply {
+                set(java.util.Calendar.HOUR_OF_DAY, 0); set(java.util.Calendar.MINUTE, 0); set(java.util.Calendar.SECOND, 0)
+            }
+            val saved = vn.tht.launcher.stats.StatsStore(this).trips().filter { it.start >= cal.timeInMillis }
+                .sumOf { it.distanceKm.toDouble() }.toFloat()
+            todayKmCache = saved to now
+        }
+        return todayKmCache.first + (currentTrip()?.distanceKm ?: 0f)
+    }
+
+    /** Quyền đọc dữ liệu xe loại "dangerous" (tốc độ, vòng tua, nhiệt độ máy…): xin một lần. */
+    private fun requestCarPermissions() {
+        val wanted = arrayOf(
+            "android.car.permission.CAR_SPEED", "android.car.permission.CAR_ENERGY",
+            "android.car.permission.CAR_ENGINE_DETAILED",
+        ).filter { checkSelfPermission(it) != android.content.pm.PackageManager.PERMISSION_GRANTED }
+        if (wanted.isNotEmpty() && !prefs.sp.getBoolean("car_perm_asked", false)) {
+            prefs.sp.edit().putBoolean("car_perm_asked", true).apply()
+            runCatching { requestPermissions(wanted.toTypedArray(), 1) }
+        }
+    }
 
     @Suppress("DEPRECATION")
     override fun openSettings() {

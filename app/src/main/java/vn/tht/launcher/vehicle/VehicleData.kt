@@ -11,7 +11,23 @@ data class VehicleData(
     val nightMode: Boolean? = null,
     val outsideTempC: Float? = null,
     val rangeKm: Float? = null,
+    /** VehicleIgnitionState: 3 ACC, 4 ON, 5 START; null = không đọc được. */
+    val ignition: Int? = null,
+    val rpm: Float? = null,
+    val coolantTempC: Float? = null,
 ) {
+    /**
+     * Máy đang nổ: ưu tiên khoá điện, rồi vòng tua, cuối cùng là xe đang chạy.
+     * null = không đủ dữ liệu để biết.
+     */
+    val engineOn: Boolean?
+        get() = when {
+            ignition != null -> ignition >= IGNITION_ON
+            rpm != null -> rpm > 300f
+            speedKmh != null && speedKmh > 1f -> true
+            else -> null
+        }
+
     val gearText: String
         get() = when (gear) {
             null -> "-"
@@ -29,5 +45,6 @@ data class VehicleData(
         const val GEAR_PARK = 0x4
         const val GEAR_DRIVE = 0x8
         const val GEAR_1 = 0x10
+        const val IGNITION_ON = 4
     }
 }

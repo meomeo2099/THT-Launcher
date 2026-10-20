@@ -51,7 +51,7 @@ class DemoCarFunction {
         /** Dữ liệu VHAL giả cho widget. */
         fun vehicle() = VehicleData(
             speedKmh = 0f, gear = VehicleData.GEAR_PARK, fuelPercent = 62f, fuelLow = false,
-            odometerKm = 12480f, parkingBrake = true, nightMode = null, outsideTempC = 31f, rangeKm = 430f,
+            odometerKm = 12480f, parkingBrake = true, nightMode = null, outsideTempC = 31f, rangeKm = 430f, ignition = 4, rpm = 750f, coolantTempC = 88f,
         )
     }
 }

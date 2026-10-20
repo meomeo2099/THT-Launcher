@@ -92,7 +92,30 @@ class SettingsActivity : Activity() {
         toggle("Chỉ khi xe đỗ", { prefs.saverParkedOnly }) { prefs.saverParkedOnly = it }
         toggle("Hiện bài đang phát", { prefs.saverShowTrack }) { prefs.saverShowTrack = it }
 
+        section("Tự động hoá sau khi nổ máy")
+        val a = vn.tht.launcher.automation.AutomationPrefs(prefs)
+        toggle("Bật tự động hoá", { a.enabled }) { a.enabled = it }
+        slider("Chỉ chạy khi đã đỗ ít nhất (0 = mỗi lần nổ máy)", 0, 240, " phút", { a.parkedMinutes }) { a.parkedMinutes = it }
+        toggle("Bật điều hoà AUTO", { a.climateAuto }) { a.climateAuto = it }
+        slider("Sưởi khi ngoài trời dưới", -20, 25, "°C", { a.heatBelowC }) { a.heatBelowC = it }
+        slider("Sưởi ghế lái (0 = không)", 0, 3, "", { a.heatDriver }) { a.heatDriver = it }
+        slider("Sưởi ghế phụ (0 = không)", 0, 3, "", { a.heatPassenger }) { a.heatPassenger = it }
+        slider("Sưởi vô lăng (0 = không)", 0, 3, "", { a.heatWheel }) { a.heatWheel = it }
+        slider("Tắt sưởi sau (0 = không tắt)", 0, 60, " phút", { a.heatOffMinutes }) { a.heatOffMinutes = it }
+        slider("Làm mát khi ngoài trời từ", 15, 45, "°C", { a.ventAboveC }) { a.ventAboveC = it }
+        slider("Làm mát ghế lái (0 = không)", 0, 3, "", { a.ventDriver }) { a.ventDriver = it }
+        slider("Làm mát ghế phụ (0 = không)", 0, 3, "", { a.ventPassenger }) { a.ventPassenger = it }
+        slider("Tắt làm mát sau (0 = không tắt)", 0, 60, " phút", { a.ventOffMinutes }) { a.ventOffMinutes = it }
+        toggle("Xả nóng: hé cửa sổ trời + bật quạt khi trời nóng", { a.airOut }) { a.airOut = it }
+        slider("Mức quạt khi xả nóng", 1, 7, "", { a.airOutFan }) { a.airOutFan = it }
+        slider("Đóng cửa sổ trời sau", 1, 30, " phút", { a.airOutMinutes }) { a.airOutMinutes = it }
+        slider("Đóng cửa sổ trời khi chạy từ (0 = không)", 0, 120, " km/h", { a.closeRoofAtSpeed }) { a.closeRoofAtSpeed = it }
+
         section("Xe")
+        action("Thống kê chuyến đi", "Quãng đường, tiêu hao, đổ xăng, bảo dưỡng") {
+            startActivity(Intent(this, vn.tht.launcher.stats.StatsActivity::class.java))
+        }
+        toggle("Ghi thống kê chuyến đi", { prefs.sp.getBoolean("stats_on", true) }) { prefs.sp.edit().putBoolean("stats_on", it).apply() }
         action("Dung tích bình xăng", if (prefs.tankLiters > 0) "${prefs.tankLiters} lít" else "Theo xe báo") { editTank() }
 
         if ((applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
@@ -177,9 +200,17 @@ class SettingsActivity : Activity() {
                 override fun onStopTrackingTouch(s: SeekBar?) {}
             })
         }
-        val r = row(title, null, value)
-        r.orientation = LinearLayout.VERTICAL
-        r.addView(bar, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Ui.dp(this, 48)))
+        list.addView(Ui.vbox(this).apply {
+            background = Ui.card(context, 14)
+            setPadding(Ui.dp(context, 20), Ui.dp(context, 14), Ui.dp(context, 20), Ui.dp(context, 6))
+            addView(Ui.hbox(context).apply {
+                addView(Ui.text(context, title, 20f), Ui.weight())
+                addView(value)
+            })
+            addView(bar, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Ui.dp(context, 48)))
+        }, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+            bottomMargin = Ui.dp(this@SettingsActivity, 8)
+        })
     }
 
     // ---- Hộp thoại ----

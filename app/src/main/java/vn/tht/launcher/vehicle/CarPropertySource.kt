@@ -103,6 +103,9 @@ class CarPropertySource(
             nightMode = bool(NIGHT_MODE),
             outsideTempC = float(ENV_OUTSIDE_TEMPERATURE)?.takeIf { it in -50f..70f },
             rangeKm = float(RANGE_REMAINING)?.let { it / 1000f }?.takeIf { it in 0f..2000f },
+            ignition = int(IGNITION_STATE),
+            rpm = float(ENGINE_RPM),
+            coolantTempC = float(ENGINE_COOLANT_TEMP)?.takeIf { it in -40f..150f },
         )
     }
 
@@ -136,5 +139,8 @@ class CarPropertySource(
         // Chuẩn VHAL; chưa thấy trong dump Coolray 2025 nên có thể không có trên xe (khi đó null)
         const val ENV_OUTSIDE_TEMPERATURE = 0x11600703  // °C
         const val RANGE_REMAINING = 0x11600308          // mét
+        const val IGNITION_STATE = 0x11400409
+        const val ENGINE_RPM = 0x11600305
+        const val ENGINE_COOLANT_TEMP = 0x11600301      // °C
     }
 }

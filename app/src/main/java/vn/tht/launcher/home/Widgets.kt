@@ -35,6 +35,9 @@ interface WidgetHost {
     fun appLabel(pkg: String): String?
     fun pickApp(onPicked: (String) -> Unit)
     fun saveLayout()
+    fun openStats()
+    fun currentTrip(): vn.tht.launcher.stats.Trip?
+    fun todayKm(): Float
     fun openNativeHvac()
     fun openControlPanel(tab: Int = 0)
     fun toast(msg: String)
@@ -62,6 +65,7 @@ abstract class HomeWidget(protected val host: WidgetHost) {
             WidgetType.FUEL -> FuelWidget(host)
             WidgetType.CAR -> CarWidget(host)
             WidgetType.APP -> AppWidget(host, spec)
+            WidgetType.TRIP -> TripWidget(host)
         }
     }
 }
@@ -297,5 +301,27 @@ class AppWidget(host: WidgetHost, private val spec: WidgetSpec) : HomeWidget(hos
             icon.setImageDrawable(host.appIcon(spec.pkg))
             label.text = host.appLabel(spec.pkg) ?: spec.pkg
         }
+    }
+}
+
+class TripWidget(host: WidgetHost) : HomeWidget(host) {
+    private val dist = Ui.text(c, "–", 44f)
+    private val time = Ui.text(c, "", 18f, dim = true)
+    private val today = Ui.text(c, "", 18f)
+
+    override val view: View = base().apply {
+        addView(Ui.text(c, "Chuyến đi", 20f, dim = true))
+        addView(dist)
+        addView(time)
+        addView(Ui.spacer(c), LinearLayout.LayoutParams(0, 0, 1f))
+        addView(today)
+        setOnClickListener { host.openStats() }
+    }
+
+    override fun onVehicle(d: VehicleData?) {
+        val t = host.currentTrip()
+        dist.text = t?.let { String.format(Locale.US, "%.1f km", it.distanceKm) } ?: "Máy tắt"
+        time.text = t?.let { "Lái ${it.driveSec / 60} phút · TB ${it.avgSpeed.toInt()} km/h" } ?: ""
+        today.text = String.format(Locale.US, "Hôm nay: %.1f km", host.todayKm())
     }
 }

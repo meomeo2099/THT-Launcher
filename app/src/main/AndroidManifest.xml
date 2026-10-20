@@ -12,6 +12,7 @@
     <uses-permission android:name="android.car.permission.CAR_ENERGY" />
     <uses-permission android:name="android.car.permission.CAR_MILEAGE" />
     <uses-permission android:name="android.car.permission.CAR_EXTERIOR_ENVIRONMENT" />
+    <uses-permission android:name="android.car.permission.CAR_ENGINE_DETAILED" />
     <!-- Quyền điều khiển: đầu xe chỉ cấp khi APK ký bằng khoá platform của firmware -->
     <uses-permission android:name="android.car.permission.CONTROL_CAR_CLIMATE" />
     <uses-permission android:name="android.car.permission.CAR_VENDOR_EXTENSION" />
@@ -48,6 +49,14 @@
             android:name=".settings.SettingsActivity"
             android:exported="false"
             android:label="Cài đặt THT Launcher"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/Theme.THT"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|uiMode|density" />
+
+        <activity
+            android:name=".stats.StatsActivity"
+            android:exported="false"
+            android:label="Thống kê"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/Theme.THT"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|uiMode|density" />

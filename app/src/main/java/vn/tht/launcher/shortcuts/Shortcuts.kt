@@ -30,7 +30,7 @@ data class Shortcut(
     /** Chưa điền package/action: hiện mờ, chạm vào chỉ nhắc cách cấu hình. */
     val configured: Boolean
         get() = when (type) {
-            TYPE_HVAC, TYPE_CONTROLS, TYPE_APPS, TYPE_SETTINGS -> true
+            TYPE_HVAC, TYPE_CONTROLS, TYPE_APPS, TYPE_SETTINGS, TYPE_STATS -> true
             TYPE_ACTION -> action.isNotBlank()
             else -> pkg.isNotBlank()
         }
@@ -47,6 +47,7 @@ data class Shortcut(
         const val TYPE_CONTROLS = "controls"
         const val TYPE_APPS = "apps"
         const val TYPE_SETTINGS = "settings"
+        const val TYPE_STATS = "stats"
 
         fun fromJson(o: JSONObject) = Shortcut(
             id = o.optString("id"),

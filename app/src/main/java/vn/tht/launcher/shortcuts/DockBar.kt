@@ -30,6 +30,7 @@ class DockBar(
         fun openControls()
         fun openAppDrawer()
         fun openSettings()
+        fun openStats()
         fun pickApp(onPicked: (String) -> Unit)
     }
 
@@ -103,6 +104,7 @@ class DockBar(
             "Điều khiển xe" to Shortcut("controls", "Điều khiển", Shortcut.TYPE_CONTROLS),
             "Điều hoà gốc" to Shortcut("hvac", "Điều hoà", Shortcut.TYPE_HVAC),
             "Cài đặt launcher" to Shortcut("settings", "Cài đặt", Shortcut.TYPE_SETTINGS),
+            "Thống kê chuyến đi" to Shortcut("stats", "Thống kê", Shortcut.TYPE_STATS),
             "THT Voice" to ShortcutStore.DEFAULTS.first { it.id == "voice" },
         )
         AlertDialog.Builder(context)
@@ -138,6 +140,7 @@ class DockBar(
             Shortcut.TYPE_CONTROLS -> actions.openControls()
             Shortcut.TYPE_APPS -> actions.openAppDrawer()
             Shortcut.TYPE_SETTINGS -> actions.openSettings()
+            Shortcut.TYPE_STATS -> actions.openStats()
             else -> start(intentFor(s), s.label)
         }
     }
@@ -165,6 +168,7 @@ class DockBar(
             Shortcut.TYPE_CONTROLS -> return Icons.get(context, "shortcut")
             Shortcut.TYPE_APPS -> return Icons.get(context, "apps")
             Shortcut.TYPE_SETTINGS -> return Icons.get(context, "settings")
+            Shortcut.TYPE_STATS -> return Icons.get(context, "trip")
         }
         val pkg = if (s.type == Shortcut.TYPE_HVAC) s.pkg.ifBlank { HvacOpener.DEFAULT_PACKAGE } else s.pkg
         if (pkg.isBlank()) return Icons.get(context, "plus")
