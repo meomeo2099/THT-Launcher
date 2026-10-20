@@ -9,6 +9,8 @@ data class VehicleData(
     val odometerKm: Float? = null,
     val parkingBrake: Boolean? = null,
     val nightMode: Boolean? = null,
+    val outsideTempC: Float? = null,
+    val rangeKm: Float? = null,
 ) {
     val gearText: String
         get() = when (gear) {

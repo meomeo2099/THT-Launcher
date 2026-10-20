@@ -26,11 +26,19 @@ Thêm xe mới: tạo một `VehicleProfile` trong `vehicle/VehicleProfile.kt` v
 
 Đọc qua API chuẩn Android Automotive (`android.car`, `CarPropertyManager`) bằng reflection, nên APK vẫn chạy trên máy không có thư viện này. Mã thuộc tính nằm trong `CarPropertySource.kt`.
 
-Trên đầu ECARX còn đọc thêm qua ECARX AdaptAPI (`EcarxCarSource.kt`, chỉ đọc). Nhiệt độ ngoài trời và quãng đường còn lại chỉ hiện khi xe báo function đó là `active`. Dò toàn bộ catalog: `adb logcat -s EcarxCarSource`.
+Nhiệt độ ngoài trời và quãng đường còn lại đọc qua VHAL chuẩn (`ENV_OUTSIDE_TEMPERATURE`, `RANGE_REMAINING`). Nếu xe không có hai thuộc tính này thì chúng không hiện.
+
+Trên đầu ECARX còn đọc thêm qua ECARX AdaptAPI 1.1.18.9 (`Car.create(context).getICarFunction()`, xem `EcarxCarSource.kt`): trạng thái điều hoà, nhiệt độ đặt, quạt, chế độ lái, đèn viền. Function ID nằm trong `EcarxFunctions.kt`, lấy từ `Coolray2025-Voice-Spec.md`. Một function chỉ được dùng khi xe báo `active`. Dò toàn bộ: `adb logcat -s EcarxCarSource PlatformSignature`.
+
+## Điều khiển xe
+
+Lối tắt **Điều khiển** mở bảng điều khiển gồm điều hoà (bật/tắt, A/C, AUTO, nhiệt độ ±, quạt ±), chế độ lái (Eco/Comfort/Sport, chỉ khi xe đứng yên) và đèn viền (bật/tắt, màu).
+
+Phần ghi **chỉ mở** khi `PackageManager.checkSignatures("android", vn.tht.launcher)` báo khớp, tức APK ký cùng chứng chỉ với firmware đầu xe. Bản debug ký bằng khoá debug nên luôn ở chế độ chỉ đọc. Mỗi lệnh đều đọc lại giá trị, chỉ báo ✔ khi xe đã đổi thật.
 
 ## Thanh lối tắt
 
-Đầu cột app có 4 lối tắt: Camera 540°, Điều hoà, CarPlay, Cài đặt xe. Cấu hình nằm ở:
+Đầu cột app có 6 lối tắt: Camera 540° (`com.neusoft.nsapa`), Điều hoà (`ecarx.hvac.app`), CarPlay (`com.neusoft.carplay`), Cài đặt xe (`ecarx.settings`), Điều khiển, THT Voice (`VOICE_COMMAND` tới `com.tht.voice.coolray2025`). Cấu hình nằm ở:
 
 ```
 /sdcard/Android/data/vn.tht.launcher/files/shortcuts.json

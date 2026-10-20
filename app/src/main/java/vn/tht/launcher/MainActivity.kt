@@ -21,11 +21,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import vn.tht.launcher.apps.AppsAdapter
 import vn.tht.launcher.apps.AppsRepository
+import vn.tht.launcher.controls.ControlPanel
 import vn.tht.launcher.media.MediaWatcher
 import vn.tht.launcher.media.NowPlaying
 import vn.tht.launcher.shortcuts.ShortcutBar
 import vn.tht.launcher.vehicle.CarPropertySource
 import vn.tht.launcher.vehicle.EcarxCarSource
+import vn.tht.launcher.vehicle.EcarxController
 import vn.tht.launcher.vehicle.VehicleData
 import java.util.Locale
 
@@ -43,6 +45,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var ecarx: EcarxCarSource
     private lateinit var media: MediaWatcher
     private lateinit var shortcutBar: ShortcutBar
+    private lateinit var controller: EcarxController
+    @Volatile private var lastSpeedKmh: Float? = null
     private val handler = Handler(Looper.getMainLooper())
     private val ecarxPoll = object : Runnable {
         override fun run() {
@@ -78,7 +82,9 @@ class MainActivity : AppCompatActivity() {
         }
         reloadApps()
 
-        shortcutBar = ShortcutBar(this, findViewById<LinearLayout>(R.id.shortcuts))
+        shortcutBar = ShortcutBar(this, findViewById<LinearLayout>(R.id.shortcuts)) {
+            ControlPanel(this, controller).show()
+        }
         // In các activity gợi ý (camera, carplay, cài đặt...) để điền shortcuts.json: adb logcat -s ShortcutBar
         ShortcutBar.logCandidates(this)
 
@@ -91,6 +97,7 @@ class MainActivity : AppCompatActivity() {
                 handler.post(ecarxPoll)
             }
         }
+        controller = EcarxController(ecarx) { lastSpeedKmh }
         media = MediaWatcher(this) { runOnUiThread { showMedia(it) } }
 
         btnPlay.setOnClickListener { media.playPause() }
@@ -128,6 +135,7 @@ class MainActivity : AppCompatActivity() {
         handler.removeCallbacks(ecarxPoll)
         carSource.stop()
         ecarx.stop()
+        controller.shutdown()
         unregisterReceiver(packageReceiver)
         super.onDestroy()
     }
@@ -155,6 +163,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showVehicle(d: VehicleData?) {
+        lastSpeedKmh = d?.speedKmh
         if (d == null) {
             speed.text = "--"
             vehicleInfo.text = getString(R.string.no_vehicle)
@@ -165,6 +174,8 @@ class MainActivity : AppCompatActivity() {
         d.fuelPercent?.let { lines += "Xăng: ${it.toInt()}%" + if (d.fuelLow == true) "  ⚠ sắp hết" else "" }
             ?: run { if (d.fuelLow == true) lines += "⚠ Xăng sắp hết" }
         d.batteryPercent?.let { lines += "Pin: ${it.toInt()}%" }
+        d.outsideTempC?.let { lines += String.format(Locale.US, "Ngoài trời: %.0f°C", it) }
+        d.rangeKm?.let { lines += String.format(Locale.US, "Còn đi được: %.0f km", it) }
         d.odometerKm?.let { lines += "ODO: ${String.format(Locale.US, "%,.0f", it)} km" }
         if (d.parkingBrake == true) lines += "Phanh tay: BẬT"
         vehicleInfo.text = lines.joinToString("\n")

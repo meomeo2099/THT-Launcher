@@ -14,6 +14,7 @@ import java.io.File
  *                (package/service tuỳ chọn, mặc định ecarx.hvac.app + tự dò service)
  *  - "activity": mở activity [pkg]/[activity]; bỏ trống activity = mở app [pkg]
  *  - "action":   startActivity với intent [action] (kèm [pkg] nếu có)
+ *  - "controls": mở bảng điều khiển xe (điều hoà, chế độ lái, đèn viền)
  */
 data class Shortcut(
     val id: String,
@@ -27,7 +28,7 @@ data class Shortcut(
     /** Chưa điền package/action: hiện mờ, chạm vào chỉ nhắc cách cấu hình. */
     val configured: Boolean
         get() = when (type) {
-            TYPE_HVAC -> true
+            TYPE_HVAC, TYPE_CONTROLS -> true
             TYPE_ACTION -> action.isNotBlank()
             else -> pkg.isNotBlank()
         }
@@ -41,6 +42,7 @@ data class Shortcut(
         const val TYPE_HVAC = "hvac"
         const val TYPE_ACTIVITY = "activity"
         const val TYPE_ACTION = "action"
+        const val TYPE_CONTROLS = "controls"
 
         fun fromJson(o: JSONObject) = Shortcut(
             id = o.optString("id"),
@@ -59,19 +61,27 @@ data class Shortcut(
  *
  * File nằm ở thư mục ngoài riêng của app để sửa được bằng adb mà không cần root:
  *   /sdcard/Android/data/vn.tht.launcher/files/shortcuts.json
- * Lần đầu chạy (hoặc file hỏng) sẽ ghi bản mặc định với chỗ trống để điền package/activity thật.
+ * Lần đầu chạy (hoặc file hỏng) sẽ ghi bản mặc định; file bản cũ được nâng cấp, giữ mục đã sửa.
  */
 object ShortcutStore {
     private const val TAG = "ShortcutStore"
     private const val FILE = "shortcuts.json"
-    private const val VERSION = 1
+    private const val VERSION = 2
 
-    /** Mặc định cho Coolray 2025. package/activity thật cần lấy từ xe nên để trống. */
+    /**
+     * Mặc định cho Coolray 2025. Package lấy từ danh sách gói trên đầu xe (Coolray2025-Voice-Spec.md
+     * mục 7); activity để trống = mở activity chính của app. Chưa thử mở trên xe.
+     */
     val DEFAULTS = listOf(
-        Shortcut("camera", "Camera 540°", Shortcut.TYPE_ACTIVITY),
+        Shortcut("camera", "Camera 540°", Shortcut.TYPE_ACTIVITY, pkg = "com.neusoft.nsapa"),
         Shortcut("hvac", "Điều hoà", Shortcut.TYPE_HVAC),
-        Shortcut("carplay", "CarPlay", Shortcut.TYPE_ACTIVITY),
-        Shortcut("car_settings", "Cài đặt xe", Shortcut.TYPE_ACTIVITY),
+        Shortcut("carplay", "CarPlay", Shortcut.TYPE_ACTIVITY, pkg = "com.neusoft.carplay"),
+        Shortcut("car_settings", "Cài đặt xe", Shortcut.TYPE_ACTIVITY, pkg = "ecarx.settings"),
+        Shortcut("controls", "Điều khiển", Shortcut.TYPE_CONTROLS),
+        Shortcut(
+            "voice", "THT Voice", Shortcut.TYPE_ACTION,
+            pkg = "com.tht.voice.coolray2025", action = "android.intent.action.VOICE_COMMAND",
+        ),
     )
 
     fun file(context: Context): File =
@@ -81,9 +91,16 @@ object ShortcutStore {
         val f = file(context)
         try {
             if (f.exists()) {
-                val arr = JSONObject(f.readText()).getJSONArray("shortcuts")
-                val list = (0 until arr.length()).map { Shortcut.fromJson(arr.getJSONObject(it)) }
-                if (list.isNotEmpty()) return list
+                val json = JSONObject(f.readText())
+                val arr = json.getJSONArray("shortcuts")
+                var list = (0 until arr.length()).map { Shortcut.fromJson(arr.getJSONObject(it)) }
+                if (list.isNotEmpty()) {
+                    if (json.optInt("version", 1) < VERSION) {
+                        list = migrate(list)
+                        save(context, list)
+                    }
+                    return list
+                }
             }
         } catch (t: Throwable) {
             Log.w(TAG, "shortcuts.json hỏng, dùng mặc định: $t")
@@ -91,6 +108,17 @@ object ShortcutStore {
         }
         save(context, DEFAULTS)
         return DEFAULTS
+    }
+
+    /** Bản cũ: điền package mặc định vào mục còn trống và thêm mục mới; giữ nguyên mục người dùng đã sửa. */
+    private fun migrate(old: List<Shortcut>): List<Shortcut> {
+        val byId = DEFAULTS.associateBy { it.id }
+        val updated = old.map { s ->
+            val d = byId[s.id]
+            if (d != null && s.type == d.type && s.pkg.isBlank() && s.action.isBlank()) d.copy(label = s.label) else s
+        }
+        val ids = updated.map { it.id }.toSet()
+        return updated + DEFAULTS.filter { it.id !in ids }
     }
 
     fun save(context: Context, list: List<Shortcut>) {

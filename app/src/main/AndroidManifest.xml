@@ -12,6 +12,10 @@
     <uses-permission android:name="android.car.permission.CAR_ENERGY" />
     <uses-permission android:name="android.car.permission.CAR_MILEAGE" />
     <uses-permission android:name="android.car.permission.CAR_EXTERIOR_ENVIRONMENT" />
+    <!-- Quyền điều khiển: đầu xe chỉ cấp khi APK ký bằng khoá platform của firmware -->
+    <uses-permission android:name="android.car.permission.CONTROL_CAR_CLIMATE" />
+    <uses-permission android:name="android.car.permission.CAR_VENDOR_EXTENSION" />
+    <uses-permission android:name="android.car.permission.CONTROL_CAR_INTERIOR_LIGHTS" />
 
     <uses-feature android:name="android.hardware.type.automotive" android:required="false" />
 

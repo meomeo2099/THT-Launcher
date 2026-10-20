@@ -1,82 +1,98 @@
 package vn.tht.launcher.vehicle
 
 /**
- * Danh mục function ID của ECARX AdaptAPI (ICarFunction).
+ * Function ID của ECARX AdaptAPI 1.1.18.9 (`ICarFunction`) mà launcher dùng.
  *
- * Các ID dưới đây là DỮ LIỆU THAM KHẢO, suy ra từ hành vi đầu ECARX; không phải mọi xe đều có.
- * Luôn kiểm chứng bằng [EcarxCarSource.dumpSupported] trên chính xe trước khi tin dùng:
- * đầu xe trả về "active" nghĩa là có, "notactive"/"unknown" nghĩa là không hỗ trợ.
+ * Nguồn: Coolray2025-Voice-Spec.md, phụ lục A, sinh tự động từ `AdapterAPI.jar` trên chính đầu xe
+ * Coolray 2025. Có ID trong catalog chưa có nghĩa là xe có function đó: luôn kiểm tra bằng
+ * `isFunctionSupported(id, zone)` (xem [EcarxCarSource.dumpSupported]).
  *
- * Quy ước ID của ECARX: 4 byte, byte cao là nhóm chức năng.
+ * Quy ước giá trị: bật/tắt = [ON]/[OFF] (tuyệt đối); giá trị enum = `ID + n` (xem [level]).
  */
 object EcarxFunctions {
 
-    /** Một function ID kèm tên người đọc được, để in khi dò. */
-    data class Fn(val id: Int, val name: String)
+    data class Fn(val id: Int, val name: String, val zone: Int = ZONE_ALL)
 
-    // ----- Điều hoà (HVAC) -----
-    const val HVAC_POWER = 0x10010100          // bật/tắt điều hoà
-    const val HVAC_AC = 0x10010300             // A/C
-    const val HVAC_AC_MAX = 0x10010400         // A/C MAX
-    const val HVAC_FAN_SPEED = 0x10020100      // mức quạt
-    const val HVAC_AUTO = 0x10030100           // chế độ AUTO
-    const val HVAC_DEFROST_FRONT = 0x10040100  // sấy kính trước
-    const val HVAC_DEFROST_REAR = 0x10040300   // sấy kính sau
-    const val HVAC_SEAT = 0x10050200           // sưởi/thông gió ghế
-    const val HVAC_TEMP_ZONE = 0x10060100      // nhiệt độ đặt theo vùng
-    const val HVAC_TEMP_UNIT = 0x10060600      // đơn vị nhiệt (°C/°F)
-    const val HVAC_SYNC = 0x10060500           // đồng bộ nhiệt 2 vùng
-    const val HVAC_AIRFLOW = 0x10070100        // hướng gió
-    const val HVAC_RECIRC = 0x10090100         // lấy gió trong/ngoài
-    const val HVAC_AIR_CLEAN = 0x10100300      // lọc khí
-    const val HVAC_AC_ECO = 0x28070400         // AC eco
+    const val OFF = 0
+    const val ON = 1
 
-    // ----- Trạng thái / thông tin xe -----
-    const val POWER_MODE = 0x20030600          // chế độ nguồn (0x20030602 = ACC)
-    const val RANGE_REMAINING = 0x20150300     // quãng đường còn lại
-    const val FUEL_OR_BATTERY = 0x20150400     // mức nhiên liệu / pin
-    const val TEMP_OUTSIDE_A = 0x20150500      // nhiệt độ ngoài (biến thể A)
-    const val TEMP_OUTSIDE_B = 0x20150600      // nhiệt độ ngoài (biến thể B)
+    /** Giá trị enum `id + n`; n <= 0 nghĩa là tắt (0 tuyệt đối). */
+    fun level(id: Int, n: Int): Int = if (n <= 0) OFF else id + n
 
-    // ----- Đèn nội thất (ambient) -----
-    const val AMBIENT_SWITCH = 0x21030000      // bật/tắt đèn ambient
-    const val AMBIENT_BRIGHTNESS = 0x21030300  // độ sáng
-    const val AMBIENT_COLOR = 0x21030400       // màu
+    /** Ngược của [level]: 0 -> 0, `id + n` -> n; một số firmware trả thẳng n nhỏ. */
+    fun levelOf(id: Int, value: Int?): Int? = when {
+        value == null -> null
+        value == OFF -> 0
+        value in (id + 1)..(id + 0xFF) -> value - id
+        value in 1..15 -> value
+        else -> null
+    }
 
-    // ----- Chế độ lái -----
-    const val DRIVE_MODE = 0x22010100          // eco / comfort / sport / offroad
+    // ----- Vùng (com.ecarx.xui.adaptapi.vehicle) -----
+    const val ZONE_ALL = Int.MIN_VALUE
+    const val ZONE_ROW_1_LEFT = 1
+    const val ZONE_ROW_1_RIGHT = 4
 
-    /** Giá trị của POWER_MODE. */
-    const val POWER_MODE_ACC = 0x20030602
+    // ----- Điều hoà: car.hvac.IHvac -----
+    const val HVAC_POWER = 268501248
+    const val HVAC_AUTO = 268501504
+    const val HVAC_AC = 268501760
+    const val HVAC_AC_MAX = 268502016
+    const val HVAC_FAN_SPEED = 268566784         // +1..+7 trên Coolray (VHAL 1–7)
+    const val HVAC_CIRCULATION = 268632320       // +1 gió trong, +2 gió ngoài, +3 tự động
+    const val HVAC_DEFROST_FRONT = 268697856
+    const val HVAC_DEFROST_REAR = 268698368
+    const val HVAC_TEMP = 268828928              // float (customize), 16–32 °C
+    const val HVAC_TEMP_STEP = 268829696
+    const val HVAC_TEMP_DUAL = 268829952
+    const val HVAC_BLOWING_MODE = 268894464      // +1 mặt, +2 chân, +3 mặt+chân, +4 kính
 
-    /**
-     * Toàn bộ ID để dò. Thứ tự nhóm giống trên để log dễ đọc.
-     * Giữ danh sách này đồng bộ với các hằng số ở trên.
-     */
+    const val FAN_MIN = 1
+    const val FAN_MAX = 7
+    const val TEMP_MIN = 16f
+    const val TEMP_MAX = 32f
+
+    // ----- Đèn viền: car.vehicle.IBcm / IAmbienceLight -----
+    const val AMBIENT_SWITCH = 553979904         // BCM_FUNC_LIGHT_ATMOSPHERE_LAMPS
+    const val AMBIENT_THEME_COLOR = 704709120    // +1 đỏ … +8 trắng
+    const val AMBIENT_INTENSITY = 704708864      // float (customize)
+
+    /** Màu đèn viền: n trong `AMBIENT_THEME_COLOR + n` -> tên + mã màu hiển thị. */
+    val AMBIENT_COLORS: List<Triple<Int, String, Int>> = listOf(
+        Triple(1, "Đỏ", 0xFFE53935.toInt()),
+        Triple(2, "Cam", 0xFFFB8C00.toInt()),
+        Triple(3, "Vàng", 0xFFFDD835.toInt()),
+        Triple(4, "Xanh lá", 0xFF43A047.toInt()),
+        Triple(5, "Chàm", 0xFF3949AB.toInt()),
+        Triple(6, "Xanh dương", 0xFF1E88E5.toInt()),
+        Triple(7, "Tím", 0xFF8E24AA.toInt()),
+        Triple(8, "Trắng", 0xFFFFFFFF.toInt()),
+    )
+
+    // ----- Chế độ lái: car.vehicle.IDriveMode -----
+    const val DRIVE_MODE = 570491136             // +1 eco, +2 comfort, +3 sport (dynamic)
+
+    val DRIVE_MODES: List<Pair<Int, String>> = listOf(1 to "Eco", 2 to "Comfort", 3 to "Sport")
+
+    /** Toàn bộ ID để dò. Giữ đồng bộ với các hằng số ở trên. */
     val ALL: List<Fn> = listOf(
         Fn(HVAC_POWER, "HVAC_POWER"),
+        Fn(HVAC_AUTO, "HVAC_AUTO"),
         Fn(HVAC_AC, "HVAC_AC"),
         Fn(HVAC_AC_MAX, "HVAC_AC_MAX"),
         Fn(HVAC_FAN_SPEED, "HVAC_FAN_SPEED"),
-        Fn(HVAC_AUTO, "HVAC_AUTO"),
+        Fn(HVAC_CIRCULATION, "HVAC_CIRCULATION"),
         Fn(HVAC_DEFROST_FRONT, "HVAC_DEFROST_FRONT"),
         Fn(HVAC_DEFROST_REAR, "HVAC_DEFROST_REAR"),
-        Fn(HVAC_SEAT, "HVAC_SEAT"),
-        Fn(HVAC_TEMP_ZONE, "HVAC_TEMP_ZONE"),
-        Fn(HVAC_TEMP_UNIT, "HVAC_TEMP_UNIT"),
-        Fn(HVAC_SYNC, "HVAC_SYNC"),
-        Fn(HVAC_AIRFLOW, "HVAC_AIRFLOW"),
-        Fn(HVAC_RECIRC, "HVAC_RECIRC"),
-        Fn(HVAC_AIR_CLEAN, "HVAC_AIR_CLEAN"),
-        Fn(HVAC_AC_ECO, "HVAC_AC_ECO"),
-        Fn(POWER_MODE, "POWER_MODE"),
-        Fn(RANGE_REMAINING, "RANGE_REMAINING"),
-        Fn(FUEL_OR_BATTERY, "FUEL_OR_BATTERY"),
-        Fn(TEMP_OUTSIDE_A, "TEMP_OUTSIDE_A"),
-        Fn(TEMP_OUTSIDE_B, "TEMP_OUTSIDE_B"),
+        Fn(HVAC_TEMP, "HVAC_TEMP (ALL)"),
+        Fn(HVAC_TEMP, "HVAC_TEMP (LEFT)", ZONE_ROW_1_LEFT),
+        Fn(HVAC_TEMP, "HVAC_TEMP (RIGHT)", ZONE_ROW_1_RIGHT),
+        Fn(HVAC_TEMP_STEP, "HVAC_TEMP_STEP"),
+        Fn(HVAC_TEMP_DUAL, "HVAC_TEMP_DUAL"),
+        Fn(HVAC_BLOWING_MODE, "HVAC_BLOWING_MODE"),
         Fn(AMBIENT_SWITCH, "AMBIENT_SWITCH"),
-        Fn(AMBIENT_BRIGHTNESS, "AMBIENT_BRIGHTNESS"),
-        Fn(AMBIENT_COLOR, "AMBIENT_COLOR"),
+        Fn(AMBIENT_THEME_COLOR, "AMBIENT_THEME_COLOR"),
+        Fn(AMBIENT_INTENSITY, "AMBIENT_INTENSITY"),
         Fn(DRIVE_MODE, "DRIVE_MODE"),
     )
 

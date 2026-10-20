@@ -18,6 +18,7 @@ import vn.tht.launcher.vehicle.HvacOpener
 class ShortcutBar(
     private val context: Context,
     private val container: LinearLayout,
+    private val onControls: () -> Unit,
 ) {
     private val pm = context.packageManager
     private val hvac = HvacOpener(context)
@@ -51,6 +52,7 @@ class ShortcutBar(
                 pkg = s.pkg.ifBlank { HvacOpener.DEFAULT_PACKAGE },
                 serviceClass = s.service.ifBlank { null },
             ) { ok -> if (!ok) toast("Không mở được điều hoà") }
+            Shortcut.TYPE_CONTROLS -> onControls()
             else -> start(intentFor(s), s.label)
         }
     }
@@ -74,6 +76,7 @@ class ShortcutBar(
     }
 
     private fun iconFor(s: Shortcut): Drawable? {
+        if (s.type == Shortcut.TYPE_CONTROLS) return context.getDrawable(android.R.drawable.ic_menu_manage)
         val pkg = when {
             s.type == Shortcut.TYPE_HVAC -> s.pkg.ifBlank { HvacOpener.DEFAULT_PACKAGE }
             else -> s.pkg
