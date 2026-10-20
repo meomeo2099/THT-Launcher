@@ -54,6 +54,7 @@ class SettingsActivity : Activity() {
         choice("Nền ban đêm", Palette.BACKGROUNDS.mapValues { it.value.first }, { prefs.backgroundNight }) { prefs.backgroundNight = it }
         action("Ảnh nền riêng – ngày", wallpaperState(DAY)) { pickWallpaper(DAY) }
         action("Ảnh nền riêng – đêm", wallpaperState(NIGHT)) { pickWallpaper(NIGHT) }
+        action("Bộ biểu tượng", vn.tht.launcher.ui.Icons.packName ?: "Mặc định · chạm để nạp file .zip") { iconPack() }
         slider("Độ đặc nền widget", 0, 100, "%", { prefs.cardOpacity }) { prefs.cardOpacity = it }
         slider("Tỉ lệ giao diện", 75, 150, "%", { prefs.uiScale }) { prefs.uiScale = it }
 
@@ -93,6 +94,14 @@ class SettingsActivity : Activity() {
 
         section("Xe")
         action("Dung tích bình xăng", if (prefs.tankLiters > 0) "${prefs.tankLiters} lít" else "Theo xe báo") { editTank() }
+
+        if ((applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
+            section("Gỡ lỗi (chỉ bản debug)")
+            toggle("Chế độ demo (xe giả khi không có ECARX)", { prefs.sp.getBoolean("demo_mode", false) }) {
+                prefs.sp.edit().putBoolean("demo_mode", it).apply()
+                toast("Khởi động lại launcher để áp dụng")
+            }
+        }
 
         section("Quyền")
         action("Quyền đọc nhạc", "Cho phép THT Launcher đọc bài đang phát") {
@@ -225,6 +234,16 @@ class SettingsActivity : Activity() {
             }.setNegativeButton("Huỷ", null).show()
     }
 
+    private fun iconPack() {
+        val items = if (vn.tht.launcher.ui.Icons.packName != null) arrayOf("Nạp bộ khác (.zip)", "Dùng biểu tượng mặc định")
+        else arrayOf("Nạp bộ biểu tượng (.zip)")
+        AlertDialog.Builder(this).setTitle("Bộ biểu tượng").setItems(items) { _, i ->
+            if (i == 0) startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                .setType("*/*"), REQ_ICONS)
+            else { vn.tht.launcher.ui.Icons.remove(this); prefs.sp.edit().putLong("icons_changed", System.currentTimeMillis()).apply(); render() }
+        }.show()
+    }
+
     // ---- Ảnh nền ----
 
     private fun wallpaperState(which: String) =
@@ -253,6 +272,11 @@ class SettingsActivity : Activity() {
                 val ok = Wallpapers.save(this, uri, if (requestCode == REQ_WP_DAY) DAY else NIGHT)
                 toast(if (ok) "Đã lưu ảnh nền" else "Không đọc được ảnh")
             }
+            REQ_ICONS -> {
+                val err = vn.tht.launcher.ui.Icons.install(this, uri)
+                prefs.sp.edit().putLong("icons_changed", System.currentTimeMillis()).apply()
+                toast(err ?: "Đã nạp ${vn.tht.launcher.ui.Icons.packName}")
+            }
             REQ_EXPORT -> toast(if (Backup.export(this, uri)) "Đã xuất cài đặt" else "Không ghi được file")
             REQ_IMPORT -> {
                 val err = Backup.import(this, uri)
@@ -270,6 +294,7 @@ class SettingsActivity : Activity() {
         private const val REQ_WP_NIGHT = 2
         private const val REQ_EXPORT = 3
         private const val REQ_IMPORT = 4
+        private const val REQ_ICONS = 5
     }
 }
 

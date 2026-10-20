@@ -36,7 +36,7 @@ interface WidgetHost {
     fun pickApp(onPicked: (String) -> Unit)
     fun saveLayout()
     fun openNativeHvac()
-    fun openControlPanel()
+    fun openControlPanel(tab: Int = 0)
     fun toast(msg: String)
 }
 
@@ -133,23 +133,22 @@ class MediaWidget(host: WidgetHost) : HomeWidget(host) {
     }
     private val title = Ui.text(c, "", 24f).apply { maxLines = 1; ellipsize = android.text.TextUtils.TruncateAt.END; gravity = Gravity.CENTER }
     private val artist = Ui.text(c, "", 18f, dim = true).apply { maxLines = 1; ellipsize = android.text.TextUtils.TruncateAt.END; gravity = Gravity.CENTER }
-    private val play = icon(R.drawable.ic_play) { host.mediaPlayPause() }
+    private val play = icon("play") { host.mediaPlayPause() }
 
     override val view: View = base(gravity = Gravity.CENTER_HORIZONTAL).apply {
         addView(art, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f))
         addView(title, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { topMargin = Ui.dp(c, 12) })
         addView(artist, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT))
         addView(Ui.hbox(c, Gravity.CENTER).apply {
-            addView(icon(R.drawable.ic_prev) { host.mediaPrevious() })
+            addView(icon("previous") { host.mediaPrevious() })
             addView(play)
-            addView(icon(R.drawable.ic_next) { host.mediaNext() })
+            addView(icon("next") { host.mediaNext() })
         })
         setOnClickListener { if (!host.hasMediaPermission()) host.requestMediaPermission() }
     }
 
-    private fun icon(res: Int, onClick: () -> Unit) = ImageButton(c).apply {
-        setImageResource(res)
-        imageTintList = android.content.res.ColorStateList.valueOf(Palette.text)
+    private fun icon(key: String, onClick: () -> Unit) = ImageButton(c).apply {
+        setImageDrawable(vn.tht.launcher.ui.Icons.get(c, key))
         scaleType = ImageView.ScaleType.FIT_CENTER
         val p = Ui.dp(c, 14)
         setPadding(p, p, p, p)
@@ -163,13 +162,13 @@ class MediaWidget(host: WidgetHost) : HomeWidget(host) {
             title.text = c.getString(if (host.hasMediaPermission()) R.string.no_media else R.string.grant_media)
             artist.text = ""
             art.setImageDrawable(null)
-            play.setImageResource(R.drawable.ic_play)
+            play.setImageDrawable(vn.tht.launcher.ui.Icons.get(c, "play"))
             return
         }
         title.text = np.title ?: ""
         artist.text = np.artist ?: ""
         if (np.art != null) art.setImageBitmap(np.art) else art.setImageDrawable(null)
-        play.setImageResource(if (np.isPlaying) R.drawable.ic_pause else R.drawable.ic_play)
+        play.setImageDrawable(vn.tht.launcher.ui.Icons.get(c, if (np.isPlaying) "pause" else "play"))
     }
 }
 
@@ -266,7 +265,7 @@ class CarWidget(host: WidgetHost) : HomeWidget(host) {
         addView(Ui.text(c, "Đèn viền", 20f, dim = true))
         addView(Ui.hbox(c).apply {
             addView(ambient, Ui.weight().apply { marginEnd = Ui.dp(c, 6) })
-            addView(Ui.button(c, "Màu…") { host.openControlPanel() }, Ui.weight())
+            addView(Ui.button(c, "Màu…") { host.openControlPanel(3) }, Ui.weight())
         })
     }
 

@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.RecyclerView
 import vn.tht.launcher.apps.AppEntry
 import vn.tht.launcher.apps.AppsAdapter
 import vn.tht.launcher.apps.AppsRepository
-import vn.tht.launcher.controls.ControlPanel
+import vn.tht.launcher.controls.ControlCenter
 import vn.tht.launcher.home.HomeCanvas
 import vn.tht.launcher.home.HomeLayout
 import vn.tht.launcher.home.HomeWidget
@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
                 handler.post(ecarxPoll)
             }
         }
-        controller = EcarxController(ecarx) { lastVehicle?.speedKmh }
+        controller = EcarxController(ecarx, { lastVehicle?.speedKmh }, { lastVehicle?.gearText })
         media = MediaWatcher(this) { np ->
             runOnUiThread {
                 lastMedia = np
@@ -246,7 +246,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     // ---- Dữ liệu xe ----
 
-    private fun onVehicle(d: VehicleData?) {
+    private fun onVehicle(data: VehicleData?) {
+        val d = data ?: if (vn.tht.launcher.vehicle.DemoCarFunction.enabled(this)) vn.tht.launcher.vehicle.DemoCarFunction.vehicle() else null
         lastVehicle = d
         widgets.values.forEach { it.onVehicle(d) }
         // Theme "tự động": đổi ngày/đêm theo đèn xe
@@ -366,7 +367,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     override fun openNativeHvac() = hvac.open { ok -> if (!ok) toast("Không mở được điều hoà") }
 
-    override fun openControlPanel() = ControlPanel(this, controller).show()
+    override fun openControlPanel(tab: Int) = ControlCenter(this, ecarx, controller, tab).show()
     override fun openControls() = openControlPanel()
 
     @Suppress("DEPRECATION")

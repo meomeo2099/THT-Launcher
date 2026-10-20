@@ -46,16 +46,58 @@ object EcarxFunctions {
     const val HVAC_TEMP_STEP = 268829696
     const val HVAC_TEMP_DUAL = 268829952
     const val HVAC_BLOWING_MODE = 268894464      // +1 mặt, +2 chân, +3 mặt+chân, +4 kính
+    const val HVAC_DEFROST_FRONT_MAX = 268698112
+    const val HVAC_SEAT_VENTILATION = 268763392  // zone trái/phải, +1..+3
+    const val HVAC_SEAT_HEATING = 268763648      // zone trái/phải, +1..+3
+    const val HVAC_STEERING_WHEEL_HEAT = 269025536 // +1 thấp, +2 vừa, +3 cao
+    const val HVAC_ECO = 268960000
+    const val HVAC_IONS = 268961024
+    const val HVAC_G_CLEAN = 269485056
+    const val HVAC_AUTO_DRY = 269485312
+    const val HVAC_PM25 = 269811968
+    const val HVAC_FRAGRANCE = 269156608
+    const val HVAC_FRAGRANCE_LEVEL = 269157120   // +1..+3
+
+    val CIRCULATION_MODES = listOf(1 to "Gió trong", 2 to "Gió ngoài", 3 to "Tự động")
+    val BLOWING_MODES = listOf(1 to "Mặt", 2 to "Chân", 3 to "Mặt + chân", 4 to "Kính", 6 to "Chân + kính")
 
     const val FAN_MIN = 1
     const val FAN_MAX = 7
     const val TEMP_MIN = 16f
     const val TEMP_MAX = 32f
 
+    // ----- Thân xe: car.vehicle.IBcm / IVehicle -----
+    const val BCM_WINDOW = 553844992             // ON mở / OFF đóng, +1 dừng, +2 nửa
+    const val BCM_SUNROOF_TILT = 553845760
+    const val BCM_DOOR = 553779456
+    const val BCM_FOLD_MIRROR = 554041600
+    const val SUN_CURTAIN_CLOSE = 537395456      // ON đóng rèm / OFF mở rèm
+    const val WINDOW_VENTILATE = 537396736
+    const val ZONE_ROOF = 4                      // WINDOW_ROOF_TOP
+    const val ZONE_DOOR_REAR = 536870912         // DOOR_REAR (cốp)
+    const val WINDOW_ALL = 16 or 32 or 256 or 512
+
+    // ----- Đèn ngoài / trong -----
+    const val READING_LIGHT = 553980672
+    const val DRL = 537135104
+    const val WELCOME_LIGHT = 721617152
+    const val AUTO_HIGH_BEAM = 721486080
+
+    // ----- Màn hình -----
+    const val BACKLIGHT = 687997184
+    const val BACKLIGHT_MAX = 687997440
+    const val BACKLIGHT_MIN = 687997696
+    const val BACKLIGHT_STEP = 687997952
+    const val DAYMODE = 538247424                // +1 ngày, +2 đêm, +3 tự động
+    val DAYMODES = listOf(1 to "Ngày", 2 to "Đêm", 3 to "Tự động")
+
     // ----- Đèn viền: car.vehicle.IBcm / IAmbienceLight -----
     const val AMBIENT_SWITCH = 553979904         // BCM_FUNC_LIGHT_ATMOSPHERE_LAMPS
     const val AMBIENT_THEME_COLOR = 704709120    // +1 đỏ … +8 trắng
     const val AMBIENT_INTENSITY = 704708864      // float (customize)
+    const val AMBIENT_MUSIC = 704972800          // +1 sôi động, +2 thường, +3 nhẹ
+    val AMBIENT_MUSIC_MODES = listOf(1 to "Sôi động", 2 to "Thường", 3 to "Nhẹ")
+    const val VOICE_LIGHT_MODE = 705103104       // hiệu ứng đèn theo giọng nói
 
     /** Màu đèn viền: n trong `AMBIENT_THEME_COLOR + n` -> tên + mã màu hiển thị. */
     val AMBIENT_COLORS: List<Triple<Int, String, Int>> = listOf(
@@ -73,6 +115,8 @@ object EcarxFunctions {
     const val DRIVE_MODE = 570491136             // +1 eco, +2 comfort, +3 sport (dynamic)
 
     val DRIVE_MODES: List<Pair<Int, String>> = listOf(1 to "Eco", 2 to "Comfort", 3 to "Sport")
+    /** Thêm các chế độ có thể có trên một số bản xe; chỉ hiện khi getSupportedFunctionValue có. */
+    val DRIVE_MODES_EXTRA: List<Pair<Int, String>> = listOf(9 to "Tuyết", 19 to "Off-road", 21 to "Sport+", 22 to "Thích ứng")
 
     /** Toàn bộ ID để dò. Giữ đồng bộ với các hằng số ở trên. */
     val ALL: List<Fn> = listOf(
@@ -94,6 +138,33 @@ object EcarxFunctions {
         Fn(AMBIENT_THEME_COLOR, "AMBIENT_THEME_COLOR"),
         Fn(AMBIENT_INTENSITY, "AMBIENT_INTENSITY"),
         Fn(DRIVE_MODE, "DRIVE_MODE"),
+        Fn(HVAC_DEFROST_FRONT_MAX, "HVAC_DEFROST_FRONT_MAX"),
+        Fn(HVAC_SEAT_HEATING, "SEAT_HEAT (LEFT)", ZONE_ROW_1_LEFT),
+        Fn(HVAC_SEAT_HEATING, "SEAT_HEAT (RIGHT)", ZONE_ROW_1_RIGHT),
+        Fn(HVAC_SEAT_VENTILATION, "SEAT_VENT (LEFT)", ZONE_ROW_1_LEFT),
+        Fn(HVAC_SEAT_VENTILATION, "SEAT_VENT (RIGHT)", ZONE_ROW_1_RIGHT),
+        Fn(HVAC_STEERING_WHEEL_HEAT, "WHEEL_HEAT"),
+        Fn(HVAC_ECO, "HVAC_ECO"),
+        Fn(HVAC_IONS, "HVAC_IONS"),
+        Fn(HVAC_G_CLEAN, "HVAC_G_CLEAN"),
+        Fn(HVAC_AUTO_DRY, "HVAC_AUTO_DRY"),
+        Fn(HVAC_PM25, "HVAC_PM25"),
+        Fn(HVAC_FRAGRANCE, "HVAC_FRAGRANCE"),
+        Fn(BCM_WINDOW, "SUNROOF", ZONE_ROOF),
+        Fn(BCM_WINDOW, "WINDOWS (ALL)", WINDOW_ALL),
+        Fn(BCM_SUNROOF_TILT, "SUNROOF_TILT", ZONE_ROOF),
+        Fn(SUN_CURTAIN_CLOSE, "SUN_CURTAIN"),
+        Fn(WINDOW_VENTILATE, "WINDOW_VENTILATE"),
+        Fn(BCM_DOOR, "TRUNK", ZONE_DOOR_REAR),
+        Fn(BCM_FOLD_MIRROR, "FOLD_MIRROR"),
+        Fn(READING_LIGHT, "READING_LIGHT"),
+        Fn(DRL, "DRL"),
+        Fn(WELCOME_LIGHT, "WELCOME_LIGHT"),
+        Fn(AUTO_HIGH_BEAM, "AUTO_HIGH_BEAM"),
+        Fn(BACKLIGHT, "BACKLIGHT"),
+        Fn(DAYMODE, "DAYMODE"),
+        Fn(AMBIENT_MUSIC, "AMBIENT_MUSIC"),
+        Fn(VOICE_LIGHT_MODE, "VOICE_LIGHT_MODE"),
     )
 
     fun hex(id: Int): String = "0x%08X".format(id)

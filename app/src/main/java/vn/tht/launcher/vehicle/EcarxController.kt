@@ -18,8 +18,13 @@ class EcarxController(
     private val ecarx: EcarxCarSource,
     /** Tốc độ hiện tại (km/h) từ CarPropertySource; null = không đọc được. */
     private val speedKmh: () -> Float?,
+    /** Số hiện tại ("P", "R", "N", "D"…); null = không đọc được. */
+    private val gear: () -> String? = { null },
 ) {
     data class Result(val ok: Boolean, val message: String)
+
+    /** Mức an toàn của lệnh (theo spec mục 4.4 / 8). */
+    enum class Safety { SAFE, BELOW_80, PARKED, PARKED_IN_P }
 
     private val io = Executors.newSingleThreadExecutor()
     private val main = Handler(Looper.getMainLooper())
@@ -42,6 +47,69 @@ class EcarxController(
     }
 
     private fun unsupported() = Result(false, "Xe không hỗ trợ tính năng này")
+
+    private fun safetyBlock(safety: Safety): Result? {
+        if (safety == Safety.SAFE) return null
+        val speed = speedKmh()
+        if (safety == Safety.BELOW_80) {
+            return if (speed == null || speed > 80f) Result(false, "Không mở kính/cửa sổ trời khi xe chạy trên 80 km/h") else null
+        }
+        if (speed == null || speed >= 1f) return Result(false, "Chỉ làm được khi xe đứng yên")
+        if (safety == Safety.PARKED_IN_P && gear() != "P") return Result(false, "Chỉ làm được khi xe ở số P")
+        return null
+    }
+
+    /** Chạy [block] trên luồng nền của controller, trả kết quả về main thread. */
+    fun <T> background(block: () -> T, done: (T) -> Unit) {
+        io.execute {
+            val v = runCatching(block).getOrNull()
+            @Suppress("UNCHECKED_CAST")
+            main.post { done(v as T) }
+        }
+    }
+
+    // ---- Thao tác tổng quát (dùng cho Trung tâm điều khiển) ----
+
+    fun setValue(id: Int, zone: Int, value: Int, okMsg: String, safety: Safety = Safety.SAFE, done: (Result) -> Unit) =
+        run(done) { safetyBlock(safety) ?: setIntVerified(id, zone, value, okMsg) }
+
+    fun toggleFn(id: Int, zone: Int, name: String, safety: Safety = Safety.SAFE, done: (Result) -> Unit) = run(done) {
+        safetyBlock(safety)?.let { return@run it }
+        if (!supported(id, zone)) return@run unsupported()
+        val on = ecarx.getInt(id, zone) == F.ON
+        val target = if (on) F.OFF else F.ON
+        setIntVerified(id, zone, target, "$name: " + if (target == F.ON) "bật" else "tắt")
+    }
+
+    /** Chạm để sang mức kế tiếp: tắt -> 1 -> … -> [max] -> tắt. */
+    fun cycleLevel(id: Int, zone: Int, max: Int, name: String, done: (Result) -> Unit) = run(done) {
+        if (!supported(id, zone)) return@run unsupported()
+        val cur = F.levelOf(id, ecarx.getInt(id, zone)) ?: 0
+        val next = if (cur >= max) 0 else cur + 1
+        setIntVerified(id, zone, F.level(id, next), if (next == 0) "$name: tắt" else "$name: mức $next")
+    }
+
+    /** Nhiệt độ theo vùng (trái/phải/tất cả). */
+    fun tempStepZone(zone: Int, direction: Int, done: (Result) -> Unit) = run(done) {
+        if (!supported(F.HVAC_TEMP, zone)) return@run unsupported()
+        val cur = ecarx.getFloat(F.HVAC_TEMP, zone) ?: return@run Result(false, "Không đọc được nhiệt độ")
+        val step = ecarx.getFloat(F.HVAC_TEMP_STEP, F.ZONE_ALL)?.takeIf { it in 0.1f..2f } ?: 0.5f
+        val target = (cur + direction * step).coerceIn(F.TEMP_MIN, F.TEMP_MAX)
+        if (target == cur) return@run Result(true, "Nhiệt độ đã ở mức giới hạn")
+        setFloatVerified(F.HVAC_TEMP, zone, target, String.format(Locale.US, "Nhiệt độ %.1f°C", target))
+    }
+
+    /** Độ sáng màn hình theo bước của xe (BACKLIGHT_MIN/MAX/STEP). */
+    fun backlightStep(direction: Int, done: (Result) -> Unit) = run(done) {
+        if (!supported(F.BACKLIGHT)) return@run unsupported()
+        val cur = ecarx.getInt(F.BACKLIGHT, F.ZONE_ALL) ?: return@run Result(false, "Không đọc được độ sáng")
+        val min = ecarx.getInt(F.BACKLIGHT_MIN, F.ZONE_ALL) ?: 0
+        val max = ecarx.getInt(F.BACKLIGHT_MAX, F.ZONE_ALL) ?: 10
+        val step = ecarx.getInt(F.BACKLIGHT_STEP, F.ZONE_ALL)?.takeIf { it > 0 } ?: 1
+        val target = (cur + direction * step).coerceIn(min, max)
+        if (target == cur) return@run Result(true, "Độ sáng đã ở mức giới hạn")
+        setIntVerified(F.BACKLIGHT, F.ZONE_ALL, target, "Độ sáng $target")
+    }
 
     /** Ghi int rồi đọc lại tới khi khớp (tối đa ~1,2 s). */
     private fun setIntVerified(id: Int, zone: Int, value: Int, okMsg: String): Result {

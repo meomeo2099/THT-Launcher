@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import vn.tht.launcher.R
+import vn.tht.launcher.ui.Icons
 import vn.tht.launcher.ui.Ui
 import vn.tht.launcher.vehicle.HvacOpener
 
@@ -45,7 +46,7 @@ class DockBar(
         container.removeAllViews()
         items.forEachIndexed { i, s -> container.addView(itemView(s, i)) }
         if (items.size < ShortcutStore.MAX) {
-            container.addView(cell(tinted(R.drawable.ic_add), "Thêm", 0.6f).apply {
+            container.addView(cell(Icons.get(context, "plus"), "Thêm", 0.6f).apply {
                 setOnClickListener { addDialog() }
             })
         }
@@ -161,12 +162,12 @@ class DockBar(
 
     private fun iconFor(s: Shortcut): Drawable? {
         when (s.type) {
-            Shortcut.TYPE_CONTROLS -> return tinted(R.drawable.ic_tune)
-            Shortcut.TYPE_APPS -> return tinted(R.drawable.ic_apps)
-            Shortcut.TYPE_SETTINGS -> return tinted(R.drawable.ic_settings)
+            Shortcut.TYPE_CONTROLS -> return Icons.get(context, "shortcut")
+            Shortcut.TYPE_APPS -> return Icons.get(context, "apps")
+            Shortcut.TYPE_SETTINGS -> return Icons.get(context, "settings")
         }
         val pkg = if (s.type == Shortcut.TYPE_HVAC) s.pkg.ifBlank { HvacOpener.DEFAULT_PACKAGE } else s.pkg
-        if (pkg.isBlank()) return tinted(R.drawable.ic_add)
+        if (pkg.isBlank()) return Icons.get(context, "plus")
         return try {
             if (s.type == Shortcut.TYPE_ACTIVITY && s.activity.isNotBlank()) {
                 val cls = if (s.activity.startsWith(".")) pkg + s.activity else s.activity
@@ -176,9 +177,6 @@ class DockBar(
             null // app không có trên máy này
         }
     }
-
-    private fun tinted(res: Int): Drawable? =
-        context.getDrawable(res)?.mutate()?.apply { setTint(vn.tht.launcher.ui.Palette.text) }
 
     private fun toast(msg: String) = Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
 

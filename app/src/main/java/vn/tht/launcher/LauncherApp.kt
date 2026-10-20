@@ -11,5 +11,6 @@ class LauncherApp : Application() {
     override fun onCreate() {
         super.onCreate()
         profile = Profiles.detect()
+        vn.tht.launcher.ui.Icons.init(this)
     }
 }

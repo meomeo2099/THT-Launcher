@@ -33,7 +33,8 @@ class EcarxCarSource(
     private val supportCache = java.util.concurrent.ConcurrentHashMap<Long, Boolean>()
 
     /** true khi APK ký bằng khoá platform của firmware; tính một lần lúc tạo. */
-    val writeAllowed: Boolean = PlatformSignature.verify(context)
+    var writeAllowed: Boolean = PlatformSignature.verify(context)
+        private set
 
     val connected: Boolean get() = carFunction != null
 
@@ -56,6 +57,13 @@ class EcarxCarSource(
             bind(fn)
         } catch (t: Throwable) {
             Log.w(TAG, "ECARX AdaptAPI không khả dụng: $t")
+            if (DemoCarFunction.enabled(context)) {
+                // Bản debug, không có xe thật: dùng xe giả để xem giao diện (ghi chỉ vào bộ nhớ)
+                Log.i(TAG, "Chế độ demo: dùng DemoCarFunction")
+                writeAllowed = true
+                bind(DemoCarFunction())
+                return
+            }
             onReady(false)
         }
     }
