@@ -18,10 +18,31 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.9"
+      - name: Giải mã keystore
+        env:
+          KS: ${{ secrets.THT_SIGN_KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$KS" ]; then
+            echo "$KS" | base64 -d > "$RUNNER_TEMP/tht.jks"
+            echo "THT_SIGN_STORE_FILE=$RUNNER_TEMP/tht.jks" >> "$GITHUB_ENV"
+            echo "Có keystore ($(stat -c%s "$RUNNER_TEMP/tht.jks") bytes)"
+          else
+            echo "::warning::Không có secret THT_SIGN_KEYSTORE_BASE64 – bản release sẽ ký bằng khóa debug"
+          fi
       - name: Build
+        env:
+          THT_SIGN_STORE_PASSWORD: ${{ secrets.THT_SIGN_STORE_PASSWORD }}
+          THT_SIGN_KEY_ALIAS: ${{ secrets.THT_SIGN_KEY_ALIAS }}
+          THT_SIGN_KEY_PASSWORD: ${{ secrets.THT_SIGN_KEY_PASSWORD }}
         run: |
           set -o pipefail
           gradle :app:assembleDebug :app:assembleRelease 2>&1 | tee build.log
+      - name: Kiểm tra chữ ký
+        run: |
+          APKSIGNER=$(ls $ANDROID_HOME/build-tools/*/apksigner | sort -V | tail -1)
+          for f in app/build/outputs/apk/release/*.apk; do
+            $APKSIGNER verify --print-certs "$f" | grep -E "Signer #1 certificate (DN|SHA-256)" | sed "s/^/::notice::$(basename $f): /"
+          done
       - name: Report errors
         if: failure()
         run: |

@@ -15,11 +15,26 @@ android {
         versionName = "0.1.0"
     }
 
+    // Ký release bằng keystore từ GitHub Secrets (THT_SIGN_*); không có thì dùng khóa debug
+    val signFile = System.getenv("THT_SIGN_STORE_FILE")?.let { file(it) }
+    signingConfigs {
+        create("tht") {
+            if (signFile != null && signFile.exists()) {
+                storeFile = signFile
+                storePassword = System.getenv("THT_SIGN_STORE_PASSWORD")
+                keyAlias = System.getenv("THT_SIGN_KEY_ALIAS")
+                keyPassword = System.getenv("THT_SIGN_KEY_PASSWORD")
+                    ?: System.getenv("THT_SIGN_STORE_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = if (signFile != null && signFile.exists())
+                signingConfigs.getByName("tht") else signingConfigs.getByName("debug")
         }
     }
     compileOptions {
