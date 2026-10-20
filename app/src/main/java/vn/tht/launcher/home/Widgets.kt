@@ -291,7 +291,7 @@ class AppWidget(host: WidgetHost, private val spec: WidgetSpec) : HomeWidget(hos
 
     private fun bind() {
         if (spec.pkg.isBlank()) {
-            icon.setImageResource(R.drawable.ic_add)
+            icon.setImageDrawable(vn.tht.launcher.ui.Icons.get(c, "plus"))
             label.text = "Chọn ứng dụng"
         } else {
             icon.setImageDrawable(host.appIcon(spec.pkg))

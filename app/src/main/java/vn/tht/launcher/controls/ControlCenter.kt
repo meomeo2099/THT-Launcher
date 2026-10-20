@@ -163,12 +163,20 @@ class ControlCenter(
             background = Ui.card(c, 18)
             if (icon != null) Icons.get(c, icon)?.let { d ->
                 img.setImageDrawable(d)
-                addView(img, LinearLayout.LayoutParams(Ui.dp(c, 40), Ui.dp(c, 40)))
+                addView(img, LinearLayout.LayoutParams(Ui.dp(c, 48), Ui.dp(c, 48)))
             }
             addView(Ui.text(c, label, 18f).apply { gravity = Gravity.CENTER; maxLines = 1 })
             addView(state, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT))
         }
         return Triple(box, img, state)
+    }
+
+    /** Nhãn của ô rộng: icon + chữ. */
+    private fun wideLabel(label: String, icon: String?): View = Ui.hbox(c).apply {
+        if (icon != null) Icons.get(c, icon)?.let { d ->
+            addView(ImageView(c).apply { setImageDrawable(d) }, LinearLayout.LayoutParams(Ui.dp(c, 32), Ui.dp(c, 32)).apply { marginEnd = Ui.dp(c, 12) })
+        }
+        addView(Ui.text(c, label, 20f))
     }
 
     private fun setOn(box: View, img: ImageView, state: TextView, on: Boolean) {
@@ -200,7 +208,7 @@ class ControlCenter(
     /** Ô rộng chọn một trong nhiều giá trị `id + n` (hoặc giá trị tuyệt đối nếu [absolute]). */
     private inner class ChoiceTile(
         id: Int, zone: Int, val label: String, val options: List<Pair<Int, String>>,
-        val safety: Safety = Safety.SAFE, val absolute: Boolean = false,
+        val safety: Safety = Safety.SAFE, val absolute: Boolean = false, val icon: String? = null,
     ) : Tile(id, zone) {
         private val buttons = options.map { (n, name) ->
             n to Ui.button(c, name) {
@@ -211,7 +219,7 @@ class ControlCenter(
         override val view: View = Ui.hbox(c).apply {
             background = Ui.card(c, 18)
             setPadding(Ui.dp(c, 20), 0, Ui.dp(c, 12), 0)
-            addView(Ui.text(c, label, 20f), LinearLayout.LayoutParams(Ui.dp(c, 220), ViewGroup.LayoutParams.WRAP_CONTENT))
+            addView(wideLabel(label, icon), LinearLayout.LayoutParams(Ui.dp(c, 260), ViewGroup.LayoutParams.WRAP_CONTENT))
             buttons.forEach { addView(it.second, Ui.weight().apply { marginEnd = Ui.dp(c, 8) }) }
         }
         override fun bind(v: Values) {
@@ -224,14 +232,14 @@ class ControlCenter(
     /** Ô rộng có nút −/+ và giá trị ở giữa. */
     private inner class StepperTile(
         id: Int, zone: Int, val label: String, val isFloat: Boolean,
-        val format: (Values) -> String, val step: (Int) -> Unit,
+        val format: (Values) -> String, val icon: String? = null, val step: (Int) -> Unit,
     ) : Tile(id, zone) {
         init { if (isFloat) floatReads = floatReads + (id to zone) }
         private val value = Ui.text(c, "–", 30f).apply { gravity = Gravity.CENTER }
         override val view: View = Ui.hbox(c).apply {
             background = Ui.card(c, 18)
             setPadding(Ui.dp(c, 20), 0, Ui.dp(c, 12), 0)
-            addView(Ui.text(c, label, 20f), LinearLayout.LayoutParams(Ui.dp(c, 220), ViewGroup.LayoutParams.WRAP_CONTENT))
+            addView(wideLabel(label, icon), LinearLayout.LayoutParams(Ui.dp(c, 260), ViewGroup.LayoutParams.WRAP_CONTENT))
             addView(Ui.button(c, "−", 28f) { step(-1) }, LinearLayout.LayoutParams(Ui.dp(c, 140), Ui.dp(c, 72)))
             addView(value, Ui.weight())
             addView(Ui.button(c, "+", 28f) { step(+1) }, LinearLayout.LayoutParams(Ui.dp(c, 140), Ui.dp(c, 72)))
@@ -248,29 +256,29 @@ class ControlCenter(
         ToggleTile(F.HVAC_POWER, F.ZONE_ALL, "Điều hoà", "power"),
         ToggleTile(F.HVAC_AC, F.ZONE_ALL, "A/C", "ac"),
         ToggleTile(F.HVAC_AUTO, F.ZONE_ALL, "AUTO", "auto"),
-        ToggleTile(F.HVAC_AC_MAX, F.ZONE_ALL, "Lạnh tối đa", "ac"),
+        ToggleTile(F.HVAC_AC_MAX, F.ZONE_ALL, "Lạnh tối đa", "climate"),
         StepperTile(F.HVAC_TEMP, F.ZONE_ROW_1_LEFT, "Nhiệt độ bên lái", true,
-            { tempLabel(it, F.ZONE_ROW_1_LEFT) }) { d -> controller.tempStepZone(F.ZONE_ROW_1_LEFT, d, ::report) },
+            { tempLabel(it, F.ZONE_ROW_1_LEFT) }, "thermometer") { d -> controller.tempStepZone(F.ZONE_ROW_1_LEFT, d, ::report) },
         StepperTile(F.HVAC_TEMP, F.ZONE_ROW_1_RIGHT, "Nhiệt độ bên phụ", true,
-            { tempLabel(it, F.ZONE_ROW_1_RIGHT) }) { d -> controller.tempStepZone(F.ZONE_ROW_1_RIGHT, d, ::report) },
+            { tempLabel(it, F.ZONE_ROW_1_RIGHT) }, "thermometer") { d -> controller.tempStepZone(F.ZONE_ROW_1_RIGHT, d, ::report) },
         StepperTile(F.HVAC_TEMP, F.ZONE_ALL, "Nhiệt độ", true,
-            { tempLabel(it, F.ZONE_ALL) }) { d -> controller.tempStepZone(F.ZONE_ALL, d, ::report) },
-        ToggleTile(F.HVAC_TEMP_DUAL, F.ZONE_ALL, "Tách 2 vùng", "climate"),
+            { tempLabel(it, F.ZONE_ALL) }, "thermometer") { d -> controller.tempStepZone(F.ZONE_ALL, d, ::report) },
+        ToggleTile(F.HVAC_TEMP_DUAL, F.ZONE_ALL, "Tách 2 vùng", "dual"),
         StepperTile(F.HVAC_FAN_SPEED, F.ZONE_ALL, "Quạt", false,
-            { v -> F.levelOf(F.HVAC_FAN_SPEED, v.int(F.HVAC_FAN_SPEED))?.let { if (it == 0) "Tắt" else "Mức $it/7" } ?: "–" },
+            { v -> F.levelOf(F.HVAC_FAN_SPEED, v.int(F.HVAC_FAN_SPEED))?.let { if (it == 0) "Tắt" else "Mức $it/7" } ?: "–" }, "fan",
         ) { d -> controller.fanStep(d, ::report) },
-        ChoiceTile(F.HVAC_CIRCULATION, F.ZONE_ALL, "Lấy gió", F.CIRCULATION_MODES),
-        ChoiceTile(F.HVAC_BLOWING_MODE, F.ZONE_ALL, "Hướng gió", F.BLOWING_MODES),
+        ChoiceTile(F.HVAC_CIRCULATION, F.ZONE_ALL, "Lấy gió", F.CIRCULATION_MODES, icon = "recirc"),
+        ChoiceTile(F.HVAC_BLOWING_MODE, F.ZONE_ALL, "Hướng gió", F.BLOWING_MODES, icon = "air-both"),
         ToggleTile(F.HVAC_DEFROST_FRONT, F.ZONE_ALL, "Sấy kính trước", "front-defrost"),
         ToggleTile(F.HVAC_DEFROST_FRONT_MAX, F.ZONE_ALL, "Sấy kính tối đa", "front-defrost"),
         ToggleTile(F.HVAC_DEFROST_REAR, F.ZONE_ALL, "Sấy kính sau", "rear-defrost"),
         ToggleTile(F.HVAC_ECO, F.ZONE_ALL, "Điều hoà ECO", "eco"),
-        ToggleTile(F.HVAC_IONS, F.ZONE_ALL, "Ion", null),
-        ToggleTile(F.HVAC_G_CLEAN, F.ZONE_ALL, "Làm sạch khí", null),
-        ToggleTile(F.HVAC_AUTO_DRY, F.ZONE_ALL, "Tự sấy dàn lạnh", null),
-        ToggleTile(F.HVAC_PM25, F.ZONE_ALL, "Lọc PM2.5", null),
-        ToggleTile(F.HVAC_FRAGRANCE, F.ZONE_ALL, "Nước hoa", null),
-        LevelTile(F.HVAC_FRAGRANCE_LEVEL, F.ZONE_ALL, "Độ đậm nước hoa", null),
+        ToggleTile(F.HVAC_IONS, F.ZONE_ALL, "Ion", "ion"),
+        ToggleTile(F.HVAC_G_CLEAN, F.ZONE_ALL, "Làm sạch khí", "air-clean"),
+        ToggleTile(F.HVAC_AUTO_DRY, F.ZONE_ALL, "Tự sấy dàn lạnh", "dry"),
+        ToggleTile(F.HVAC_PM25, F.ZONE_ALL, "Lọc PM2.5", "pm25"),
+        ToggleTile(F.HVAC_FRAGRANCE, F.ZONE_ALL, "Nước hoa", "fragrance"),
+        LevelTile(F.HVAC_FRAGRANCE_LEVEL, F.ZONE_ALL, "Độ đậm nước hoa", "fragrance"),
     )
 
     private fun seatTiles(): List<Tile> = listOf(
@@ -282,28 +290,28 @@ class ControlCenter(
     )
 
     private fun vehicleTiles(): List<Tile> = listOf(
-        ChoiceTile(F.DRIVE_MODE, F.ZONE_ALL, "Chế độ lái", F.DRIVE_MODES, Safety.PARKED),
-        ChoiceTile(F.BCM_WINDOW, F.ZONE_ROOF, "Cửa sổ trời", listOf(F.ON to "Mở", F.OFF to "Đóng"), Safety.BELOW_80, absolute = true),
+        ChoiceTile(F.DRIVE_MODE, F.ZONE_ALL, "Chế độ lái", F.DRIVE_MODES, Safety.PARKED, icon = "sport"),
+        ChoiceTile(F.BCM_WINDOW, F.ZONE_ROOF, "Cửa sổ trời", listOf(F.ON to "Mở", F.OFF to "Đóng"), Safety.BELOW_80, absolute = true, icon = "sunroof-open"),
         ToggleTile(F.BCM_SUNROOF_TILT, F.ZONE_ROOF, "Hé cửa sổ trời", "roof-tilt"),
         ToggleTile(F.SUN_CURTAIN_CLOSE, F.ZONE_ALL, "Rèm che nắng (đóng)", "sun-curtain"),
         ChoiceTile(F.BCM_WINDOW, F.WINDOW_ALL, "Tất cả kính",
-            listOf(F.ON to "Mở", F.BCM_WINDOW + 2 to "Mở nửa", F.OFF to "Đóng"), Safety.BELOW_80, absolute = true),
+            listOf(F.ON to "Mở", F.BCM_WINDOW + 2 to "Mở nửa", F.OFF to "Đóng"), Safety.BELOW_80, absolute = true, icon = "windows"),
         ToggleTile(F.WINDOW_VENTILATE, F.ZONE_ALL, "Hé kính thông gió", "window-vent"),
         ToggleTile(F.BCM_FOLD_MIRROR, F.ZONE_ALL, "Gập gương", "mirrors", Safety.PARKED),
-        ChoiceTile(F.BCM_DOOR, F.ZONE_DOOR_REAR, "Cốp sau (chỉ số P)", listOf(F.ON to "Mở cốp"), Safety.PARKED_IN_P, absolute = true),
+        ChoiceTile(F.BCM_DOOR, F.ZONE_DOOR_REAR, "Cốp sau (chỉ số P)", listOf(F.ON to "Mở cốp"), Safety.PARKED_IN_P, absolute = true, icon = "trunk"),
     )
 
     private fun lightTiles(): List<Tile> = listOf(
         ToggleTile(F.AMBIENT_SWITCH, F.ZONE_ALL, "Đèn viền", "ambient"),
-        ChoiceTile(F.AMBIENT_THEME_COLOR, F.ZONE_ALL, "Màu đèn viền", F.AMBIENT_COLORS.map { it.first to it.second }),
-        ChoiceTile(F.AMBIENT_MUSIC, F.ZONE_ALL, "Nháy theo nhạc", F.AMBIENT_MUSIC_MODES),
-        ToggleTile(F.READING_LIGHT, F.ZONE_ALL, "Đèn đọc sách", null),
+        ChoiceTile(F.AMBIENT_THEME_COLOR, F.ZONE_ALL, "Màu đèn viền", F.AMBIENT_COLORS.map { it.first to it.second }, icon = "ambient"),
+        ChoiceTile(F.AMBIENT_MUSIC, F.ZONE_ALL, "Nháy theo nhạc", F.AMBIENT_MUSIC_MODES, icon = "music-light"),
+        ToggleTile(F.READING_LIGHT, F.ZONE_ALL, "Đèn đọc sách", "reading-light"),
         ToggleTile(F.DRL, F.ZONE_ALL, "Đèn ban ngày", "ext-light"),
-        ToggleTile(F.WELCOME_LIGHT, F.ZONE_ALL, "Đèn chào mừng", null),
-        ToggleTile(F.AUTO_HIGH_BEAM, F.ZONE_ALL, "Pha tự động", null),
+        ToggleTile(F.WELCOME_LIGHT, F.ZONE_ALL, "Đèn chào mừng", "welcome-light"),
+        ToggleTile(F.AUTO_HIGH_BEAM, F.ZONE_ALL, "Pha tự động", "high-beam"),
         StepperTile(F.BACKLIGHT, F.ZONE_ALL, "Độ sáng màn hình", false,
-            { v -> v.int(F.BACKLIGHT)?.toString() ?: "–" }) { d -> controller.backlightStep(d, ::report) },
-        ChoiceTile(F.DAYMODE, F.ZONE_ALL, "Ngày / đêm", F.DAYMODES),
+            { v -> v.int(F.BACKLIGHT)?.toString() ?: "–" }, "brightness") { d -> controller.backlightStep(d, ::report) },
+        ChoiceTile(F.DAYMODE, F.ZONE_ALL, "Ngày / đêm", F.DAYMODES, icon = "daynight"),
     )
 
     companion object {

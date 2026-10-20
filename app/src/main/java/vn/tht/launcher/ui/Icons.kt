@@ -7,14 +7,13 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.Log
 import org.json.JSONObject
-import vn.tht.launcher.R
 import java.io.File
 import java.util.zip.ZipInputStream
 
 /**
  * Biểu tượng theo tên chức năng ("ac", "seat-heat-left", "play"…).
  *
- * Mặc định dùng vector có sẵn trong app. Người dùng có thể nạp một bộ biểu tượng dạng .zip
+ * Mặc định dùng vector ic_<tên> có sẵn trong app (Material Design Icons, Apache 2.0). Người dùng có thể nạp một bộ biểu tượng dạng .zip
  * (các PNG đặt tên theo chức năng + manifest.json {name, author, mode: "mono"|"color"}),
  * cùng định dạng các bộ icon cộng đồng đang dùng. Bộ icon chỉ lưu trên máy người dùng
  * (filesDir/iconpack), không đóng gói trong APK. "mono" được tô lại theo màu theme.
@@ -24,19 +23,6 @@ object Icons {
     private const val DIR = "iconpack"
     private const val MAX_FILES = 200
     private const val MAX_BYTES = 1_500_000L
-
-    /** Vector mặc định cho từng tên; tên không có ở đây và không có trong bộ icon -> null. */
-    private val DEFAULTS = mapOf(
-        "play" to R.drawable.ic_play, "pause" to R.drawable.ic_pause,
-        "next" to R.drawable.ic_next, "previous" to R.drawable.ic_prev,
-        "apps" to R.drawable.ic_apps, "settings" to R.drawable.ic_settings,
-        "plus" to R.drawable.ic_add, "minus" to R.drawable.ic_minus,
-        "ac" to R.drawable.ic_ac, "climate" to R.drawable.ic_ac,
-        "shortcut" to R.drawable.ic_tune, "home" to R.drawable.ic_home,
-        "power" to R.drawable.ic_power, "brightness" to R.drawable.ic_brightness,
-        "music" to R.drawable.ic_music, "fuel" to R.drawable.ic_fuel,
-        "eco" to R.drawable.ic_eco, "car" to R.drawable.ic_car,
-    )
 
     private var packDir: File? = null
     private var mono = true
@@ -76,9 +62,16 @@ object Icons {
                 return d
             }
         }
-        val res = DEFAULTS[key] ?: return null
+        val res = builtin(c, key) ?: return null
         return c.getDrawable(res)?.mutate()?.apply { setTint(tint) }
     }
+
+    /** Vector có sẵn tên ic_<key> (dấu "-" đổi thành "_"), ví dụ "seat-heat-left" -> ic_seat_heat_left. */
+    private val builtinCache = HashMap<String, Int>()
+    private fun builtin(c: Context, key: String): Int? = builtinCache.getOrPut(key) {
+        @Suppress("DiscouragedApi")
+        c.resources.getIdentifier("ic_" + key.replace('-', '_'), "drawable", c.packageName)
+    }.takeIf { it != 0 }
 
     private class Entry(val drawable: BitmapDrawable, val color: Boolean)
 
