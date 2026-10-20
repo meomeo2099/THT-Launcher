@@ -94,18 +94,34 @@ object ShortcutStore {
         Shortcut("settings", "Cài đặt", Shortcut.TYPE_SETTINGS),
     )
 
-    fun file(context: Context): File =
-        File(context.getExternalFilesDir(null) ?: context.filesDir, FILE)
+    /** Thanh trạng thái nhỏ phía trên màn hình. */
+    const val TOPBAR_FILE = "topbar.json"
 
-    fun load(context: Context): List<Shortcut> {
-        val f = file(context)
+    private fun status(metric: String, label: String) =
+        Shortcut("status_$metric", label, Shortcut.TYPE_STATUS, action = metric)
+
+    val TOPBAR_DEFAULTS = listOf(
+        status("wifi", "Wi-Fi"),
+        Shortcut("apps", "Ứng dụng", Shortcut.TYPE_APPS),
+        status("coolant", "Nhiệt độ máy"),
+        status("fuel_l", "Xăng"),
+        status("voltage", "Điện áp"),
+        status("seat_heat", "Sưởi ghế lái"),
+        status("home", "Màn hình chính"),
+    )
+
+    fun file(context: Context, name: String = FILE): File =
+        File(context.getExternalFilesDir(null) ?: context.filesDir, name)
+
+    fun load(context: Context, name: String = FILE, defaults: List<Shortcut> = DEFAULTS): List<Shortcut> {
+        val f = file(context, name)
         try {
             if (f.exists()) {
                 val json = JSONObject(f.readText())
                 val arr = json.getJSONArray("shortcuts")
                 var list = (0 until arr.length()).map { Shortcut.fromJson(arr.getJSONObject(it)) }
                 if (list.isNotEmpty()) {
-                    if (json.optInt("version", 1) < VERSION) {
+                    if (name == FILE && json.optInt("version", 1) < VERSION) {
                         list = migrate(list)
                         save(context, list)
                     }
@@ -113,11 +129,11 @@ object ShortcutStore {
                 }
             }
         } catch (t: Throwable) {
-            Log.w(TAG, "shortcuts.json hỏng, dùng mặc định: $t")
+            Log.w(TAG, "$name hỏng, dùng mặc định: $t")
             runCatching { f.copyTo(File(f.path + ".bak"), overwrite = true) }
         }
-        save(context, DEFAULTS)
-        return DEFAULTS
+        save(context, defaults, name)
+        return defaults
     }
 
     /** Bản cũ: điền package mặc định vào mục còn trống và thêm mục mới; giữ nguyên mục người dùng đã sửa. */
@@ -131,14 +147,14 @@ object ShortcutStore {
         return updated + DEFAULTS.filter { it.id !in ids }
     }
 
-    fun save(context: Context, list: List<Shortcut>) {
+    fun save(context: Context, list: List<Shortcut>, name: String = FILE) {
         try {
             val json = JSONObject()
                 .put("version", VERSION)
                 .put("shortcuts", JSONArray().apply { list.forEach { put(it.toJson()) } })
-            file(context).apply { parentFile?.mkdirs() }.writeText(json.toString(2))
+            file(context, name).apply { parentFile?.mkdirs() }.writeText(json.toString(2))
         } catch (t: Throwable) {
-            Log.w(TAG, "Không ghi được shortcuts.json: $t")
+            Log.w(TAG, "Không ghi được $name: $t")
         }
     }
 }

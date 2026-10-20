@@ -24,6 +24,11 @@ class DockBar(
     private val context: Context,
     private val container: LinearLayout,
     private val actions: Actions,
+    /** File cấu hình (shortcuts.json cho dock, topbar.json cho thanh trên). */
+    private val storeName: String = "shortcuts.json",
+    private val defaults: List<Shortcut> = ShortcutStore.DEFAULTS,
+    /** Thanh nhỏ phía trên: icon nhỏ, không chữ. */
+    private val compact: Boolean = false,
 ) {
     /** Các hành động nội bộ launcher mà nút dock có thể gọi. */
     interface Actions {
@@ -77,11 +82,12 @@ class DockBar(
 
     private fun statusCell(s: Shortcut, index: Int) = Ui.hbox(context, Gravity.CENTER).apply {
         background = context.getDrawable(R.drawable.ripple)
-        val pad = Ui.dp(context, 14)
+        val pad = Ui.dp(context, if (compact) 12 else 14)
         setPadding(pad, 0, pad, 0)
         val icon = ImageView(context)
-        val text = Ui.text(context, "", 22f).apply { setPadding(Ui.dp(context, 8), 0, 0, 0) }
-        addView(icon, LinearLayout.LayoutParams(Ui.dp(context, 36), Ui.dp(context, 36)))
+        val text = Ui.text(context, "", if (compact) 18f else 22f).apply { setPadding(Ui.dp(context, 6), 0, 0, 0) }
+        val iconPx = Ui.dp(context, if (compact) 26 else 36)
+        addView(icon, LinearLayout.LayoutParams(iconPx, iconPx))
         addView(text)
         layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT)
         statusViews += s.action to (icon to text)
@@ -98,7 +104,7 @@ class DockBar(
     }
 
     fun reload() {
-        items = ShortcutStore.load(context).toMutableList()
+        items = ShortcutStore.load(context, storeName, defaults).toMutableList()
         render()
     }
 
@@ -109,7 +115,7 @@ class DockBar(
             container.addView(if (s.type == Shortcut.TYPE_STATUS) statusCell(s, i) else itemView(s, i))
         }
         if (items.size < ShortcutStore.MAX) {
-            container.addView(cell(Icons.get(context, "plus"), "Thêm", 0.6f).apply {
+            container.addView(cell(Icons.get(context, "plus"), "Thêm", if (compact) 0.35f else 0.6f).apply {
                 setOnClickListener { addDialog() }
             })
         }
@@ -124,6 +130,14 @@ class DockBar(
     }
 
     private fun cell(icon: Drawable?, label: String, alpha: Float) = Ui.vbox(context, 6, Gravity.CENTER).apply {
+        if (compact) {
+            this.alpha = alpha
+            background = context.getDrawable(R.drawable.ripple)
+            val s = Ui.dp(context, 26)
+            addView(ImageView(context).apply { setImageDrawable(icon) }, LinearLayout.LayoutParams(s, s))
+            layoutParams = LinearLayout.LayoutParams(Ui.dp(context, 52), LinearLayout.LayoutParams.MATCH_PARENT)
+            return@apply
+        }
         val prefs = vn.tht.launcher.settings.Prefs(context)
         val (iconDp, cellDp) = when (prefs.dockSize) {
             "compact" -> 40 to 88
@@ -141,7 +155,7 @@ class DockBar(
 
 
     private fun save() {
-        ShortcutStore.save(context, items)
+        ShortcutStore.save(context, items, storeName)
         render()
     }
 
@@ -149,7 +163,7 @@ class DockBar(
         val s = items[index]
         AlertDialog.Builder(context)
             .setTitle(s.label)
-            .setItems(arrayOf("Sang trái", "Sang phải", "Xoá khỏi dock")) { _, which ->
+            .setItems(arrayOf("Sang trái", "Sang phải", "Xoá")) { _, which ->
                 when (which) {
                     0 -> if (index > 0) { items.add(index - 1, items.removeAt(index)); save() }
                     1 -> if (index < items.size - 1) { items.add(index + 1, items.removeAt(index)); save() }
@@ -187,7 +201,7 @@ class DockBar(
     }
 
     private fun add(s: Shortcut) {
-        if (items.size >= ShortcutStore.MAX) return toast("Dock tối đa ${ShortcutStore.MAX} nút")
+        if (items.size >= ShortcutStore.MAX) return toast("Tối đa ${ShortcutStore.MAX} nút")
         items.add(s)
         save()
     }

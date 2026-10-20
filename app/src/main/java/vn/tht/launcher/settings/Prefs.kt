@@ -33,6 +33,7 @@ class Prefs(context: Context) {
     /** "compact", "normal", "large". */
     var dockSize: String get() = str("dock_size", "normal"); set(v) = put("dock_size", v)
     var dockLabels: Boolean get() = sp.getBoolean("dock_labels", true); set(v) = put("dock_labels", v)
+    var topBar: Boolean get() = sp.getBoolean("top_bar", true); set(v) = put("top_bar", v)
 
     // ---- Đồng hồ ----
     var clock24h: Boolean get() = sp.getBoolean("clock_24h", true); set(v) = put("clock_24h", v)

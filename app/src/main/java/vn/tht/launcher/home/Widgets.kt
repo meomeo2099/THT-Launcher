@@ -72,11 +72,12 @@ abstract class HomeWidget(protected val host: WidgetHost) {
 
 class ClockWidget(host: WidgetHost) : HomeWidget(host) {
     private val outside = Ui.text(c, "", 20f, dim = true)
-    override val view: View = base().apply {
+    override val view: View = base(16).apply {
         val fmt = if (host.prefs.clock24h) "HH:mm" else "h:mm a"
         addView(TextClock(c).apply {
             format24Hour = fmt; format12Hour = fmt
-            textSize = 72f
+            textSize = 60f
+            includeFontPadding = false
             setTextColor(Palette.text)
             typeface = android.graphics.Typeface.create("sans-serif-light", android.graphics.Typeface.NORMAL)
         })

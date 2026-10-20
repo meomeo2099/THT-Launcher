@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private lateinit var ecarx: EcarxCarSource
     private lateinit var media: MediaWatcher
     private lateinit var dock: DockBar
+    private lateinit var topBar: DockBar
     private lateinit var canvas: HomeCanvas
     private lateinit var drawer: View
     private lateinit var editBar: View
@@ -141,6 +142,11 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         }
 
         dock = DockBar(this, findViewById<LinearLayout>(R.id.dock), this)
+        topBar = DockBar(
+            this, findViewById<LinearLayout>(R.id.top_bar), this,
+            vn.tht.launcher.shortcuts.ShortcutStore.TOPBAR_FILE, vn.tht.launcher.shortcuts.ShortcutStore.TOPBAR_DEFAULTS,
+            compact = true,
+        )
         DockBar.logCandidates(this)
 
         setupDrawer()
@@ -165,7 +171,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     override fun onResume() {
         super.onResume()
         media.start()
-        if (appearanceDirty) applyAppearance() else dock.reload()
+        if (appearanceDirty) applyAppearance() else { dock.reload(); topBar.reload() }
         screensaver.setActive(true)
     }
 
@@ -301,6 +307,10 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         buildWidgets(HomeLayout.load(this))
         canvas.setEditing(editing)
         dock.reload()
+        val top = findViewById<View>(R.id.top_bar)
+        top.visibility = if (prefs.topBar) View.VISIBLE else View.GONE
+        top.background = Ui.pill(this, Palette.withAlpha(if (Palette.night) 0xFF000000.toInt() else 0xFFFFFFFF.toInt(), 200), 14)
+        topBar.reload()
         appsAdapter.notifyDataSetChanged()
         applyFullScreen()
     }
@@ -408,13 +418,15 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
                 ecarx.getInt(vn.tht.launcher.vehicle.EcarxFunctions.HVAC_SEAT_HEATING, vn.tht.launcher.vehicle.EcarxFunctions.ZONE_ROW_1_LEFT),
             )
         }
-        dock.update(DockBar.Status(
+        val status = DockBar.Status(
             wifi = wifiConnected(),
             coolantC = d?.coolantTempC,
             fuelL = d?.fuelLiters ?: if (tank > 0f) d?.fuelPercent?.let { it / 100f * tank } else null,
             voltage = supplyVoltage(),
             seatHeatLevel = seat,
-        ))
+        )
+        dock.update(status)
+        topBar.update(status)
     }
 
     @Suppress("DEPRECATION")
