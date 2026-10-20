@@ -80,6 +80,7 @@ class EcarxCarSource(
         car = null
         carFunction = null
         connected = false
+        displaySupported = emptySet()
     }
 
     private fun onConnected() {
@@ -88,6 +89,7 @@ class EcarxCarSource(
             carFunction = car!!.javaClass.getMethod("getICarFunction").invoke(car)
             connected = carFunction != null
             Log.i(TAG, if (connected) "Đã nối ICarFunction" else "getICarFunction trả null")
+            if (connected) refreshDisplaySupport()
             onReady(connected)
         } catch (t: Throwable) {
             Log.w(TAG, "getICarFunction lỗi: $t")
@@ -113,6 +115,36 @@ class EcarxCarSource(
     fun supportedValues(id: Int): IntArray? = invoke(
         "getSupportedFunctionValue", arrayOf(Int::class.javaPrimitiveType!!), id
     ) as? IntArray
+
+    /** Các function hiển thị lên màn hình mà xe báo "active"; tính lại mỗi lần nối. */
+    private var displaySupported: Set<Int> = emptySet()
+
+    private fun refreshDisplaySupport() {
+        displaySupported = DISPLAY_IDS.filter { isSupported(it) }.toSet()
+        Log.i(TAG, "Function hiển thị được: ${displaySupported.joinToString { EcarxFunctions.hex(it) }}")
+    }
+
+    /**
+     * Giá trị để hiện trên giao diện; chỉ đọc function xe báo hỗ trợ. null nếu chưa nối.
+     * Đơn vị/hệ số chưa kiểm chứng trên xe: giá trị ngoài khoảng hợp lý được trả nguyên ở [raw].
+     */
+    fun readInfo(): EcarxInfo? {
+        if (!connected) return null
+        val tempId = listOf(EcarxFunctions.TEMP_OUTSIDE_A, EcarxFunctions.TEMP_OUTSIDE_B)
+            .firstOrNull { it in displaySupported }
+        val temp = tempId?.let { getInt(it) }
+        val range = if (EcarxFunctions.RANGE_REMAINING in displaySupported) {
+            getInt(EcarxFunctions.RANGE_REMAINING)
+        } else null
+        return EcarxInfo(
+            outsideTempC = temp?.takeIf { it in -50..70 },
+            rangeKm = range?.takeIf { it in 0..2000 },
+            raw = buildMap {
+                if (tempId != null && temp != null && temp !in -50..70) put(tempId, temp)
+                if (range != null && range !in 0..2000) put(EcarxFunctions.RANGE_REMAINING, range)
+            },
+        )
+    }
 
     /**
      * Dò toàn bộ catalog và in ra logcat (tag "EcarxCarSource") function nào xe hỗ trợ,
@@ -157,5 +189,23 @@ class EcarxCarSource(
 
     private companion object {
         const val TAG = "EcarxCarSource"
+        val DISPLAY_IDS = listOf(
+            EcarxFunctions.TEMP_OUTSIDE_A,
+            EcarxFunctions.TEMP_OUTSIDE_B,
+            EcarxFunctions.RANGE_REMAINING,
+        )
+    }
+}
+
+/** Giá trị đọc từ ECARX để hiển thị. [raw]: function ID -> giá trị thô chưa rõ đơn vị. */
+data class EcarxInfo(
+    val outsideTempC: Int? = null,
+    val rangeKm: Int? = null,
+    val raw: Map<Int, Int> = emptyMap(),
+) {
+    fun lines(): List<String> = buildList {
+        outsideTempC?.let { add("Ngoài trời: $it°C") }
+        rangeKm?.let { add("Còn đi được: $it km") }
+        raw.forEach { (id, v) -> add("${EcarxFunctions.hex(id)} = $v (thô)") }
     }
 }

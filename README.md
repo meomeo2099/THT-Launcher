@@ -26,6 +26,35 @@ Thêm xe mới: tạo một `VehicleProfile` trong `vehicle/VehicleProfile.kt` v
 
 Đọc qua API chuẩn Android Automotive (`android.car`, `CarPropertyManager`) bằng reflection, nên APK vẫn chạy trên máy không có thư viện này. Mã thuộc tính nằm trong `CarPropertySource.kt`.
 
+Trên đầu ECARX còn đọc thêm qua ECARX AdaptAPI (`EcarxCarSource.kt`, chỉ đọc). Nhiệt độ ngoài trời và quãng đường còn lại chỉ hiện khi xe báo function đó là `active`. Dò toàn bộ catalog: `adb logcat -s EcarxCarSource`.
+
+## Thanh lối tắt
+
+Đầu cột app có 4 lối tắt: Camera 540°, Điều hoà, CarPlay, Cài đặt xe. Cấu hình nằm ở:
+
+```
+/sdcard/Android/data/vn.tht.launcher/files/shortcuts.json
+```
+
+Lần đầu chạy app sẽ tạo file mặc định. Lối tắt chưa điền package sẽ hiện mờ. Sửa file:
+
+```
+adb pull /sdcard/Android/data/vn.tht.launcher/files/shortcuts.json
+adb push shortcuts.json /sdcard/Android/data/vn.tht.launcher/files/shortcuts.json
+```
+
+Về màn hình chính là app đọc lại file. Mỗi mục có các trường:
+
+| Trường | Ý nghĩa |
+|---|---|
+| `type` | `activity` (mở `package`/`activity`; bỏ trống `activity` thì mở app), `action` (intent action), `hvac` (điều hoà gốc) |
+| `package`, `activity` | ví dụ `"package": "com.ecarx.avm", "activity": ".MainActivity"` (tên chỉ là ví dụ) |
+| `service` | chỉ dùng cho `hvac`: service cần bind; bỏ trống thì app tự dò |
+
+Lấy package/activity thật trên xe: `adb logcat -s ShortcutBar` (in các activity có tên gợi ý như camera, carplay, setting), và `adb logcat -s HvacOpener` (in các service của app điều hoà).
+
+Nút Điều hoà bind vào service của `ecarx.hvac.app` rồi gọi transaction 1. Không bind được thì mở app điều hoà như app thường. Cả hai đều lỗi thì chỉ báo một dòng, launcher không bị crash.
+
 ## Build
 
 Mỗi lần push lên `main`, GitHub Actions tự build APK – tải ở tab **Actions → lần chạy mới nhất → Artifacts**.

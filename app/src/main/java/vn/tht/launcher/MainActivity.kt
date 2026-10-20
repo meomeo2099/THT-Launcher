@@ -6,9 +6,13 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.View
 import android.provider.Settings
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +23,7 @@ import vn.tht.launcher.apps.AppsAdapter
 import vn.tht.launcher.apps.AppsRepository
 import vn.tht.launcher.media.MediaWatcher
 import vn.tht.launcher.media.NowPlaying
+import vn.tht.launcher.shortcuts.ShortcutBar
 import vn.tht.launcher.vehicle.CarPropertySource
 import vn.tht.launcher.vehicle.EcarxCarSource
 import vn.tht.launcher.vehicle.VehicleData
@@ -28,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var speed: TextView
     private lateinit var vehicleInfo: TextView
+    private lateinit var ecarxInfo: TextView
     private lateinit var mediaTitle: TextView
     private lateinit var mediaArtist: TextView
     private lateinit var mediaArt: ImageView
@@ -36,6 +42,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var carSource: CarPropertySource
     private lateinit var ecarx: EcarxCarSource
     private lateinit var media: MediaWatcher
+    private lateinit var shortcutBar: ShortcutBar
+    private val handler = Handler(Looper.getMainLooper())
+    private val ecarxPoll = object : Runnable {
+        override fun run() {
+            showEcarx()
+            handler.postDelayed(this, ECARX_POLL_MS)
+        }
+    }
     private val appsAdapter = AppsAdapter(::launch, ::openAppInfo)
     private var lastNightMode: Boolean? = null
 
@@ -52,6 +66,7 @@ class MainActivity : AppCompatActivity() {
 
         speed = findViewById(R.id.speed)
         vehicleInfo = findViewById(R.id.vehicle_info)
+        ecarxInfo = findViewById(R.id.ecarx_info)
         mediaTitle = findViewById(R.id.media_title)
         mediaArtist = findViewById(R.id.media_artist)
         mediaArt = findViewById(R.id.media_art)
@@ -63,15 +78,25 @@ class MainActivity : AppCompatActivity() {
         }
         reloadApps()
 
+        shortcutBar = ShortcutBar(this, findViewById<LinearLayout>(R.id.shortcuts))
+        // In các activity gợi ý (camera, carplay, cài đặt...) để điền shortcuts.json: adb logcat -s ShortcutBar
+        ShortcutBar.logCandidates(this)
+
         carSource = CarPropertySource(this, profile) { runOnUiThread { showVehicle(it) } }
         // ECARX AdaptAPI: khi nối xong thì dò và in ra logcat (adb logcat -s EcarxCarSource).
-        ecarx = EcarxCarSource(this) { ready -> if (ready) ecarx.dumpSupported() }
+        ecarx = EcarxCarSource(this) { ready ->
+            if (ready) {
+                ecarx.dumpSupported()
+                handler.removeCallbacks(ecarxPoll)
+                handler.post(ecarxPoll)
+            }
+        }
         media = MediaWatcher(this) { runOnUiThread { showMedia(it) } }
 
         btnPlay.setOnClickListener { media.playPause() }
         findViewById<ImageButton>(R.id.btn_next).setOnClickListener { media.next() }
         findViewById<ImageButton>(R.id.btn_prev).setOnClickListener { media.previous() }
-        findViewById<android.view.View>(R.id.media_card).setOnClickListener {
+        findViewById<View>(R.id.media_card).setOnClickListener {
             if (!media.hasPermission()) {
                 startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
             }
@@ -90,6 +115,8 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         media.start()
+        // Đọc lại shortcuts.json mỗi lần về màn hình chính (sửa bằng adb là thấy ngay)
+        shortcutBar.reload()
     }
 
     override fun onPause() {
@@ -98,6 +125,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        handler.removeCallbacks(ecarxPoll)
         carSource.stop()
         ecarx.stop()
         unregisterReceiver(packageReceiver)
@@ -150,6 +178,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun showEcarx() {
+        val lines = ecarx.readInfo()?.lines().orEmpty()
+        ecarxInfo.text = lines.joinToString("\n")
+        ecarxInfo.visibility = if (lines.isEmpty()) View.GONE else View.VISIBLE
+    }
+
     private fun showMedia(np: NowPlaying?) {
         if (np == null) {
             mediaTitle.text = getString(if (media.hasPermission()) R.string.no_media else R.string.grant_media)
@@ -164,5 +198,9 @@ class MainActivity : AppCompatActivity() {
         btnPlay.setImageResource(
             if (np.isPlaying) android.R.drawable.ic_media_pause else android.R.drawable.ic_media_play
         )
+    }
+
+    private companion object {
+        const val ECARX_POLL_MS = 2000L
     }
 }
