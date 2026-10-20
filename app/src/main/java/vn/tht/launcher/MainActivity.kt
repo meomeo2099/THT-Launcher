@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnPlay: ImageButton
 
     private lateinit var carSource: CarPropertySource
+    private lateinit var ecarx: EcarxCarSource
     private lateinit var media: MediaWatcher
     private val appsAdapter = AppsAdapter(::launch, ::openAppInfo)
     private var lastNightMode: Boolean? = null
@@ -62,6 +63,8 @@ class MainActivity : AppCompatActivity() {
         reloadApps()
 
         carSource = CarPropertySource(this, profile) { runOnUiThread { showVehicle(it) } }
+        // ECARX AdaptAPI: khi nối xong thì dò và in ra logcat (adb logcat -s EcarxCarSource).
+        ecarx = EcarxCarSource(this) { ready -> if (ready) ecarx.dumpSupported() }
         media = MediaWatcher(this) { runOnUiThread { showMedia(it) } }
 
         btnPlay.setOnClickListener { media.playPause() }
@@ -80,6 +83,7 @@ class MainActivity : AppCompatActivity() {
             addDataScheme("package")
         })
         carSource.start()
+        ecarx.start()
     }
 
     override fun onResume() {
@@ -94,6 +98,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         carSource.stop()
+        ecarx.stop()
         unregisterReceiver(packageReceiver)
         super.onDestroy()
     }
