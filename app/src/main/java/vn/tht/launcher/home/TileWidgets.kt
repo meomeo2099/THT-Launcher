@@ -113,18 +113,25 @@ class WifiTile(host: WidgetHost) : SmallTile(host, "wifi", "Wi-Fi") {
     }
 }
 
-/** Ô đồng hồ gọn (giờ + ngày tiếng Việt) dạng thẻ. */
+/** Ô đồng hồ gọn: giờ, ngày tiếng Việt, thời tiết (Open-Meteo) hoặc nhiệt độ ngoài xe. */
 class ClockTile(host: WidgetHost) : HomeWidget(host) {
     private val time = auto(Ui.text(c, "", 48f).apply { includeFontPadding = false }, 20, 120)
     private val date = auto(Ui.text(c, "", 18f, dim = true), 10, 28)
-    private val outside = Ui.text(c, "", 22f)
+    private val wIcon = ImageView(c)
+    private val wTemp = auto(Ui.text(c, "", 26f, bold = true).apply { gravity = Gravity.END }, 14, 40)
+    private val wText = Ui.text(c, "", 14f, dim = true).apply { gravity = Gravity.END; maxLines = 1 }
+    private var outsideC: Float? = null
     private val timeFmt get() = java.text.SimpleDateFormat(if (host.prefs.clock24h) "HH:mm" else "h:mm a", Locale.US)
     private val dateFmt = java.text.SimpleDateFormat("EEEE, d 'tháng' M", Locale("vi", "VN"))
 
     override val view: View = base(18).apply {
         addView(Ui.hbox(c).apply {
-            addView(time, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f))
-            addView(outside)
+            addView(time, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1.6f))
+            addView(Ui.vbox(c, gravity = Gravity.END or Gravity.CENTER_VERTICAL).apply {
+                addView(wIcon, LinearLayout.LayoutParams(Ui.dp(c, 52), Ui.dp(c, 52)).apply { gravity = Gravity.END })
+                addView(wTemp, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Ui.dp(c, 36)))
+                addView(wText, matchW())
+            }, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f))
         }, fill(2.2f))
         addView(date, fill(0.8f))
     }
@@ -133,19 +140,31 @@ class ClockTile(host: WidgetHost) : HomeWidget(host) {
         val now = java.util.Date()
         time.text = timeFmt.format(now)
         date.text = dateFmt.format(now).replaceFirstChar { it.uppercase() }
+        val w = host.weather()
+        if (w != null) {
+            wIcon.setImageDrawable(Icons.get(c, w.icon))
+            wTemp.text = String.format(Locale.US, "%+.0f°", w.tempC)
+            wText.text = w.text
+        } else {
+            wIcon.setImageDrawable(if (outsideC != null) Icons.get(c, "thermometer", Palette.textDim) else null)
+            wTemp.text = outsideC?.let { String.format(Locale.US, "%+.0f°", it) } ?: ""
+            wText.text = if (outsideC != null) "Ngoài xe" else ""
+        }
     }
 
     override fun onVehicle(d: VehicleData?) {
-        outside.text = d?.outsideTempC?.let { String.format(Locale.US, "%+.0f°", it) } ?: ""
+        outsideC = d?.outsideTempC
         onTick()
     }
 }
 
-/** Ô dẫn đường: mở app bản đồ đã chọn (bản đồ nhúng cần quyền hệ thống, làm sau). */
+/**
+ * Ô dẫn đường. Có quyền hệ thống (bản ký platform) và bật trong Cài đặt: nhúng app bản đồ ngay trong ô
+ * (nút ⤢ mở toàn màn hình). Không thì là nút lớn mở app bản đồ đã chọn (nhấn giữ để chọn app).
+ */
 class NavWidget(host: WidgetHost) : HomeWidget(host) {
     private val label = Ui.text(c, "", 16f, dim = true).apply { gravity = Gravity.CENTER }
-
-    override val view: View = base(18, Gravity.CENTER).apply {
+    private val fallback = Ui.vbox(c, 18, Gravity.CENTER).apply {
         addView(Ui.header(c, "navigation", "Dẫn đường"), matchW())
         addView(ImageView(c).apply {
             setImageDrawable(Icons.get(c, "map", Palette.accent))
@@ -155,8 +174,40 @@ class NavWidget(host: WidgetHost) : HomeWidget(host) {
         }, fill(1f))
         addView(Ui.text(c, "Chạm để mở bản đồ", 20f).apply { gravity = Gravity.CENTER }, matchW())
         addView(label, matchW())
+    }
+    private var embedded: EmbeddedMap? = null
+
+    override val view: View = android.widget.FrameLayout(c).apply {
+        background = Ui.card(c)
+        clipToOutline = true
+        addView(fallback, android.widget.FrameLayout.LayoutParams(-1, -1))
         setOnClickListener { host.openNav() }
         setOnLongClickListener { host.chooseNavApp(); true }
+    }
+
+    init { tryEmbed() }
+
+    private fun tryEmbed() {
+        val intent = host.navLaunchIntent() ?: return
+        if (!host.canEmbedMap()) return
+        val frame = view as android.widget.FrameLayout
+        val map = EmbeddedMap(c) { why ->
+            // Không nhúng được: quay về nút mở bản đồ
+            embedded?.let { frame.removeView(it) }
+            embedded = null
+            fallback.visibility = View.VISIBLE
+            host.toast("Không nhúng được bản đồ ($why); chạm ô để mở toàn màn hình")
+        }
+        if (!map.create()) return
+        embedded = map
+        fallback.visibility = View.GONE
+        frame.addView(map, android.widget.FrameLayout.LayoutParams(-1, -1))
+        // Nút mở toàn màn hình ở góc
+        frame.addView(Ui.tile(c, "expand", "Mở toàn màn hình", 48) { host.openNav() },
+            android.widget.FrameLayout.LayoutParams(Ui.dp(c, 48), Ui.dp(c, 48), Gravity.TOP or Gravity.END).apply {
+                topMargin = Ui.dp(c, 10); marginEnd = Ui.dp(c, 10)
+            })
+        map.start(intent)
     }
 
     override fun onTick() { label.text = host.navAppLabel() ?: "Nhấn giữ để chọn app bản đồ" }

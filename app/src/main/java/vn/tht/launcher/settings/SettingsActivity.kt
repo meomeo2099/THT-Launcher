@@ -124,6 +124,12 @@ class SettingsActivity : Activity() {
         slider("Đóng cửa sổ trời sau", 1, 30, " phút", { a.airOutMinutes }) { a.airOutMinutes = it }
         slider("Đóng cửa sổ trời khi chạy từ (0 = không)", 0, 120, " km/h", { a.closeRoofAtSpeed }) { a.closeRoofAtSpeed = it }
 
+        section("Thời tiết & bản đồ")
+        action("Vị trí thời tiết", prefs.sp.getString("weather_place", null) ?: "Tự động (cần quyền vị trí) · chạm để chọn thành phố") { weatherPlace() }
+        toggle("Nhúng bản đồ vào ô Dẫn đường (cần APK ký khoá platform)", { prefs.sp.getBoolean("embed_map", true) }) {
+            prefs.sp.edit().putBoolean("embed_map", it).apply()
+        }
+
         section("Xe")
         action("Thống kê chuyến đi", "Quãng đường, tiêu hao, đổ xăng, bảo dưỡng") {
             startActivity(Intent(this, vn.tht.launcher.stats.StatsActivity::class.java))
@@ -263,6 +269,28 @@ class SettingsActivity : Activity() {
                 prefs.autoplayPlayer = if (i == 0) "" else apps[i - 1].packageName
                 render()
             }.show()
+    }
+
+    private fun weatherPlace() {
+        val input = EditText(this).apply { hint = "Ví dụ: Hà Nội, Đà Nẵng, Thành phố Hồ Chí Minh" }
+        AlertDialog.Builder(this).setTitle("Vị trí thời tiết").setView(input)
+            .setPositiveButton("Tìm") { _, _ ->
+                val q = input.text.toString().trim()
+                if (q.isEmpty()) return@setPositiveButton
+                Thread {
+                    val r = vn.tht.launcher.system.Weather.geocode(q)
+                    runOnUiThread {
+                        if (r == null) toast("Không tìm thấy \"$q\" (cần mạng)")
+                        else { vn.tht.launcher.system.Weather.setPlace(this, r.first, r.second, r.third); toast("Thời tiết: ${r.first}"); render() }
+                    }
+                }.start()
+            }
+            .setNeutralButton("Tự động") { _, _ ->
+                prefs.sp.edit().remove("weather_lat").remove("weather_lon").remove("weather_place").remove("weather_cache").apply()
+                requestPermissions(arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION), 7)
+                render()
+            }
+            .setNegativeButton("Huỷ", null).show()
     }
 
     private fun editTank() {

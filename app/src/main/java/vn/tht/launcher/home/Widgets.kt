@@ -51,6 +51,11 @@ interface WidgetHost {
     fun openNav()
     fun chooseNavApp()
     fun navAppLabel(): String?
+    /** Intent mở app bản đồ đã chọn; null nếu chưa có app nào. */
+    fun navLaunchIntent(): android.content.Intent?
+    /** Được phép thử nhúng bản đồ (có quyền hệ thống + bật trong Cài đặt). */
+    fun canEmbedMap(): Boolean
+    fun weather(): vn.tht.launcher.system.WeatherNow?
     /** 0..1; null = không đọc được. */
     fun volume(): Float?
     fun setVolume(v: Float)

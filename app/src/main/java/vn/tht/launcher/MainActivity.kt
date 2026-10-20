@@ -91,9 +91,14 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
             handler.postDelayed(this, ECARX_POLL_MS)
         }
     }
+    private var tickCount = 0
     private val tick = object : Runnable {
         override fun run() {
             widgets.values.forEach { it.onTick() }
+            // Thời tiết: kiểm tra mỗi phút, chỉ tải khi dữ liệu cũ hơn 30 phút
+            if (tickCount++ % 60 == 0) vn.tht.launcher.system.Weather.refreshIfStale(this@MainActivity) {
+                runOnUiThread { widgets.values.forEach { it.onTick() } }
+            }
             handler.postDelayed(this, 1000)
         }
     }
@@ -549,6 +554,12 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         ?: navCandidates.firstOrNull { appLabel(it) != null }
 
     override fun navAppLabel(): String? = navPackage()?.let { appLabel(it) }
+
+    override fun navLaunchIntent(): Intent? = navPackage()?.let { packageManager.getLaunchIntentForPackage(it) }
+
+    override fun canEmbedMap() = prefs.sp.getBoolean("embed_map", true) && PlatformSignature.verify(this)
+
+    override fun weather() = vn.tht.launcher.system.Weather.current
 
     override fun openNav() {
         val p = navPackage()
