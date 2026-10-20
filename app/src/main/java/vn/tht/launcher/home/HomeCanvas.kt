@@ -80,6 +80,11 @@ class HomeCanvas(context: Context) : ViewGroup(context) {
 
     /** Callback xoá do MainActivity gắn (để huỷ widget). */
     var onRemove: (WidgetSpec) -> Unit = {}
+    /** Chạm (không kéo) một widget trong chế độ sửa: mở hộp nhập vị trí/kích thước. */
+    var onWidgetTap: (WidgetSpec) -> Unit = {}
+
+    /** Dựng lại vị trí sau khi đổi số liệu bằng tay. */
+    fun relayout() = requestLayout()
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val w = MeasureSpec.getSize(widthMeasureSpec)
@@ -144,6 +149,8 @@ class HomeCanvas(context: Context) : ViewGroup(context) {
         private var startW = 0
         private var startH = 0
         private var resizing = false
+        /** Chỉ kéo khi đã nhận ACTION_DOWN trong chế độ sửa (tránh kéo theo cú nhấn giữ vừa mở chế độ sửa). */
+        private var tracking = false
 
         init {
             addView(content, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
@@ -170,12 +177,14 @@ class HomeCanvas(context: Context) : ViewGroup(context) {
             if (!editing) return super.onTouchEvent(ev)
             when (ev.actionMasked) {
                 MotionEvent.ACTION_DOWN -> {
+                    tracking = true
                     downX = ev.rawX; downY = ev.rawY
                     startX = spec.x; startY = spec.y; startW = spec.w; startH = spec.h
                     resizing = hit(handle, ev, slopDp = 24)
                     bringToFront()
                 }
                 MotionEvent.ACTION_MOVE -> {
+                    if (!tracking) return true
                     val dx = (ev.rawX - downX) / sx
                     val dy = (ev.rawY - downY) / sy
                     if (resizing) {
@@ -187,7 +196,14 @@ class HomeCanvas(context: Context) : ViewGroup(context) {
                     }
                     this@HomeCanvas.requestLayout()
                 }
-                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> onChanged()
+                MotionEvent.ACTION_UP -> {
+                    if (!tracking) return true
+                    tracking = false
+                    val moved = kotlin.math.abs(ev.rawX - downX) + kotlin.math.abs(ev.rawY - downY)
+                    if (moved < Ui.dp(context, 12)) onWidgetTap(spec)
+                    onChanged()
+                }
+                MotionEvent.ACTION_CANCEL -> { tracking = false; onChanged() }
             }
             return true
         }

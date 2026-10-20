@@ -39,6 +39,8 @@ class DockBar(
         fun goHome()
         fun cycleDriverSeatHeat()
         fun openWifiSettings()
+        fun toggleCollapsed()
+        fun isCollapsed(): Boolean
         fun pickApp(onPicked: (String) -> Unit)
     }
 
@@ -187,6 +189,7 @@ class DockBar(
             "Điều hoà gốc" to Shortcut("hvac", "Điều hoà", Shortcut.TYPE_HVAC),
             "Cài đặt launcher" to Shortcut("settings", "Cài đặt", Shortcut.TYPE_SETTINGS),
             "Thống kê chuyến đi" to Shortcut("stats", "Thống kê", Shortcut.TYPE_STATS),
+            "Nút ẩn/hiện tất cả" to Shortcut("collapse", "Ẩn/hiện tất cả", Shortcut.TYPE_COLLAPSE),
         ) + STATUS.map { (metric, label) ->
             "Trạng thái: $label" to Shortcut("status_$metric", label, Shortcut.TYPE_STATUS, action = metric)
         } + listOf(
@@ -226,6 +229,7 @@ class DockBar(
             Shortcut.TYPE_APPS -> actions.openAppDrawer()
             Shortcut.TYPE_SETTINGS -> actions.openSettings()
             Shortcut.TYPE_STATS -> actions.openStats()
+            Shortcut.TYPE_COLLAPSE -> actions.toggleCollapsed()
             else -> start(intentFor(s), s.label)
         }
     }
@@ -254,6 +258,7 @@ class DockBar(
             Shortcut.TYPE_APPS -> return Icons.get(context, "apps")
             Shortcut.TYPE_SETTINGS -> return Icons.get(context, "settings")
             Shortcut.TYPE_STATS -> return Icons.get(context, "trip")
+            Shortcut.TYPE_COLLAPSE -> return Icons.get(context, if (actions.isCollapsed()) "expand" else "collapse")
         }
         val pkg = if (s.type == Shortcut.TYPE_HVAC) s.pkg.ifBlank { HvacOpener.DEFAULT_PACKAGE } else s.pkg
         if (pkg.isBlank()) return Icons.get(context, "plus")

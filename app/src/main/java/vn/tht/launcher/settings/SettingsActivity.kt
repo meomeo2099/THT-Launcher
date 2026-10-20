@@ -62,7 +62,7 @@ class SettingsActivity : Activity() {
         choice("Cỡ dock", mapOf("compact" to "Gọn", "normal" to "Thường", "large" to "Lớn"), { prefs.dockSize }) { prefs.dockSize = it }
         toggle("Hiện tên dưới biểu tượng", { prefs.dockLabels }) { prefs.dockLabels = it }
         toggle("Cụm điều hoà ở đầu thanh dưới", { prefs.climateMini }) { prefs.climateMini = it }
-        toggle("Thanh âm lượng dọc bên phải", { prefs.volumeSlider }) { prefs.volumeSlider = it }
+
         slider("Độ đặc dock", 0, 100, "%", { prefs.dockOpacity }) { prefs.dockOpacity = it }
 
         section("Thanh trạng thái phía trên")

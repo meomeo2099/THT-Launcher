@@ -35,6 +35,8 @@ class Prefs(context: Context) {
     var dockLabels: Boolean get() = sp.getBoolean("dock_labels", false); set(v) = put("dock_labels", v)
     var topBar: Boolean get() = sp.getBoolean("top_bar", true); set(v) = put("top_bar", v)
     var volumeSlider: Boolean get() = sp.getBoolean("volume_slider", true); set(v) = put("volume_slider", v)
+    var collapsed: Boolean get() = sp.getBoolean("collapsed", false); set(v) = put("collapsed", v)
+    var navApp: String get() = str("nav_app", ""); set(v) = put("nav_app", v)
     var climateMini: Boolean get() = sp.getBoolean("climate_mini", true); set(v) = put("climate_mini", v)
 
     // ---- Đồng hồ ----

@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private lateinit var dock: DockBar
     private lateinit var topBar: DockBar
     private lateinit var climateMini: vn.tht.launcher.home.ClimateMini
-    private lateinit var volume: vn.tht.launcher.home.VolumeSlider
+    private var lastStatus: DockBar.Status? = null
     private lateinit var canvas: HomeCanvas
     private lateinit var drawer: View
     private lateinit var editBar: View
@@ -94,7 +94,6 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private val tick = object : Runnable {
         override fun run() {
             widgets.values.forEach { it.onTick() }
-            if (::volume.isInitialized) volume.refresh()
             handler.postDelayed(this, 1000)
         }
     }
@@ -138,6 +137,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
             onLongPress = { setEditMode(true) }
             onChanged = { HomeLayout.save(this@MainActivity, specs()) }
             onRemove = { widgets.remove(it.id) }
+            onWidgetTap = { exactDialog(it) }
         }
         findViewById<FrameLayout>(R.id.canvas_container).addView(canvas)
         buildWidgets(HomeLayout.load(this))
@@ -155,8 +155,6 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         climateMini = vn.tht.launcher.home.ClimateMini(this, controller, ::openClimate, ::toast)
         findViewById<FrameLayout>(R.id.climate_mini).addView(climateMini,
             FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT))
-        volume = vn.tht.launcher.home.VolumeSlider(this)
-        findViewById<FrameLayout>(R.id.volume_container).addView(volume)
         topBar = DockBar(
             this, findViewById<LinearLayout>(R.id.top_bar), this,
             vn.tht.launcher.shortcuts.ShortcutStore.TOPBAR_FILE, vn.tht.launcher.shortcuts.ShortcutStore.TOPBAR_DEFAULTS,
@@ -259,14 +257,21 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         if (!on) HomeLayout.save(this, canvas.specs())
     }
 
+    /** Thư viện widget: chọn nhóm rồi chọn loại. */
     private fun addWidgetDialog() {
-        val types = WidgetType.values()
+        val groups = WidgetType.values().groupBy { it.group }
         AlertDialog.Builder(this)
-            .setTitle("Thêm widget")
-            .setItems(types.map { it.title }.toTypedArray()) { _, i ->
-                addWidget(WidgetSpec.new(types[i]))
-                canvas.setEditing(true)
-                HomeLayout.save(this, canvas.specs())
+            .setTitle("Thư viện widget")
+            .setItems(groups.keys.map { "${it}  (${groups.getValue(it).size})" }.toTypedArray()) { _, gi ->
+                val types = groups.values.elementAt(gi)
+                AlertDialog.Builder(this)
+                    .setTitle(groups.keys.elementAt(gi))
+                    .setItems(types.map { it.title }.toTypedArray()) { _, i ->
+                        addWidget(WidgetSpec.new(types[i]))
+                        canvas.setEditing(true)
+                        HomeLayout.save(this, canvas.specs())
+                    }
+                    .show()
             }
             .show()
     }
@@ -318,8 +323,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
             setBackgroundColor(Palette.withAlpha(Palette.textDim, 80))
         }
         climateMini.bind(lastEcarx)
-        findViewById<View>(R.id.volume_container).visibility = if (prefs.volumeSlider) View.VISIBLE else View.GONE
-        volume.refresh()
+        applyCollapsed()
         editBar.background = Ui.pill(this, Palette.withAlpha(Palette.dock, 245), 24)
         drawer.setBackgroundColor(Palette.scrim)
         findViewById<EditText>(R.id.drawer_search).apply {
@@ -451,6 +455,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
             voltage = supplyVoltage(),
             seatHeatLevel = seat,
         )
+        lastStatus = status
         dock.update(status)
         topBar.update(status)
     }
@@ -470,6 +475,117 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         val mv = i?.getIntExtra(android.os.BatteryManager.EXTRA_VOLTAGE, -1) ?: -1
         (mv / 1000f).takeIf { it in 9f..16f }
     }.getOrNull()
+
+    // ---- Ẩn/hiện tất cả ----
+
+    override fun isCollapsed() = prefs.collapsed
+
+    override fun toggleCollapsed() {
+        prefs.collapsed = !prefs.collapsed
+        applyCollapsed()
+        dock.reload()
+    }
+
+    /** Ẩn: chỉ còn hình nền và thanh icon mỏng ở dưới. */
+    private fun applyCollapsed() {
+        val c = prefs.collapsed
+        canvas.visibility = if (c) View.INVISIBLE else View.VISIBLE
+        findViewById<View>(R.id.top_bar).visibility = if (c || !prefs.topBar) View.GONE else View.VISIBLE
+        val mini = prefs.climateMini && !c
+        findViewById<View>(R.id.climate_mini).visibility = if (mini) View.VISIBLE else View.GONE
+        findViewById<View>(R.id.bottom_divider).visibility = if (mini) View.VISIBLE else View.GONE
+        val bottom = findViewById<View>(R.id.bottom_bar)
+        bottom.layoutParams = bottom.layoutParams.apply {
+            height = Ui.dp(this@MainActivity, if (c) 76 else DockBar.heightDp(prefs))
+        }
+    }
+
+    // ---- Nhập chính xác vị trí / kích thước ----
+
+    private fun exactDialog(spec: WidgetSpec) {
+        fun field(label: String, v: Int) = EditText(this).apply {
+            inputType = android.text.InputType.TYPE_CLASS_NUMBER
+            setText(v.toString())
+            hint = label
+        }
+        val x = field("X (từ trái)", spec.x); val y = field("Y (từ trên)", spec.y)
+        val w = field("Rộng", spec.w); val h = field("Cao", spec.h)
+        val box = Ui.vbox(this, 20).apply {
+            addView(Ui.text(context, "Đơn vị dp trên khung ${HomeLayout.DESIGN_W}×${HomeLayout.DESIGN_H}, nhỏ nhất ${HomeLayout.MIN_SIZE}", 14f, dim = true))
+            listOf("X" to x, "Y" to y, "Rộng" to w, "Cao" to h).forEach { (l, e) ->
+                addView(Ui.hbox(context).apply {
+                    addView(Ui.text(context, l, 18f), LinearLayout.LayoutParams(Ui.dp(context, 90), LinearLayout.LayoutParams.WRAP_CONTENT))
+                    addView(e, Ui.weight())
+                })
+            }
+        }
+        AlertDialog.Builder(this).setTitle("Kích thước & vị trí: ${spec.type.title}").setView(box)
+            .setPositiveButton("Áp dụng") { _, _ ->
+                val nw = (w.text.toString().toIntOrNull() ?: spec.w).coerceIn(HomeLayout.MIN_SIZE, HomeLayout.DESIGN_W)
+                val nh = (h.text.toString().toIntOrNull() ?: spec.h).coerceIn(HomeLayout.MIN_SIZE, HomeLayout.DESIGN_H)
+                spec.w = nw; spec.h = nh
+                spec.x = (x.text.toString().toIntOrNull() ?: spec.x).coerceIn(0, HomeLayout.DESIGN_W - nw)
+                spec.y = (y.text.toString().toIntOrNull() ?: spec.y).coerceIn(0, HomeLayout.DESIGN_H - nh)
+                HomeLayout.save(this, canvas.specs())
+                // Thẻ nhạc đổi ngang/dọc theo tỉ lệ mới: dựng lại
+                buildWidgets(HomeLayout.load(this)); canvas.setEditing(true)
+            }
+            .setNegativeButton("Huỷ", null).show()
+    }
+
+    // ---- Widget: dẫn đường, âm lượng, độ sáng, cài đặt hệ thống ----
+
+    override fun lastStatus() = lastStatus
+
+    override fun openSystemSettings(action: String) {
+        runCatching { startActivity(Intent(action)) }.onFailure { toast("Không mở được cài đặt") }
+    }
+
+    private val navCandidates = listOf(
+        "vn.vietmap.live", "com.google.android.apps.maps", "com.waze", "ru.yandex.yandexnavi", "ru.yandex.yandexmaps",
+    )
+
+    private fun navPackage(): String? = prefs.navApp.takeIf { it.isNotBlank() && appLabel(it) != null }
+        ?: navCandidates.firstOrNull { appLabel(it) != null }
+
+    override fun navAppLabel(): String? = navPackage()?.let { appLabel(it) }
+
+    override fun openNav() {
+        val p = navPackage()
+        if (p == null) chooseNavApp() else launch(p)
+    }
+
+    override fun chooseNavApp() = pickApp { prefs.navApp = it; toast("Bản đồ: ${appLabel(it) ?: it}") }
+
+    private val audio by lazy { getSystemService(android.media.AudioManager::class.java) }
+
+    override fun volume(): Float? = audio?.let {
+        it.getStreamVolume(android.media.AudioManager.STREAM_MUSIC).toFloat() /
+            it.getStreamMaxVolume(android.media.AudioManager.STREAM_MUSIC).coerceAtLeast(1)
+    }
+
+    override fun setVolume(v: Float) {
+        val a = audio ?: return
+        val max = a.getStreamMaxVolume(android.media.AudioManager.STREAM_MUSIC)
+        runCatching { a.setStreamVolume(android.media.AudioManager.STREAM_MUSIC, Math.round(v * max), 0) }
+    }
+
+    override fun brightness(): Float? = runCatching {
+        Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS) / 255f
+    }.getOrNull()
+
+    /** Đổi độ sáng hệ thống nếu được phép (bản ký platform có sẵn quyền), không thì chỉ độ sáng launcher. */
+    override fun setBrightness(v: Float) {
+        val value = (v * 255).toInt().coerceIn(5, 255)
+        if (Settings.System.canWrite(this)) {
+            runCatching {
+                Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL)
+                Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, value)
+            }
+        } else {
+            window.attributes = window.attributes.apply { screenBrightness = value / 255f }
+        }
+    }
 
     override fun openClimate() = vn.tht.launcher.controls.ClimatePopup(this, ecarx, controller).show()
 

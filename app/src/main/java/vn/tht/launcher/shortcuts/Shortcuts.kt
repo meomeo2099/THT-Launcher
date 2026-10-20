@@ -30,7 +30,7 @@ data class Shortcut(
     /** Chưa điền package/action: hiện mờ, chạm vào chỉ nhắc cách cấu hình. */
     val configured: Boolean
         get() = when (type) {
-            TYPE_HVAC, TYPE_CONTROLS, TYPE_APPS, TYPE_SETTINGS, TYPE_STATS, TYPE_STATUS -> true
+            TYPE_HVAC, TYPE_CONTROLS, TYPE_APPS, TYPE_SETTINGS, TYPE_STATS, TYPE_STATUS, TYPE_COLLAPSE -> true
             TYPE_ACTION -> action.isNotBlank()
             else -> pkg.isNotBlank()
         }
@@ -50,6 +50,8 @@ data class Shortcut(
         const val TYPE_STATS = "stats"
         /** Ô trạng thái sống (icon + giá trị); [action] là tên chỉ số, xem [DockBar.STATUS]. */
         const val TYPE_STATUS = "status"
+        /** Ẩn/hiện tất cả widget (chỉ còn nền + thanh dưới). */
+        const val TYPE_COLLAPSE = "collapse"
 
         fun fromJson(o: JSONObject) = Shortcut(
             id = o.optString("id"),
@@ -73,7 +75,7 @@ data class Shortcut(
 object ShortcutStore {
     private const val TAG = "ShortcutStore"
     private const val FILE = "shortcuts.json"
-    private const val VERSION = 3
+    private const val VERSION = 4
     const val MAX = 20
 
     /**
@@ -95,7 +97,7 @@ object ShortcutStore {
         Shortcut("apps", "Ứng dụng", Shortcut.TYPE_APPS),
         Shortcut("car_settings", "Cài đặt xe", Shortcut.TYPE_ACTIVITY, pkg = "ecarx.settings"),
         Shortcut("stats", "Thống kê", Shortcut.TYPE_STATS),
-        Shortcut("status_voltage", "Điện áp", Shortcut.TYPE_STATUS, action = "voltage"),
+        Shortcut("collapse", "Ẩn/hiện tất cả", Shortcut.TYPE_COLLAPSE),
     )
 
     /** Thanh trạng thái nhỏ phía trên màn hình. */

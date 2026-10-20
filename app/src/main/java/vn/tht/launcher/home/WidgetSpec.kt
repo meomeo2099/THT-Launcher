@@ -8,15 +8,25 @@ import java.io.File
 import java.util.UUID
 
 /** Các loại widget trên màn hình chính. [title] là tên hiện trong thư viện widget. */
-enum class WidgetType(val title: String, val defaultW: Int, val defaultH: Int) {
-    CLOCK("Đồng hồ", 900, 360),
-    SPEED("Tốc độ & số", 440, 360),
-    MEDIA("Nhạc", 760, 300),
-    CLIMATE("Điều hoà", 776, 280),
-    FUEL("Xăng & quãng đường", 380, 280),
-    CAR("Xe: chế độ lái, đèn viền", 380, 280),
-    APP("Lối tắt ứng dụng", 200, 200),
-    TRIP("Chuyến đi", 380, 280),
+enum class WidgetType(val title: String, val group: String, val defaultW: Int, val defaultH: Int) {
+    CLOCK("Đồng hồ lớn (trên nền)", "Đồng hồ", 900, 360),
+    CLOCK_TILE("Đồng hồ dạng thẻ", "Đồng hồ", 480, 260),
+    MEDIA("Nhạc", "Nhạc & dẫn đường", 520, 560),
+    NAV("Dẫn đường", "Nhạc & dẫn đường", 620, 560),
+    CLIMATE("Điều hoà", "Xe", 776, 280),
+    SPEED("Tốc độ & số", "Xe", 440, 360),
+    FUEL("Xăng & quãng đường", "Xe", 380, 280),
+    CAR("Chế độ lái & đèn", "Xe", 380, 280),
+    TRIP("Chuyến đi", "Xe", 380, 280),
+    STAT_FUEL("Ô xăng (lít)", "Ô nhỏ", 240, 140),
+    STAT_VOLTAGE("Ô điện áp ắc quy", "Ô nhỏ", 240, 140),
+    STAT_COOLANT("Ô nhiệt độ máy", "Ô nhỏ", 240, 140),
+    STAT_RANGE("Ô quãng đường còn lại", "Ô nhỏ", 240, 140),
+    BLUETOOTH("Ô Bluetooth", "Ô nhỏ", 240, 140),
+    WIFI("Ô Wi-Fi", "Ô nhỏ", 240, 140),
+    VOLUME("Thanh âm lượng", "Thanh trượt", 96, 560),
+    BRIGHTNESS("Thanh độ sáng", "Thanh trượt", 96, 560),
+    APP("Lối tắt ứng dụng", "Ứng dụng", 200, 200),
 }
 
 /**
@@ -60,13 +70,19 @@ object HomeLayout {
     const val DESIGN_W = 1920
     const val DESIGN_H = 600
     const val GRID = 20
-    const val MIN_SIZE = 120
+    const val MIN_SIZE = 80
 
+    /** Bố cục mặc định dạng lưới (giống bố cục phổ biến của người dùng AutoEasy), khe 16dp. */
     fun defaults(): List<WidgetSpec> = listOf(
-        WidgetSpec("clock", WidgetType.CLOCK, 20, 40, 900, 360),
-        WidgetSpec("media", WidgetType.MEDIA, 1100, 20, 760, 300),
-        WidgetSpec("fuel", WidgetType.FUEL, 1100, 340, 370, 240),
-        WidgetSpec("car", WidgetType.CAR, 1490, 340, 370, 240),
+        WidgetSpec("brightness", WidgetType.BRIGHTNESS, 16, 16, 96, 568),
+        WidgetSpec("volume", WidgetType.VOLUME, 128, 16, 96, 568),
+        WidgetSpec("nav", WidgetType.NAV, 240, 16, 620, 568),
+        WidgetSpec("media", WidgetType.MEDIA, 876, 16, 520, 568),
+        WidgetSpec("clock", WidgetType.CLOCK_TILE, 1412, 16, 492, 272),
+        WidgetSpec("fuel", WidgetType.STAT_FUEL, 1412, 304, 238, 132),
+        WidgetSpec("voltage", WidgetType.STAT_VOLTAGE, 1666, 304, 238, 132),
+        WidgetSpec("bt", WidgetType.BLUETOOTH, 1412, 452, 238, 132),
+        WidgetSpec("wifi", WidgetType.WIFI, 1666, 452, 238, 132),
     )
 
     private fun file(c: Context) = File(c.filesDir, FILE)

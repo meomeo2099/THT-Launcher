@@ -46,6 +46,16 @@ interface WidgetHost {
     fun openControlPanel(tab: Int = 0)
     fun openClimate()
     fun toast(msg: String)
+    fun lastStatus(): vn.tht.launcher.shortcuts.DockBar.Status?
+    fun openSystemSettings(action: String)
+    fun openNav()
+    fun chooseNavApp()
+    fun navAppLabel(): String?
+    /** 0..1; null = không đọc được. */
+    fun volume(): Float?
+    fun setVolume(v: Float)
+    fun brightness(): Float?
+    fun setBrightness(v: Float)
 }
 
 /**
@@ -85,8 +95,18 @@ abstract class HomeWidget(protected val host: WidgetHost) {
     companion object {
         fun create(host: WidgetHost, spec: WidgetSpec): HomeWidget = when (spec.type) {
             WidgetType.CLOCK -> ClockWidget(host)
+            WidgetType.CLOCK_TILE -> ClockTile(host)
             WidgetType.SPEED -> SpeedWidget(host)
-            WidgetType.MEDIA -> MediaWidget(host)
+            WidgetType.MEDIA -> MediaWidget(host, vertical = spec.h > spec.w * 0.85f)
+            WidgetType.NAV -> NavWidget(host)
+            WidgetType.STAT_FUEL -> StatTile(host, "fuel_l")
+            WidgetType.STAT_VOLTAGE -> StatTile(host, "voltage")
+            WidgetType.STAT_COOLANT -> StatTile(host, "coolant")
+            WidgetType.STAT_RANGE -> StatTile(host, "range")
+            WidgetType.BLUETOOTH -> BluetoothTile(host)
+            WidgetType.WIFI -> WifiTile(host)
+            WidgetType.VOLUME -> SliderWidget(host, brightness = false)
+            WidgetType.BRIGHTNESS -> SliderWidget(host, brightness = true)
             WidgetType.CLIMATE -> ClimateWidget(host)
             WidgetType.FUEL -> FuelWidget(host)
             WidgetType.CAR -> CarWidget(host)
@@ -136,7 +156,7 @@ class ClockWidget(host: WidgetHost) : HomeWidget(host) {
 }
 
 /** Thẻ nhạc gọn: ảnh bìa trái; phải là nguồn, tên bài, tiến trình, điều khiển. */
-class MediaWidget(host: WidgetHost) : HomeWidget(host) {
+class MediaWidget(host: WidgetHost, private val vertical: Boolean = false) : HomeWidget(host) {
     private var np: NowPlaying? = null
     private val art = ImageView(c).apply {
         scaleType = ImageView.ScaleType.CENTER_CROP
@@ -159,14 +179,39 @@ class MediaWidget(host: WidgetHost) : HomeWidget(host) {
     private val dur = Ui.text(c, "", 12f, dim = true)
     private val play = ctrl("play") { host.mediaPlayPause() }
 
-    override val view: View = Ui.hbox(c).apply {
+    private fun artBox() = FrameLayout(c).apply {
+        addView(art, FrameLayout.LayoutParams(-1, -1))
+        addView(placeholder, FrameLayout.LayoutParams(Ui.dp(c, 64), Ui.dp(c, 64), Gravity.CENTER))
+    }
+
+    private fun controls() = Ui.hbox(c, Gravity.CENTER).apply {
+        addView(ctrl("previous") { host.mediaPrevious() })
+        addView(play, LinearLayout.LayoutParams(Ui.dp(c, 64), Ui.dp(c, 56)).apply {
+            marginStart = Ui.dp(c, 18); marginEnd = Ui.dp(c, 18)
+        })
+        addView(ctrl("next") { host.mediaNext() })
+    }
+
+    private fun progressBlock() = Ui.vbox(c).apply {
+        addView(progress, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Ui.dp(c, 6)))
+        addView(Ui.hbox(c).apply { addView(pos, Ui.weight()); addView(dur) }, matchW())
+    }
+
+    /** Ngang: ảnh trái, chữ phải. Dọc (widget cao): nguồn, ảnh lớn, tên bài, tiến trình, điều khiển. */
+    override val view: View = if (vertical) Ui.vbox(c, 16).apply {
+        background = Ui.card(c)
+        addView(source, matchW())
+        addView(artBox(), LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f).apply { topMargin = Ui.dp(c, 8) })
+        addView(title, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Ui.dp(c, 36)).apply { topMargin = Ui.dp(c, 10) })
+        addView(artist, matchW())
+        addView(progressBlock(), matchW().apply { topMargin = Ui.dp(c, 6) })
+        addView(controls(), matchW())
+        setOnClickListener { if (!host.hasMediaPermission()) host.requestMediaPermission() }
+    } else Ui.hbox(c).apply {
         background = Ui.card(c)
         val p = Ui.dp(c, 14)
         setPadding(p, p, Ui.dp(c, 20), p)
-        addView(FrameLayout(c).apply {
-            addView(art, FrameLayout.LayoutParams(-1, -1))
-            addView(placeholder, FrameLayout.LayoutParams(Ui.dp(c, 64), Ui.dp(c, 64), Gravity.CENTER))
-        }, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0.42f))
+        addView(artBox(), LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0.42f))
         addView(Ui.vbox(c).apply {
             setPadding(Ui.dp(c, 18), 0, 0, 0)
             addView(source, matchW())
@@ -174,15 +219,8 @@ class MediaWidget(host: WidgetHost) : HomeWidget(host) {
             addView(title, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.9f))
             addView(artist, matchW())
             addView(View(c), fill(0.4f))
-            addView(progress, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Ui.dp(c, 6)))
-            addView(Ui.hbox(c).apply { addView(pos, Ui.weight()); addView(dur) }, matchW())
-            addView(Ui.hbox(c, Gravity.CENTER).apply {
-                addView(ctrl("previous") { host.mediaPrevious() })
-                addView(play, LinearLayout.LayoutParams(Ui.dp(c, 64), Ui.dp(c, 56)).apply {
-                    marginStart = Ui.dp(c, 18); marginEnd = Ui.dp(c, 18)
-                })
-                addView(ctrl("next") { host.mediaNext() })
-            }, matchW())
+            addView(progressBlock(), matchW())
+            addView(controls(), matchW())
         }, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0.58f))
         setOnClickListener { if (!host.hasMediaPermission()) host.requestMediaPermission() }
     }
