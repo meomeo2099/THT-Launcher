@@ -259,6 +259,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         app.recorder.onVehicle(d)
         automation.onVehicle(d)
         widgets.values.forEach { it.onVehicle(d) }
+        updateDockStatus(d)
         // Theme "tự động": đổi ngày/đêm theo đèn xe
         if (prefs.themeMode == "auto" && isNight() != appliedNight) applyAppearance()
     }
@@ -378,6 +379,59 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     override fun openControlPanel(tab: Int) = ControlCenter(this, ecarx, controller, tab).show()
     override fun openControls() = openControlPanel()
+
+    override fun goHome() {
+        if (drawer.visibility == View.VISIBLE) closeDrawer()
+        if (canvas.editing) setEditMode(false)
+    }
+
+    override fun cycleDriverSeatHeat() = controller.cycleLevel(
+        vn.tht.launcher.vehicle.EcarxFunctions.HVAC_SEAT_HEATING, vn.tht.launcher.vehicle.EcarxFunctions.ZONE_ROW_1_LEFT,
+        3, "Sưởi ghế lái",
+    ) { toast((if (it.ok) "✔ " else "✖ ") + it.message) }
+
+    override fun openWifiSettings() {
+        runCatching { startActivity(Intent(Settings.ACTION_WIFI_SETTINGS)) }
+    }
+
+    private var lastStatusAt = 0L
+
+    /** Cập nhật ô trạng thái trên dock (tối đa 1 lần/giây). */
+    private fun updateDockStatus(d: VehicleData?) {
+        val now = System.currentTimeMillis()
+        if (now - lastStatusAt < 1000) return
+        lastStatusAt = now
+        val tank = prefs.tankLiters.toFloat()
+        val seat = lastEcarx?.let {
+            vn.tht.launcher.vehicle.EcarxFunctions.levelOf(
+                vn.tht.launcher.vehicle.EcarxFunctions.HVAC_SEAT_HEATING,
+                ecarx.getInt(vn.tht.launcher.vehicle.EcarxFunctions.HVAC_SEAT_HEATING, vn.tht.launcher.vehicle.EcarxFunctions.ZONE_ROW_1_LEFT),
+            )
+        }
+        dock.update(DockBar.Status(
+            wifi = wifiConnected(),
+            coolantC = d?.coolantTempC,
+            fuelL = d?.fuelLiters ?: if (tank > 0f) d?.fuelPercent?.let { it / 100f * tank } else null,
+            voltage = supplyVoltage(),
+            seatHeatLevel = seat,
+        ))
+    }
+
+    @Suppress("DEPRECATION")
+    private fun wifiConnected(): Boolean? = runCatching {
+        val cm = getSystemService(android.net.ConnectivityManager::class.java)
+        cm.activeNetworkInfo?.let { it.isConnected && it.type == android.net.ConnectivityManager.TYPE_WIFI } ?: false
+    }.getOrNull()
+
+    /**
+     * Điện áp nguồn: nhiều đầu xe báo điện áp ắc quy xe qua thông tin pin hệ thống (mV).
+     * Chỉ nhận giá trị 9–16 V; ngoài khoảng đó coi như không có. Chưa kiểm chứng trên Coolray.
+     */
+    private fun supplyVoltage(): Float? = runCatching {
+        val i = registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        val mv = i?.getIntExtra(android.os.BatteryManager.EXTRA_VOLTAGE, -1) ?: -1
+        (mv / 1000f).takeIf { it in 9f..16f }
+    }.getOrNull()
 
     override fun openStats() = startActivity(Intent(this, vn.tht.launcher.stats.StatsActivity::class.java))
 

@@ -62,6 +62,27 @@ class SettingsActivity : Activity() {
         choice("Cỡ dock", mapOf("compact" to "Gọn", "normal" to "Thường", "large" to "Lớn"), { prefs.dockSize }) { prefs.dockSize = it }
         toggle("Hiện tên dưới biểu tượng", { prefs.dockLabels }) { prefs.dockLabels = it }
         slider("Độ đặc dock", 0, 100, "%", { prefs.dockOpacity }) { prefs.dockOpacity = it }
+        action("Dùng mẫu thanh trạng thái", "Wi-Fi · Ứng dụng · Nhiệt độ máy · Xăng · Điện áp · Sưởi ghế · Home") {
+            confirm("Thay dock hiện tại bằng mẫu thanh trạng thái?") {
+                fun sc(id: String, l: String, type: String, metric: String = "") =
+                    vn.tht.launcher.shortcuts.Shortcut(id, l, type, action = metric)
+                val status = vn.tht.launcher.shortcuts.Shortcut.TYPE_STATUS
+                vn.tht.launcher.shortcuts.ShortcutStore.save(this, listOf(
+                    sc("status_wifi", "Wi-Fi", status, "wifi"),
+                    sc("apps", "Ứng dụng", vn.tht.launcher.shortcuts.Shortcut.TYPE_APPS),
+                    sc("status_coolant", "Nhiệt độ máy", status, "coolant"),
+                    sc("status_fuel_l", "Xăng", status, "fuel_l"),
+                    sc("status_voltage", "Điện áp", status, "voltage"),
+                    sc("status_seat_heat", "Sưởi ghế lái", status, "seat_heat"),
+                    sc("status_home", "Màn hình chính", status, "home"),
+                    sc("controls", "Điều khiển", vn.tht.launcher.shortcuts.Shortcut.TYPE_CONTROLS),
+                    sc("settings", "Cài đặt", vn.tht.launcher.shortcuts.Shortcut.TYPE_SETTINGS),
+                ))
+                prefs.dockLabels = false
+                prefs.dockSize = "compact"
+                toast("Đã đổi dock")
+            }
+        }
 
         section("Đồng hồ")
         toggle("Định dạng 24 giờ", { prefs.clock24h }) { prefs.clock24h = it }

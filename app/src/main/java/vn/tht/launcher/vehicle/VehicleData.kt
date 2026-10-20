@@ -15,6 +15,8 @@ data class VehicleData(
     val ignition: Int? = null,
     val rpm: Float? = null,
     val coolantTempC: Float? = null,
+    /** Xăng còn lại (lít), từ FUEL_LEVEL (ml). */
+    val fuelLiters: Float? = null,
 ) {
     /**
      * Máy đang nổ: ưu tiên khoá điện, rồi vòng tua, cuối cùng là xe đang chạy.

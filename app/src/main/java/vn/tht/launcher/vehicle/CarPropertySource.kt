@@ -105,6 +105,7 @@ class CarPropertySource(
             rangeKm = float(RANGE_REMAINING)?.let { it / 1000f }?.takeIf { it in 0f..2000f },
             ignition = int(IGNITION_STATE),
             rpm = float(ENGINE_RPM),
+            fuelLiters = fuelMl?.let { it / 1000f }?.takeIf { it in 0f..200f },
             coolantTempC = float(ENGINE_COOLANT_TEMP)?.takeIf { it in -40f..150f },
         )
     }

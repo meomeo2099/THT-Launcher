@@ -31,12 +31,71 @@ class DockBar(
         fun openAppDrawer()
         fun openSettings()
         fun openStats()
+        fun goHome()
+        fun cycleDriverSeatHeat()
+        fun openWifiSettings()
         fun pickApp(onPicked: (String) -> Unit)
     }
 
     private val pm = context.packageManager
     private val hvac = HvacOpener(context)
     private var items: MutableList<Shortcut> = mutableListOf()
+    /** Ô trạng thái đang hiện: chỉ số -> (icon, chữ). */
+    private val statusViews = mutableListOf<Pair<String, Pair<ImageView, android.widget.TextView>>>()
+    private var last: Status = Status()
+
+    /** Giá trị cho các ô trạng thái. null = không đọc được (hiện "–"). */
+    data class Status(
+        val wifi: Boolean? = null,
+        val coolantC: Float? = null,
+        val fuelL: Float? = null,
+        val voltage: Float? = null,
+        val seatHeatLevel: Int? = null,
+    )
+
+    fun update(s: Status) {
+        last = s
+        statusViews.forEach { (metric, v) -> bindStatus(metric, v.first, v.second) }
+    }
+
+    private fun bindStatus(metric: String, icon: ImageView, text: android.widget.TextView) {
+        val s = last
+        val (key, value) = when (metric) {
+            "wifi" -> (if (s.wifi == false) "wifi-off" else "wifi") to ""
+            "coolant" -> "engine-temp" to (s.coolantC?.let { "${it.toInt()}°C" } ?: "–")
+            "fuel_l" -> "fuel" to (s.fuelL?.let { "${it.toInt()} L" } ?: "–")
+            "voltage" -> "battery" to (s.voltage?.let { String.format(java.util.Locale.US, "%.1f V", it) } ?: "–")
+            "seat_heat" -> "seat-heat-left" to (s.seatHeatLevel?.takeIf { it > 0 }?.toString() ?: "")
+            "home" -> "home" to ""
+            else -> "plus" to "?"
+        }
+        val active = metric == "seat_heat" && (s.seatHeatLevel ?: 0) > 0
+        icon.setImageDrawable(Icons.get(context, key, if (active) vn.tht.launcher.ui.Palette.accent else vn.tht.launcher.ui.Palette.text))
+        text.text = value
+        text.visibility = if (value.isEmpty()) android.view.View.GONE else android.view.View.VISIBLE
+    }
+
+    private fun statusCell(s: Shortcut, index: Int) = Ui.hbox(context, Gravity.CENTER).apply {
+        background = context.getDrawable(R.drawable.ripple)
+        val pad = Ui.dp(context, 14)
+        setPadding(pad, 0, pad, 0)
+        val icon = ImageView(context)
+        val text = Ui.text(context, "", 22f).apply { setPadding(Ui.dp(context, 8), 0, 0, 0) }
+        addView(icon, LinearLayout.LayoutParams(Ui.dp(context, 36), Ui.dp(context, 36)))
+        addView(text)
+        layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT)
+        statusViews += s.action to (icon to text)
+        bindStatus(s.action, icon, text)
+        setOnClickListener {
+            when (s.action) {
+                "wifi" -> actions.openWifiSettings()
+                "seat_heat" -> actions.cycleDriverSeatHeat()
+                "home" -> actions.goHome()
+                else -> actions.openStats()
+            }
+        }
+        setOnLongClickListener { editDialog(index); true }
+    }
 
     fun reload() {
         items = ShortcutStore.load(context).toMutableList()
@@ -45,7 +104,10 @@ class DockBar(
 
     private fun render() {
         container.removeAllViews()
-        items.forEachIndexed { i, s -> container.addView(itemView(s, i)) }
+        statusViews.clear()
+        items.forEachIndexed { i, s ->
+            container.addView(if (s.type == Shortcut.TYPE_STATUS) statusCell(s, i) else itemView(s, i))
+        }
         if (items.size < ShortcutStore.MAX) {
             container.addView(cell(Icons.get(context, "plus"), "Thêm", 0.6f).apply {
                 setOnClickListener { addDialog() }
@@ -71,7 +133,7 @@ class DockBar(
         val labels = prefs.dockLabels
         this.alpha = alpha
         background = context.getDrawable(R.drawable.ripple)
-        val size = Ui.dp(context, if (labels) iconDp else iconDp + 12)
+        val size = Ui.dp(context, if (labels) iconDp else minOf(iconDp, 44))
         addView(ImageView(context).apply { setImageDrawable(icon) }, LinearLayout.LayoutParams(size, size))
         if (labels) addView(Ui.text(context, label, 13f).apply { gravity = Gravity.CENTER; maxLines = 1 })
         layoutParams = LinearLayout.LayoutParams(Ui.dp(context, cellDp), LinearLayout.LayoutParams.MATCH_PARENT)
@@ -105,6 +167,9 @@ class DockBar(
             "Điều hoà gốc" to Shortcut("hvac", "Điều hoà", Shortcut.TYPE_HVAC),
             "Cài đặt launcher" to Shortcut("settings", "Cài đặt", Shortcut.TYPE_SETTINGS),
             "Thống kê chuyến đi" to Shortcut("stats", "Thống kê", Shortcut.TYPE_STATS),
+        ) + STATUS.map { (metric, label) ->
+            "Trạng thái: $label" to Shortcut("status_$metric", label, Shortcut.TYPE_STATUS, action = metric)
+        } + listOf(
             "THT Voice" to ShortcutStore.DEFAULTS.first { it.id == "voice" },
         )
         AlertDialog.Builder(context)
@@ -186,6 +251,12 @@ class DockBar(
 
     companion object {
         private const val TAG = "DockBar"
+
+        /** Các ô trạng thái có thể thêm vào dock: chỉ số -> tên. */
+        val STATUS = listOf(
+            "wifi" to "Wi-Fi", "coolant" to "Nhiệt độ máy", "fuel_l" to "Xăng (lít)",
+            "voltage" to "Điện áp ắc quy", "seat_heat" to "Sưởi ghế lái", "home" to "Màn hình chính",
+        )
 
         /** Chiều cao dock (dp) theo cài đặt. */
         fun heightDp(prefs: vn.tht.launcher.settings.Prefs) = when (prefs.dockSize) {
