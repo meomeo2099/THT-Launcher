@@ -15,6 +15,8 @@ import java.io.File
  *  - "activity": mở activity [pkg]/[activity]; bỏ trống activity = mở app [pkg]
  *  - "action":   startActivity với intent [action] (kèm [pkg] nếu có)
  *  - "controls": mở bảng điều khiển xe (điều hoà, chế độ lái, đèn viền)
+ *  - "apps":     mở ngăn kéo tất cả ứng dụng
+ *  - "settings": mở cài đặt launcher
  */
 data class Shortcut(
     val id: String,
@@ -28,7 +30,7 @@ data class Shortcut(
     /** Chưa điền package/action: hiện mờ, chạm vào chỉ nhắc cách cấu hình. */
     val configured: Boolean
         get() = when (type) {
-            TYPE_HVAC, TYPE_CONTROLS -> true
+            TYPE_HVAC, TYPE_CONTROLS, TYPE_APPS, TYPE_SETTINGS -> true
             TYPE_ACTION -> action.isNotBlank()
             else -> pkg.isNotBlank()
         }
@@ -43,6 +45,8 @@ data class Shortcut(
         const val TYPE_ACTIVITY = "activity"
         const val TYPE_ACTION = "action"
         const val TYPE_CONTROLS = "controls"
+        const val TYPE_APPS = "apps"
+        const val TYPE_SETTINGS = "settings"
 
         fun fromJson(o: JSONObject) = Shortcut(
             id = o.optString("id"),
@@ -66,13 +70,15 @@ data class Shortcut(
 object ShortcutStore {
     private const val TAG = "ShortcutStore"
     private const val FILE = "shortcuts.json"
-    private const val VERSION = 2
+    private const val VERSION = 3
+    const val MAX = 20
 
     /**
      * Mặc định cho Coolray 2025. Package lấy từ danh sách gói trên đầu xe (Coolray2025-Voice-Spec.md
      * mục 7); activity để trống = mở activity chính của app. Chưa thử mở trên xe.
      */
     val DEFAULTS = listOf(
+        Shortcut("apps", "Ứng dụng", Shortcut.TYPE_APPS),
         Shortcut("camera", "Camera 540°", Shortcut.TYPE_ACTIVITY, pkg = "com.neusoft.nsapa"),
         Shortcut("hvac", "Điều hoà", Shortcut.TYPE_HVAC),
         Shortcut("carplay", "CarPlay", Shortcut.TYPE_ACTIVITY, pkg = "com.neusoft.carplay"),
@@ -82,6 +88,7 @@ object ShortcutStore {
             "voice", "THT Voice", Shortcut.TYPE_ACTION,
             pkg = "com.tht.voice.coolray2025", action = "android.intent.action.VOICE_COMMAND",
         ),
+        Shortcut("settings", "Cài đặt", Shortcut.TYPE_SETTINGS),
     )
 
     fun file(context: Context): File =
