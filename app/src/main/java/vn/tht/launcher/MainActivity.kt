@@ -59,6 +59,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private lateinit var media: MediaWatcher
     private lateinit var dock: DockBar
     private lateinit var topBar: DockBar
+    private lateinit var climateMini: vn.tht.launcher.home.ClimateMini
+    private lateinit var volume: vn.tht.launcher.home.VolumeSlider
     private lateinit var canvas: HomeCanvas
     private lateinit var drawer: View
     private lateinit var editBar: View
@@ -85,7 +87,15 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         override fun run() {
             lastEcarx = ecarx.readInfo()
             widgets.values.forEach { it.onEcarx(lastEcarx) }
+            if (::climateMini.isInitialized) climateMini.bind(lastEcarx)
             handler.postDelayed(this, ECARX_POLL_MS)
+        }
+    }
+    private val tick = object : Runnable {
+        override fun run() {
+            widgets.values.forEach { it.onTick() }
+            if (::volume.isInitialized) volume.refresh()
+            handler.postDelayed(this, 1000)
         }
     }
     private val appsAdapter = AppsAdapter({ launch(it.packageName); closeDrawer() }, ::openAppInfo)
@@ -142,6 +152,11 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         }
 
         dock = DockBar(this, findViewById<LinearLayout>(R.id.dock), this)
+        climateMini = vn.tht.launcher.home.ClimateMini(this, controller, ::openClimate, ::toast)
+        findViewById<FrameLayout>(R.id.climate_mini).addView(climateMini,
+            FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT))
+        volume = vn.tht.launcher.home.VolumeSlider(this)
+        findViewById<FrameLayout>(R.id.volume_container).addView(volume)
         topBar = DockBar(
             this, findViewById<LinearLayout>(R.id.top_bar), this,
             vn.tht.launcher.shortcuts.ShortcutStore.TOPBAR_FILE, vn.tht.launcher.shortcuts.ShortcutStore.TOPBAR_DEFAULTS,
@@ -173,6 +188,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         media.start()
         if (appearanceDirty) applyAppearance() else { dock.reload(); topBar.reload() }
         screensaver.setActive(true)
+        handler.removeCallbacks(tick)
+        handler.post(tick)
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
@@ -188,6 +205,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     override fun onPause() {
         media.stop()
         screensaver.setActive(false)
+        handler.removeCallbacks(tick)
         super.onPause()
     }
 
@@ -291,9 +309,17 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         if (custom != null) wp.setImageBitmap(custom)
         else wp.setImageDrawable(Palette.background(if (night) prefs.backgroundNight else prefs.backgroundDay))
 
-        val dockScroll = findViewById<View>(R.id.dock_scroll)
-        dockScroll.background = Ui.pill(this, Palette.dock, 24)
-        dockScroll.layoutParams = dockScroll.layoutParams.apply { height = Ui.dp(this@MainActivity, DockBar.heightDp(prefs)) }
+        val bottom = findViewById<View>(R.id.bottom_bar)
+        bottom.background = Ui.pill(this, Palette.dock, 26)
+        bottom.layoutParams = bottom.layoutParams.apply { height = Ui.dp(this@MainActivity, DockBar.heightDp(prefs)) }
+        findViewById<View>(R.id.climate_mini).visibility = if (prefs.climateMini) View.VISIBLE else View.GONE
+        findViewById<View>(R.id.bottom_divider).apply {
+            visibility = if (prefs.climateMini) View.VISIBLE else View.GONE
+            setBackgroundColor(Palette.withAlpha(Palette.textDim, 80))
+        }
+        climateMini.bind(lastEcarx)
+        findViewById<View>(R.id.volume_container).visibility = if (prefs.volumeSlider) View.VISIBLE else View.GONE
+        volume.refresh()
         editBar.background = Ui.pill(this, Palette.withAlpha(Palette.dock, 245), 24)
         drawer.setBackgroundColor(Palette.scrim)
         findViewById<EditText>(R.id.drawer_search).apply {
@@ -444,6 +470,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         val mv = i?.getIntExtra(android.os.BatteryManager.EXTRA_VOLTAGE, -1) ?: -1
         (mv / 1000f).takeIf { it in 9f..16f }
     }.getOrNull()
+
+    override fun openClimate() = vn.tht.launcher.controls.ClimatePopup(this, ecarx, controller).show()
 
     override fun openStats() = startActivity(Intent(this, vn.tht.launcher.stats.StatsActivity::class.java))
 

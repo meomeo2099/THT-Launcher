@@ -188,6 +188,18 @@ class EcarxCarSource(
             fanLevel = ifSupported(f.HVAC_FAN_SPEED) { f.levelOf(f.HVAC_FAN_SPEED, getInt(f.HVAC_FAN_SPEED)) },
             driveMode = ifSupported(f.DRIVE_MODE) { f.levelOf(f.DRIVE_MODE, getInt(f.DRIVE_MODE)) },
             ambientOn = ifSupported(f.AMBIENT_SWITCH) { getInt(f.AMBIENT_SWITCH) }?.let { it == f.ON },
+            autoOn = ifSupported(f.HVAC_AUTO) { getInt(f.HVAC_AUTO) }?.let { it == f.ON },
+            recirc = ifSupported(f.HVAC_CIRCULATION) { f.levelOf(f.HVAC_CIRCULATION, getInt(f.HVAC_CIRCULATION)) },
+            defrostFront = ifSupported(f.HVAC_DEFROST_FRONT) { getInt(f.HVAC_DEFROST_FRONT) }?.let { it == f.ON },
+            defrostRear = ifSupported(f.HVAC_DEFROST_REAR) { getInt(f.HVAC_DEFROST_REAR) }?.let { it == f.ON },
+            seatHeatLeft = ifSupported(f.HVAC_SEAT_HEATING, f.ZONE_ROW_1_LEFT) {
+                f.levelOf(f.HVAC_SEAT_HEATING, getInt(f.HVAC_SEAT_HEATING, f.ZONE_ROW_1_LEFT))
+            },
+            seatHeatRight = ifSupported(f.HVAC_SEAT_HEATING, f.ZONE_ROW_1_RIGHT) {
+                f.levelOf(f.HVAC_SEAT_HEATING, getInt(f.HVAC_SEAT_HEATING, f.ZONE_ROW_1_RIGHT))
+            },
+            tempRightC = ifSupported(f.HVAC_TEMP, f.ZONE_ROW_1_RIGHT) { getFloat(f.HVAC_TEMP, f.ZONE_ROW_1_RIGHT) }
+                ?.takeIf { it in f.TEMP_MIN..f.TEMP_MAX },
         )
     }
 
@@ -235,6 +247,14 @@ data class EcarxInfo(
     val fanLevel: Int? = null,
     val driveMode: Int? = null,
     val ambientOn: Boolean? = null,
+    val autoOn: Boolean? = null,
+    /** 1 gió trong, 2 gió ngoài, 3 tự động. */
+    val recirc: Int? = null,
+    val defrostFront: Boolean? = null,
+    val defrostRear: Boolean? = null,
+    val seatHeatLeft: Int? = null,
+    val seatHeatRight: Int? = null,
+    val tempRightC: Float? = null,
 ) {
     fun lines(): List<String> = buildList {
         val hvac = buildList {

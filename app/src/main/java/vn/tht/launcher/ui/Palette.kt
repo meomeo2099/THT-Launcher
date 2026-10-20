@@ -61,6 +61,9 @@ object Palette {
 
     /** Nền dựng sẵn: tên hiển thị + các màu gradient (vẽ bằng code, không dùng ảnh ngoài). */
     val BACKGROUNDS = linkedMapOf(
+        "mountains_dusk" to ("Núi hoàng hôn" to intArrayOf()),
+        "mountains_night" to ("Núi đêm" to intArrayOf()),
+        "mountains_day" to ("Núi ban ngày" to intArrayOf()),
         "midnight" to ("Nửa đêm" to intArrayOf(0xFF05070D.toInt(), 0xFF111827.toInt(), 0xFF1E293B.toInt())),
         "graphite" to ("Graphite" to intArrayOf(0xFF111111.toInt(), 0xFF1F1F1F.toInt(), 0xFF2B2B2B.toInt())),
         "evening_city" to ("Phố đêm" to intArrayOf(0xFF0F172A.toInt(), 0xFF312E81.toInt(), 0xFF7C2D12.toInt())),
@@ -74,6 +77,11 @@ object Palette {
     )
 
     fun background(key: String): Drawable {
+        when (key) {
+            "mountains_dusk" -> return LandscapeDrawable.dusk()
+            "mountains_night" -> return LandscapeDrawable.night()
+            "mountains_day" -> return LandscapeDrawable.day()
+        }
         val colors = BACKGROUNDS[key]?.second
         return if (colors == null || colors.isEmpty()) GradientDrawable().apply { setColor(bg) }
         else GradientDrawable(GradientDrawable.Orientation.TL_BR, colors)

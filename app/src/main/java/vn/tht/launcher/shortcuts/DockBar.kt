@@ -81,7 +81,7 @@ class DockBar(
     }
 
     private fun statusCell(s: Shortcut, index: Int) = Ui.hbox(context, Gravity.CENTER).apply {
-        background = context.getDrawable(R.drawable.ripple)
+        background = if (compact) context.getDrawable(R.drawable.ripple) else Ui.pill(context, vn.tht.launcher.ui.Palette.button, 16)
         val pad = Ui.dp(context, if (compact) 12 else 14)
         setPadding(pad, 0, pad, 0)
         val icon = ImageView(context)
@@ -89,7 +89,10 @@ class DockBar(
         val iconPx = Ui.dp(context, if (compact) 26 else 36)
         addView(icon, LinearLayout.LayoutParams(iconPx, iconPx))
         addView(text)
-        layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT)
+        layoutParams = if (compact) LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT)
+        else LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, Ui.dp(context, 66)).apply {
+            marginStart = Ui.dp(context, 5); marginEnd = Ui.dp(context, 5)
+        }
         statusViews += s.action to (icon to text)
         bindStatus(s.action, icon, text)
         setOnClickListener {
@@ -129,9 +132,10 @@ class DockBar(
         }
     }
 
-    private fun cell(icon: Drawable?, label: String, alpha: Float) = Ui.vbox(context, 6, Gravity.CENTER).apply {
+    private fun cell(icon: Drawable?, label: String, alpha: Float) = Ui.vbox(context, 0, Gravity.CENTER).apply {
+        this.alpha = alpha
+        contentDescription = label
         if (compact) {
-            this.alpha = alpha
             background = context.getDrawable(R.drawable.ripple)
             val s = Ui.dp(context, 26)
             addView(ImageView(context).apply { setImageDrawable(icon) }, LinearLayout.LayoutParams(s, s))
@@ -139,20 +143,22 @@ class DockBar(
             return@apply
         }
         val prefs = vn.tht.launcher.settings.Prefs(context)
-        val (iconDp, cellDp) = when (prefs.dockSize) {
-            "compact" -> 40 to 88
-            "large" -> 68 to 132
-            else -> 52 to 108
-        }
+        val tileDp = when (prefs.dockSize) { "compact" -> 56; "large" -> 80; else -> 66 }
         val labels = prefs.dockLabels
-        this.alpha = alpha
-        background = context.getDrawable(R.drawable.ripple)
-        val size = Ui.dp(context, if (labels) iconDp else minOf(iconDp, 44))
-        addView(ImageView(context).apply { setImageDrawable(icon) }, LinearLayout.LayoutParams(size, size))
-        if (labels) addView(Ui.text(context, label, 13f).apply { gravity = Gravity.CENTER; maxLines = 1 })
-        layoutParams = LinearLayout.LayoutParams(Ui.dp(context, cellDp), LinearLayout.LayoutParams.MATCH_PARENT)
+        // Ô vuông bo góc chứa icon; tên (nếu bật) nằm dưới
+        val tile = android.widget.FrameLayout(context).apply {
+            background = Ui.pill(context, vn.tht.launcher.ui.Palette.button, 16)
+            val pad = Ui.dp(context, tileDp) * 20 / 100
+            setPadding(pad, pad, pad, pad)
+            addView(ImageView(context).apply { setImageDrawable(icon) }, android.widget.FrameLayout.LayoutParams(-1, -1))
+        }
+        addView(tile, LinearLayout.LayoutParams(Ui.dp(context, tileDp), Ui.dp(context, tileDp)))
+        if (labels) addView(Ui.text(context, label, 12f).apply { gravity = Gravity.CENTER; maxLines = 1 })
+        layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT).apply {
+            marginStart = Ui.dp(context, 5); marginEnd = Ui.dp(context, 5)
+        }
+        setOnLongClickListener { false }
     }
-
 
     private fun save() {
         ShortcutStore.save(context, items, storeName)
@@ -257,9 +263,18 @@ class DockBar(
                 pm.getActivityIcon(ComponentName(pkg, cls))
             } else pm.getApplicationIcon(pkg)
         } catch (_: PackageManager.NameNotFoundException) {
-            null // app không có trên máy này
+            fallbackIcon(s) // app không có trên máy này: icon theo chức năng
         }
     }
+
+    private fun fallbackIcon(s: Shortcut): Drawable? = Icons.get(context, when {
+        s.type == Shortcut.TYPE_HVAC -> "climate"
+        s.id.startsWith("voice") || s.action.contains("VOICE") -> "mic"
+        s.id.startsWith("camera") -> "camera360"
+        s.id.startsWith("carplay") -> "carplay"
+        s.id.startsWith("car_settings") -> "car-settings"
+        else -> "apps"
+    }, vn.tht.launcher.ui.Palette.textDim)
 
     private fun toast(msg: String) = Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
 
@@ -274,8 +289,8 @@ class DockBar(
 
         /** Chiều cao dock (dp) theo cài đặt. */
         fun heightDp(prefs: vn.tht.launcher.settings.Prefs) = when (prefs.dockSize) {
-            "compact" -> 84
-            "large" -> 140
+            "compact" -> 88
+            "large" -> 120
             else -> 104
         }
         private val HINTS = listOf("ecarx", "geely", "avm", "camera", "carplay", "setting", "hvac", "climate")

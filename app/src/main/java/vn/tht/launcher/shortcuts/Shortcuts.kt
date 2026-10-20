@@ -81,17 +81,21 @@ object ShortcutStore {
      * mục 7); activity để trống = mở activity chính của app. Chưa thử mở trên xe.
      */
     val DEFAULTS = listOf(
-        Shortcut("apps", "Ứng dụng", Shortcut.TYPE_APPS),
-        Shortcut("camera", "Camera 540°", Shortcut.TYPE_ACTIVITY, pkg = "com.neusoft.nsapa"),
-        Shortcut("hvac", "Điều hoà", Shortcut.TYPE_HVAC),
-        Shortcut("carplay", "CarPlay", Shortcut.TYPE_ACTIVITY, pkg = "com.neusoft.carplay"),
-        Shortcut("car_settings", "Cài đặt xe", Shortcut.TYPE_ACTIVITY, pkg = "ecarx.settings"),
-        Shortcut("controls", "Điều khiển", Shortcut.TYPE_CONTROLS),
+        Shortcut("status_fuel_l", "Xăng", Shortcut.TYPE_STATUS, action = "fuel_l"),
+        Shortcut("status_seat_heat", "Sưởi ghế lái", Shortcut.TYPE_STATUS, action = "seat_heat"),
         Shortcut(
             "voice", "THT Voice", Shortcut.TYPE_ACTION,
             pkg = "com.tht.voice.coolray2025", action = "android.intent.action.VOICE_COMMAND",
         ),
+        Shortcut("hvac", "Điều hoà", Shortcut.TYPE_HVAC),
+        Shortcut("camera", "Camera 540°", Shortcut.TYPE_ACTIVITY, pkg = "com.neusoft.nsapa"),
+        Shortcut("carplay", "CarPlay", Shortcut.TYPE_ACTIVITY, pkg = "com.neusoft.carplay"),
+        Shortcut("controls", "Điều khiển", Shortcut.TYPE_CONTROLS),
         Shortcut("settings", "Cài đặt", Shortcut.TYPE_SETTINGS),
+        Shortcut("apps", "Ứng dụng", Shortcut.TYPE_APPS),
+        Shortcut("car_settings", "Cài đặt xe", Shortcut.TYPE_ACTIVITY, pkg = "ecarx.settings"),
+        Shortcut("stats", "Thống kê", Shortcut.TYPE_STATS),
+        Shortcut("status_voltage", "Điện áp", Shortcut.TYPE_STATUS, action = "voltage"),
     )
 
     /** Thanh trạng thái nhỏ phía trên màn hình. */

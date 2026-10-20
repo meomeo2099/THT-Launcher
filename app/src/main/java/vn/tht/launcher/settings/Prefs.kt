@@ -20,10 +20,10 @@ class Prefs(context: Context) {
     // ---- Giao diện ----
     /** "auto" (theo đèn xe / hệ thống), "day", "night". */
     var themeMode: String get() = str("theme_mode", "auto"); set(v) = put("theme_mode", v)
-    var backgroundDay: String get() = str("bg_day", "blue_horizon"); set(v) = put("bg_day", v)
-    var backgroundNight: String get() = str("bg_night", "midnight"); set(v) = put("bg_night", v)
+    var backgroundDay: String get() = str("bg_day", "mountains_day"); set(v) = put("bg_day", v)
+    var backgroundNight: String get() = str("bg_night", "mountains_dusk"); set(v) = put("bg_night", v)
     /** Độ đặc của nền widget, 0–100 (%). */
-    var cardOpacity: Int get() = sp.getInt("card_opacity", 85); set(v) = put("card_opacity", v)
+    var cardOpacity: Int get() = sp.getInt("card_opacity", 72); set(v) = put("card_opacity", v)
     var dockOpacity: Int get() = sp.getInt("dock_opacity", 80); set(v) = put("dock_opacity", v)
     /** Tỉ lệ giao diện widget, 75–150 (%). */
     var uiScale: Int get() = sp.getInt("ui_scale", 100); set(v) = put("ui_scale", v)
@@ -32,8 +32,10 @@ class Prefs(context: Context) {
     // ---- Dock ----
     /** "compact", "normal", "large". */
     var dockSize: String get() = str("dock_size", "normal"); set(v) = put("dock_size", v)
-    var dockLabels: Boolean get() = sp.getBoolean("dock_labels", true); set(v) = put("dock_labels", v)
+    var dockLabels: Boolean get() = sp.getBoolean("dock_labels", false); set(v) = put("dock_labels", v)
     var topBar: Boolean get() = sp.getBoolean("top_bar", true); set(v) = put("top_bar", v)
+    var volumeSlider: Boolean get() = sp.getBoolean("volume_slider", true); set(v) = put("volume_slider", v)
+    var climateMini: Boolean get() = sp.getBoolean("climate_mini", true); set(v) = put("climate_mini", v)
 
     // ---- Đồng hồ ----
     var clock24h: Boolean get() = sp.getBoolean("clock_24h", true); set(v) = put("clock_24h", v)

@@ -21,9 +21,82 @@ object Ui {
             if (bold) typeface = android.graphics.Typeface.create("sans-serif-medium", android.graphics.Typeface.NORMAL)
         }
 
-    fun card(c: Context, radiusDp: Int = 20): GradientDrawable = GradientDrawable().apply {
+    fun card(c: Context, radiusDp: Int = 24): GradientDrawable = GradientDrawable().apply {
         cornerRadius = dp(c, radiusDp).toFloat()
         setColor(Palette.card)
+        // Viền mảnh cho thẻ nổi trên nền ảnh/gradient
+        setStroke(dp(c, 1), if (Palette.night) 0x1FFFFFFF else 0x14000000)
+    }
+
+    /** Tiêu đề widget: icon nhỏ + chữ mờ. */
+    fun header(c: Context, iconKey: String, title: String) = hbox(c).apply {
+        Icons.get(c, iconKey, Palette.textDim)?.let { d ->
+            addView(android.widget.ImageView(c).apply { setImageDrawable(d) },
+                LinearLayout.LayoutParams(dp(c, 22), dp(c, 22)).apply { marginEnd = dp(c, 8) })
+        }
+        addView(text(c, title, 17f, dim = true))
+    }
+
+    /** Nút icon tròn. Dùng [setIconActive] để tô trạng thái bật. */
+    fun iconButton(c: Context, iconKey: String, sizeDp: Int = 60, onClick: () -> Unit) =
+        android.widget.ImageView(c).apply {
+            tag = iconKey
+            val p = dp(c, sizeDp) / 4
+            setPadding(p, p, p, p)
+            scaleType = android.widget.ImageView.ScaleType.FIT_CENTER
+            layoutParams = LinearLayout.LayoutParams(dp(c, sizeDp), dp(c, sizeDp))
+            setIconActive(this, false)
+            setOnClickListener { onClick() }
+        }
+
+    fun setIconActive(v: android.widget.ImageView, active: Boolean, label: String? = null) {
+        val c = v.context
+        v.background = GradientDrawable().apply {
+            shape = GradientDrawable.OVAL
+            setColor(if (active) Palette.accent else Palette.button)
+        }
+        v.setImageDrawable(Icons.get(c, v.tag as String, if (active) android.graphics.Color.WHITE else Palette.text))
+        if (label != null) v.contentDescription = label
+    }
+
+    /**
+     * Ô vuông bo góc chỉ có icon (kiểu thanh dưới / bảng điều khiển). [label] là mô tả (đọc màn hình,
+     * nhấn giữ hiện tên). Bật/tắt bằng [setTileActive].
+     */
+    fun tile(c: Context, iconKey: String, label: String, sizeDp: Int = 64, onClick: () -> Unit) =
+        android.widget.ImageView(c).apply {
+            tag = iconKey
+            contentDescription = label
+            val p = dp(c, sizeDp) * 22 / 100
+            setPadding(p, p, p, p)
+            scaleType = android.widget.ImageView.ScaleType.FIT_CENTER
+            layoutParams = LinearLayout.LayoutParams(dp(c, sizeDp), dp(c, sizeDp))
+            setTileActive(this, false)
+            setOnClickListener { onClick() }
+            setOnLongClickListener { android.widget.Toast.makeText(c, label, android.widget.Toast.LENGTH_SHORT).show(); true }
+        }
+
+    fun setTileActive(v: android.widget.ImageView, active: Boolean) {
+        val c = v.context
+        v.background = pill(c, if (active) Palette.accent else Palette.button, 16)
+        v.setImageDrawable(Icons.get(c, v.tag as String, if (active) android.graphics.Color.WHITE else Palette.text))
+    }
+
+    /** Ô icon + chữ nhỏ (chế độ lái, nút nhanh). */
+    fun iconChip(c: Context, iconKey: String, label: String, onClick: () -> Unit) = vbox(c, 8, Gravity.CENTER).apply {
+        tag = iconKey
+        addView(android.widget.ImageView(c), LinearLayout.LayoutParams(dp(c, 30), dp(c, 30)))
+        addView(text(c, label, 15f).apply { gravity = Gravity.CENTER; maxLines = 1 })
+        setChipActive(this, false)
+        setOnClickListener { onClick() }
+    }
+
+    fun setChipActive(v: LinearLayout, active: Boolean) {
+        val c = v.context
+        v.background = pill(c, if (active) Palette.accent else Palette.button, 18)
+        (v.getChildAt(0) as android.widget.ImageView).setImageDrawable(
+            Icons.get(c, v.tag as String, if (active) android.graphics.Color.WHITE else Palette.text))
+        (v.getChildAt(1) as TextView).setTextColor(if (active) android.graphics.Color.WHITE else Palette.text)
     }
 
     fun pill(c: Context, color: Int, radiusDp: Int = 14) = GradientDrawable().apply {

@@ -9,9 +9,9 @@ import java.util.UUID
 
 /** Các loại widget trên màn hình chính. [title] là tên hiện trong thư viện widget. */
 enum class WidgetType(val title: String, val defaultW: Int, val defaultH: Int) {
-    CLOCK("Đồng hồ", 440, 200),
+    CLOCK("Đồng hồ", 900, 360),
     SPEED("Tốc độ & số", 440, 360),
-    MEDIA("Nhạc", 640, 576),
+    MEDIA("Nhạc", 760, 300),
     CLIMATE("Điều hoà", 776, 280),
     FUEL("Xăng & quãng đường", 380, 280),
     CAR("Xe: chế độ lái, đèn viền", 380, 280),
@@ -63,12 +63,10 @@ object HomeLayout {
     const val MIN_SIZE = 120
 
     fun defaults(): List<WidgetSpec> = listOf(
-        WidgetSpec("clock", WidgetType.CLOCK, 16, 16, 440, 200),
-        WidgetSpec("speed", WidgetType.SPEED, 16, 232, 440, 352),
-        WidgetSpec("media", WidgetType.MEDIA, 472, 16, 640, 568),
-        WidgetSpec("climate", WidgetType.CLIMATE, 1128, 16, 776, 276),
-        WidgetSpec("fuel", WidgetType.FUEL, 1128, 308, 380, 276),
-        WidgetSpec("car", WidgetType.CAR, 1524, 308, 380, 276),
+        WidgetSpec("clock", WidgetType.CLOCK, 20, 40, 900, 360),
+        WidgetSpec("media", WidgetType.MEDIA, 1100, 20, 760, 300),
+        WidgetSpec("fuel", WidgetType.FUEL, 1100, 340, 370, 240),
+        WidgetSpec("car", WidgetType.CAR, 1490, 340, 370, 240),
     )
 
     private fun file(c: Context) = File(c.filesDir, FILE)
