@@ -113,3 +113,38 @@ object HomeLayout {
         file(c).delete()
     }
 }
+
+/** Icon của loại widget (thư viện widget). */
+object WidgetSpecIcons {
+    val WidgetType.iconKey: String
+    get() = when (this) {
+        WidgetType.CLOCK -> "clock"
+        WidgetType.CLOCK_TILE -> "clock"
+        WidgetType.MEDIA -> "music"
+        WidgetType.NAV -> "navigation"
+        WidgetType.CLIMATE -> "climate"
+        WidgetType.SPEED -> "sport"
+        WidgetType.FUEL -> "fuel"
+        WidgetType.CAR -> "car"
+        WidgetType.TRIP -> "trip"
+        WidgetType.STAT_FUEL -> "fuel"
+        WidgetType.STAT_VOLTAGE -> "battery"
+        WidgetType.STAT_COOLANT -> "engine-temp"
+        WidgetType.STAT_RANGE -> "range"
+        WidgetType.BLUETOOTH -> "bluetooth"
+        WidgetType.WIFI -> "wifi"
+        WidgetType.VOLUME -> "speaker"
+        WidgetType.BRIGHTNESS -> "sun"
+        WidgetType.APP -> "apps"
+    }
+}
+
+/** Icon của nhóm widget. */
+fun groupIcon(group: String) = when (group) {
+    "Đồng hồ" -> "clock"
+    "Nhạc & dẫn đường" -> "music"
+    "Xe" -> "car"
+    "Ô nhỏ" -> "apps"
+    "Thanh trượt" -> "brightness"
+    else -> "plus"
+}

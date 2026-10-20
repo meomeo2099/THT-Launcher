@@ -169,16 +169,17 @@ class DockBar(
 
     private fun editDialog(index: Int) {
         val s = items[index]
-        AlertDialog.Builder(context)
-            .setTitle(s.label)
-            .setItems(arrayOf("Sang trái", "Sang phải", "Xoá")) { _, which ->
-                when (which) {
-                    0 -> if (index > 0) { items.add(index - 1, items.removeAt(index)); save() }
-                    1 -> if (index < items.size - 1) { items.add(index + 1, items.removeAt(index)); save() }
-                    2 -> { items.removeAt(index); save() }
-                }
+        vn.tht.launcher.ui.IconList.show(context, s.label, listOf(
+            vn.tht.launcher.ui.IconList.Item("Sang trái", "chevron-left"),
+            vn.tht.launcher.ui.IconList.Item("Sang phải", "chevron-right"),
+            vn.tht.launcher.ui.IconList.Item("Xoá", "close", danger = true),
+        )) { which ->
+            when (which) {
+                0 -> if (index > 0) { items.add(index - 1, items.removeAt(index)); save() }
+                1 -> if (index < items.size - 1) { items.add(index + 1, items.removeAt(index)); save() }
+                2 -> { items.removeAt(index); save() }
             }
-            .show()
+        }
     }
 
     private fun addDialog() {
@@ -195,9 +196,22 @@ class DockBar(
         } + listOf(
             "THT Voice" to ShortcutStore.DEFAULTS.first { it.id == "voice" },
         )
-        AlertDialog.Builder(context)
-            .setTitle("Thêm vào dock")
-            .setItems(choices.map { it.first }.toTypedArray()) { _, which ->
+        fun iconOf(sc: Shortcut?): String = when {
+            sc == null -> "apps"
+            sc.type == Shortcut.TYPE_STATUS -> when (sc.action) {
+                "wifi" -> "wifi"; "coolant" -> "engine-temp"; "fuel_l" -> "fuel"; "voltage" -> "battery"
+                "seat_heat" -> "seat-heat-left"; else -> "home"
+            }
+            sc.type == Shortcut.TYPE_APPS -> "apps"
+            sc.type == Shortcut.TYPE_CONTROLS -> "shortcut"
+            sc.type == Shortcut.TYPE_HVAC -> "climate"
+            sc.type == Shortcut.TYPE_SETTINGS -> "settings"
+            sc.type == Shortcut.TYPE_STATS -> "trip"
+            sc.type == Shortcut.TYPE_COLLAPSE -> "collapse"
+            else -> "mic"
+        }
+        vn.tht.launcher.ui.IconList.show(context, "Thêm vào thanh",
+            choices.map { vn.tht.launcher.ui.IconList.Item(it.first, iconOf(it.second)) }, columns = 2) { which ->
                 val s = choices[which].second
                 if (s == null) {
                     actions.pickApp { pkg ->
@@ -206,7 +220,6 @@ class DockBar(
                     }
                 } else add(s.copy(id = s.id + "_" + System.currentTimeMillis()))
             }
-            .show()
     }
 
     private fun add(s: Shortcut) {

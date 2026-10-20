@@ -262,23 +262,21 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         if (!on) HomeLayout.save(this, canvas.specs())
     }
 
-    /** Thư viện widget: chọn nhóm rồi chọn loại. */
+    /** Thư viện widget: chọn nhóm rồi chọn loại (hộp chọn có icon). */
     private fun addWidgetDialog() {
         val groups = WidgetType.values().groupBy { it.group }
-        AlertDialog.Builder(this)
-            .setTitle("Thư viện widget")
-            .setItems(groups.keys.map { "${it}  (${groups.getValue(it).size})" }.toTypedArray()) { _, gi ->
-                val types = groups.values.elementAt(gi)
-                AlertDialog.Builder(this)
-                    .setTitle(groups.keys.elementAt(gi))
-                    .setItems(types.map { it.title }.toTypedArray()) { _, i ->
-                        addWidget(WidgetSpec.new(types[i]))
-                        canvas.setEditing(true)
-                        HomeLayout.save(this, canvas.specs())
-                    }
-                    .show()
+        val keys = groups.keys.toList()
+        vn.tht.launcher.ui.IconList.show(this, "Thư viện widget",
+            keys.map { vn.tht.launcher.ui.IconList.Item(it, vn.tht.launcher.home.groupIcon(it), summary = "${groups.getValue(it).size} loại") },
+            columns = 2) { gi ->
+            val types = groups.getValue(keys[gi])
+            vn.tht.launcher.ui.IconList.show(this, keys[gi],
+                types.map { t -> vn.tht.launcher.ui.IconList.Item(t.title, with(vn.tht.launcher.home.WidgetSpecIcons) { t.iconKey }) }, columns = 2) { i ->
+                addWidget(WidgetSpec.new(types[i]))
+                canvas.setEditing(true)
+                HomeLayout.save(this, canvas.specs())
             }
-            .show()
+        }
     }
 
     override fun saveLayout() = HomeLayout.save(this, canvas.specs())
@@ -414,10 +412,10 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     override fun pickApp(onPicked: (String) -> Unit) {
         val apps = allApps.ifEmpty { AppsRepository.load(this) }
-        AlertDialog.Builder(this)
-            .setTitle("Chọn ứng dụng")
-            .setItems(apps.map { it.label }.toTypedArray()) { _, i -> onPicked(apps[i].packageName) }
-            .show()
+        vn.tht.launcher.ui.IconList.show(this, "Chọn ứng dụng",
+            apps.map { vn.tht.launcher.ui.IconList.Item(it.label, drawable = it.icon) }, columns = 3) { i ->
+            onPicked(apps[i].packageName)
+        }
     }
 
     override fun openNativeHvac() = hvac.open { ok -> if (!ok) toast("Không mở được điều hoà") }
