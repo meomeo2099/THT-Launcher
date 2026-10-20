@@ -20,6 +20,7 @@ import vn.tht.launcher.apps.AppsRepository
 import vn.tht.launcher.media.MediaWatcher
 import vn.tht.launcher.media.NowPlaying
 import vn.tht.launcher.vehicle.CarPropertySource
+import vn.tht.launcher.vehicle.EcarxCarSource
 import vn.tht.launcher.vehicle.VehicleData
 import java.util.Locale
 
