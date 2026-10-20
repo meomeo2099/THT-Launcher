@@ -49,9 +49,12 @@ class SettingsActivity : Activity() {
 
         section("Giao diện")
         choice("Theme", mapOf("auto" to "Tự động (theo đèn xe)", "day" to "Ngày", "night" to "Đêm"), { prefs.themeMode }) { prefs.themeMode = it }
-        choice("Màu nhấn", Palette.ACCENTS.mapValues { it.value.first }, { prefs.accent }) { prefs.accent = it }
-        choice("Nền ban ngày", Palette.BACKGROUNDS.mapValues { it.value.first }, { prefs.backgroundDay }) { prefs.backgroundDay = it }
-        choice("Nền ban đêm", Palette.BACKGROUNDS.mapValues { it.value.first }, { prefs.backgroundNight }) { prefs.backgroundNight = it }
+        choice("Màu nhấn", Palette.ACCENTS.mapValues { it.value.first }, { prefs.accent },
+            icon = { k -> swatch(Palette.ACCENTS.getValue(k).second) }) { prefs.accent = it }
+        choice("Nền ban ngày", Palette.BACKGROUNDS.mapValues { it.value.first }, { prefs.backgroundDay },
+            icon = { k -> Palette.background(k) }) { prefs.backgroundDay = it }
+        choice("Nền ban đêm", Palette.BACKGROUNDS.mapValues { it.value.first }, { prefs.backgroundNight },
+            icon = { k -> Palette.background(k) }) { prefs.backgroundNight = it }
         action("Ảnh nền riêng – ngày", wallpaperState(DAY)) { pickWallpaper(DAY) }
         action("Ảnh nền riêng – đêm", wallpaperState(NIGHT)) { pickWallpaper(NIGHT) }
         action("Bộ biểu tượng", vn.tht.launcher.ui.Icons.packName ?: "Mặc định · chạm để nạp file .zip") { iconPack() }
@@ -62,6 +65,7 @@ class SettingsActivity : Activity() {
         choice("Cỡ dock", mapOf("compact" to "Gọn", "normal" to "Thường", "large" to "Lớn"), { prefs.dockSize }) { prefs.dockSize = it }
         toggle("Hiện tên dưới biểu tượng", { prefs.dockLabels }) { prefs.dockLabels = it }
         toggle("Cụm điều hoà ở đầu thanh dưới", { prefs.climateMini }) { prefs.climateMini = it }
+        toggle("Thanh dọc bên trái (nhấn giữ một ô để sửa)", { prefs.sideRail }) { prefs.sideRail = it }
 
         slider("Độ đặc dock", 0, 100, "%", { prefs.dockOpacity }) { prefs.dockOpacity = it }
 
@@ -194,15 +198,27 @@ class SettingsActivity : Activity() {
         row(title, null, sw) { sw.toggle() }
     }
 
-    private fun choice(title: String, options: Map<String, String>, get: () -> String, set: (String) -> Unit) {
-        lateinit var r: LinearLayout
-        r = row(title, options[get()] ?: get()) {
+    /** Chọn một giá trị trong hộp chọn có icon; mục đang chọn có dấu tích. */
+    private fun choice(
+        title: String, options: Map<String, String>, get: () -> String,
+        icon: (String) -> android.graphics.drawable.Drawable? = { null },
+        set: (String) -> Unit,
+    ) {
+        row(title, options[get()] ?: get()) {
             val keys = options.keys.toList()
-            AlertDialog.Builder(this).setTitle(title)
-                .setSingleChoiceItems(options.values.toTypedArray(), keys.indexOf(get())) { d, i ->
-                    set(keys[i]); d.dismiss(); render()
-                }.show()
+            vn.tht.launcher.ui.IconList.show(this, title, keys.map { k ->
+                vn.tht.launcher.ui.IconList.Item(
+                    options.getValue(k),
+                    icon = if (k == get()) "check" else "chevron-right",
+                    drawable = icon(k),
+                    summary = if (k == get()) "Đang dùng" else null,
+                )
+            }, columns = if (keys.size > 4) 2 else 1) { i -> set(keys[i]); render() }
         }
+    }
+
+    private fun swatch(color: Int) = android.graphics.drawable.GradientDrawable().apply {
+        shape = android.graphics.drawable.GradientDrawable.OVAL; setColor(color)
     }
 
     private fun slider(title: String, min: Int, max: Int, unit: String, get: () -> Int, set: (Int) -> Unit) {

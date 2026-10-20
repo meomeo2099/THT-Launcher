@@ -13,6 +13,7 @@ enum class WidgetType(val title: String, val group: String, val defaultW: Int, v
     CLOCK_TILE("Đồng hồ dạng thẻ", "Đồng hồ", 480, 260),
     MEDIA("Nhạc", "Nhạc & dẫn đường", 520, 560),
     NAV("Dẫn đường", "Nhạc & dẫn đường", 620, 560),
+    RADIO("Radio", "Nhạc & dẫn đường", 620, 120),
     CLIMATE("Điều hoà", "Xe", 776, 280),
     SPEED("Tốc độ & số", "Xe", 440, 360),
     FUEL("Xăng & quãng đường", "Xe", 380, 280),
@@ -122,6 +123,7 @@ object WidgetSpecIcons {
         WidgetType.CLOCK_TILE -> "clock"
         WidgetType.MEDIA -> "music"
         WidgetType.NAV -> "navigation"
+        WidgetType.RADIO -> "radio"
         WidgetType.CLIMATE -> "climate"
         WidgetType.SPEED -> "sport"
         WidgetType.FUEL -> "fuel"
@@ -144,7 +146,8 @@ fun groupIcon(group: String) = when (group) {
     "Đồng hồ" -> "clock"
     "Nhạc & dẫn đường" -> "music"
     "Xe" -> "car"
-    "Ô nhỏ" -> "apps"
+    "Ô nhỏ" -> "wifi"
+    "Ứng dụng" -> "apps"
     "Thanh trượt" -> "brightness"
     else -> "plus"
 }

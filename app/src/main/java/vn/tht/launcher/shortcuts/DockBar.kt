@@ -29,6 +29,8 @@ class DockBar(
     private val defaults: List<Shortcut> = ShortcutStore.DEFAULTS,
     /** Thanh nhỏ phía trên: icon nhỏ, không chữ. */
     private val compact: Boolean = false,
+    /** Xếp dọc (thanh bên trái). */
+    private val vertical: Boolean = false,
 ) {
     /** Các hành động nội bộ launcher mà nút dock có thể gọi. */
     interface Actions {
@@ -91,7 +93,15 @@ class DockBar(
         val iconPx = Ui.dp(context, if (compact) 26 else 36)
         addView(icon, LinearLayout.LayoutParams(iconPx, iconPx))
         addView(text)
-        layoutParams = if (compact) LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT)
+        if (vertical) {
+            orientation = LinearLayout.VERTICAL
+            (text.layoutParams as? LinearLayout.LayoutParams)?.let { it.width = LinearLayout.LayoutParams.WRAP_CONTENT }
+            text.setPadding(0, Ui.dp(context, 2), 0, 0)
+            text.textSize = 13f
+        }
+        layoutParams = if (vertical) LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+            topMargin = Ui.dp(context, 6); bottomMargin = Ui.dp(context, 6)
+        } else if (compact) LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT)
         else LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, Ui.dp(context, 66)).apply {
             marginStart = Ui.dp(context, 5); marginEnd = Ui.dp(context, 5)
         }
@@ -141,7 +151,8 @@ class DockBar(
             background = context.getDrawable(R.drawable.ripple)
             val s = Ui.dp(context, 26)
             addView(ImageView(context).apply { setImageDrawable(icon) }, LinearLayout.LayoutParams(s, s))
-            layoutParams = LinearLayout.LayoutParams(Ui.dp(context, 52), LinearLayout.LayoutParams.MATCH_PARENT)
+            layoutParams = if (vertical) LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Ui.dp(context, 56))
+            else LinearLayout.LayoutParams(Ui.dp(context, 52), LinearLayout.LayoutParams.MATCH_PARENT)
             return@apply
         }
         val prefs = vn.tht.launcher.settings.Prefs(context)

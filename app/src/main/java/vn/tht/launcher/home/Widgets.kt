@@ -56,6 +56,8 @@ interface WidgetHost {
     /** Được phép thử nhúng bản đồ (có quyền hệ thống + bật trong Cài đặt). */
     fun canEmbedMap(): Boolean
     fun weather(): vn.tht.launcher.system.WeatherNow?
+    fun openRadio()
+    fun radioLabel(): String?
     /** 0..1; null = không đọc được. */
     fun volume(): Float?
     fun setVolume(v: Float)
@@ -112,6 +114,7 @@ abstract class HomeWidget(protected val host: WidgetHost) {
             WidgetType.WIFI -> WifiTile(host)
             WidgetType.VOLUME -> SliderWidget(host, brightness = false)
             WidgetType.BRIGHTNESS -> SliderWidget(host, brightness = true)
+            WidgetType.RADIO -> RadioWidget(host)
             WidgetType.CLIMATE -> ClimateWidget(host)
             WidgetType.FUEL -> FuelWidget(host)
             WidgetType.CAR -> CarWidget(host)

@@ -16,6 +16,8 @@ data class NowPlaying(
     val isPlaying: Boolean,
     /** Tên app đang phát (Spotify, Zing MP3…). */
     val source: String? = null,
+    /** Package của app đang phát. */
+    val pkg: String? = null,
     val durationMs: Long = 0,
     /** Vị trí tại thời điểm [positionAt] (elapsedRealtime) và tốc độ phát, để tự ước lượng. */
     val positionMs: Long = 0,
@@ -107,6 +109,7 @@ class MediaWatcher(
                     ?: md?.getBitmap(MediaMetadata.METADATA_KEY_ART),
                 isPlaying = st?.state == PlaybackState.STATE_PLAYING,
                 source = source,
+                pkg = c.packageName,
                 durationMs = md?.getLong(MediaMetadata.METADATA_KEY_DURATION) ?: 0,
                 positionMs = st?.position ?: 0,
                 positionAt = st?.lastPositionUpdateTime ?: 0,

@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private lateinit var media: MediaWatcher
     private lateinit var dock: DockBar
     private lateinit var topBar: DockBar
+    private lateinit var sideRail: DockBar
     private lateinit var climateMini: vn.tht.launcher.home.ClimateMini
     private var lastStatus: DockBar.Status? = null
     private lateinit var canvas: HomeCanvas
@@ -157,6 +158,11 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         }
 
         dock = DockBar(this, findViewById<LinearLayout>(R.id.dock), this)
+        sideRail = DockBar(
+            this, findViewById<LinearLayout>(R.id.side_rail), this,
+            vn.tht.launcher.shortcuts.ShortcutStore.SIDERAIL_FILE, vn.tht.launcher.shortcuts.ShortcutStore.SIDERAIL_DEFAULTS,
+            compact = true, vertical = true,
+        )
         climateMini = vn.tht.launcher.home.ClimateMini(this, controller, ::openClimate, ::toast)
         findViewById<FrameLayout>(R.id.climate_mini).addView(climateMini,
             FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT))
@@ -189,7 +195,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     override fun onResume() {
         super.onResume()
         media.start()
-        if (appearanceDirty) applyAppearance() else { dock.reload(); topBar.reload() }
+        if (appearanceDirty) applyAppearance() else { dock.reload(); topBar.reload(); sideRail.reload() }
         screensaver.setActive(true)
         handler.removeCallbacks(tick)
         handler.post(tick)
@@ -344,6 +350,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         top.visibility = if (prefs.topBar) View.VISIBLE else View.GONE
         top.background = Ui.pill(this, Palette.withAlpha(if (Palette.night) 0xFF000000.toInt() else 0xFFFFFFFF.toInt(), 200), 14)
         topBar.reload()
+        findViewById<View>(R.id.side_rail).background = Ui.pill(this, Palette.dock, 24)
+        sideRail.reload()
         appsAdapter.notifyDataSetChanged()
         applyFullScreen()
     }
@@ -460,6 +468,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         )
         lastStatus = status
         dock.update(status)
+        if (::sideRail.isInitialized) sideRail.update(status)
         topBar.update(status)
     }
 
@@ -500,6 +509,13 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         val bottom = findViewById<View>(R.id.bottom_bar)
         bottom.layoutParams = bottom.layoutParams.apply {
             height = Ui.dp(this@MainActivity, if (c) 76 else DockBar.heightDp(prefs))
+        }
+        findViewById<View>(R.id.side_rail).visibility = if (prefs.sideRail && !c) View.VISIBLE else View.GONE
+        // Khi ẩn tất cả: thanh icon nằm giữa
+        val dockRow = findViewById<View>(R.id.dock)
+        (dockRow.layoutParams as? FrameLayout.LayoutParams)?.let {
+            it.gravity = if (c) android.view.Gravity.CENTER else android.view.Gravity.START or android.view.Gravity.CENTER_VERTICAL
+            dockRow.layoutParams = it
         }
     }
 
@@ -558,6 +574,20 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     override fun canEmbedMap() = prefs.sp.getBoolean("embed_map", true) && PlatformSignature.verify(this)
 
     override fun weather() = vn.tht.launcher.system.Weather.current
+
+    /** App radio của đầu xe: gói ECARX trước, rồi bất kỳ app nào có "radio" trong tên gói. */
+    private fun radioPackage(): String? {
+        val known = listOf("com.ecarx.radio", "com.ecarx.radio.service", "ecarx.radio", "sw.com.dabdrmradio")
+        known.firstOrNull { packageManager.getLaunchIntentForPackage(it) != null }?.let { return it }
+        return allApps.firstOrNull { it.packageName.contains("radio", ignoreCase = true) }?.packageName
+    }
+
+    override fun openRadio() {
+        val p = radioPackage() ?: return toast("Không tìm thấy app radio")
+        launch(p)
+    }
+
+    override fun radioLabel(): String? = radioPackage()?.let { appLabel(it) }
 
     override fun openNav() {
         val p = navPackage()

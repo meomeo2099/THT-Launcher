@@ -37,6 +37,7 @@ class Prefs(context: Context) {
     var volumeSlider: Boolean get() = sp.getBoolean("volume_slider", true); set(v) = put("volume_slider", v)
     var collapsed: Boolean get() = sp.getBoolean("collapsed", false); set(v) = put("collapsed", v)
     var navApp: String get() = str("nav_app", ""); set(v) = put("nav_app", v)
+    var sideRail: Boolean get() = sp.getBoolean("side_rail", false); set(v) = put("side_rail", v)
     var climateMini: Boolean get() = sp.getBoolean("climate_mini", true); set(v) = put("climate_mini", v)
 
     // ---- Đồng hồ ----

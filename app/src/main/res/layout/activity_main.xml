@@ -35,6 +35,17 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
+            <LinearLayout
+                android:id="@+id/side_rail"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingVertical="10dp"
+                android:visibility="gone" />
+
             <FrameLayout
                 android:id="@+id/canvas_container"
                 android:layout_width="0dp"

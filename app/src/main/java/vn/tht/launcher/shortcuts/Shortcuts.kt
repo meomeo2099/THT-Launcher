@@ -100,6 +100,18 @@ object ShortcutStore {
         Shortcut("collapse", "Ẩn/hiện tất cả", Shortcut.TYPE_COLLAPSE),
     )
 
+    /** Thanh dọc bên trái (kiểu thanh bên của AutoEasy). */
+    const val SIDERAIL_FILE = "siderail.json"
+
+    val SIDERAIL_DEFAULTS = listOf(
+        Shortcut("status_coolant", "Nhiệt độ máy", Shortcut.TYPE_STATUS, action = "coolant"),
+        Shortcut("apps", "Ứng dụng", Shortcut.TYPE_APPS),
+        Shortcut("controls", "Điều khiển xe", Shortcut.TYPE_CONTROLS),
+        Shortcut("hvac", "Điều hoà", Shortcut.TYPE_HVAC),
+        Shortcut("stats", "Thống kê", Shortcut.TYPE_STATS),
+        Shortcut("status_home", "Màn hình chính", Shortcut.TYPE_STATUS, action = "home"),
+    )
+
     /** Thanh trạng thái nhỏ phía trên màn hình. */
     const val TOPBAR_FILE = "topbar.json"
 
