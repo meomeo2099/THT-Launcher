@@ -1,7 +1,6 @@
 package vn.tht.launcher.stats
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -13,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import vn.tht.launcher.LauncherApp
 import vn.tht.launcher.settings.Prefs
+import vn.tht.launcher.ui.Dialogs
 import vn.tht.launcher.ui.Palette
 import vn.tht.launcher.ui.Ui
 import java.text.SimpleDateFormat
@@ -149,37 +149,40 @@ class StatsActivity : Activity() {
     // ---- Hộp thoại ----
 
     private fun addRefuel() {
-        val input = EditText(this).apply { inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL; hint = "Số lít" }
-        AlertDialog.Builder(this).setTitle("Đổ xăng").setView(input)
-            .setPositiveButton("Đầy bình") { _, _ -> saveRefuel(input, true) }
-            .setNeutralButton("Chưa đầy") { _, _ -> saveRefuel(input, false) }
-            .setNegativeButton("Huỷ", null).show()
+        Dialogs.form(this, "Đổ xăng", listOf(Dialogs.Field("Số lít", hint = "Ví dụ 35,5", decimal = true)), listOf(
+            Dialogs.FormButton("Huỷ"),
+            Dialogs.FormButton("Chưa đầy") { (l) -> saveRefuel(l, false) },
+            Dialogs.FormButton("Đầy bình", Dialogs.Kind.PRIMARY) { (l) -> saveRefuel(l, true) },
+        ), note = "Chọn \"Đầy bình\" khi đổ đầy để tính mức tiêu hao giữa hai lần đầy bình.")
     }
 
-    private fun saveRefuel(input: EditText, full: Boolean) {
-        val l = input.text.toString().replace(',', '.').toFloatOrNull() ?: return
+    private fun saveRefuel(input: String, full: Boolean) {
+        val l = input.replace(',', '.').toFloatOrNull() ?: return
         if (l <= 0f || l > 200f) return
         store.add(Refuel(System.currentTimeMillis(), l, full, (application as LauncherApp).lastOdometerKm))
         render()
     }
 
     private fun editService() {
-        val km = EditText(this).apply { inputType = InputType.TYPE_CLASS_NUMBER; hint = "Bảo dưỡng tại ODO (km)" }
-        val days = EditText(this).apply { inputType = InputType.TYPE_CLASS_NUMBER; hint = "Hoặc sau bao nhiêu ngày nữa" }
-        AlertDialog.Builder(this).setTitle("Nhắc bảo dưỡng")
-            .setView(Ui.vbox(this, 16).apply { addView(km); addView(days) })
-            .setPositiveButton("Lưu") { _, _ ->
+        Dialogs.form(this, "Nhắc bảo dưỡng", listOf(
+            Dialogs.Field("Bảo dưỡng tại ODO (km)", prefs.sp.getInt("service_km", 0).takeIf { it > 0 }?.toString() ?: "", number = true),
+            Dialogs.Field("Hoặc sau bao nhiêu ngày nữa", number = true),
+        ), listOf(
+            Dialogs.FormButton("Xoá nhắc", Dialogs.Kind.DANGER) {
+                prefs.sp.edit().remove("service_km").remove("service_date").apply(); render()
+            },
+            Dialogs.FormButton("Huỷ"),
+            Dialogs.FormButton("Lưu", Dialogs.Kind.PRIMARY) { (km, days) ->
                 val ed = prefs.sp.edit()
-                km.text.toString().toIntOrNull()?.let { ed.putInt("service_km", it) }
-                days.text.toString().toIntOrNull()?.let { ed.putLong("service_date", System.currentTimeMillis() + TimeUnit.DAYS.toMillis(it.toLong())) }
+                km.toIntOrNull()?.let { ed.putInt("service_km", it) }
+                days.toIntOrNull()?.let { ed.putLong("service_date", System.currentTimeMillis() + TimeUnit.DAYS.toMillis(it.toLong())) }
                 ed.apply(); render()
-            }
-            .setNeutralButton("Xoá nhắc") { _, _ -> prefs.sp.edit().remove("service_km").remove("service_date").apply(); render() }
-            .setNegativeButton("Huỷ", null).show()
+            },
+        ), columns = 2)
     }
 
     private fun confirm(msg: String, ok: () -> Unit) =
-        AlertDialog.Builder(this).setMessage(msg).setPositiveButton("Đồng ý") { _, _ -> ok() }.setNegativeButton("Huỷ", null).show()
+        Dialogs.confirm(this, "Xác nhận", msg, okLabel = "Xoá", danger = true, onOk = ok)
 
     // ---- Dựng giao diện ----
 

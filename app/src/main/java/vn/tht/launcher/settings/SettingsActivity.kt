@@ -1,7 +1,6 @@
 package vn.tht.launcher.settings
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -19,6 +18,8 @@ import android.widget.TextView
 import android.widget.Toast
 import vn.tht.launcher.apps.AppsRepository
 import vn.tht.launcher.home.HomeLayout
+import vn.tht.launcher.ui.Dialogs
+import vn.tht.launcher.ui.IconList
 import vn.tht.launcher.ui.Palette
 import vn.tht.launcher.ui.Ui
 import java.io.File
@@ -276,8 +277,7 @@ class SettingsActivity : Activity() {
     // ---- Hộp thoại ----
 
     private fun confirm(msg: String, ok: () -> Unit) {
-        AlertDialog.Builder(this).setMessage(msg).setPositiveButton("Đồng ý") { _, _ -> ok() }
-            .setNegativeButton("Huỷ", null).show()
+        Dialogs.confirm(this, "Khôi phục mặc định", msg, okLabel = "Khôi phục", onOk = ok)
     }
 
     private fun toast(m: String) = Toast.makeText(this, m, Toast.LENGTH_SHORT).show()
@@ -291,25 +291,19 @@ class SettingsActivity : Activity() {
 
     private fun editAutostart() {
         val apps = AppsRepository.load(this)
-        val chosen = prefs.autostartApps.toMutableList()
-        val checked = apps.map { it.packageName in chosen }.toBooleanArray()
-        AlertDialog.Builder(this).setTitle("Ứng dụng tự mở (theo thứ tự chọn)")
-            .setMultiChoiceItems(apps.map { it.label }.toTypedArray(), checked) { _, i, on ->
-                val p = apps[i].packageName
-                if (on) { if (p !in chosen) chosen += p } else chosen -= p
-            }
-            .setPositiveButton("Lưu") { _, _ -> prefs.autostartApps = chosen; render() }
-            .setNegativeButton("Huỷ", null).show()
+        val checked = prefs.autostartApps.map { p -> apps.indexOfFirst { it.packageName == p } }.filter { it >= 0 }
+        Dialogs.multiChoice(this, "Ứng dụng tự mở (theo thứ tự chọn)", apps.map { it.label to it.icon }, checked) { order ->
+            prefs.autostartApps = order.map { apps[it].packageName }; render()
+        }
     }
 
     private fun pickPlayer() {
         val apps = AppsRepository.load(this)
-        val labels = listOf("Không") + apps.map { it.label }
-        AlertDialog.Builder(this).setTitle("Trình phát nhạc")
-            .setItems(labels.toTypedArray()) { _, i ->
-                prefs.autoplayPlayer = if (i == 0) "" else apps[i - 1].packageName
-                render()
-            }.show()
+        IconList.show(this, "Trình phát nhạc", listOf(IconList.Item("Không", "close")) +
+            apps.map { IconList.Item(it.label, drawable = it.icon) }, columns = 2) { i ->
+            prefs.autoplayPlayer = if (i == 0) "" else apps[i - 1].packageName
+            render()
+        }
     }
 
     private fun checkUpdate() {
@@ -324,48 +318,47 @@ class SettingsActivity : Activity() {
     }
 
     private fun weatherPlace() {
-        val input = EditText(this).apply { hint = "Ví dụ: Hà Nội, Đà Nẵng, Thành phố Hồ Chí Minh" }
-        AlertDialog.Builder(this).setTitle("Vị trí thời tiết").setView(input)
-            .setPositiveButton("Tìm") { _, _ ->
-                val q = input.text.toString().trim()
-                if (q.isEmpty()) return@setPositiveButton
-                Thread {
+        Dialogs.form(this, "Vị trí thời tiết", listOf(Dialogs.Field("Tỉnh / thành phố", hint = "Ví dụ: Hà Nội, Đà Nẵng, Thành phố Hồ Chí Minh")), listOf(
+            Dialogs.FormButton("Tự động (GPS)") {
+                prefs.sp.edit().remove("weather_lat").remove("weather_lon").remove("weather_place").remove("weather_cache").apply()
+                requestPermissions(arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION), 7)
+                render()
+            },
+            Dialogs.FormButton("Huỷ"),
+            Dialogs.FormButton("Tìm", Dialogs.Kind.PRIMARY) { (raw) ->
+                val q = raw.trim()
+                if (q.isNotEmpty()) Thread {
                     val r = vn.tht.launcher.system.Weather.geocode(q)
                     runOnUiThread {
                         if (r == null) toast("Không tìm thấy \"$q\" (cần mạng)")
                         else { vn.tht.launcher.system.Weather.setPlace(this, r.first, r.second, r.third); toast("Thời tiết: ${r.first}"); render() }
                     }
                 }.start()
-            }
-            .setNeutralButton("Tự động") { _, _ ->
-                prefs.sp.edit().remove("weather_lat").remove("weather_lon").remove("weather_place").remove("weather_cache").apply()
-                requestPermissions(arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION), 7)
-                render()
-            }
-            .setNegativeButton("Huỷ", null).show()
+            },
+        ))
     }
 
     private fun editTank() {
-        val input = EditText(this).apply {
-            inputType = android.text.InputType.TYPE_CLASS_NUMBER
-            setText(if (prefs.tankLiters > 0) prefs.tankLiters.toString() else "")
-            hint = "20–150 lít, để trống = theo xe"
-        }
-        AlertDialog.Builder(this).setTitle("Dung tích bình xăng (lít)").setView(input)
-            .setPositiveButton("Lưu") { _, _ ->
-                val v = input.text.toString().toIntOrNull() ?: 0
+        Dialogs.form(this, "Dung tích bình xăng", listOf(
+            Dialogs.Field("Số lít", if (prefs.tankLiters > 0) prefs.tankLiters.toString() else "", "20–150 lít, để trống = theo xe", number = true),
+        ), listOf(
+            Dialogs.FormButton("Huỷ"),
+            Dialogs.FormButton("Lưu", Dialogs.Kind.PRIMARY) { (raw) ->
+                val v = raw.toIntOrNull() ?: 0
                 if (v != 0 && v !in 20..150) toast("Nhập trong khoảng 20–150 lít") else { prefs.tankLiters = v; render() }
-            }.setNegativeButton("Huỷ", null).show()
+            },
+        ))
     }
 
     private fun iconPack() {
-        val items = if (vn.tht.launcher.ui.Icons.packName != null) arrayOf("Nạp bộ khác (.zip)", "Dùng biểu tượng mặc định")
-        else arrayOf("Nạp bộ biểu tượng (.zip)")
-        AlertDialog.Builder(this).setTitle("Bộ biểu tượng").setItems(items) { _, i ->
+        val has = vn.tht.launcher.ui.Icons.packName != null
+        val items = listOf(IconList.Item(if (has) "Nạp bộ khác (.zip)" else "Nạp bộ biểu tượng (.zip)", "apps")) +
+            (if (has) listOf(IconList.Item("Dùng biểu tượng mặc định", "close", danger = true)) else emptyList())
+        IconList.show(this, "Bộ biểu tượng", items) { i ->
             if (i == 0) startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
                 .setType("*/*"), REQ_ICONS)
             else { vn.tht.launcher.ui.Icons.remove(this); prefs.sp.edit().putLong("icons_changed", System.currentTimeMillis()).apply(); render() }
-        }.show()
+        }
     }
 
     // ---- Ảnh nền ----
@@ -375,9 +368,12 @@ class SettingsActivity : Activity() {
 
     private fun pickWallpaper(which: String) {
         if (Wallpapers.file(this, which).exists()) {
-            AlertDialog.Builder(this).setItems(arrayOf("Chọn ảnh khác", "Xoá ảnh riêng")) { _, i ->
+            IconList.show(this, if (which == DAY) "Ảnh nền ban ngày" else "Ảnh nền ban đêm", listOf(
+                IconList.Item("Chọn ảnh khác", "sun"),
+                IconList.Item("Xoá ảnh riêng", "close", danger = true),
+            )) { i ->
                 if (i == 0) openImage(which) else { Wallpapers.file(this, which).delete(); render() }
-            }.show()
+            }
         } else openImage(which)
     }
 

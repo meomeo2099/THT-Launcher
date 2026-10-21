@@ -1,6 +1,5 @@
 package vn.tht.launcher.shortcuts
 
-import android.app.AlertDialog
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent

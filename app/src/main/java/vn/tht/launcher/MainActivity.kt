@@ -1,6 +1,5 @@
 package vn.tht.launcher
 
-import android.app.AlertDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -43,6 +42,7 @@ import vn.tht.launcher.settings.Wallpapers
 import vn.tht.launcher.shortcuts.DockBar
 import vn.tht.launcher.system.Autostart
 import vn.tht.launcher.system.Screensaver
+import vn.tht.launcher.ui.Dialogs
 import vn.tht.launcher.ui.Palette
 import vn.tht.launcher.ui.Ui
 import vn.tht.launcher.vehicle.CarPropertySource
@@ -600,34 +600,24 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     // ---- Nhập chính xác vị trí / kích thước ----
 
     private fun exactDialog(spec: WidgetSpec) {
-        fun field(label: String, v: Int) = EditText(this).apply {
-            inputType = android.text.InputType.TYPE_CLASS_NUMBER
-            setText(v.toString())
-            hint = label
-        }
-        val x = field("X (từ trái)", spec.x); val y = field("Y (từ trên)", spec.y)
-        val w = field("Rộng", spec.w); val h = field("Cao", spec.h)
-        val box = Ui.vbox(this, 20).apply {
-            addView(Ui.text(context, "Đơn vị dp trên khung ${HomeLayout.DESIGN_W}×${HomeLayout.DESIGN_H}, nhỏ nhất ${HomeLayout.MIN_SIZE}", 14f, dim = true))
-            listOf("X" to x, "Y" to y, "Rộng" to w, "Cao" to h).forEach { (l, e) ->
-                addView(Ui.hbox(context).apply {
-                    addView(Ui.text(context, l, 18f), LinearLayout.LayoutParams(Ui.dp(context, 90), LinearLayout.LayoutParams.WRAP_CONTENT))
-                    addView(e, Ui.weight())
-                })
-            }
-        }
-        AlertDialog.Builder(this).setTitle("Kích thước & vị trí: ${spec.type.title}").setView(box)
-            .setPositiveButton("Áp dụng") { _, _ ->
-                val nw = (w.text.toString().toIntOrNull() ?: spec.w).coerceIn(HomeLayout.MIN_SIZE, HomeLayout.DESIGN_W)
-                val nh = (h.text.toString().toIntOrNull() ?: spec.h).coerceIn(HomeLayout.MIN_SIZE, HomeLayout.DESIGN_H)
+        Dialogs.form(this, "Kích thước & vị trí: ${spec.type.title}", listOf(
+            Dialogs.Field("X (từ trái)", spec.x.toString(), number = true),
+            Dialogs.Field("Y (từ trên)", spec.y.toString(), number = true),
+            Dialogs.Field("Rộng", spec.w.toString(), number = true),
+            Dialogs.Field("Cao", spec.h.toString(), number = true),
+        ), listOf(
+            Dialogs.FormButton("Huỷ"),
+            Dialogs.FormButton("Áp dụng", Dialogs.Kind.PRIMARY) { (x, y, w, h) ->
+                val nw = (w.toIntOrNull() ?: spec.w).coerceIn(HomeLayout.MIN_SIZE, HomeLayout.DESIGN_W)
+                val nh = (h.toIntOrNull() ?: spec.h).coerceIn(HomeLayout.MIN_SIZE, HomeLayout.DESIGN_H)
                 spec.w = nw; spec.h = nh
-                spec.x = (x.text.toString().toIntOrNull() ?: spec.x).coerceIn(0, HomeLayout.DESIGN_W - nw)
-                spec.y = (y.text.toString().toIntOrNull() ?: spec.y).coerceIn(0, HomeLayout.DESIGN_H - nh)
+                spec.x = (x.toIntOrNull() ?: spec.x).coerceIn(0, HomeLayout.DESIGN_W - nw)
+                spec.y = (y.toIntOrNull() ?: spec.y).coerceIn(0, HomeLayout.DESIGN_H - nh)
                 HomeLayout.save(this, canvas.specs())
                 // Thẻ nhạc đổi ngang/dọc theo tỉ lệ mới: dựng lại
                 buildWidgets(HomeLayout.load(this)); canvas.setEditing(true)
-            }
-            .setNegativeButton("Huỷ", null).show()
+            },
+        ), note = "Đơn vị dp trên khung ${HomeLayout.DESIGN_W}×${HomeLayout.DESIGN_H}, nhỏ nhất ${HomeLayout.MIN_SIZE}", columns = 2)
     }
 
     // ---- Widget: dẫn đường, âm lượng, độ sáng, cài đặt hệ thống ----
@@ -769,7 +759,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
             appendLine("Chứng chỉ app: ${PlatformSignature.certSha256(this@MainActivity, packageName).take(16)}…")
             appendLine("Dữ liệu xe (VHAL): ${if (lastVehicle != null) "có" else "không"}")
         }
-        AlertDialog.Builder(this).setTitle("Chẩn đoán").setMessage(msg).setPositiveButton("Đóng", null).show()
+        Dialogs.message(this, "Chẩn đoán", msg.trim())
     }
 
     override fun toast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
