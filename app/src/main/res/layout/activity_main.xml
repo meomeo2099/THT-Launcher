@@ -1,154 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Thiết kế cho màn hình ngang 1920x720 @160dpi (= 1920x720dp), co giãn cho màn khác -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Thiết kế cho màn ngang 1920x720 @160dpi (= 1920x720dp); widget co theo kích thước thật -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:padding="16dp"
     android:background="@color/bg">
 
-    <!-- Cột 1: đồng hồ + dữ liệu xe -->
-    <LinearLayout
-        android:layout_width="0dp"
+    <ImageView
+        android:id="@+id/wallpaper"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:padding="20dp"
-        android:background="@drawable/card_bg">
+        android:scaleType="centerCrop" />
 
-        <TextClock
-            android:id="@+id/clock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:format24Hour="HH:mm"
-            android:format12Hour="HH:mm"
-            android:textColor="@color/text"
-            android:textSize="64sp"
-            android:fontFamily="sans-serif-light" />
+    <!-- Khung widget phủ toàn màn hình: mọi phần (kể cả các thanh) đặt được ở bất kỳ đâu -->
+    <FrameLayout
+        android:id="@+id/canvas_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-        <TextClock
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:format24Hour="EEEE, dd/MM/yyyy"
-            android:format12Hour="EEEE, dd/MM/yyyy"
-            android:textColor="@color/text_dim"
-            android:textSize="18sp" />
-
-        <View android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/speed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="--"
-            android:textColor="@color/text"
-            android:textSize="96sp"
-            android:fontFamily="sans-serif-medium" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="km/h"
-            android:textColor="@color/text_dim"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/vehicle_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textColor="@color/text"
-            android:textSize="20sp"
-            android:lineSpacingExtra="6dp" />
-
-        <TextView
-            android:id="@+id/profile_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/text_dim"
-            android:textSize="14sp" />
-    </LinearLayout>
-
-    <!-- Cột 2: nhạc đang phát -->
-    <LinearLayout
-        android:id="@+id/media_card"
+    <!-- Các thanh được dựng sẵn ở đây rồi chuyển vào widget Thanh trên / Thanh dưới / Thanh dọc -->
+    <FrameLayout
+        android:id="@+id/bars_holder"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_marginStart="16dp"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:padding="20dp"
-        android:background="@drawable/card_bg">
-
-        <ImageView
-            android:id="@+id/media_art"
-            android:layout_width="280dp"
-            android:layout_height="280dp"
-            android:scaleType="centerCrop"
-            android:background="@color/bg" />
-
-        <TextView
-            android:id="@+id/media_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:text="@string/no_media"
-            android:textColor="@color/text"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/media_artist"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textColor="@color/text_dim"
-            android:textSize="18sp" />
+        android:layout_height="0dp"
+        android:visibility="gone">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/top_bar"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/side_rail"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingVertical="10dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/bottom_bar"
+            android:background="@drawable/dock_bg"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/btn_prev"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:src="@android:drawable/ic_media_previous" />
+            <HorizontalScrollView
+                android:id="@+id/dock_scroll"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fillViewport="true"
+                android:scrollbars="none">
 
-            <ImageButton
-                android:id="@+id/btn_play"
-                android:layout_width="96dp"
-                android:layout_height="72dp"
-                android:layout_marginHorizontal="24dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:src="@android:drawable/ic_media_play" />
-
-            <ImageButton
-                android:id="@+id/btn_next"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:src="@android:drawable/ic_media_next" />
+                <LinearLayout
+                    android:id="@+id/dock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp" />
+            </HorizontalScrollView>
         </LinearLayout>
+    </FrameLayout>
+
+    <!-- Thanh công cụ khi sửa màn hình chính -->
+    <LinearLayout
+        android:id="@+id/edit_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/dock_bg"
+        android:elevation="8dp"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:visibility="gone">
+
+        <Button android:id="@+id/edit_add" style="@style/THT.Button" android:text="+ Thêm widget" />
+        <Button android:id="@+id/edit_reset" style="@style/THT.Button" android:text="Bố cục mặc định" />
+        <Button android:id="@+id/edit_done" style="@style/THT.Button.Accent" android:text="Xong" />
     </LinearLayout>
 
-    <!-- Cột 3: danh sách app -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/apps"
-        android:layout_width="0dp"
+    <!-- Ngăn kéo ứng dụng -->
+    <LinearLayout
+        android:id="@+id/drawer"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.3"
-        android:layout_marginStart="16dp"
-        android:padding="12dp"
-        android:clipToPadding="false"
-        android:background="@drawable/card_bg" />
-</LinearLayout>
+        android:background="@color/scrim"
+        android:clickable="true"
+        android:elevation="12dp"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/drawer_search"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:background="@drawable/card_bg"
+                android:hint="Tìm ứng dụng"
+                android:inputType="text"
+                android:paddingHorizontal="20dp"
+                android:textColor="@color/text"
+                android:textColorHint="@color/text_dim"
+                android:textSize="20sp" />
+
+            <Button android:id="@+id/drawer_close" style="@style/THT.Button" android:text="Đóng" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/apps"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:clipToPadding="false" />
+    </LinearLayout>
+</FrameLayout>

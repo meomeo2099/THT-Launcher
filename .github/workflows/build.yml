@@ -6,6 +6,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-24.04
@@ -51,6 +54,16 @@ jobs:
         run: |
           grep -E "^e: |error:|What went wrong|ERROR:" -A4 build.log | head -60 > err.txt || true
           while IFS= read -r l; do echo "::error::$l"; done < err.txt
+      - name: Phát hành (push lên main hoặc chạy tay)
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="build-${{ github.run_number }}"
+          APK=$(ls app/build/outputs/apk/release/THT-Launcher-*-release.apk | head -1)
+          gh release create "$TAG" "$APK" --target "${{ github.sha }}" \
+            --title "THT Launcher 0.2.${{ github.run_number }}" \
+            --notes "Bản build tự động từ ${{ github.ref_name }} @ ${GITHUB_SHA::7}. Launcher tự cập nhật từ đây (Cài đặt → Cập nhật)."
       - uses: actions/upload-artifact@v4
         with:
           name: tht-launcher-apk

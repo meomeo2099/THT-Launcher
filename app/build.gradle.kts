@@ -11,8 +11,10 @@ android {
         applicationId = "vn.tht.launcher"
         minSdk = 28          // Android 9 – đầu xe Coolray 2025 (API 28)
         targetSdk = 28       // giữ 28 để hành vi nền/overlay giống đầu xe
-        versionCode = 1
-        versionName = "0.1.0"
+        // Số bản = số lần chạy CI, để bản sau luôn lớn hơn (tự cập nhật so sánh số này)
+        val build = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: 1
+        versionCode = build
+        versionName = "0.2.$build"
     }
 
     // Ký release bằng keystore từ GitHub Secrets (THT_SIGN_*); không có thì dùng khóa debug
@@ -54,4 +56,13 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+}
+
+// Đặt tên file APK: THT-Launcher-<phiên bản>-<release|debug>.apk
+android.applicationVariants.all {
+    val variant = this
+    outputs.all {
+        (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName =
+            "THT-Launcher-${variant.versionName}-${variant.buildType.name}.apk"
+    }
 }
