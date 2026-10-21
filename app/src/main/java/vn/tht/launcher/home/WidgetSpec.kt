@@ -28,6 +28,7 @@ enum class WidgetType(val title: String, val group: String, val defaultW: Int, v
     VOLUME("Thanh âm lượng", "Thanh trượt", 96, 560),
     BRIGHTNESS("Thanh độ sáng", "Thanh trượt", 96, 560),
     APP("Lối tắt ứng dụng", "Ứng dụng", 200, 200),
+    IMAGE("Ảnh có vùng chạm (ví dụ ảnh xe)", "Ứng dụng", 640, 360),
     TOP_BAR("Thanh trạng thái (trên)", "Thanh", 520, 48),
     BOTTOM_BAR("Thanh dưới (dock)", "Thanh", 1552, 100),
     CLIMATE_MINI("Cụm điều hoà gọn", "Thanh", 320, 100),
@@ -155,6 +156,7 @@ object WidgetSpecIcons {
         WidgetType.VOLUME -> "speaker"
         WidgetType.BRIGHTNESS -> "sun"
         WidgetType.APP -> "apps"
+        WidgetType.IMAGE -> "car"
         WidgetType.TOP_BAR -> "chevron-up"
         WidgetType.BOTTOM_BAR -> "chevron-down"
         WidgetType.SIDE_RAIL -> "chevron-left"
