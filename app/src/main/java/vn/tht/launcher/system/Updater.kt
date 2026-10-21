@@ -14,7 +14,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 /**
- * Tự cập nhật từ GitHub Releases của repo (bản phát hành `build-<số>` do CI tạo, kèm `app-release.apk`).
+ * Tự cập nhật từ GitHub Releases của repo (bản phát hành `build-<số>` do CI tạo, kèm `THT-Launcher-<phiên bản>-release.apk`).
  *
  * An toàn: chỉ cài khi APK tải về cùng package và **cùng chứng chỉ ký** với bản đang cài, và số bản
  * lớn hơn bản hiện tại. Có quyền hệ thống (INSTALL_PACKAGES, bản ký platform) thì cài thẳng;
@@ -23,7 +23,6 @@ import java.net.URL
 object Updater {
     private const val TAG = "Updater"
     private const val API = "https://api.github.com/repos/meomeo2099/THT-Launcher/releases/latest"
-    private const val ASSET = "app-release.apk"
     private const val KEY_LAST_CHECK = "update_last_check"
     const val KEY_AUTO = "update_auto"
 
@@ -44,7 +43,10 @@ object Updater {
         val build = tag.substringAfter("build-").toLongOrNull() ?: return@runCatching null
         val assets = j.getJSONArray("assets")
         val url = (0 until assets.length()).map { assets.getJSONObject(it) }
-            .firstOrNull { it.getString("name") == ASSET }?.getString("browser_download_url") ?: return@runCatching null
+            .firstOrNull { a ->
+                val n = a.getString("name")
+                n.endsWith(".apk") && !n.contains("debug") && (n.startsWith("THT-Launcher") || n == "app-release.apk")
+            }?.getString("browser_download_url") ?: return@runCatching null
         Release(build, j.optString("name", tag), url, j.optString("body"))
     }.onFailure { Log.w(TAG, "Không kiểm tra được cập nhật: $it") }.getOrNull()
 

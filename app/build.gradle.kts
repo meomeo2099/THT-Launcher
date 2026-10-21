@@ -57,3 +57,12 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 }
+
+// Đặt tên file APK: THT-Launcher-<phiên bản>-<release|debug>.apk
+android.applicationVariants.all {
+    val variant = this
+    outputs.all {
+        (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName =
+            "THT-Launcher-${variant.versionName}-${variant.buildType.name}.apk"
+    }
+}
