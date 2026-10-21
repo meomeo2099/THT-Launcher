@@ -42,6 +42,7 @@ class DockBar(
         fun cycleDriverSeatHeat()
         fun openWifiSettings()
         fun toggleCollapsed()
+        fun cleanup()
         fun isCollapsed(): Boolean
         fun pickApp(onPicked: (String) -> Unit)
     }
@@ -202,6 +203,7 @@ class DockBar(
             "Cài đặt launcher" to Shortcut("settings", "Cài đặt", Shortcut.TYPE_SETTINGS),
             "Thống kê chuyến đi" to Shortcut("stats", "Thống kê", Shortcut.TYPE_STATS),
             "Nút ẩn/hiện tất cả" to Shortcut("collapse", "Ẩn/hiện tất cả", Shortcut.TYPE_COLLAPSE),
+            "Dọn dẹp (đóng app chạy nền)" to Shortcut("cleanup", "Dọn dẹp", Shortcut.TYPE_CLEANUP),
         ) + STATUS.map { (metric, label) ->
             "Trạng thái: $label" to Shortcut("status_$metric", label, Shortcut.TYPE_STATUS, action = metric)
         } + listOf(
@@ -219,6 +221,7 @@ class DockBar(
             sc.type == Shortcut.TYPE_SETTINGS -> "settings"
             sc.type == Shortcut.TYPE_STATS -> "trip"
             sc.type == Shortcut.TYPE_COLLAPSE -> "collapse"
+            sc.type == Shortcut.TYPE_CLEANUP -> "cleanup"
             else -> "mic"
         }
         vn.tht.launcher.ui.IconList.show(context, "Thêm vào thanh",
@@ -254,6 +257,7 @@ class DockBar(
             Shortcut.TYPE_SETTINGS -> actions.openSettings()
             Shortcut.TYPE_STATS -> actions.openStats()
             Shortcut.TYPE_COLLAPSE -> actions.toggleCollapsed()
+            Shortcut.TYPE_CLEANUP -> actions.cleanup()
             else -> start(intentFor(s), s.label)
         }
     }
@@ -283,6 +287,7 @@ class DockBar(
             Shortcut.TYPE_SETTINGS -> return Icons.get(context, "settings")
             Shortcut.TYPE_STATS -> return Icons.get(context, "trip")
             Shortcut.TYPE_COLLAPSE -> return Icons.get(context, if (actions.isCollapsed()) "expand" else "collapse")
+            Shortcut.TYPE_CLEANUP -> return Icons.get(context, "cleanup")
         }
         val pkg = if (s.type == Shortcut.TYPE_HVAC) s.pkg.ifBlank { HvacOpener.DEFAULT_PACKAGE } else s.pkg
         if (pkg.isBlank()) return Icons.get(context, "plus")

@@ -57,6 +57,8 @@ interface WidgetHost {
     fun canEmbedMap(): Boolean
     fun weather(): vn.tht.launcher.system.WeatherNow?
     fun openRadio()
+    /** View thanh tương ứng (thanh trên / dưới / dọc) để đặt vào khung widget. */
+    fun barView(type: WidgetType): View
     fun radioLabel(): String?
     /** 0..1; null = không đọc được. */
     fun volume(): Float?
@@ -115,6 +117,8 @@ abstract class HomeWidget(protected val host: WidgetHost) {
             WidgetType.VOLUME -> SliderWidget(host, brightness = false)
             WidgetType.BRIGHTNESS -> SliderWidget(host, brightness = true)
             WidgetType.RADIO -> RadioWidget(host)
+            WidgetType.TOP_BAR, WidgetType.BOTTOM_BAR, WidgetType.SIDE_RAIL, WidgetType.CLIMATE_MINI ->
+                BarWidget(host, host.barView(spec.type))
             WidgetType.CLIMATE -> ClimateWidget(host)
             WidgetType.FUEL -> FuelWidget(host)
             WidgetType.CAR -> CarWidget(host)
@@ -484,3 +488,8 @@ class TripWidget(host: WidgetHost) : HomeWidget(host) {
 
 /** Dùng chung cho GradientDrawable tròn. */
 internal fun oval(color: Int) = GradientDrawable().apply { shape = GradientDrawable.OVAL; setColor(color) }
+
+/** Thanh trên / dưới / dọc đặt như widget: di chuyển, đổi cỡ, xoá được. */
+class BarWidget(host: WidgetHost, bar: View) : HomeWidget(host) {
+    override val view: View = bar.also { (it.parent as? android.view.ViewGroup)?.removeView(it) }
+}

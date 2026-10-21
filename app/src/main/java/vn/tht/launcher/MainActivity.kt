@@ -34,6 +34,7 @@ import vn.tht.launcher.home.HomeWidget
 import vn.tht.launcher.home.WidgetHost
 import vn.tht.launcher.home.WidgetSpec
 import vn.tht.launcher.home.WidgetType
+import vn.tht.launcher.home.isBar
 import vn.tht.launcher.media.MediaWatcher
 import vn.tht.launcher.media.NowPlaying
 import vn.tht.launcher.settings.Prefs
@@ -114,6 +115,13 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        bars = mapOf(
+            WidgetType.TOP_BAR to findViewById(R.id.top_bar),
+            WidgetType.SIDE_RAIL to findViewById(R.id.side_rail),
+            WidgetType.BOTTOM_BAR to findViewById(R.id.bottom_bar),
+            // Cụm điều hoà gọn: khung riêng, đặt như widget
+            WidgetType.CLIMATE_MINI to FrameLayout(this),
+        )
         val profile = (application as LauncherApp).profile
         prefs = Prefs(this)
         Palette.apply(prefs, isNight())
@@ -157,17 +165,17 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
             canvas.setEditing(true)
         }
 
-        dock = DockBar(this, findViewById<LinearLayout>(R.id.dock), this)
+        dock = DockBar(this, bars.getValue(WidgetType.BOTTOM_BAR).findViewById<LinearLayout>(R.id.dock), this)
         sideRail = DockBar(
-            this, findViewById<LinearLayout>(R.id.side_rail), this,
+            this, bars.getValue(WidgetType.SIDE_RAIL) as LinearLayout, this,
             vn.tht.launcher.shortcuts.ShortcutStore.SIDERAIL_FILE, vn.tht.launcher.shortcuts.ShortcutStore.SIDERAIL_DEFAULTS,
             compact = true, vertical = true,
         )
         climateMini = vn.tht.launcher.home.ClimateMini(this, controller, ::openClimate, ::toast)
-        findViewById<FrameLayout>(R.id.climate_mini).addView(climateMini,
-            FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT))
+        (bars.getValue(WidgetType.CLIMATE_MINI) as FrameLayout).addView(climateMini,
+            FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT, android.view.Gravity.CENTER))
         topBar = DockBar(
-            this, findViewById<LinearLayout>(R.id.top_bar), this,
+            this, bars.getValue(WidgetType.TOP_BAR) as LinearLayout, this,
             vn.tht.launcher.shortcuts.ShortcutStore.TOPBAR_FILE, vn.tht.launcher.shortcuts.ShortcutStore.TOPBAR_DEFAULTS,
             compact = true,
         )
@@ -278,6 +286,9 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
             val types = groups.getValue(keys[gi])
             vn.tht.launcher.ui.IconList.show(this, keys[gi],
                 types.map { t -> vn.tht.launcher.ui.IconList.Item(t.title, with(vn.tht.launcher.home.WidgetSpecIcons) { t.iconKey }) }, columns = 2) { i ->
+                if (types[i].isBar && canvas.specs().any { it.type == types[i] }) {
+                    toast("Thanh này đã có trên màn hình"); return@show
+                }
                 addWidget(WidgetSpec.new(types[i]))
                 canvas.setEditing(true)
                 HomeLayout.save(this, canvas.specs())
@@ -323,16 +334,10 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         if (custom != null) wp.setImageBitmap(custom)
         else wp.setImageDrawable(Palette.background(if (night) prefs.backgroundNight else prefs.backgroundDay))
 
-        val bottom = findViewById<View>(R.id.bottom_bar)
+        val bottom = bars.getValue(WidgetType.BOTTOM_BAR)
         bottom.background = Ui.pill(this, Palette.dock, 26)
-        bottom.layoutParams = bottom.layoutParams.apply { height = Ui.dp(this@MainActivity, DockBar.heightDp(prefs)) }
-        findViewById<View>(R.id.climate_mini).visibility = if (prefs.climateMini) View.VISIBLE else View.GONE
-        findViewById<View>(R.id.bottom_divider).apply {
-            visibility = if (prefs.climateMini) View.VISIBLE else View.GONE
-            setBackgroundColor(Palette.withAlpha(Palette.textDim, 80))
-        }
+        bars.getValue(WidgetType.CLIMATE_MINI).background = Ui.pill(this, Palette.dock, 26)
         climateMini.bind(lastEcarx)
-        applyCollapsed()
         editBar.background = Ui.pill(this, Palette.withAlpha(Palette.dock, 245), 24)
         drawer.setBackgroundColor(Palette.scrim)
         findViewById<EditText>(R.id.drawer_search).apply {
@@ -346,12 +351,12 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         buildWidgets(HomeLayout.load(this))
         canvas.setEditing(editing)
         dock.reload()
-        val top = findViewById<View>(R.id.top_bar)
-        top.visibility = if (prefs.topBar) View.VISIBLE else View.GONE
+        val top = bars.getValue(WidgetType.TOP_BAR)
         top.background = Ui.pill(this, Palette.withAlpha(if (Palette.night) 0xFF000000.toInt() else 0xFFFFFFFF.toInt(), 200), 14)
         topBar.reload()
-        findViewById<View>(R.id.side_rail).background = Ui.pill(this, Palette.dock, 24)
+        bars.getValue(WidgetType.SIDE_RAIL).background = Ui.pill(this, Palette.dock, 24)
         sideRail.reload()
+        applyCollapsed()
         appsAdapter.notifyDataSetChanged()
         applyFullScreen()
     }
@@ -498,26 +503,33 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         dock.reload()
     }
 
-    /** Ẩn: chỉ còn hình nền và thanh icon mỏng ở dưới. */
+    /** Ẩn: chỉ còn hình nền và thanh dưới (không có cụm điều hoà, icon nằm giữa). */
     private fun applyCollapsed() {
         val c = prefs.collapsed
-        canvas.visibility = if (c) View.INVISIBLE else View.VISIBLE
-        findViewById<View>(R.id.top_bar).visibility = if (c || !prefs.topBar) View.GONE else View.VISIBLE
-        val mini = prefs.climateMini && !c
-        findViewById<View>(R.id.climate_mini).visibility = if (mini) View.VISIBLE else View.GONE
-        findViewById<View>(R.id.bottom_divider).visibility = if (mini) View.VISIBLE else View.GONE
-        val bottom = findViewById<View>(R.id.bottom_bar)
-        bottom.layoutParams = bottom.layoutParams.apply {
-            height = Ui.dp(this@MainActivity, if (c) 76 else DockBar.heightDp(prefs))
-        }
-        findViewById<View>(R.id.side_rail).visibility = if (prefs.sideRail && !c) View.VISIBLE else View.GONE
-        // Khi ẩn tất cả: thanh icon nằm giữa
-        val dockRow = findViewById<View>(R.id.dock)
+        canvas.showOnly(if (c) { s -> s.type == WidgetType.BOTTOM_BAR } else null)
+        val dockRow = bars.getValue(WidgetType.BOTTOM_BAR).findViewById<View>(R.id.dock)
         (dockRow.layoutParams as? FrameLayout.LayoutParams)?.let {
             it.gravity = if (c) android.view.Gravity.CENTER else android.view.Gravity.START or android.view.Gravity.CENTER_VERTICAL
             dockRow.layoutParams = it
         }
     }
+
+    /** Các thanh lấy một lần lúc mở (sau đó chúng chuyển qua lại giữa các khung widget). */
+    private lateinit var bars: Map<WidgetType, View>
+
+    /** Dọn dẹp: đóng app chạy nền, giữ nhạc đang phát, bản đồ, THT Voice. */
+    override fun cleanup() {
+        val keep = setOfNotNull(lastMedia?.pkg, navPackage())
+        toast("Đang dọn dẹp…")
+        Thread {
+            val r = vn.tht.launcher.system.Cleaner.clean(this, keep)
+            runOnUiThread {
+                toast("Đã dọn ${r.apps} ứng dụng" + if (r.freedMb > 0) ", giải phóng ~${r.freedMb} MB RAM" else "")
+            }
+        }.start()
+    }
+
+    override fun barView(type: WidgetType): View = bars.getValue(if (type.isBar) type else WidgetType.BOTTOM_BAR)
 
     // ---- Nhập chính xác vị trí / kích thước ----
 

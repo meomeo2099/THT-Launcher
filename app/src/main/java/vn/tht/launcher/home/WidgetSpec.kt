@@ -28,7 +28,15 @@ enum class WidgetType(val title: String, val group: String, val defaultW: Int, v
     VOLUME("Thanh âm lượng", "Thanh trượt", 96, 560),
     BRIGHTNESS("Thanh độ sáng", "Thanh trượt", 96, 560),
     APP("Lối tắt ứng dụng", "Ứng dụng", 200, 200),
+    TOP_BAR("Thanh trạng thái (trên)", "Thanh", 520, 48),
+    BOTTOM_BAR("Thanh dưới (dock)", "Thanh", 1552, 100),
+    CLIMATE_MINI("Cụm điều hoà gọn", "Thanh", 320, 100),
+    SIDE_RAIL("Thanh dọc", "Thanh", 72, 440),
 }
+
+/** Các thanh: mỗi loại chỉ có một trên màn hình. */
+val WidgetType.isBar get() = this == WidgetType.TOP_BAR || this == WidgetType.BOTTOM_BAR ||
+    this == WidgetType.SIDE_RAIL || this == WidgetType.CLIMATE_MINI
 
 /**
  * Vị trí/kích thước một widget, đơn vị dp trên khung thiết kế [HomeLayout.DESIGN_W]×[HomeLayout.DESIGN_H].
@@ -67,23 +75,28 @@ object HomeLayout {
     private const val TAG = "HomeLayout"
     private const val FILE = "home.json"
 
-    /** Khung thiết kế: màn 1920×720dp trừ dock và lề. */
+    /** Khung thiết kế: toàn màn 1920×720dp (kể cả các thanh). */
     const val DESIGN_W = 1920
-    const val DESIGN_H = 600
+    const val DESIGN_H = 720
+    /** Tăng khi đổi khung: bố cục cũ được thay bằng mặc định. */
+    private const val VERSION = 3
     const val GRID = 20
-    const val MIN_SIZE = 80
+    const val MIN_SIZE = 40
 
     /** Bố cục mặc định dạng lưới (giống bố cục phổ biến của người dùng AutoEasy), khe 16dp. */
     fun defaults(): List<WidgetSpec> = listOf(
-        WidgetSpec("brightness", WidgetType.BRIGHTNESS, 16, 16, 96, 568),
-        WidgetSpec("volume", WidgetType.VOLUME, 128, 16, 96, 568),
-        WidgetSpec("nav", WidgetType.NAV, 240, 16, 620, 568),
-        WidgetSpec("media", WidgetType.MEDIA, 876, 16, 520, 568),
-        WidgetSpec("clock", WidgetType.CLOCK_TILE, 1412, 16, 492, 272),
-        WidgetSpec("fuel", WidgetType.STAT_FUEL, 1412, 304, 238, 132),
-        WidgetSpec("voltage", WidgetType.STAT_VOLTAGE, 1666, 304, 238, 132),
-        WidgetSpec("bt", WidgetType.BLUETOOTH, 1412, 452, 238, 132),
-        WidgetSpec("wifi", WidgetType.WIFI, 1666, 452, 238, 132),
+        WidgetSpec("top_bar", WidgetType.TOP_BAR, 700, 8, 520, 48),
+        WidgetSpec("brightness", WidgetType.BRIGHTNESS, 16, 72, 96, 528),
+        WidgetSpec("volume", WidgetType.VOLUME, 128, 72, 96, 528),
+        WidgetSpec("nav", WidgetType.NAV, 240, 72, 620, 528),
+        WidgetSpec("media", WidgetType.MEDIA, 876, 72, 520, 528),
+        WidgetSpec("clock", WidgetType.CLOCK_TILE, 1412, 72, 492, 248),
+        WidgetSpec("fuel", WidgetType.STAT_FUEL, 1412, 336, 238, 124),
+        WidgetSpec("voltage", WidgetType.STAT_VOLTAGE, 1666, 336, 238, 124),
+        WidgetSpec("bt", WidgetType.BLUETOOTH, 1412, 476, 238, 124),
+        WidgetSpec("wifi", WidgetType.WIFI, 1666, 476, 238, 124),
+        WidgetSpec("climate_mini", WidgetType.CLIMATE_MINI, 16, 612, 320, 100),
+        WidgetSpec("bottom_bar", WidgetType.BOTTOM_BAR, 352, 612, 1552, 100),
     )
 
     private fun file(c: Context) = File(c.filesDir, FILE)
@@ -92,8 +105,12 @@ object HomeLayout {
         val f = file(c)
         if (!f.exists()) defaults().toMutableList()
         else {
-            val arr = JSONObject(f.readText()).getJSONArray("widgets")
-            (0 until arr.length()).mapNotNull { WidgetSpec.fromJson(arr.getJSONObject(it)) }.toMutableList()
+            val json = JSONObject(f.readText())
+            if (json.optInt("version", 1) < VERSION) defaults().toMutableList()
+            else {
+                val arr = json.getJSONArray("widgets")
+                (0 until arr.length()).mapNotNull { WidgetSpec.fromJson(arr.getJSONObject(it)) }.toMutableList()
+            }
         }
     } catch (t: Throwable) {
         Log.w(TAG, "home.json hỏng, dùng mặc định: $t")
@@ -102,7 +119,7 @@ object HomeLayout {
 
     fun save(c: Context, list: List<WidgetSpec>) {
         try {
-            val json = JSONObject().put("version", 1)
+            val json = JSONObject().put("version", VERSION)
                 .put("widgets", JSONArray().apply { list.forEach { put(it.toJson()) } })
             file(c).writeText(json.toString())
         } catch (t: Throwable) {
@@ -138,6 +155,10 @@ object WidgetSpecIcons {
         WidgetType.VOLUME -> "speaker"
         WidgetType.BRIGHTNESS -> "sun"
         WidgetType.APP -> "apps"
+        WidgetType.TOP_BAR -> "chevron-up"
+        WidgetType.BOTTOM_BAR -> "chevron-down"
+        WidgetType.SIDE_RAIL -> "chevron-left"
+        WidgetType.CLIMATE_MINI -> "climate"
     }
 }
 
@@ -148,6 +169,7 @@ fun groupIcon(group: String) = when (group) {
     "Xe" -> "car"
     "Ô nhỏ" -> "wifi"
     "Ứng dụng" -> "apps"
+    "Thanh" -> "shortcut"
     "Thanh trượt" -> "brightness"
     else -> "plus"
 }

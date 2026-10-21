@@ -83,6 +83,11 @@ class HomeCanvas(context: Context) : ViewGroup(context) {
     /** Chạm (không kéo) một widget trong chế độ sửa: mở hộp nhập vị trí/kích thước. */
     var onWidgetTap: (WidgetSpec) -> Unit = {}
 
+    /** Chỉ hiện các widget thoả [keep] (null = hiện tất cả). */
+    fun showOnly(keep: ((WidgetSpec) -> Boolean)?) {
+        frames.forEach { it.visibility = if (keep == null || keep(it.spec)) VISIBLE else INVISIBLE }
+    }
+
     /** Dựng lại vị trí sau khi đổi số liệu bằng tay. */
     fun relayout() = requestLayout()
 

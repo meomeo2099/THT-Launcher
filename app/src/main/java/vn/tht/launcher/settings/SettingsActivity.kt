@@ -64,13 +64,10 @@ class SettingsActivity : Activity() {
         section("Dock")
         choice("Cỡ dock", mapOf("compact" to "Gọn", "normal" to "Thường", "large" to "Lớn"), { prefs.dockSize }) { prefs.dockSize = it }
         toggle("Hiện tên dưới biểu tượng", { prefs.dockLabels }) { prefs.dockLabels = it }
-        toggle("Cụm điều hoà ở đầu thanh dưới", { prefs.climateMini }) { prefs.climateMini = it }
-        toggle("Thanh dọc bên trái (nhấn giữ một ô để sửa)", { prefs.sideRail }) { prefs.sideRail = it }
 
         slider("Độ đặc dock", 0, 100, "%", { prefs.dockOpacity }) { prefs.dockOpacity = it }
 
         section("Thanh trạng thái phía trên")
-        toggle("Hiện thanh trạng thái phía trên", { prefs.topBar }) { prefs.topBar = it }
         action("Khôi phục thanh trạng thái mặc định", "Wi-Fi · Ứng dụng · Nhiệt độ máy · Xăng · Điện áp · Sưởi ghế · Home. Nhấn giữ một ô trên thanh để di chuyển/xoá, \"+\" để thêm") {
             confirm("Đưa thanh trạng thái phía trên về mặc định?") {
                 vn.tht.launcher.shortcuts.ShortcutStore.save(this, vn.tht.launcher.shortcuts.ShortcutStore.TOPBAR_DEFAULTS,
@@ -91,6 +88,12 @@ class SettingsActivity : Activity() {
         }
 
         section("Khởi động & hệ thống")
+        action("Dọn dẹp ngay", "Đóng app chạy nền để giải phóng RAM (giữ nhạc, bản đồ, THT Voice)") {
+            Thread {
+                val r = vn.tht.launcher.system.Cleaner.clean(this, emptySet())
+                runOnUiThread { toast("Đã dọn ${r.apps} ứng dụng" + if (r.freedMb > 0) ", giải phóng ~${r.freedMb} MB" else "") }
+            }.start()
+        }
         action("Đặt làm màn hình chính", "Chọn THT Launcher → Luôn luôn") {
             runCatching { startActivity(Intent(Settings.ACTION_HOME_SETTINGS)) }
                 .onFailure { startActivity(Intent(Settings.ACTION_SETTINGS)) }
