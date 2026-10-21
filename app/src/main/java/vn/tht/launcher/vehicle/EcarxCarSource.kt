@@ -190,6 +190,7 @@ class EcarxCarSource(
             ambientOn = ifSupported(f.AMBIENT_SWITCH) { getInt(f.AMBIENT_SWITCH) }?.let { it == f.ON },
             autoOn = ifSupported(f.HVAC_AUTO) { getInt(f.HVAC_AUTO) }?.let { it == f.ON },
             recirc = ifSupported(f.HVAC_CIRCULATION) { f.levelOf(f.HVAC_CIRCULATION, getInt(f.HVAC_CIRCULATION)) },
+            blowing = ifSupported(f.HVAC_BLOWING_MODE) { f.levelOf(f.HVAC_BLOWING_MODE, getInt(f.HVAC_BLOWING_MODE)) },
             defrostFront = ifSupported(f.HVAC_DEFROST_FRONT) { getInt(f.HVAC_DEFROST_FRONT) }?.let { it == f.ON },
             defrostRear = ifSupported(f.HVAC_DEFROST_REAR) { getInt(f.HVAC_DEFROST_REAR) }?.let { it == f.ON },
             seatHeatLeft = ifSupported(f.HVAC_SEAT_HEATING, f.ZONE_ROW_1_LEFT) {
@@ -250,6 +251,8 @@ data class EcarxInfo(
     val autoOn: Boolean? = null,
     /** 1 gió trong, 2 gió ngoài, 3 tự động. */
     val recirc: Int? = null,
+    /** Hướng gió: 1 mặt, 2 chân, 3 mặt+chân, 4 kính… */
+    val blowing: Int? = null,
     val defrostFront: Boolean? = null,
     val defrostRear: Boolean? = null,
     val seatHeatLeft: Int? = null,

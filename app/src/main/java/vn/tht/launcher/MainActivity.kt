@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private lateinit var topBar: DockBar
     private lateinit var sideRail: DockBar
     private lateinit var climateMini: vn.tht.launcher.home.ClimateMini
+    private lateinit var fanMini: vn.tht.launcher.home.FanMini
     private var lastStatus: DockBar.Status? = null
     private lateinit var canvas: HomeCanvas
     private lateinit var drawer: View
@@ -90,6 +91,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
             lastEcarx = ecarx.readInfo()
             widgets.values.forEach { it.onEcarx(lastEcarx) }
             if (::climateMini.isInitialized) climateMini.bind(lastEcarx)
+            if (::fanMini.isInitialized) fanMini.bind(lastEcarx)
             handler.postDelayed(this, ECARX_POLL_MS)
         }
     }
@@ -121,6 +123,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
             WidgetType.BOTTOM_BAR to findViewById(R.id.bottom_bar),
             // Cụm điều hoà gọn: khung riêng, đặt như widget
             WidgetType.CLIMATE_MINI to FrameLayout(this),
+            WidgetType.FAN_MINI to vn.tht.launcher.ui.FitFrame(this).apply { val p = Ui.dp(this@MainActivity, 6); setPadding(p, p, p, p) },
         )
         val profile = (application as LauncherApp).profile
         prefs = Prefs(this)
@@ -173,6 +176,9 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         )
         climateMini = vn.tht.launcher.home.ClimateMini(this, controller, ::openClimate, ::toast)
         (bars.getValue(WidgetType.CLIMATE_MINI) as FrameLayout).addView(climateMini,
+            FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT, android.view.Gravity.CENTER))
+        fanMini = vn.tht.launcher.home.FanMini(this, controller, ::openClimate, ::toast)
+        (bars.getValue(WidgetType.FAN_MINI) as FrameLayout).addView(fanMini,
             FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT, android.view.Gravity.CENTER))
         topBar = DockBar(
             this, bars.getValue(WidgetType.TOP_BAR) as LinearLayout, this,
@@ -344,6 +350,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         val bottom = bars.getValue(WidgetType.BOTTOM_BAR)
         bottom.background = Ui.pill(this, Palette.dock, 26)
         bars.getValue(WidgetType.CLIMATE_MINI).background = Ui.pill(this, Palette.dock, 26)
+        bars.getValue(WidgetType.FAN_MINI).background = Ui.pill(this, Palette.dock, 26)
+        fanMini.bind(lastEcarx)
         climateMini.bind(lastEcarx)
         editBar.background = Ui.pill(this, Palette.withAlpha(Palette.dock, 245), 24)
         drawer.setBackgroundColor(Palette.scrim)

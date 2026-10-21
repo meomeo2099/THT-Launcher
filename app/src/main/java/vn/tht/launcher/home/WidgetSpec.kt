@@ -32,12 +32,13 @@ enum class WidgetType(val title: String, val group: String, val defaultW: Int, v
     TOP_BAR("Thanh trạng thái (trên)", "Thanh", 520, 48),
     BOTTOM_BAR("Thanh dưới (dock)", "Thanh", 1552, 100),
     CLIMATE_MINI("Cụm điều hoà gọn", "Thanh", 320, 100),
+    FAN_MINI("Cụm quạt gió gọn", "Thanh", 360, 100),
     SIDE_RAIL("Thanh dọc", "Thanh", 72, 440),
 }
 
 /** Các thanh: mỗi loại chỉ có một trên màn hình. */
 val WidgetType.isBar get() = this == WidgetType.TOP_BAR || this == WidgetType.BOTTOM_BAR ||
-    this == WidgetType.SIDE_RAIL || this == WidgetType.CLIMATE_MINI
+    this == WidgetType.SIDE_RAIL || this == WidgetType.CLIMATE_MINI || this == WidgetType.FAN_MINI
 
 /**
  * Vị trí/kích thước một widget, đơn vị dp trên khung thiết kế [HomeLayout.DESIGN_W]×[HomeLayout.DESIGN_H].
@@ -80,7 +81,7 @@ object HomeLayout {
     const val DESIGN_W = 1920
     const val DESIGN_H = 720
     /** Tăng khi đổi khung: bố cục cũ được thay bằng mặc định. */
-    private const val VERSION = 3
+    private const val VERSION = 4
     const val GRID = 20
     const val MIN_SIZE = 40
 
@@ -97,7 +98,8 @@ object HomeLayout {
         WidgetSpec("bt", WidgetType.BLUETOOTH, 1412, 476, 238, 124),
         WidgetSpec("wifi", WidgetType.WIFI, 1666, 476, 238, 124),
         WidgetSpec("climate_mini", WidgetType.CLIMATE_MINI, 16, 612, 320, 100),
-        WidgetSpec("bottom_bar", WidgetType.BOTTOM_BAR, 352, 612, 1552, 100),
+        WidgetSpec("fan_mini", WidgetType.FAN_MINI, 352, 612, 360, 100),
+        WidgetSpec("bottom_bar", WidgetType.BOTTOM_BAR, 728, 612, 1176, 100),
     )
 
     private fun file(c: Context) = File(c.filesDir, FILE)
@@ -161,6 +163,7 @@ object WidgetSpecIcons {
         WidgetType.BOTTOM_BAR -> "chevron-down"
         WidgetType.SIDE_RAIL -> "chevron-left"
         WidgetType.CLIMATE_MINI -> "climate"
+        WidgetType.FAN_MINI -> "fan"
     }
 }
 

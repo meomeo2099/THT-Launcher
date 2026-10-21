@@ -122,7 +122,7 @@ abstract class HomeWidget(protected val host: WidgetHost) {
             WidgetType.BRIGHTNESS -> SliderWidget(host, brightness = true)
             WidgetType.RADIO -> RadioWidget(host)
             WidgetType.IMAGE -> ImageWidget(host, spec)
-            WidgetType.TOP_BAR, WidgetType.BOTTOM_BAR, WidgetType.SIDE_RAIL, WidgetType.CLIMATE_MINI ->
+            WidgetType.TOP_BAR, WidgetType.BOTTOM_BAR, WidgetType.SIDE_RAIL, WidgetType.CLIMATE_MINI, WidgetType.FAN_MINI ->
                 BarWidget(host, host.barView(spec.type))
             WidgetType.CLIMATE -> ClimateWidget(host)
             WidgetType.FUEL -> FuelWidget(host)
