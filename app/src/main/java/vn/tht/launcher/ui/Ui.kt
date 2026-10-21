@@ -144,3 +144,11 @@ object Ui {
         layoutParams = LinearLayout.LayoutParams(0, 0, 1f)
     }
 }
+
+/**
+ * Đặt chữ chỉ khi khác: setText luôn yêu cầu đo lại bố cục (và tính lại cỡ chữ tự co),
+ * nên các widget cập nhật mỗi giây / mỗi 0,5 giây dùng thuộc tính này thay cho `text`.
+ */
+var TextView.textIfChanged: CharSequence
+    get() = text
+    set(v) { if (!android.text.TextUtils.equals(text, v)) text = v }

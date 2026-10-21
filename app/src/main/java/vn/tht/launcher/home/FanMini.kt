@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.widget.ImageView
 import android.widget.LinearLayout
 import vn.tht.launcher.ui.Icons
+import vn.tht.launcher.ui.textIfChanged
 import vn.tht.launcher.ui.Palette
 import vn.tht.launcher.ui.Ui
 import vn.tht.launcher.vehicle.EcarxController
@@ -76,12 +77,17 @@ class FanMini(
         ctl.setValue(F.HVAC_BLOWING_MODE, F.ZONE_ALL, F.level(F.HVAC_BLOWING_MODE, n), "Hướng gió: $name", done = ::report)
     }
 
+    private var drawn: List<Any?>? = null
+
     fun bind(e: EcarxInfo?) {
         val on = e?.hvacOn == true
         val lvl = if (on) e?.fanLevel ?: 0 else 0
+        val key = listOf(lvl, e?.fanLevel == null, e?.blowing, Palette.night, Palette.accent)
+        if (key == drawn) return
+        drawn = key
         fanIcon.background = oval(if (lvl > 0) Palette.accent else Palette.button)
         fanIcon.setImageDrawable(Icons.get(context, "fan", if (lvl > 0) Color.WHITE else Palette.text))
-        level.text = if (e?.fanLevel == null) "–" else if (lvl == 0) "Tắt" else "$lvl/${F.FAN_MAX}"
+        level.textIfChanged = if (e?.fanLevel == null) "–" else if (lvl == 0) "Tắt" else "$lvl/${F.FAN_MAX}"
         dots.level = lvl
         blowing = e?.blowing
         val icon = directions.firstOrNull { it.first == blowing }?.second ?: "air-both"

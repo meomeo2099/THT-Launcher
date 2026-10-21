@@ -418,18 +418,14 @@ class SettingsActivity : Activity() {
     }
 }
 
-/** Ảnh nền riêng, lưu thu nhỏ (≤ 1920 px) trong filesDir. */
+/** Ảnh nền riêng, lưu đúng cỡ màn (cắt giữa cho phủ kín) trong filesDir. */
 object Wallpapers {
     fun file(c: android.content.Context, which: String) = File(c.filesDir, "wallpaper_$which.jpg")
 
     fun save(c: android.content.Context, uri: Uri, which: String): Boolean = try {
-        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-        c.contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, bounds) }
-        var sample = 1
-        while (bounds.outWidth / (sample * 2) >= 1920) sample *= 2
-        val bmp = c.contentResolver.openInputStream(uri)?.use {
-            BitmapFactory.decodeStream(it, null, BitmapFactory.Options().apply { inSampleSize = sample })
-        } ?: error("decode null")
+        val (sw, sh) = vn.tht.launcher.ui.Bitmaps.screen(c)
+        val bmp = vn.tht.launcher.ui.Bitmaps.cover(
+            vn.tht.launcher.ui.Bitmaps.decode(c, uri, sw, sh) ?: error("decode null"), sw, sh)
         file(c, which).outputStream().use { bmp.compress(Bitmap.CompressFormat.JPEG, 90, it) }
         true
     } catch (_: Throwable) {

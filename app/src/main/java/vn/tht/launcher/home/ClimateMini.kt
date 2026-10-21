@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.widget.ImageView
 import android.widget.LinearLayout
 import vn.tht.launcher.ui.Icons
+import vn.tht.launcher.ui.textIfChanged
 import vn.tht.launcher.ui.Palette
 import vn.tht.launcher.ui.Ui
 import vn.tht.launcher.vehicle.EcarxController
@@ -59,11 +60,16 @@ class ClimateMini(
         setOnClickListener { onClick() }
     }
 
+    private var drawn: List<Any?>? = null
+
     fun bind(e: EcarxInfo?) {
         val on = e?.hvacOn == true
+        val key = listOf(on, e?.tempC, e?.fanLevel, Palette.night, Palette.accent)
+        if (key == drawn) return
+        drawn = key
         power.background = oval(if (on) Palette.ok else Palette.button)
         power.setImageDrawable(Icons.get(context, "power", if (on) Color.WHITE else Palette.text))
-        temp.text = e?.tempC?.let { String.format(Locale.US, "%.1f°", it) } ?: "--°"
+        temp.textIfChanged = e?.tempC?.let { String.format(Locale.US, "%.1f°", it) } ?: "--°"
         fan.level = if (on) e?.fanLevel ?: 0 else 0
     }
 

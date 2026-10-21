@@ -86,13 +86,21 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private var allApps: List<AppEntry> = emptyList()
 
     private val handler = Handler(Looper.getMainLooper())
+    /** Luồng phụ cho lệnh đọc ECARX (hàng chục lời gọi binder mỗi lượt), để luồng giao diện không bị giật. */
+    private val carIo = android.os.HandlerThread("car-io").apply { start() }
+    private val io = Handler(carIo.looper)
+    /** Launcher đang hiện trên màn (giữa onResume và onPause). */
+    private var inFront = false
     private val ecarxPoll = object : Runnable {
         override fun run() {
-            lastEcarx = ecarx.readInfo()
-            widgets.values.forEach { it.onEcarx(lastEcarx) }
-            if (::climateMini.isInitialized) climateMini.bind(lastEcarx)
-            if (::fanMini.isInitialized) fanMini.bind(lastEcarx)
-            handler.postDelayed(this, ECARX_POLL_MS)
+            val info = ecarx.readInfo()
+            handler.post {
+                lastEcarx = info
+                widgets.values.forEach { it.onEcarx(info) }
+                if (::climateMini.isInitialized) climateMini.bind(info)
+                if (::fanMini.isInitialized) fanMini.bind(info)
+            }
+            io.postDelayed(this, ECARX_POLL_MS)
         }
     }
     private var tickCount = 0
@@ -117,6 +125,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        // Gốc giao diện + ảnh nền đã phủ kín màn: bỏ nền cửa sổ để khỏi vẽ 1920×720 thêm một lần mỗi khung hình
+        window.setBackgroundDrawable(null)
         bars = mapOf(
             WidgetType.TOP_BAR to findViewById(R.id.top_bar),
             WidgetType.SIDE_RAIL to findViewById(R.id.side_rail),
@@ -135,8 +145,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
             if (ready) {
                 // Dò và in ra logcat: adb logcat -s EcarxCarSource
                 ecarx.dumpSupported()
-                handler.removeCallbacks(ecarxPoll)
-                handler.post(ecarxPoll)
+                io.removeCallbacks(ecarxPoll)
+                if (inFront) io.post(ecarxPoll)
             }
         }
         controller = EcarxController(ecarx, { lastVehicle?.speedKmh }, { lastVehicle?.gearText })
@@ -213,6 +223,10 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     override fun onResume() {
         super.onResume()
+        inFront = true
+        // Khi ẩn chỉ ghi chuyến đi/tự động hoá; giờ hiện lại thì cập nhật giao diện theo dữ liệu mới nhất
+        refreshVehicleUi(lastVehicle)
+        if (ecarx.connected) { io.removeCallbacks(ecarxPoll); io.post(ecarxPoll) }
         media.start()
         if (appearanceDirty) applyAppearance() else { dock.reload(); topBar.reload(); sideRail.reload() }
         screensaver.setActive(true)
@@ -232,6 +246,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     }
 
     override fun onPause() {
+        inFront = false
+        io.removeCallbacks(ecarxPoll)
         media.stop()
         screensaver.setActive(false)
         vn.tht.launcher.system.NavAssistService.setLauncherInFront(false)
@@ -241,6 +257,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     override fun onDestroy() {
         handler.removeCallbacksAndMessages(null)
+        io.removeCallbacksAndMessages(null)
+        carIo.quitSafely()
         carSource.stop()
         ecarx.stop()
         controller.shutdown()
@@ -320,6 +338,12 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         d?.odometerKm?.let { app.lastOdometerKm = it }
         app.recorder.onVehicle(d)
         automation.onVehicle(d)
+        if (inFront) refreshVehicleUi(d)
+        else if (prefs.themeMode == "auto" && isNight() != appliedNight) appearanceDirty = true
+    }
+
+    /** Cập nhật widget, thanh trạng thái và theme ngày/đêm; bỏ qua khi launcher đang ẩn sau app khác. */
+    private fun refreshVehicleUi(d: VehicleData?) {
         widgets.values.forEach { it.onVehicle(d) }
         updateDockStatus(d)
         // Theme "tự động": đổi ngày/đêm theo đèn xe
@@ -405,6 +429,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     private fun reloadApps() {
         allApps = AppsRepository.load(this)
+        navCache = null; radioCache = null
         filterApps(findViewById<EditText>(R.id.drawer_search).text.toString())
     }
 
@@ -556,15 +581,11 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         }.onFailure { pendingImage = null; toast("Đầu xe không có trình chọn file") }
     }
 
-    /** Lưu ảnh thu nhỏ (cạnh dài ≤ 1600 px), PNG để giữ nền trong suốt. */
+    /** Lưu ảnh thu nhỏ vừa màn hình (widget không thể lớn hơn màn), PNG để giữ nền trong suốt. */
     private fun saveImage(uri: Uri, dest: java.io.File): Boolean = runCatching {
-        val bounds = android.graphics.BitmapFactory.Options().apply { inJustDecodeBounds = true }
-        contentResolver.openInputStream(uri)?.use { android.graphics.BitmapFactory.decodeStream(it, null, bounds) }
-        var sample = 1
-        while (maxOf(bounds.outWidth, bounds.outHeight) / (sample * 2) >= 1600) sample *= 2
-        val bmp = contentResolver.openInputStream(uri)?.use {
-            android.graphics.BitmapFactory.decodeStream(it, null, android.graphics.BitmapFactory.Options().apply { inSampleSize = sample })
-        } ?: return false
+        val (sw, sh) = vn.tht.launcher.ui.Bitmaps.screen(this)
+        val src = vn.tht.launcher.ui.Bitmaps.decode(this, uri, sh, sh) ?: return false
+        val bmp = vn.tht.launcher.ui.Bitmaps.fit(src, sw, sh)
         dest.outputStream().use { bmp.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }
         true
     }.getOrDefault(false)
@@ -632,10 +653,20 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         "vn.vietmap.live", "com.google.android.apps.maps", "com.waze", "ru.yandex.yandexnavi", "ru.yandex.yandexmaps",
     )
 
-    private fun navPackage(): String? = prefs.navApp.takeIf { it.isNotBlank() && appLabel(it) != null }
-        ?: navCandidates.firstOrNull { appLabel(it) != null }
+    /** Gói + tên app đã dò; giữ lại vì widget hỏi mỗi giây (mỗi lần dò là vài lời gọi PackageManager). */
+    private class Resolved(val pkg: String?, val label: String?)
+    private var navCache: Resolved? = null
+    private var radioCache: Resolved? = null
 
-    override fun navAppLabel(): String? = navPackage()?.let { appLabel(it) }
+    private fun nav(): Resolved = navCache ?: run {
+        val p = prefs.navApp.takeIf { it.isNotBlank() && appLabel(it) != null }
+            ?: navCandidates.firstOrNull { appLabel(it) != null }
+        Resolved(p, p?.let { appLabel(it) }).also { navCache = it }
+    }
+
+    private fun navPackage(): String? = nav().pkg
+
+    override fun navAppLabel(): String? = nav().label
 
     override fun navLaunchIntent(): Intent? = navPackage()?.let { packageManager.getLaunchIntentForPackage(it) }
 
@@ -644,7 +675,13 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     override fun weather() = vn.tht.launcher.system.Weather.current
 
     /** App radio của đầu xe: gói ECARX trước, rồi bất kỳ app nào có "radio" trong tên gói. */
-    private fun radioPackage(): String? {
+    private fun radioPackage(): String? = radio().pkg
+
+    private fun radio(): Resolved = radioCache ?: findRadio().let { p ->
+        Resolved(p, p?.let { appLabel(it) }).also { if (allApps.isNotEmpty()) radioCache = it }
+    }
+
+    private fun findRadio(): String? {
         val known = listOf("com.ecarx.radio", "com.ecarx.radio.service", "ecarx.radio", "sw.com.dabdrmradio")
         known.firstOrNull { packageManager.getLaunchIntentForPackage(it) != null }?.let { return it }
         return allApps.firstOrNull { it.packageName.contains("radio", ignoreCase = true) }?.packageName
@@ -655,14 +692,14 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         launch(p)
     }
 
-    override fun radioLabel(): String? = radioPackage()?.let { appLabel(it) }
+    override fun radioLabel(): String? = radio().label
 
     override fun openNav() {
         val p = navPackage()
         if (p == null) chooseNavApp() else launch(p)
     }
 
-    override fun chooseNavApp() = pickApp { prefs.navApp = it; toast("Bản đồ: ${appLabel(it) ?: it}") }
+    override fun chooseNavApp() = pickApp { prefs.navApp = it; navCache = null; toast("Bản đồ: ${appLabel(it) ?: it}") }
 
     private val audio by lazy { getSystemService(android.media.AudioManager::class.java) }
 
