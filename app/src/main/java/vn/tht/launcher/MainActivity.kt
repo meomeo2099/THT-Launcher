@@ -536,6 +536,57 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         }.start()
     }
 
+    // ---- Widget ảnh ----
+
+    private var pendingImage: Pair<java.io.File, (Boolean) -> Unit>? = null
+
+    @Suppress("DEPRECATION")
+    override fun pickImage(dest: java.io.File, done: (Boolean) -> Unit) {
+        pendingImage = dest to done
+        runCatching {
+            startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("image/*"), REQ_IMAGE)
+        }.onFailure { pendingImage = null; toast("Đầu xe không có trình chọn file") }
+    }
+
+    /** Lưu ảnh thu nhỏ (cạnh dài ≤ 1600 px), PNG để giữ nền trong suốt. */
+    private fun saveImage(uri: Uri, dest: java.io.File): Boolean = runCatching {
+        val bounds = android.graphics.BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        contentResolver.openInputStream(uri)?.use { android.graphics.BitmapFactory.decodeStream(it, null, bounds) }
+        var sample = 1
+        while (maxOf(bounds.outWidth, bounds.outHeight) / (sample * 2) >= 1600) sample *= 2
+        val bmp = contentResolver.openInputStream(uri)?.use {
+            android.graphics.BitmapFactory.decodeStream(it, null, android.graphics.BitmapFactory.Options().apply { inSampleSize = sample })
+        } ?: return false
+        dest.outputStream().use { bmp.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }
+        true
+    }.getOrDefault(false)
+
+    override fun runImageAction(id: String) {
+        val F = vn.tht.launcher.vehicle.EcarxFunctions
+
+        val r: (vn.tht.launcher.vehicle.EcarxController.Result) -> Unit = { toast((if (it.ok) "✔ " else "✖ ") + it.message) }
+        when (id) {
+            "climate" -> openClimate()
+            "controls" -> openControlPanel(0)
+            "power" -> controller.toggleHvacPower(r)
+            "temp_up" -> controller.tempStep(+1, r)
+            "temp_down" -> controller.tempStep(-1, r)
+            "fan_up" -> controller.fanStep(+1, r)
+            "fan_down" -> controller.fanStep(-1, r)
+            "roof_open" -> controller.setValue(F.BCM_WINDOW, F.ZONE_ROOF, F.ON, "Mở cửa sổ trời", vn.tht.launcher.vehicle.EcarxController.Safety.BELOW_80, r)
+            "roof_close" -> controller.setValue(F.BCM_WINDOW, F.ZONE_ROOF, F.OFF, "Đóng cửa sổ trời", done = r)
+            "curtain_open" -> controller.setValue(F.SUN_CURTAIN_CLOSE, F.ZONE_ALL, F.OFF, "Mở rèm", done = r)
+            "curtain_close" -> controller.setValue(F.SUN_CURTAIN_CLOSE, F.ZONE_ALL, F.ON, "Đóng rèm", done = r)
+            "trunk" -> controller.setValue(F.BCM_DOOR, F.ZONE_DOOR_REAR, F.ON, "Mở cốp", vn.tht.launcher.vehicle.EcarxController.Safety.PARKED_IN_P, r)
+            "prev" -> mediaPrevious()
+            "next" -> mediaNext()
+            "play" -> mediaPlayPause()
+            "vol_up" -> audio?.adjustStreamVolume(android.media.AudioManager.STREAM_MUSIC, android.media.AudioManager.ADJUST_RAISE, android.media.AudioManager.FLAG_SHOW_UI)
+            "vol_down" -> audio?.adjustStreamVolume(android.media.AudioManager.STREAM_MUSIC, android.media.AudioManager.ADJUST_LOWER, android.media.AudioManager.FLAG_SHOW_UI)
+            "mute" -> audio?.adjustStreamVolume(android.media.AudioManager.STREAM_MUSIC, android.media.AudioManager.ADJUST_TOGGLE_MUTE, android.media.AudioManager.FLAG_SHOW_UI)
+        }
+    }
+
     override fun barView(type: WidgetType): View = bars.getValue(if (type.isBar) type else WidgetType.BOTTOM_BAR)
 
     // ---- Nhập chính xác vị trí / kích thước ----
@@ -685,6 +736,17 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQ_IMAGE) {
+            val p = pendingImage ?: return
+            pendingImage = null
+            val uri = data?.data
+            if (resultCode != RESULT_OK || uri == null) return
+            Thread {
+                val ok = saveImage(uri, p.first)
+                runOnUiThread { p.second(ok) }
+            }.start()
+            return
+        }
         if (requestCode != REQ_SETTINGS) return
         applyAppearance()
         if (resultCode == SettingsActivity.RESULT_EDIT_HOME) setEditMode(true)
@@ -720,5 +782,6 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private companion object {
         const val ECARX_POLL_MS = 2000L
         const val REQ_SETTINGS = 10
+        const val REQ_IMAGE = 11
     }
 }

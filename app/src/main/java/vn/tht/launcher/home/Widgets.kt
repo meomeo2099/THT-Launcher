@@ -59,6 +59,10 @@ interface WidgetHost {
     fun openRadio()
     /** View thanh tương ứng (thanh trên / dưới / dọc) để đặt vào khung widget. */
     fun barView(type: WidgetType): View
+    /** Chọn ảnh từ bộ nhớ, lưu (thu nhỏ, giữ nền trong suốt) vào [dest]; [done] báo thành công. */
+    fun pickImage(dest: java.io.File, done: (Boolean) -> Unit)
+    /** Chạy chức năng của vùng ảnh (xem ImageActions). */
+    fun runImageAction(id: String)
     fun radioLabel(): String?
     /** 0..1; null = không đọc được. */
     fun volume(): Float?
@@ -117,6 +121,7 @@ abstract class HomeWidget(protected val host: WidgetHost) {
             WidgetType.VOLUME -> SliderWidget(host, brightness = false)
             WidgetType.BRIGHTNESS -> SliderWidget(host, brightness = true)
             WidgetType.RADIO -> RadioWidget(host)
+            WidgetType.IMAGE -> ImageWidget(host, spec)
             WidgetType.TOP_BAR, WidgetType.BOTTOM_BAR, WidgetType.SIDE_RAIL, WidgetType.CLIMATE_MINI ->
                 BarWidget(host, host.barView(spec.type))
             WidgetType.CLIMATE -> ClimateWidget(host)
