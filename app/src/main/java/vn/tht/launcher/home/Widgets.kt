@@ -16,6 +16,7 @@ import android.widget.TextView
 import vn.tht.launcher.R
 import vn.tht.launcher.media.NowPlaying
 import vn.tht.launcher.ui.Icons
+import vn.tht.launcher.ui.textIfChanged
 import vn.tht.launcher.ui.Palette
 import vn.tht.launcher.ui.Ui
 import vn.tht.launcher.vehicle.EcarxController
@@ -161,13 +162,13 @@ class ClockWidget(host: WidgetHost) : HomeWidget(host) {
 
     override fun onTick() {
         val s = dateFmt.format(java.util.Date())
-        date.text = s.replaceFirstChar { it.uppercase() }
+        date.textIfChanged = s.replaceFirstChar { it.uppercase() }
     }
 
     override fun onVehicle(d: VehicleData?) {
         onTick()
         val t = d?.outsideTempC
-        outside.text = t?.let { String.format(Locale.US, "Ngoài trời %.0f°C", it) } ?: ""
+        outside.textIfChanged = t?.let { String.format(Locale.US, "Ngoài trời %.0f°C", it) } ?: ""
         outsideRow.visibility = if (t == null) View.GONE else View.VISIBLE
     }
 }
@@ -256,16 +257,16 @@ class MediaWidget(host: WidgetHost, private val vertical: Boolean = false) : Hom
     override fun onMedia(np: NowPlaying?) {
         this.np = np
         if (np == null) {
-            source.text = ""
-            title.text = c.getString(if (host.hasMediaPermission()) R.string.no_media else R.string.grant_media)
-            artist.text = ""
+            source.textIfChanged = ""
+            title.textIfChanged = c.getString(if (host.hasMediaPermission()) R.string.no_media else R.string.grant_media)
+            artist.textIfChanged = ""
             art.setImageDrawable(null)
             placeholder.visibility = View.VISIBLE
             play.setImageDrawable(Icons.get(c, "play"))
         } else {
-            source.text = np.source ?: ""
-            title.text = np.title ?: ""
-            artist.text = np.artist ?: ""
+            source.textIfChanged = np.source ?: ""
+            title.textIfChanged = np.title ?: ""
+            artist.textIfChanged = np.artist ?: ""
             if (np.art != null) art.setImageBitmap(np.art) else art.setImageDrawable(null)
             placeholder.visibility = if (np.art != null) View.GONE else View.VISIBLE
             play.setImageDrawable(Icons.get(c, if (np.isPlaying) "pause" else "play"))
@@ -278,11 +279,11 @@ class MediaWidget(host: WidgetHost, private val vertical: Boolean = false) : Hom
         val d = n?.durationMs ?: 0
         val visible = n != null && d > 0
         progress.visibility = if (visible) View.VISIBLE else View.INVISIBLE
-        if (!visible) { pos.text = ""; dur.text = ""; return }
+        if (!visible) { pos.textIfChanged = ""; dur.textIfChanged = ""; return }
         val p = n!!.currentPosition()
         progress.progress = (p * 1000 / d).toInt()
-        pos.text = time(p)
-        dur.text = time(d)
+        pos.textIfChanged = time(p)
+        dur.textIfChanged = time(d)
     }
 }
 
@@ -320,11 +321,11 @@ class ClimateWidget(host: WidgetHost) : HomeWidget(host) {
     }
 
     override fun onEcarx(e: EcarxInfo?) {
-        temp.text = e?.tempC?.let { String.format(Locale.US, "%.1f°", it) } ?: "--°"
+        temp.textIfChanged = e?.tempC?.let { String.format(Locale.US, "%.1f°", it) } ?: "--°"
         fan.level = e?.fanLevel ?: 0
         val on = listOf(e?.hvacOn, e?.acOn, e?.autoOn, e?.defrostFront, e?.defrostRear, (e?.seatHeatLeft ?: 0) > 0)
         toggles.forEachIndexed { i, t -> Ui.setTileActive(t, on[i] == true) }
-        state.text = when {
+        state.textIfChanged = when {
             e == null -> "Chưa nối xe"
             !ctl.canWrite -> "Chỉ đọc"
             e.hvacOn == false -> "Đang tắt"
@@ -339,7 +340,7 @@ class FanDots(c: Context, private val onSet: (Int) -> Unit) : LinearLayout(c) {
         View(c).apply { setOnClickListener { onSet(i + 1) } }
     }
     var level = 0
-        set(v) { field = v; paint() }
+        set(v) { if (field != v) { field = v; paint() } }
 
     init {
         orientation = HORIZONTAL
@@ -377,7 +378,7 @@ class SpeedWidget(host: WidgetHost) : HomeWidget(host) {
     }
 
     override fun onVehicle(d: VehicleData?) {
-        speed.text = d?.speedKmh?.let { String.format(Locale.US, "%.0f", it) } ?: "--"
+        speed.textIfChanged = d?.speedKmh?.let { String.format(Locale.US, "%.0f", it) } ?: "--"
         val g = d?.gearText
         gears.forEach { (k, v) ->
             val on = k == g || (k == "D" && g == "M")
@@ -407,12 +408,12 @@ class FuelWidget(host: WidgetHost) : HomeWidget(host) {
 
     override fun onVehicle(d: VehicleData?) {
         val p = d?.fuelPercent ?: d?.batteryPercent
-        liters.text = d?.fuelLiters?.let { "${it.toInt()} L" } ?: p?.let { "${it.toInt()}%" } ?: "–"
+        liters.textIfChanged = d?.fuelLiters?.let { "${it.toInt()} L" } ?: p?.let { "${it.toInt()}%" } ?: "–"
         liters.setTextColor(if (d?.fuelLow == true) Palette.danger else Palette.text)
         bar.progress = p?.toInt() ?: 0
         bar.progressTintList = android.content.res.ColorStateList.valueOf(if (d?.fuelLow == true) Palette.danger else Palette.accent)
-        range.text = d?.rangeKm?.let { String.format(Locale.US, "Còn đi được %.0f km", it) } ?: "Còn đi được –"
-        odo.text = d?.odometerKm?.let { String.format(Locale.US, "ODO %,.0f km", it) } ?: ""
+        range.textIfChanged = d?.rangeKm?.let { String.format(Locale.US, "Còn đi được %.0f km", it) } ?: "Còn đi được –"
+        odo.textIfChanged = d?.odometerKm?.let { String.format(Locale.US, "ODO %,.0f km", it) } ?: ""
     }
 }
 
@@ -462,10 +463,10 @@ class AppWidget(host: WidgetHost, private val spec: WidgetSpec) : HomeWidget(hos
     private fun bind() {
         if (spec.pkg.isBlank()) {
             icon.setImageDrawable(Icons.get(c, "plus"))
-            label.text = "Chọn ứng dụng"
+            label.textIfChanged = "Chọn ứng dụng"
         } else {
             icon.setImageDrawable(host.appIcon(spec.pkg))
-            label.text = host.appLabel(spec.pkg) ?: spec.pkg
+            label.textIfChanged = host.appLabel(spec.pkg) ?: spec.pkg
         }
     }
 }
@@ -485,9 +486,9 @@ class TripWidget(host: WidgetHost) : HomeWidget(host) {
 
     override fun onVehicle(d: VehicleData?) {
         val t = host.currentTrip()
-        dist.text = t?.let { String.format(Locale.US, "%.1f km", it.distanceKm) } ?: "Máy tắt"
-        time.text = t?.let { "Lái ${it.driveSec / 60} phút · TB ${it.avgSpeed.toInt()} km/h" } ?: ""
-        today.text = String.format(Locale.US, "Hôm nay %.1f km", host.todayKm())
+        dist.textIfChanged = t?.let { String.format(Locale.US, "%.1f km", it.distanceKm) } ?: "Máy tắt"
+        time.textIfChanged = t?.let { "Lái ${it.driveSec / 60} phút · TB ${it.avgSpeed.toInt()} km/h" } ?: ""
+        today.textIfChanged = String.format(Locale.US, "Hôm nay %.1f km", host.todayKm())
     }
 }
 

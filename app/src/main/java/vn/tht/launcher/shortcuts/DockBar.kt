@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import vn.tht.launcher.R
 import vn.tht.launcher.ui.Icons
+import vn.tht.launcher.ui.textIfChanged
 import vn.tht.launcher.ui.Ui
 import vn.tht.launcher.vehicle.HvacOpener
 
@@ -79,9 +80,11 @@ class DockBar(
             else -> "plus" to "?"
         }
         val active = metric == "seat_heat" && (s.seatHeatLevel ?: 0) > 0
-        icon.setImageDrawable(Icons.get(context, key, if (active) vn.tht.launcher.ui.Palette.accent else vn.tht.launcher.ui.Palette.text))
-        text.text = value
-        text.visibility = if (value.isEmpty()) android.view.View.GONE else android.view.View.VISIBLE
+        val tint = if (active) vn.tht.launcher.ui.Palette.accent else vn.tht.launcher.ui.Palette.text
+        if (icon.tag != "$key/$tint") { icon.tag = "$key/$tint"; icon.setImageDrawable(Icons.get(context, key, tint)) }
+        text.textIfChanged = value
+        val vis = if (value.isEmpty()) android.view.View.GONE else android.view.View.VISIBLE
+        if (text.visibility != vis) text.visibility = vis
     }
 
     private fun statusCell(s: Shortcut, index: Int) = Ui.hbox(context, Gravity.CENTER).apply {

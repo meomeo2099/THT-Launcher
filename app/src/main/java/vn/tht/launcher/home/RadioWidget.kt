@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import vn.tht.launcher.R
 import vn.tht.launcher.media.NowPlaying
 import vn.tht.launcher.ui.Icons
+import vn.tht.launcher.ui.textIfChanged
 import vn.tht.launcher.ui.Palette
 import vn.tht.launcher.ui.Ui
 
@@ -54,15 +55,15 @@ class RadioWidget(host: WidgetHost) : HomeWidget(host) {
     override fun onMedia(np: NowPlaying?) {
         active = np?.pkg?.contains("radio", ignoreCase = true) == true
         if (active) {
-            station.text = np!!.title?.takeIf { it.isNotBlank() } ?: "Radio"
-            sub.text = listOfNotNull(np.artist, np.source).joinToString(" · ")
+            station.textIfChanged = np!!.title?.takeIf { it.isNotBlank() } ?: "Radio"
+            sub.textIfChanged = listOfNotNull(np.artist, np.source).joinToString(" · ")
             play.setImageDrawable(Icons.get(c, if (np.isPlaying) "pause" else "play"))
         } else {
-            station.text = "Radio"
-            sub.text = host.radioLabel()?.let { "Chạm để mở $it" } ?: "Không tìm thấy app radio"
+            station.textIfChanged = "Radio"
+            sub.textIfChanged = host.radioLabel()?.let { "Chạm để mở $it" } ?: "Không tìm thấy app radio"
             play.setImageDrawable(Icons.get(c, "play"))
         }
     }
 
-    override fun onTick() { if (!active) sub.text = host.radioLabel()?.let { "Chạm để mở $it" } ?: "Không tìm thấy app radio" }
+    override fun onTick() { if (!active) sub.textIfChanged = host.radioLabel()?.let { "Chạm để mở $it" } ?: "Không tìm thấy app radio" }
 }

@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import vn.tht.launcher.ui.Icons
+import vn.tht.launcher.ui.textIfChanged
 import vn.tht.launcher.ui.Palette
 import vn.tht.launcher.ui.Ui
 import vn.tht.launcher.vehicle.VehicleData
@@ -48,8 +49,13 @@ abstract class SmallTile(host: WidgetHost, iconKey: String, title: String) : Hom
     open fun onTap() {}
 
     /** Đặt trạng thái: [ok] = xanh lá, false = đỏ, null = xám. [frac] = độ dài vạch 0..1. */
+    private var lastState: Triple<String, Boolean?, Int>? = null
+
     protected fun state(text: String, ok: Boolean?, frac: Float = 1f) {
-        value.text = text
+        val key = Triple(text, ok, (frac.coerceIn(0f, 1f) * 100).toInt())
+        if (key == lastState) return
+        lastState = key
+        value.textIfChanged = text
         val color = when (ok) { true -> Palette.ok; false -> Palette.danger; null -> Palette.textDim }
         badge.background = oval(if (ok == null) Palette.button else color)
         badge.drawable?.setTint(if (ok == null) Palette.text else Color.WHITE)
@@ -121,7 +127,15 @@ class ClockTile(host: WidgetHost) : HomeWidget(host) {
     private val wTemp = auto(Ui.text(c, "", 26f, bold = true).apply { gravity = Gravity.END }, 14, 40)
     private val wText = Ui.text(c, "", 14f, dim = true).apply { gravity = Gravity.END; maxLines = 1 }
     private var outsideC: Float? = null
-    private val timeFmt get() = java.text.SimpleDateFormat(if (host.prefs.clock24h) "HH:mm" else "h:mm a", Locale.US)
+    private var fmt24: Boolean? = null
+    private var timeFmtCache: java.text.SimpleDateFormat? = null
+    private val timeFmt: java.text.SimpleDateFormat
+        get() {
+            val h24 = host.prefs.clock24h
+            if (h24 != fmt24) { fmt24 = h24; timeFmtCache = java.text.SimpleDateFormat(if (h24) "HH:mm" else "h:mm a", Locale.US) }
+            return timeFmtCache!!
+        }
+    private var wIconKey: String? = null
     private val dateFmt = java.text.SimpleDateFormat("EEEE, d 'tháng' M", Locale("vi", "VN"))
 
     override val view: View = base(18).apply {
@@ -138,17 +152,18 @@ class ClockTile(host: WidgetHost) : HomeWidget(host) {
 
     override fun onTick() {
         val now = java.util.Date()
-        time.text = timeFmt.format(now)
-        date.text = dateFmt.format(now).replaceFirstChar { it.uppercase() }
+        time.textIfChanged = timeFmt.format(now)
+        date.textIfChanged = dateFmt.format(now).replaceFirstChar { it.uppercase() }
         val w = host.weather()
         if (w != null) {
-            wIcon.setImageDrawable(Icons.get(c, w.icon))
-            wTemp.text = String.format(Locale.US, "%+.0f°", w.tempC)
-            wText.text = w.text
+            if (wIconKey != w.icon) { wIconKey = w.icon; wIcon.setImageDrawable(Icons.get(c, w.icon)) }
+            wTemp.textIfChanged = String.format(Locale.US, "%+.0f°", w.tempC)
+            wText.textIfChanged = w.text
         } else {
-            wIcon.setImageDrawable(if (outsideC != null) Icons.get(c, "thermometer", Palette.textDim) else null)
-            wTemp.text = outsideC?.let { String.format(Locale.US, "%+.0f°", it) } ?: ""
-            wText.text = if (outsideC != null) "Ngoài xe" else ""
+            val key = if (outsideC != null) "thermometer" else ""
+            if (wIconKey != key) { wIconKey = key; wIcon.setImageDrawable(if (key.isEmpty()) null else Icons.get(c, key, Palette.textDim)) }
+            wTemp.textIfChanged = outsideC?.let { String.format(Locale.US, "%+.0f°", it) } ?: ""
+            wText.textIfChanged = if (outsideC != null) "Ngoài xe" else ""
         }
     }
 
@@ -210,7 +225,7 @@ class NavWidget(host: WidgetHost) : HomeWidget(host) {
         map.start(intent)
     }
 
-    override fun onTick() { label.text = host.navAppLabel() ?: "Nhấn giữ để chọn app bản đồ" }
+    override fun onTick() { label.textIfChanged = host.navAppLabel() ?: "Nhấn giữ để chọn app bản đồ" }
     override fun onVehicle(d: VehicleData?) = onTick()
 }
 
@@ -220,7 +235,13 @@ class SliderWidget(host: WidgetHost, private val brightness: Boolean) : HomeWidg
         get = { if (brightness) host.brightness() else host.volume() },
         set = { if (brightness) host.setBrightness(it) else host.setVolume(it) })
     override val view: View = slider
-    override fun onTick() = slider.invalidate()
+    private var shown: Float? = null
+
+    /** Âm lượng/độ sáng có thể đổi từ nút vô lăng: vẽ lại chỉ khi giá trị khác lần trước. */
+    override fun onTick() {
+        val v = if (brightness) host.brightness() else host.volume()
+        if (v != shown) { shown = v; slider.invalidate() }
+    }
 }
 
 /** Thanh trượt dọc dùng chung (0..1). */
