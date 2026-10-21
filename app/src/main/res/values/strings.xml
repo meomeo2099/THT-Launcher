@@ -3,4 +3,6 @@
     <string name="no_media">Chưa có nhạc đang phát</string>
     <string name="grant_media">Chạm để cấp quyền đọc nhạc</string>
     <string name="no_vehicle">Không đọc được dữ liệu xe</string>
+    <string name="nav_assist_label">THT Launcher – Quay lại &amp; Màn hình chính</string>
+    <string name="nav_assist_desc">Hiện nút Quay lại / Màn hình chính (hoặc cử chỉ vuốt ở mép dưới) trên mọi app, cho đầu xe không có thanh điều hướng. Chỉ thực hiện khi bạn bấm hoặc vuốt; không đọc nội dung màn hình.</string>
 </resources>

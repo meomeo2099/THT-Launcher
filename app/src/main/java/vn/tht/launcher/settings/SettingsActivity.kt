@@ -87,6 +87,21 @@ class SettingsActivity : Activity() {
             confirm("Đưa widget về bố cục mặc định?") { HomeLayout.reset(this); toast("Đã khôi phục") }
         }
 
+        section("Điều hướng (Quay lại / Màn hình chính)")
+        val navOn = vn.tht.launcher.system.NavAssistService.isEnabled(this)
+        action("Dịch vụ điều hướng", if (navOn) "Đang bật" else "Chưa bật · chạm để bật (Trợ năng của Android)") {
+            if (!vn.tht.launcher.system.NavAssistService.tryEnable(this) || !vn.tht.launcher.system.NavAssistService.isEnabled(this)) {
+                toast("Bật \"THT Launcher – Quay lại & Màn hình chính\" trong Trợ năng")
+                runCatching { startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)) }
+            } else { toast("Đã bật"); render() }
+        }
+        choice("Kiểu điều hướng", mapOf(
+            "buttons" to "Nút nổi ← ⌂ (nhấn giữ để kéo)",
+            "gestures" to "Cử chỉ: vuốt lên = Home, vuốt ngang = Quay lại",
+            "both" to "Cả hai",
+            "off" to "Tắt",
+        ), { prefs.sp.getString("nav_mode", "buttons") ?: "buttons" }) { prefs.sp.edit().putString("nav_mode", it).apply() }
+
         section("Khởi động & hệ thống")
         action("Dọn dẹp ngay", "Đóng app chạy nền để giải phóng RAM (giữ nhạc, bản đồ, THT Voice)") {
             Thread {

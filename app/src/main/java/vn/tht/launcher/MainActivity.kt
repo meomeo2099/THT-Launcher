@@ -205,6 +205,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         media.start()
         if (appearanceDirty) applyAppearance() else { dock.reload(); topBar.reload(); sideRail.reload() }
         screensaver.setActive(true)
+        vn.tht.launcher.system.NavAssistService.setLauncherInFront(true)
         handler.removeCallbacks(tick)
         handler.post(tick)
     }
@@ -222,6 +223,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     override fun onPause() {
         media.stop()
         screensaver.setActive(false)
+        vn.tht.launcher.system.NavAssistService.setLauncherInFront(false)
         handler.removeCallbacks(tick)
         super.onPause()
     }
