@@ -172,6 +172,13 @@ class SettingsActivity : Activity() {
             startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
         }
 
+        section("Cập nhật")
+        action("Phiên bản hiện tại", runCatching { packageManager.getPackageInfo(packageName, 0).versionName }.getOrNull() ?: "?") {}
+        action("Kiểm tra cập nhật", "Tải bản mới từ GitHub Releases của THT Launcher") { checkUpdate() }
+        toggle("Tự kiểm tra mỗi ngày", { prefs.sp.getBoolean(vn.tht.launcher.system.Updater.KEY_AUTO, true) }) {
+            prefs.sp.edit().putBoolean(vn.tht.launcher.system.Updater.KEY_AUTO, it).apply()
+        }
+
         section("Sao lưu")
         action("Xuất cài đặt", "Cài đặt, bố cục widget và dock ra file JSON") {
             startActivityForResult(Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
@@ -303,6 +310,17 @@ class SettingsActivity : Activity() {
                 prefs.autoplayPlayer = if (i == 0) "" else apps[i - 1].packageName
                 render()
             }.show()
+    }
+
+    private fun checkUpdate() {
+        toast("Đang kiểm tra…")
+        Thread {
+            val r = vn.tht.launcher.system.Updater.check(this)
+            runOnUiThread {
+                if (r == null) toast("Đang dùng bản mới nhất (hoặc không có mạng)")
+                else vn.tht.launcher.system.UpdateUi.offer(this, r)
+            }
+        }.start()
     }
 
     private fun weatherPlace() {

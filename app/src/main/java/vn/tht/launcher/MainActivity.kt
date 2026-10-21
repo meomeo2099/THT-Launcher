@@ -198,6 +198,11 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         carSource.start()
         ecarx.start()
         Autostart.runIfPending(this)
+        // Tự kiểm tra cập nhật tối đa mỗi ngày một lần
+        if (vn.tht.launcher.system.Updater.shouldAutoCheck(this)) Thread {
+            val r = vn.tht.launcher.system.Updater.check(this) ?: return@Thread
+            runOnUiThread { vn.tht.launcher.system.UpdateUi.offer(this, r) }
+        }.start()
     }
 
     override fun onResume() {
