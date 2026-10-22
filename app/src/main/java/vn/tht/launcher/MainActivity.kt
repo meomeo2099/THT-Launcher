@@ -67,6 +67,19 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private lateinit var ecarx: EcarxCarSource
     private lateinit var media: MediaWatcher
     override val radio by lazy { vn.tht.launcher.radio.EcarxRadio(this) }
+    private val appWidgets by lazy { vn.tht.launcher.home.AppWidgets(this) }
+
+    override fun appWidgetView(id: Int): View? = appWidgets.createView(id)
+
+    override fun onStart() {
+        super.onStart()
+        appWidgets.startListening()
+    }
+
+    override fun onStop() {
+        appWidgets.stopListening()
+        super.onStop()
+    }
     private lateinit var dock: DockBar
     private lateinit var topBar: DockBar
     private lateinit var sideRail: DockBar
@@ -205,7 +218,10 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         canvas = HomeCanvas(this).apply {
             onLongPress = { setEditMode(true) }
             onChanged = { HomeLayout.save(this@MainActivity, specs()) }
-            onRemove = { widgets.remove(it.id) }
+            onRemove = {
+                widgets.remove(it.id)
+                if (it.type == WidgetType.ANDROID_WIDGET) it.pkg.toIntOrNull()?.let { id -> appWidgets.delete(id) }
+            }
             onWidgetTap = { exactDialog(it) }
         }
         findViewById<FrameLayout>(R.id.canvas_container).addView(canvas)
@@ -374,6 +390,15 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
                 types.map { t -> vn.tht.launcher.ui.IconList.Item(t.title, with(vn.tht.launcher.home.WidgetSpecIcons) { t.iconKey }) }, columns = 2) { i ->
                 if (types[i].isBar && canvas.specs().any { it.type == types[i] }) {
                     toast("Thanh này đã có trên màn hình"); return@show
+                }
+                if (types[i] == WidgetType.ANDROID_WIDGET) {
+                    appWidgets.pick { id ->
+                        if (id == null) return@pick toast("Chưa thêm widget")
+                        addWidget(WidgetSpec.new(types[i]).also { it.pkg = id.toString() })
+                        canvas.setEditing(true)
+                        HomeLayout.save(this, canvas.specs())
+                    }
+                    return@show
                 }
                 addWidget(WidgetSpec.new(types[i]))
                 canvas.setEditing(true)
@@ -831,6 +856,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (appWidgets.onResult(requestCode, resultCode)) return
         if (requestCode == REQ_IMAGE) {
             val p = pendingImage ?: return
             pendingImage = null
