@@ -55,6 +55,7 @@ class EmbeddedMap(private val c: Context, private val onFail: (String) -> Unit) 
                 handler.postDelayed(::tryStart, 300)
             } else {
                 Log.w(TAG, "Không nhúng được bản đồ: $cause")
+                lastError = "${i.`package`}: $cause"
                 onFail(cause.javaClass.simpleName + ": " + (cause.message ?: ""))
             }
         }
@@ -71,7 +72,9 @@ class EmbeddedMap(private val c: Context, private val onFail: (String) -> Unit) 
         super.onDetachedFromWindow()
     }
 
-    private companion object {
-        const val TAG = "EmbeddedMap"
+    companion object {
+        private const val TAG = "EmbeddedMap"
+        /** Lỗi nhúng gần nhất (cho báo cáo chẩn đoán); null = chưa lỗi. */
+        @Volatile var lastError: String? = null
     }
 }

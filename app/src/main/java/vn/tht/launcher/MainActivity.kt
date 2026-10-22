@@ -927,21 +927,88 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
             }.start()
             return
         }
+        if (requestCode == REQ_REPORT) {
+            val uri = data?.data
+            if (resultCode != RESULT_OK || uri == null) return
+            io.post {
+                val ok = runCatching {
+                    contentResolver.openOutputStream(uri)?.use { it.write(buildReport().toByteArray()) } != null
+                }.getOrDefault(false)
+                handler.post { toast(if (ok) "Đã lưu báo cáo chẩn đoán" else "Không ghi được file") }
+            }
+            return
+        }
         if (requestCode != REQ_SETTINGS) return
+        if (resultCode == SettingsActivity.RESULT_DIAGNOSTICS) { diagnostics(); return }
         applyAppearance()
         if (resultCode == SettingsActivity.RESULT_EDIT_HOME) setEditMode(true)
     }
 
+    /** Tóm tắt kết nối với xe; nút lưu báo cáo đầy đủ ra file (USB…) để gửi nhà phát triển. */
     fun diagnostics() {
+        val v = lastVehicle
         val msg = buildString {
-            appendLine("Profile: ${(application as LauncherApp).profile.displayName}")
-            appendLine("ECARX AdaptAPI: ${ecarx.status}")
+            appendLine("Phiên bản: ${appVersion()}")
             appendLine("Chữ ký platform: ${if (PlatformSignature.verify(this@MainActivity)) "KHỚP – ghi được" else "không khớp – chỉ đọc"}")
-            appendLine("Chứng chỉ firmware: ${PlatformSignature.certSha256(this@MainActivity, "android").take(16)}…")
-            appendLine("Chứng chỉ app: ${PlatformSignature.certSha256(this@MainActivity, packageName).take(16)}…")
-            appendLine("Dữ liệu xe (VHAL): ${if (lastVehicle != null) "có" else "không"}")
+            appendLine("ECARX AdaptAPI: ${ecarx.status}")
+            appendLine("Dữ liệu xe (VHAL): ${if (v != null) "có" else "không"}" + (v?.batteryVoltage?.let { " · ắc quy ${it} V" } ?: ""))
+            appendLine("Radio xe: ${if (radio.available) radio.state?.label() ?: "đã nối" else "không có dịch vụ"}")
+            appendLine("Trợ năng THT: ${if (vn.tht.launcher.system.NavAssistService.isEnabled(this@MainActivity)) "bật" else "tắt"}")
+            vn.tht.launcher.home.EmbeddedMap.lastError?.let { appendLine("Nhúng bản đồ: lỗi – $it") }
         }
-        Dialogs.message(this, "Chẩn đoán", msg.trim())
+        Dialogs.show(this, "Chẩn đoán", Ui.text(this, msg.trim(), 17f).apply { setLineSpacing(0f, 1.25f) }, listOf(
+            Dialogs.Button("Đóng"),
+            Dialogs.Button("Lưu báo cáo đầy đủ", Dialogs.Kind.PRIMARY) { saveReport() },
+        ))
+    }
+
+    private fun appVersion() = runCatching {
+        packageManager.getPackageInfo(packageName, 0).let { "${it.versionName} (${it.versionCode})" }
+    }.getOrDefault("?")
+
+    private fun saveReport() {
+        val name = "tht-chan-doan-" + java.text.SimpleDateFormat("yyyyMMdd-HHmm", java.util.Locale.US).format(java.util.Date()) + ".txt"
+        runCatching {
+            startActivityForResult(Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                .setType("text/plain").putExtra(Intent.EXTRA_TITLE, name), REQ_REPORT)
+        }.onFailure { toast("Đầu xe không có trình lưu file") }
+    }
+
+    /** Báo cáo đầy đủ: máy, chữ ký, ECARX (cả catalog), VHAL, nhạc, radio, lớp nổi, bản đồ nhúng. Chạy trên luồng car-io. */
+    private fun buildReport(): String = buildString {
+        val v = lastVehicle
+        appendLine("== THT Launcher – báo cáo chẩn đoán ${java.util.Date()}")
+        appendLine("Phiên bản app: ${appVersion()}")
+        appendLine("Máy: ${android.os.Build.MANUFACTURER} ${android.os.Build.MODEL} · ${android.os.Build.PRODUCT} · Android ${android.os.Build.VERSION.RELEASE} (API ${android.os.Build.VERSION.SDK_INT})")
+        appendLine("Firmware: ${android.os.Build.FINGERPRINT}")
+        val dm = resources.displayMetrics
+        appendLine("Màn hình: ${dm.widthPixels}×${dm.heightPixels} @${dm.densityDpi}dpi")
+        appendLine()
+        appendLine("== Chữ ký")
+        appendLine("Khớp platform: ${PlatformSignature.verify(this@MainActivity)}")
+        appendLine("Firmware: ${PlatformSignature.certSha256(this@MainActivity, "android")}")
+        appendLine("App: ${PlatformSignature.certSha256(this@MainActivity, packageName)}")
+        appendLine()
+        appendLine("== ECARX")
+        appendLine("Trạng thái: ${ecarx.status} · ghi=${ecarx.writeAllowed}")
+        append(ecarx.report())
+        appendLine()
+        appendLine("== VHAL (lần đọc gần nhất)")
+        appendLine(v?.toString() ?: "(không có)")
+        appendLine()
+        appendLine("== Nhạc / radio")
+        appendLine("Đang phát: ${lastMedia?.let { "${it.title} – ${it.artist} · ${it.source} (${it.pkg}) playing=${it.isPlaying}" } ?: "(không)"}")
+        appendLine("Quyền đọc nhạc: ${media.hasPermission()}")
+        appendLine("Radio: available=${radio.available} state=${radio.state}")
+        appendLine("Đài yêu thích: ${radio.favorites()}")
+        appendLine()
+        appendLine("== Hệ thống")
+        appendLine("Trợ năng THT: ${vn.tht.launcher.system.NavAssistService.isEnabled(this@MainActivity)}")
+        appendLine("Vẽ trên app khác: ${android.provider.Settings.canDrawOverlays(this@MainActivity)}")
+        appendLine("Nhúng bản đồ: bật=${prefs.sp.getBoolean("embed_map", true)} lỗi gần nhất=${vn.tht.launcher.home.EmbeddedMap.lastError ?: "không"}")
+        appendLine("App bản đồ: ${navPackage() ?: "(chưa có)"} · app radio: ${radioPackage() ?: "(chưa có)"}")
+        appendLine("Gói ECARX đã cài: " + listOf("ecarx.hvac.app", "ecarx.xsf.mediacenter", "com.ecarx.radio.service", "com.ecarx.radio", "ecarx.launcher3")
+            .joinToString(", ") { p -> p + if (runCatching { packageManager.getPackageInfo(p, 0) }.isSuccess) "✔" else "✖" })
     }
 
     override fun toast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
@@ -1044,5 +1111,6 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         const val ECARX_POLL_MS = 2000L
         const val REQ_SETTINGS = 10
         const val REQ_IMAGE = 11
+        const val REQ_REPORT = 12
     }
 }
