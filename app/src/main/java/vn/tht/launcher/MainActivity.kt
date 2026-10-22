@@ -127,8 +127,14 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         setContentView(R.layout.activity_main)
         // Gốc giao diện + ảnh nền đã phủ kín màn: bỏ nền cửa sổ để khỏi vẽ 1920×720 thêm một lần mỗi khung hình
         window.setBackgroundDrawable(null)
+        // Thanh trên: hàng icon nằm trong khung tự thu nhỏ, thêm ô trạng thái không bị cắt hai đầu
+        val topRow = findViewById<LinearLayout>(R.id.top_bar)
+        (topRow.parent as? android.view.ViewGroup)?.removeView(topRow)
+        val topHolder = vn.tht.launcher.ui.FitFrame(this, matchHeight = true).apply {
+            addView(topRow, FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT))
+        }
         bars = mapOf(
-            WidgetType.TOP_BAR to findViewById(R.id.top_bar),
+            WidgetType.TOP_BAR to topHolder,
             WidgetType.SIDE_RAIL to findViewById(R.id.side_rail),
             WidgetType.BOTTOM_BAR to findViewById(R.id.bottom_bar),
             // Cụm điều hoà gọn: khung riêng, đặt như widget
@@ -191,7 +197,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         (bars.getValue(WidgetType.FAN_MINI) as FrameLayout).addView(fanMini,
             FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT, android.view.Gravity.CENTER))
         topBar = DockBar(
-            this, bars.getValue(WidgetType.TOP_BAR) as LinearLayout, this,
+            this, topRow, this,
             vn.tht.launcher.shortcuts.ShortcutStore.TOPBAR_FILE, vn.tht.launcher.shortcuts.ShortcutStore.TOPBAR_DEFAULTS,
             compact = true,
         )
