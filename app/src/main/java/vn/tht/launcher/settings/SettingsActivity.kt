@@ -164,6 +164,21 @@ class SettingsActivity : Activity() {
             prefs.sp.edit().putBoolean("embed_map", it).apply()
         }
 
+        section("Điều hoà")
+        val nav = vn.tht.launcher.system.NavAssistService
+        toggle("Ẩn cửa sổ điều hoà gốc khi xe tự bật (cần dịch vụ trợ năng THT)", { prefs.sp.getBoolean(nav.KEY_HIDE_STOCK_HVAC, false) }) {
+            prefs.sp.edit().putBoolean(nav.KEY_HIDE_STOCK_HVAC, it).apply()
+            if (it) ensureNavAssist()
+        }
+        toggle("Khung nhiệt độ nổi trên app khi đổi nhiệt độ / quạt / hướng gió", { prefs.sp.getBoolean(nav.KEY_TEMP_INFO, false) }) {
+            prefs.sp.edit().putBoolean(nav.KEY_TEMP_INFO, it).apply()
+            if (it) ensureNavAssist()
+        }
+        action("Xem thử khung nhiệt độ", "Kéo khung bằng ngón tay – nó sẽ hiện ở chỗ đó") {
+            if (!nav.showTempInfo("24.0°", "Quạt 3/7", "air-both", preview = true)) ensureNavAssist()
+        }
+        action("Đưa khung nhiệt độ về chỗ cũ", "Giữa mép trái màn hình") { nav.resetTempInfo(); toast("Đã đặt lại vị trí") }
+
         section("Xe")
         action("Thống kê chuyến đi", "Quãng đường, tiêu hao, đổ xăng, bảo dưỡng") {
             startActivity(Intent(this, vn.tht.launcher.stats.StatsActivity::class.java))
@@ -289,6 +304,15 @@ class SettingsActivity : Activity() {
 
     private fun confirm(msg: String, ok: () -> Unit) {
         Dialogs.confirm(this, "Khôi phục mặc định", msg, okLabel = "Khôi phục", onOk = ok)
+    }
+
+    /** Các tính năng nổi trên app chạy trong dịch vụ trợ năng: bật giúp (bản platform) hoặc mở Cài đặt trợ năng. */
+    private fun ensureNavAssist() {
+        val nav = vn.tht.launcher.system.NavAssistService
+        if (nav.isEnabled(this)) return
+        if (nav.tryEnable(this)) { toast("Đã bật dịch vụ trợ năng THT Launcher"); return }
+        toast("Hãy bật THT Launcher trong Trợ năng")
+        runCatching { startActivity(Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS)) }
     }
 
     private fun toast(m: String) = Toast.makeText(this, m, Toast.LENGTH_SHORT).show()

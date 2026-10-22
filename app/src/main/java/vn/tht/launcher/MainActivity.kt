@@ -100,6 +100,33 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private val io = Handler(carIo.looper)
     /** Launcher đang hiện trên màn (giữa onResume và onPause). */
     private var inFront = false
+    /** Nhiệt độ/quạt/hướng gió lần đọc trước khi launcher bị che (cho khung nhiệt độ nổi). */
+    private var bgClimate: Triple<Float?, Int?, Int?>? = null
+    private val bgClimatePoll = object : Runnable {
+        override fun run() {
+            val f = vn.tht.launcher.vehicle.EcarxFunctions
+            val zone = if (ecarx.isSupported(f.HVAC_TEMP, f.ZONE_ROW_1_LEFT) == true) f.ZONE_ROW_1_LEFT else f.ZONE_ALL
+            val now = Triple(
+                ecarx.getFloat(f.HVAC_TEMP, zone)?.takeIf { it in f.TEMP_MIN..f.TEMP_MAX },
+                f.levelOf(f.HVAC_FAN_SPEED, ecarx.getInt(f.HVAC_FAN_SPEED)),
+                f.levelOf(f.HVAC_BLOWING_MODE, ecarx.getInt(f.HVAC_BLOWING_MODE)),
+            )
+            val before = bgClimate
+            bgClimate = now
+            if (before != null && now != before && (now.first != null || now.second != null)) handler.post { showTempInfo(now) }
+            io.postDelayed(this, 1000)
+        }
+    }
+
+    private fun showTempInfo(v: Triple<Float?, Int?, Int?>) {
+        val air = when (v.third) { 1 -> "air-upper"; 2 -> "air-lower"; 3 -> "air-both"; 4 -> "front-defrost"; else -> null }
+        val ok = vn.tht.launcher.system.NavAssistService.showTempInfo(
+            v.first?.let { String.format(java.util.Locale.US, "%.1f°", it) } ?: "--°",
+            v.second?.let { if (it == 0) "Quạt tắt" else "Quạt $it/${vn.tht.launcher.vehicle.EcarxFunctions.FAN_MAX}" } ?: "Quạt –",
+            air,
+        )
+        if (!ok) android.util.Log.i("MainActivity", "Khung nhiệt độ: dịch vụ trợ năng chưa chạy")
+    }
     private val ecarxPoll = object : Runnable {
         override fun run() {
             val info = ecarx.readInfo()
@@ -242,6 +269,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         refreshFloatingDock()
         // Khi ẩn chỉ ghi chuyến đi/tự động hoá; giờ hiện lại thì cập nhật giao diện theo dữ liệu mới nhất
         refreshVehicleUi(lastVehicle)
+        io.removeCallbacks(bgClimatePoll)
         if (ecarx.connected) { io.removeCallbacks(ecarxPoll); io.post(ecarxPoll) }
         media.start()
         radio.start()
@@ -267,6 +295,11 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         rememberDockBounds()
         refreshFloatingDock()
         io.removeCallbacks(ecarxPoll)
+        // Khung nhiệt độ nổi: chỉ đọc 3 giá trị điều hoà mỗi giây khi launcher bị che
+        if (ecarx.connected && prefs.sp.getBoolean(vn.tht.launcher.system.NavAssistService.KEY_TEMP_INFO, false)) {
+            bgClimate = null
+            io.post(bgClimatePoll)
+        }
         media.stop()
         radio.stop()
         screensaver.setActive(false)
@@ -494,7 +527,10 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         }
     }
 
-    override fun openNativeHvac() = hvac.open { ok -> if (!ok) toast("Không mở được điều hoà") }
+    override fun openNativeHvac() {
+        vn.tht.launcher.system.NavAssistService.allowStockHvac(15_000)
+        hvac.open { ok -> if (!ok) toast("Không mở được điều hoà") }
+    }
 
     override fun openControlPanel(tab: Int) = ControlCenter(this, ecarx, controller, tab).show()
     override fun openControls() = inLauncher { openControlPanel() }

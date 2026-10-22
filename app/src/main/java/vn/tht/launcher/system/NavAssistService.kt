@@ -35,11 +35,13 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
     private lateinit var prefs: Prefs
     private var pill: View? = null
     private var strip: View? = null
+    private var tempInfo: TempInfoOverlay? = null
     override fun onServiceConnected() {
         instance = this
         wm = getSystemService(WindowManager::class.java)
         prefs = Prefs(this)
         prefs.sp.registerOnSharedPreferenceChangeListener(this)
+        tempInfo = TempInfoOverlay(this, wm, prefs)
         rebuild()
     }
 
@@ -47,13 +49,27 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
         if (instance === this) instance = null
         runCatching { prefs.sp.unregisterOnSharedPreferenceChangeListener(this) }
         removeAll()
+        tempInfo?.remove()
+        tempInfo = null
         super.onDestroy()
     }
 
     override fun onInterrupt() {}
 
     /** Launcher (cùng tiến trình) tự báo khi hiện/ẩn, xem [setLauncherInFront]. */
-    override fun onAccessibilityEvent(e: AccessibilityEvent?) {}
+    /**
+     * Popup điều hoà gốc (app ecarx.hvac.app) vừa hiện mà người dùng bật "Ẩn cửa sổ điều hoà gốc":
+     * đóng ngay bằng lệnh của chính app điều hoà (lệnh này bật/tắt cửa sổ, nên chỉ gửi khi thấy nó hiện).
+     * Bỏ qua khi người dùng vừa chủ động mở điều hoà gốc từ launcher.
+     */
+    override fun onAccessibilityEvent(e: AccessibilityEvent?) {
+        if (e?.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return
+        if (e.packageName?.toString() != HVAC_PACKAGE) return
+        if (!prefs.sp.getBoolean(KEY_HIDE_STOCK_HVAC, false)) return
+        if (android.os.SystemClock.elapsedRealtime() < allowStockUntil) return
+        android.util.Log.i("NavAssist", "Đóng popup điều hoà gốc")
+        vn.tht.launcher.vehicle.HvacOpener(this).open()
+    }
 
     override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
         if (key == KEY_MODE) rebuild()
@@ -170,6 +186,22 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
 
     companion object {
         const val KEY_MODE = "nav_mode"
+        const val KEY_HIDE_STOCK_HVAC = "hide_stock_hvac"
+        const val KEY_TEMP_INFO = "temp_info"
+        private const val HVAC_PACKAGE = "ecarx.hvac.app"
+        @Volatile private var allowStockUntil = 0L
+
+        /** Người dùng chủ động mở điều hoà gốc: đừng tự đóng trong [ms]. */
+        fun allowStockHvac(ms: Long) { allowStockUntil = android.os.SystemClock.elapsedRealtime() + ms }
+
+        /** Hiện khung nhiệt độ nổi; false nếu dịch vụ trợ năng chưa chạy. */
+        fun showTempInfo(temp: String, fan: String, airKey: String?, preview: Boolean = false): Boolean {
+            val t = instance?.tempInfo ?: return false
+            t.show(temp, fan, airKey, if (preview) 8000 else 3500, draggable = preview)
+            return true
+        }
+
+        fun resetTempInfo() { instance?.tempInfo?.resetPosition() }
 
         private var instance: NavAssistService? = null
         /** Launcher đang ở trước: ẩn nút điều hướng. Gọi từ MainActivity.onResume/onPause. */
