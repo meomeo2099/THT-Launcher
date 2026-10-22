@@ -8,12 +8,14 @@ import java.lang.reflect.Method
 
 /**
  * Đọc/ghi dữ liệu xe qua ECARX AdaptAPI 1.1.18.9:
- * `com.ecarx.xui.adaptapi.car.Car.create(context).getICarFunction()` với các hàm
- * `isFunctionSupported(id, zone)`, `get/setFunctionValue(id, zone[, int])`,
- * `get/setCustomizeFunctionValue(id, zone[, float])`.
+ * `com.ecarx.xui.adaptapi.car.Car.create(context)` → `connect()` → chờ `onConnected` →
+ * `getICarFunction()` với các hàm `isFunctionSupported(id, zone)`,
+ * `get/setFunctionValue(id, zone[, int])`, `get/setCustomizeFunctionValue(id, zone[, float])`.
  *
- * Thư viện nằm sẵn trong boot classpath của đầu xe nên chỉ dùng reflection; trên máy khác
- * (điện thoại, máy ảo) đơn giản là không nối được và không có dữ liệu.
+ * Trên đầu xe, AdaptAPI KHÔNG nằm trong classpath của app thường (manifest chỉ khai báo
+ * android.car), nên phải nạp các jar trong /system/framework bằng PathClassLoader riêng.
+ * Car là đối tượng IConnectable: lấy ICarFunction trước khi nối xong sẽ đọc sai / ghi không ăn.
+ * Trên máy khác (điện thoại, máy ảo) đơn giản là không nối được và không có dữ liệu.
  *
  * GHI bị khoá trừ khi [PlatformSignature.verify] xác nhận APK ký cùng chứng chỉ với firmware
  * (gói "android"). Khi bị khoá, [setInt]/[setFloat] trả false và không gọi xuống xe.
@@ -23,12 +25,18 @@ class EcarxCarSource(
     private val onReady: (Boolean) -> Unit = {},
 ) {
     private val handler = Handler(Looper.getMainLooper())
-    private var carFunction: Any? = null
+    @Volatile private var carFunction: Any? = null
+    private var loader: ClassLoader? = null
+    private var car: Any? = null
+    private var watching = false
     private var mSupported: Method? = null
     private var mGetInt: Method? = null
     private var mSetInt: Method? = null
     private var mGetFloat: Method? = null
     private var mSetFloat: Method? = null
+    /** Bản không có vùng: getFunctionValue(id), setFunctionValue(id, value) – dùng cho chức năng toàn xe. */
+    private var mGetIntNoZone: Method? = null
+    private var mSetIntNoZone: Method? = null
     private var attempts = 0
     private val supportCache = java.util.concurrent.ConcurrentHashMap<Long, Boolean>()
 
@@ -38,25 +46,33 @@ class EcarxCarSource(
 
     val connected: Boolean get() = carFunction != null
 
+    /** Trạng thái nối (hiện trong Chẩn đoán). */
+    @Volatile var status: String = "chưa nối"
+        private set
+
     fun start() {
         if (connected) return
         try {
-            val carClass = Class.forName(CAR_CLASS)
-            val create = carClass.methods.firstOrNull {
-                it.name == "create" && it.parameterTypes.size == 1 &&
-                    Context::class.java.isAssignableFrom(it.parameterTypes[0])
-            } ?: error("$CAR_CLASS.create(Context) không có")
-            val car = create.invoke(null, context.applicationContext) ?: error("Car.create trả null")
-            val fn = car.javaClass.methods
-                .firstOrNull { it.name == "getICarFunction" && it.parameterTypes.isEmpty() }
-                ?.invoke(car)
-            if (fn == null) {
-                retry("getICarFunction trả null")
-                return
+            val cl = loader ?: adaptApiLoader().also { loader = it }
+            val c = car ?: createCar(cl).also { car = it }
+            val connectable = runCatching { cl.loadClass(CONNECTABLE) }.getOrNull()
+            if (connectable != null && connectable.isInstance(c)) {
+                if (!watching) watching = watchConnection(cl, connectable, c)
+                val already = runCatching { connectable.getMethod("isConnected").invoke(c) == true }.getOrDefault(false)
+                if (already) {
+                    fetchFunction(c)
+                } else {
+                    status = "đang kết nối dịch vụ xe…"
+                    connectable.getMethod("connect").invoke(c)
+                    // Nếu bản AdaptAPI không gọi onConnected: thử lấy ICarFunction sau một lúc
+                    handler.postDelayed({ if (!connected) fetchFunction(c) }, CONNECT_WAIT_MS)
+                }
+            } else {
+                fetchFunction(c)
             }
-            bind(fn)
         } catch (t: Throwable) {
             Log.w(TAG, "ECARX AdaptAPI không khả dụng: $t")
+            status = "không có AdaptAPI (${t.javaClass.simpleName}: ${t.message})"
             if (DemoCarFunction.enabled(context)) {
                 // Bản debug, không có xe thật: dùng xe giả để xem giao diện (ghi chỉ vào bộ nhớ)
                 Log.i(TAG, "Chế độ demo: dùng DemoCarFunction")
@@ -74,14 +90,78 @@ class EcarxCarSource(
         supportCache.clear()
     }
 
-    private fun retry(reason: String) {
+    /**
+     * ClassLoader có AdaptAPI: của app nếu đã có sẵn, không thì nạp các jar hệ thống của đầu xe
+     * (cha là ClassLoader của app để dùng chung lớp Android).
+     */
+    private fun adaptApiLoader(): ClassLoader {
+        val app = context.classLoader
+        if (runCatching { app.loadClass(CAR_CLASS) }.isSuccess) return app
+        val jars = SYSTEM_JARS.filter { java.io.File(it).exists() }
+        if (jars.isEmpty()) throw ClassNotFoundException("$CAR_CLASS (không có jar AdaptAPI trong /system/framework)")
+        Log.i(TAG, "Nạp AdaptAPI từ ${jars.joinToString(":")}")
+        return dalvik.system.PathClassLoader(jars.joinToString(":"), app)
+    }
+
+    /** `Car.create(Context)`; bản không có hàm này thì tạo `CarImpl(Context)`. */
+    private fun createCar(cl: ClassLoader): Any {
+        val ctx = context.applicationContext
+        val create = runCatching { cl.loadClass(CAR_CLASS) }.getOrNull()?.methods?.firstOrNull {
+            it.name == "create" && it.parameterTypes.size == 1 && Context::class.java.isAssignableFrom(it.parameterTypes[0])
+        }
+        if (create != null) create.invoke(null, ctx)?.let { return it }
+        return cl.loadClass(CAR_IMPL_CLASS).getConstructor(Context::class.java).newInstance(ctx)
+    }
+
+    /** Đăng ký IConnectWatcher: nối xong mới lấy ICarFunction; mất nối thì nối lại. */
+    private fun watchConnection(cl: ClassLoader, connectable: Class<*>, c: Any): Boolean = try {
+        val watcher = cl.loadClass("$CONNECTABLE\$IConnectWatcher")
+        val proxy = java.lang.reflect.Proxy.newProxyInstance(watcher.classLoader, arrayOf(watcher)) { self, m, args ->
+            when (m.name) {
+                "onConnected" -> { handler.post { fetchFunction(c) }; null }
+                "onDisConnected", "onDisconnected" -> { handler.post { onDisconnected() }; null }
+                "hashCode" -> System.identityHashCode(self)
+                "equals" -> self === args?.getOrNull(0)
+                "toString" -> "THTCarConnectWatcher"
+                else -> null
+            }
+        }
+        connectable.methods.first { it.name == "registerConnectWatcher" && it.parameterTypes.size == 1 }.invoke(c, proxy)
+        true
+    } catch (t: Throwable) {
+        Log.w(TAG, "Không đăng ký được IConnectWatcher: $t")
+        false
+    }
+
+    private fun onDisconnected() {
+        Log.w(TAG, "Mất kết nối dịch vụ xe, nối lại sau ${RETRY_MS} ms")
+        carFunction = null
+        supportCache.clear()
+        status = "mất kết nối, đang nối lại…"
+        onReady(false)
+        handler.postDelayed({ start() }, RETRY_MS)
+    }
+
+    private fun fetchFunction(c: Any) {
+        if (connected) return
+        val fn = try {
+            c.javaClass.methods.firstOrNull { it.name == "getICarFunction" && it.parameterTypes.isEmpty() }?.invoke(c)
+        } catch (t: Throwable) {
+            Log.w(TAG, "getICarFunction lỗi: ${t.cause ?: t}")
+            null
+        }
+        if (fn == null) retry("getICarFunction trả null") { fetchFunction(c) } else bind(fn)
+    }
+
+    private fun retry(reason: String, again: () -> Unit) {
         if (++attempts > MAX_ATTEMPTS) {
             Log.w(TAG, "$reason, bỏ cuộc sau $MAX_ATTEMPTS lần")
+            status = "$reason (đã thử $MAX_ATTEMPTS lần)"
             onReady(false)
             return
         }
         Log.i(TAG, "$reason, thử lại ($attempts/$MAX_ATTEMPTS)")
-        handler.postDelayed({ start() }, RETRY_MS)
+        handler.postDelayed(again, RETRY_MS)
     }
 
     private fun bind(fn: Any) {
@@ -93,7 +173,12 @@ class EcarxCarSource(
         mSetInt = find("setFunctionValue", INT, INT, INT)
         mGetFloat = find("getCustomizeFunctionValue", INT, INT)
         mSetFloat = find("setCustomizeFunctionValue", INT, INT, FLOAT)
+        mGetIntNoZone = find("getFunctionValue", INT)
+        mSetIntNoZone = find("setFunctionValue", INT, INT)
+        supportCache.clear()
+        attempts = 0
         carFunction = fn
+        status = "đã nối (${fn.javaClass.simpleName})"
         Log.i(
             TAG, "Đã nối ${fn.javaClass.name}: supported=${mSupported != null} " +
                 "int=${mGetInt != null}/${mSetInt != null} float=${mGetFloat != null}/${mSetFloat != null} " +
@@ -104,13 +189,21 @@ class EcarxCarSource(
 
     // ---- Đọc ----
 
-    /** true = active, false = xe không hỗ trợ, null = không hỏi được. Có cache theo (id, zone). */
+    /**
+     * true = xe có chức năng này (trạng thái "active", hoặc "notactive" = có nhưng đang tạm không dùng,
+     * ví dụ nhiệt độ khi điều hoà tắt), false = xe không có, null = không hỏi được.
+     * Chỉ nhớ kết quả chắc chắn; trạng thái khác (lỗi, chưa sẵn sàng) hỏi lại lần sau.
+     */
     fun isSupported(id: Int, zone: Int = EcarxFunctions.ZONE_ALL): Boolean? {
         val key = (id.toLong() shl 32) or (zone.toLong() and 0xFFFFFFFFL)
         supportCache[key]?.let { return it }
-        val state = rawSupportState(id, zone)
-        val result = state?.equals("active", ignoreCase = true)
-        if (result != null) supportCache[key] = result
+        val state = rawSupportState(id, zone)?.lowercase() ?: return null
+        val result = when (state) {
+            "active", "notactive" -> true
+            "notavailable", "unsupported", "notsupport" -> false
+            else -> return null
+        }
+        supportCache[key] = result
         return result
     }
 
@@ -124,10 +217,16 @@ class EcarxCarSource(
         null
     }
 
-    fun getInt(id: Int, zone: Int = EcarxFunctions.ZONE_ALL): Int? = try {
-        (mGetInt?.invoke(carFunction, id, zone) as? Number)?.toInt()
-    } catch (_: Throwable) {
-        null
+    fun getInt(id: Int, zone: Int = EcarxFunctions.ZONE_ALL): Int? {
+        // Chức năng toàn xe: hỏi bản không vùng trước, không được thì hỏi kèm ZONE_ALL
+        if (zone == EcarxFunctions.ZONE_ALL) {
+            runCatching { (mGetIntNoZone?.invoke(carFunction, id) as? Number)?.toInt() }.getOrNull()?.let { return it }
+        }
+        return try {
+            (mGetInt?.invoke(carFunction, id, zone) as? Number)?.toInt()
+        } catch (_: Throwable) {
+            null
+        }
     }
 
     fun getFloat(id: Int, zone: Int = EcarxFunctions.ZONE_ALL): Float? = try {
@@ -146,19 +245,24 @@ class EcarxCarSource(
     // ---- Ghi (khoá nếu chưa xác minh chữ ký) ----
 
     /** true chỉ nghĩa là AdaptAPI nhận lệnh; người gọi phải đọc lại để xác nhận. */
-    fun setInt(id: Int, zone: Int, value: Int): Boolean = write(mSetInt, id, zone, value)
+    fun setInt(id: Int, zone: Int, value: Int): Boolean {
+        // Nhiều chức năng toàn xe chỉ nhận setFunctionValue(id, value); không ăn thì gửi kèm vùng
+        if (zone == EcarxFunctions.ZONE_ALL && mSetIntNoZone != null && write(mSetIntNoZone, id, null, value)) return true
+        return write(mSetInt, id, zone, value)
+    }
 
     fun setFloat(id: Int, zone: Int, value: Float): Boolean = write(mSetFloat, id, zone, value)
 
-    private fun write(method: Method?, id: Int, zone: Int, value: Any): Boolean {
+    /** [zone] null = gọi bản không có tham số vùng. */
+    private fun write(method: Method?, id: Int, zone: Int?, value: Any): Boolean {
         if (!writeAllowed) {
             Log.w(TAG, "Chặn ghi ${EcarxFunctions.hex(id)}: APK chưa ký bằng khoá platform của firmware")
             return false
         }
         if (method == null || carFunction == null) return false
         return try {
-            val r = method.invoke(carFunction, id, zone, value)
-            Log.i(TAG, "set ${EcarxFunctions.hex(id)} zone=$zone value=$value -> $r")
+            val r = if (zone == null) method.invoke(carFunction, id, value) else method.invoke(carFunction, id, zone, value)
+            Log.i(TAG, "set ${EcarxFunctions.hex(id)} zone=${zone ?: "-"} value=$value -> $r")
             when (r) {
                 is Boolean -> r
                 is Number -> r.toInt() != 0
@@ -216,11 +320,11 @@ class EcarxCarSource(
         var n = 0
         for (fn in EcarxFunctions.ALL) {
             val state = rawSupportState(fn.id, fn.zone) ?: "null"
-            if (state.equals("active", ignoreCase = true)) {
+            if (state.equals("active", ignoreCase = true) || state.equals("notactive", ignoreCase = true)) {
                 n++
                 val values = supportedValues(fn.id, fn.zone)?.joinToString(",")
                 Log.i(
-                    TAG, "✔ ${fn.name} ${EcarxFunctions.hex(fn.id)} int=${getInt(fn.id, fn.zone)} " +
+                    TAG, "✔ ${fn.name} ${EcarxFunctions.hex(fn.id)} ($state) int=${getInt(fn.id, fn.zone)} " +
                         "float=${getFloat(fn.id, fn.zone)}" + (values?.let { "  [giá trị: $it]" } ?: "")
                 )
             } else {
@@ -233,6 +337,14 @@ class EcarxCarSource(
     private companion object {
         const val TAG = "EcarxCarSource"
         const val CAR_CLASS = "com.ecarx.xui.adaptapi.car.Car"
+        const val CAR_IMPL_CLASS = "com.ecarx.xui.adaptapi.car.impl.CarImpl"
+        const val CONNECTABLE = "com.ecarx.xui.adaptapi.binder.IConnectable"
+        /** Jar AdaptAPI có sẵn trong firmware ECARX (không đóng gói vào APK). */
+        val SYSTEM_JARS = listOf(
+            "/system/framework/AdapterAPI.jar", "/system/framework/AdapterAPIImpl.jar",
+            "/system/framework/ecarx.jar", "/system/framework/ecarxSignalAPI.jar",
+        )
+        const val CONNECT_WAIT_MS = 5000L
         const val MAX_ATTEMPTS = 5
         const val RETRY_MS = 2000L
         val INT: Class<*> = Int::class.javaPrimitiveType!!

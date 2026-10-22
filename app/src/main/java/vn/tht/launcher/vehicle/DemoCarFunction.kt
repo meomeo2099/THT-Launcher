@@ -35,7 +35,7 @@ class DemoCarFunction {
     }
 
     fun isFunctionSupported(id: Int, zone: Int): String =
-        if (EcarxFunctions.ALL.any { it.id == id } || id == EcarxFunctions.BACKLIGHT_MIN || id == EcarxFunctions.BACKLIGHT_MAX) "active" else "notactive"
+        if (EcarxFunctions.ALL.any { it.id == id } || id == EcarxFunctions.BACKLIGHT_MIN || id == EcarxFunctions.BACKLIGHT_MAX) "active" else "notavailable"
 
     fun getFunctionValue(id: Int, zone: Int): Int = ints[key(id, zone)] ?: 0
     fun setFunctionValue(id: Int, zone: Int, value: Int): Boolean { ints[key(id, zone)] = value; return true }
