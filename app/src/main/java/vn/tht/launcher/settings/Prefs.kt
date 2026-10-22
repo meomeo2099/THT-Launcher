@@ -33,6 +33,8 @@ class Prefs(context: Context) {
     /** "compact", "normal", "large". */
     var dockSize: String get() = str("dock_size", "normal"); set(v) = put("dock_size", v)
     var dockLabels: Boolean get() = sp.getBoolean("dock_labels", false); set(v) = put("dock_labels", v)
+    /** Dock nổi trên app: "off" | "split" (chỉ khi đang chia đôi) | "always". */
+    var dockOverlay: String get() = str("dock_overlay", "off"); set(v) = put("dock_overlay", v)
     var topBar: Boolean get() = sp.getBoolean("top_bar", true); set(v) = put("top_bar", v)
     var volumeSlider: Boolean get() = sp.getBoolean("volume_slider", true); set(v) = put("volume_slider", v)
     var collapsed: Boolean get() = sp.getBoolean("collapsed", false); set(v) = put("collapsed", v)

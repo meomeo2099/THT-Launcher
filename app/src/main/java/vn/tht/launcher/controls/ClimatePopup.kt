@@ -30,6 +30,8 @@ class ClimatePopup(
     private val c: Context,
     private val ecarx: EcarxCarSource,
     private val ctl: EcarxController,
+    /** true = cửa sổ overlay đè lên app đang mở (gọi từ dock nổi khi launcher bị che). */
+    private val overlay: Boolean = false,
 ) {
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var dialog: Dialog
@@ -150,6 +152,7 @@ class ClimatePopup(
                     android.widget.FrameLayout.LayoutParams(Ui.dp(c, 1240), ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER))
             })
             window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            if (overlay) window?.setType(android.view.WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
             setOnDismissListener { showing = false; handler.removeCallbacks(refresh) }
         }
         dialog.show()
