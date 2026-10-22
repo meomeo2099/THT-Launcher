@@ -29,6 +29,7 @@ enum class WidgetType(val title: String, val group: String, val defaultW: Int, v
     BRIGHTNESS("Thanh độ sáng", "Thanh trượt", 96, 560),
     APP("Lối tắt ứng dụng", "Ứng dụng", 200, 200),
     IMAGE("Ảnh có vùng chạm (ví dụ ảnh xe)", "Ứng dụng", 640, 360),
+    SPLIT("Chia đôi màn hình", "Ứng dụng", 320, 200),
     TOP_BAR("Thanh trạng thái (trên)", "Thanh", 520, 48),
     BOTTOM_BAR("Thanh dưới (dock)", "Thanh", 1552, 100),
     CLIMATE_MINI("Cụm điều hoà gọn", "Thanh", 320, 100),
@@ -42,7 +43,7 @@ val WidgetType.isBar get() = this == WidgetType.TOP_BAR || this == WidgetType.BO
 
 /**
  * Vị trí/kích thước một widget, đơn vị dp trên khung thiết kế [HomeLayout.DESIGN_W]×[HomeLayout.DESIGN_H].
- * [pkg] chỉ dùng cho [WidgetType.APP].
+ * [pkg]: gói app ([WidgetType.APP]), cấu hình ảnh ([WidgetType.IMAGE]) hoặc id cặp chia đôi ([WidgetType.SPLIT]).
  */
 data class WidgetSpec(
     val id: String,
@@ -159,6 +160,7 @@ object WidgetSpecIcons {
         WidgetType.BRIGHTNESS -> "sun"
         WidgetType.APP -> "apps"
         WidgetType.IMAGE -> "car"
+        WidgetType.SPLIT -> "dual"
         WidgetType.TOP_BAR -> "chevron-up"
         WidgetType.BOTTOM_BAR -> "chevron-down"
         WidgetType.SIDE_RAIL -> "chevron-left"
