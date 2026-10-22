@@ -39,7 +39,7 @@ jobs:
           THT_SIGN_KEY_PASSWORD: ${{ secrets.THT_SIGN_KEY_PASSWORD }}
         run: |
           set -o pipefail
-          gradle :app:assembleDebug :app:assembleRelease 2>&1 | tee build.log
+          gradle :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease 2>&1 | tee build.log
       - name: Kiểm tra chữ ký
         run: |
           SDK="${ANDROID_HOME:-$ANDROID_SDK_ROOT}"

@@ -60,6 +60,7 @@ class SettingsActivity : Activity() {
         action("Ảnh nền riêng – đêm", wallpaperState(NIGHT)) { pickWallpaper(NIGHT) }
         action("Bộ biểu tượng", vn.tht.launcher.ui.Icons.packName ?: "Mặc định · chạm để nạp file .zip") { iconPack() }
         action("Font chữ", vn.tht.launcher.ui.Fonts.name(this) ?: "Mặc định · chạm để nạp file .ttf/.otf (có tiếng Việt)") { fontMenu() }
+        choice("Kiểu thẻ widget", mapOf("solid" to "Đặc", "frosted" to "Kính mờ (làm mờ ảnh nền phía sau)"), { prefs.cardStyle }) { prefs.cardStyle = it }
         slider("Độ đặc nền widget", 0, 100, "%", { prefs.cardOpacity }) { prefs.cardOpacity = it }
         slider("Tỉ lệ giao diện", 75, 150, "%", { prefs.uiScale }) { prefs.uiScale = it }
 

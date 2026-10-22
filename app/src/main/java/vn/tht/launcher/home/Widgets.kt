@@ -94,8 +94,13 @@ abstract class HomeWidget(protected val host: WidgetHost) {
     /** Gọi mỗi giây (thanh tiến trình nhạc…). */
     open fun onTick() {}
 
+    /** Nền thẻ widget: đặc, hoặc kính mờ (Cài đặt → Giao diện → Kiểu thẻ widget). */
+    protected fun cardBackground(v: View): android.graphics.drawable.Drawable =
+        if (host.prefs.cardStyle == "frosted") vn.tht.launcher.ui.Frosted.CardDrawable(v, Ui.dp(c, 24).toFloat(), Ui.card(c))
+        else Ui.card(c)
+
     protected fun base(padDp: Int = 22, gravity: Int = Gravity.START) =
-        Ui.vbox(c, padDp, gravity).apply { background = Ui.card(c) }
+        Ui.vbox(c, padDp, gravity).apply { background = cardBackground(this) }
 
     /** Dòng icon + chữ (thông tin phụ). */
     protected fun infoRow(icon: String, text: TextView, tint: Int = Palette.textDim) = Ui.hbox(c).apply {
@@ -228,7 +233,7 @@ class MediaWidget(host: WidgetHost, private val vertical: Boolean = false) : Hom
 
     /** Ngang: ảnh trái, chữ phải. Dọc (widget cao): nguồn, ảnh lớn, tên bài, tiến trình, điều khiển. */
     override val view: View = if (vertical) Ui.vbox(c, 16).apply {
-        background = Ui.card(c)
+        background = cardBackground(this)
         addView(source, matchW())
         addView(artBox(), LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f).apply { topMargin = Ui.dp(c, 8) })
         addView(title, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Ui.dp(c, 36)).apply { topMargin = Ui.dp(c, 10) })
@@ -237,7 +242,7 @@ class MediaWidget(host: WidgetHost, private val vertical: Boolean = false) : Hom
         addView(controls(), matchW())
         setOnClickListener { if (!host.hasMediaPermission()) host.requestMediaPermission() }
     } else Ui.hbox(c).apply {
-        background = Ui.card(c)
+        background = cardBackground(this)
         val p = Ui.dp(c, 14)
         setPadding(p, p, Ui.dp(c, 20), p)
         addView(artBox(), LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0.42f))

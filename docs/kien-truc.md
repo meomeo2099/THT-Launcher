@@ -95,7 +95,7 @@ và tạo bản phát hành `build-N`; launcher trên xe tự cập nhật khi c
 ```mermaid
 flowchart LR
   A["Nhánh tính năng"] --> B["Pull request"]
-  B --> C{"CI build<br/>debug + release"}
+  B --> C{"CI: kiểm thử +<br/>build debug, release"}
   C -- "lỗi" --> A
   C -- "đạt" --> D["Merge vào main"]
   D --> E["CI ký bằng THT_SIGN_*<br/>cert c8a2e9bc…"]

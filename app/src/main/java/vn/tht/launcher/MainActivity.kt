@@ -393,8 +393,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     /** Tìm loại widget theo tên (không phân biệt dấu). */
     private fun searchWidgets() {
-        fun plain(s: String) = java.text.Normalizer.normalize(s.lowercase().replace('đ', 'd'), java.text.Normalizer.Form.NFD)
-            .replace(Regex("\\p{Mn}+"), "")
+        fun plain(s: String) = vn.tht.launcher.ui.Text.plain(s)
         Dialogs.form(this, "Tìm widget", listOf(Dialogs.Field("Tên widget", hint = "vd: nhạc, xăng, radio")), listOf(
             Dialogs.FormButton("Huỷ"),
             Dialogs.FormButton("Tìm", Dialogs.Kind.PRIMARY) { (q) ->
@@ -491,6 +490,11 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         }
 
         canvas.uiScale = prefs.uiScale.coerceIn(75, 150) / 100f
+        // Kính mờ: chụp + làm mờ ảnh nền một lần (sau khi ảnh nền đã layout), rồi vẽ lại các thẻ
+        if (prefs.cardStyle == "frosted") wp.post {
+            vn.tht.launcher.ui.Frosted.capture(wp)
+            widgets.values.forEach { w -> invalidateTree(w.view) }
+        } else vn.tht.launcher.ui.Frosted.clear()
         val editing = canvas.editing
         buildWidgets(HomeLayout.load(this))
         canvas.setEditing(editing)
@@ -960,6 +964,11 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
             Dialogs.Button("Đóng"),
             Dialogs.Button("Lưu báo cáo đầy đủ", Dialogs.Kind.PRIMARY) { saveReport() },
         ))
+    }
+
+    private fun invalidateTree(v: View) {
+        v.invalidate()
+        (v as? android.view.ViewGroup)?.let { g -> for (i in 0 until g.childCount) invalidateTree(g.getChildAt(i)) }
     }
 
     private fun appVersion() = runCatching {

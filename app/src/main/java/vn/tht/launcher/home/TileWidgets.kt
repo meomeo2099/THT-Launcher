@@ -193,7 +193,7 @@ class NavWidget(host: WidgetHost) : HomeWidget(host) {
     private var embedded: EmbeddedMap? = null
 
     override val view: View = android.widget.FrameLayout(c).apply {
-        background = Ui.card(c)
+        background = cardBackground(this)
         clipToOutline = true
         addView(fallback, android.widget.FrameLayout.LayoutParams(-1, -1))
         setOnClickListener { host.openNav() }

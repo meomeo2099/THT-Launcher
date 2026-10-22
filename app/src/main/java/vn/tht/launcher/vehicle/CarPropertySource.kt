@@ -107,7 +107,7 @@ class CarPropertySource(
             rpm = float(ENGINE_RPM),
             fuelLiters = fuelMl?.let { it / 1000f }?.takeIf { it in 0f..200f },
             coolantTempC = float(ENGINE_COOLANT_TEMP)?.takeIf { it in -40f..150f },
-            batteryVoltage = voltage(bytes(VENDOR_BATTERY_VOLTAGE)),
+            batteryVoltage = decodeVoltage(bytes(VENDOR_BATTERY_VOLTAGE)),
         )
     }
 
@@ -121,21 +121,6 @@ class CarPropertySource(
         null
     }
 
-    /**
-     * Điện áp từ 1–4 byte little-endian. Đầu xe báo theo 0,1 V (vd. 141 = 14,1 V); một số bản báo mV.
-     * Chỉ nhận 6–17 V, ngoài khoảng đó coi như không đọc được.
-     */
-    private fun voltage(b: ByteArray?): Float? {
-        if (b == null || b.isEmpty() || b.size > 4) return null
-        var raw = 0
-        for (i in b.indices.reversed()) raw = (raw shl 8) or (b[i].toInt() and 0xFF)
-        val v = when {
-            raw > 1000 -> raw / 1000f
-            raw > 100 -> raw / 10f
-            else -> raw.toFloat()
-        }
-        return v.takeIf { it in 6f..17f }
-    }
 
     private fun call(name: String, prop: Int): Any? = try {
         propertyManager!!.javaClass
@@ -150,6 +135,22 @@ class CarPropertySource(
     private fun bool(prop: Int) = call("getBooleanProperty", prop) as? Boolean
 
     companion object {
+        /**
+         * Điện áp từ 1–4 byte little-endian. Đầu xe báo theo 0,1 V (vd. 141 = 14,1 V); một số bản báo mV.
+         * Chỉ nhận 6–17 V, ngoài khoảng đó coi như không đọc được.
+         */
+        fun decodeVoltage(b: ByteArray?): Float? {
+            if (b == null || b.isEmpty() || b.size > 4) return null
+            var raw = 0
+            for (i in b.indices.reversed()) raw = (raw shl 8) or (b[i].toInt() and 0xFF)
+            val v = when {
+                raw > 1000 -> raw / 1000f
+                raw > 100 -> raw / 10f
+                else -> raw.toFloat()
+            }
+            return v.takeIf { it in 6f..17f }
+        }
+
         private const val TAG = "CarPropertySource"
         private const val POLL_MS = 500L
 
