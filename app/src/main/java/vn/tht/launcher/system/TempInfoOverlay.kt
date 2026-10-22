@@ -20,7 +20,7 @@ import vn.tht.launcher.ui.Ui
 
 /**
  * Khung "Nhiệt độ" nổi trên app: khi đang mở app khác mà nhiệt độ / quạt / hướng gió đổi,
- * hiện vài giây ở vị trí đã chọn (mặc định giữa mép trái), không chặn chạm vào app bên dưới.
+ * hiện vài giây ở vị trí đã chọn (mặc định giữa mép trái, cạnh viên nút điều hướng), không chặn chạm vào app bên dưới.
  * Ở chế độ xem thử thì kéo được để đổi chỗ. Dùng lớp phủ của dịch vụ trợ năng (không cần quyền
  * hiển thị trên app khác).
  */
@@ -68,7 +68,7 @@ class TempInfoOverlay(private val c: Context, private val wm: WindowManager, pri
             gravity = Gravity.CENTER_VERTICAL
             setPadding(pad, pad, pad + Ui.dp(c, 4), pad)
             background = GradientDrawable().apply { cornerRadius = Ui.dp(c, 24).toFloat(); setColor(0xD9101418.toInt()) }
-            addView(ImageView(c).apply { setImageDrawable(Icons.get(c, "climate", Color.WHITE)) },
+            addView(ImageView(c).apply { setImageDrawable(Icons.get(c, "fan", Color.WHITE)) },
                 LinearLayout.LayoutParams(Ui.dp(c, 40), Ui.dp(c, 40)).apply { marginEnd = Ui.dp(c, 12) })
             addView(LinearLayout(c).apply {
                 orientation = LinearLayout.VERTICAL
@@ -83,7 +83,8 @@ class TempInfoOverlay(private val c: Context, private val wm: WindowManager, pri
         ).apply {
             gravity = Gravity.TOP or Gravity.START
             val screen = c.resources.displayMetrics
-            x = prefs.sp.getInt(KEY_X, Ui.dp(c, 24))
+            // Mặc định giữa mép trái, cạnh phải viên nút Quay lại/Màn hình chính
+            x = prefs.sp.getInt(KEY_X, Ui.dp(c, 88))
             y = prefs.sp.getInt(KEY_Y, screen.heightPixels / 2 - Ui.dp(c, 50))
         }
         // Kéo để đổi chỗ (chỉ khi đang xem thử – lúc thường khung không nhận chạm)

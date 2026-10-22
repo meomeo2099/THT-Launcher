@@ -82,7 +82,9 @@ class AppWidgets(private val activity: Activity) {
     /** View của widget đã gắn; null nếu app đã gỡ hoặc widget không còn. */
     fun createView(id: Int): AppWidgetHostView? {
         val info = manager.getAppWidgetInfo(id) ?: return null
-        return runCatching { host.createView(activity, id, info) }.onFailure { Log.w(TAG, "Không tạo được widget $id: $it") }.getOrNull()
+        // Context thường (không có bộ tạo view AppCompat của Activity): RemoteViews không chạy với view AppCompat
+        val plain = android.view.ContextThemeWrapper(activity.applicationContext, android.R.style.Theme_DeviceDefault)
+        return runCatching { host.createView(plain, id, info) }.onFailure { Log.w(TAG, "Không tạo được widget $id: $it") }.getOrNull()
     }
 
     fun delete(id: Int) = runCatching { host.deleteAppWidgetId(id) }.let { }

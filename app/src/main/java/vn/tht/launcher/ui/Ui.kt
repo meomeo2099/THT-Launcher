@@ -18,7 +18,9 @@ object Ui {
             text = s
             textSize = size
             setTextColor(if (dim) Palette.textDim else Palette.text)
-            if (bold) typeface = android.graphics.Typeface.create("sans-serif-medium", android.graphics.Typeface.NORMAL)
+            val custom = if (bold) Fonts.bold(c) else Fonts.regular(c)
+            if (custom != null) typeface = custom
+            else if (bold) typeface = android.graphics.Typeface.create("sans-serif-medium", android.graphics.Typeface.NORMAL)
         }
 
     fun card(c: Context, radiusDp: Int = 24): GradientDrawable = GradientDrawable().apply {
@@ -121,6 +123,7 @@ object Ui {
         text = label
         textSize = size
         isAllCaps = false
+        Fonts.regular(c)?.let { typeface = it }
         setTextColor(Palette.text)
         background = pill(c, Palette.button)
         minWidth = dp(c, 64)
