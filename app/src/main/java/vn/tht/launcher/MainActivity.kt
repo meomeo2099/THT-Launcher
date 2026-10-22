@@ -790,7 +790,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     fun diagnostics() {
         val msg = buildString {
             appendLine("Profile: ${(application as LauncherApp).profile.displayName}")
-            appendLine("ECARX AdaptAPI: ${if (ecarx.connected) "đã nối" else "chưa nối"}")
+            appendLine("ECARX AdaptAPI: ${ecarx.status}")
             appendLine("Chữ ký platform: ${if (PlatformSignature.verify(this@MainActivity)) "KHỚP – ghi được" else "không khớp – chỉ đọc"}")
             appendLine("Chứng chỉ firmware: ${PlatformSignature.certSha256(this@MainActivity, "android").take(16)}…")
             appendLine("Chứng chỉ app: ${PlatformSignature.certSha256(this@MainActivity, packageName).take(16)}…")
