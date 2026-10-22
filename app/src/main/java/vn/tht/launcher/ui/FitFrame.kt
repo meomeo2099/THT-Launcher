@@ -6,13 +6,16 @@ import android.widget.FrameLayout
 /**
  * Khung chứa một view con có kích thước tự nhiên cố định (cụm điều hoà, cụm quạt): nếu khung nhỏ
  * hơn nội dung thì thu nhỏ đều nội dung cho vừa (không bị cắt), luôn đặt ở giữa.
+ * [matchHeight]: con cao đúng bằng khung (hàng icon của thanh trên), chỉ chiều ngang đo tự nhiên.
  */
-class FitFrame(c: Context) : FrameLayout(c) {
+class FitFrame(c: Context, private val matchHeight: Boolean = false) : FrameLayout(c) {
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val w = MeasureSpec.getSize(widthMeasureSpec)
         val h = MeasureSpec.getSize(heightMeasureSpec)
         val unspecified = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
-        for (i in 0 until childCount) getChildAt(i).measure(unspecified, unspecified)
+        val childH = if (matchHeight) MeasureSpec.makeMeasureSpec((h - paddingTop - paddingBottom).coerceAtLeast(0), MeasureSpec.EXACTLY)
+        else unspecified
+        for (i in 0 until childCount) getChildAt(i).measure(unspecified, childH)
         setMeasuredDimension(w, h)
     }
 
