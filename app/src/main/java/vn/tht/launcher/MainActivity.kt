@@ -1018,6 +1018,14 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         appendLine("App bản đồ: ${navPackage() ?: "(chưa có)"} · app radio: ${radioPackage() ?: "(chưa có)"}")
         appendLine("Gói ECARX đã cài: " + listOf("ecarx.hvac.app", "ecarx.xsf.mediacenter", "com.ecarx.radio.service", "com.ecarx.radio", "ecarx.launcher3")
             .joinToString(", ") { p -> p + if (runCatching { packageManager.getPackageInfo(p, 0) }.isSuccess) "✔" else "✖" })
+        appendLine()
+        appendLine("== Danh mục hằng số AdaptAPI của xe")
+        append(ecarx.constantsCatalog())
+        // Bản debug với xe giả: chạy cùng cách liệt kê trên lớp của chính app để chắc nó hoạt động
+        if (vn.tht.launcher.vehicle.DemoCarFunction.enabled(this@MainActivity)) {
+            appendLine("-- tự kiểm tra (bản debug): EcarxFunctions")
+            append(ecarx.catalog(classLoader, "vn.tht.launcher.vehicle.EcarxFunctions"))
+        }
     }
 
     override fun toast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()

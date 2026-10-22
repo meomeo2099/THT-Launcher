@@ -336,6 +336,63 @@ class EcarxCarSource(
         }
     }
 
+    /**
+     * Danh mục hằng số số nguyên trong AdaptAPI của chính xe (tên → mã), để biết mã chức năng chuẩn
+     * của firmware. Đọc danh sách lớp từ ClassLoader đã nạp jar hệ thống; gọi ngoài luồng giao diện.
+     */
+    fun constantsCatalog(): String {
+        val cl = runCatching { loader ?: adaptApiLoader().also { loader = it } }.getOrElse {
+            return "(không nạp được AdaptAPI: $it)\n"
+        }
+        return catalog(cl, "com.ecarx.xui.adaptapi", SYSTEM_JARS)
+    }
+
+    /** Liệt kê hằng số int/long của mọi lớp có tên bắt đầu bằng [prefix] mà [cl] (hoặc [jars]) chứa. */
+    fun catalog(cl: ClassLoader, prefix: String, jars: List<String> = emptyList()): String = buildString {
+        val names = sortedSetOf<String>()
+        // Lấy tên lớp từ các file dex mà ClassLoader đang giữ (BaseDexClassLoader.pathList.dexElements[].dexFile)
+        runCatching {
+            var c: ClassLoader? = cl
+            while (c != null) {
+                if (c is dalvik.system.BaseDexClassLoader) {
+                    val pathList = dalvik.system.BaseDexClassLoader::class.java.getDeclaredField("pathList").apply { isAccessible = true }.get(c)
+                    val elements = pathList.javaClass.getDeclaredField("dexElements").apply { isAccessible = true }.get(pathList) as Array<*>
+                    for (e in elements) {
+                        val dex = e?.javaClass?.getDeclaredField("dexFile")?.apply { isAccessible = true }?.get(e) as? dalvik.system.DexFile ?: continue
+                        @Suppress("DEPRECATION")
+                        for (n in dex.entries()) if (n.startsWith(prefix)) names += n
+                    }
+                }
+                c = c.parent
+            }
+        }.onFailure { appendLine("(không đọc được danh sách lớp: $it)") }
+        // Dự phòng: AdaptAPI nằm trong classpath hệ thống → mở thẳng các jar để lấy tên lớp
+        if (names.isEmpty()) for (path in jars.filter { java.io.File(it).exists() }) {
+            runCatching {
+                @Suppress("DEPRECATION")
+                val dex = dalvik.system.DexFile(path)
+                @Suppress("DEPRECATION")
+                for (n in dex.entries()) if (n.startsWith(prefix)) names += n
+            }.onFailure { appendLine("(không mở được $path: $it)") }
+        }
+        if (names.isEmpty()) { appendLine("(không thấy lớp AdaptAPI nào)"); return@buildString }
+        var total = 0
+        for (n in names) {
+            val cls = runCatching { Class.forName(n, false, cl) }.getOrNull() ?: continue
+            val consts = cls.declaredFields.filter {
+                java.lang.reflect.Modifier.isStatic(it.modifiers) && java.lang.reflect.Modifier.isFinal(it.modifiers) &&
+                    (it.type == Int::class.javaPrimitiveType || it.type == Long::class.javaPrimitiveType)
+            }.mapNotNull { f ->
+                runCatching { f.isAccessible = true; f.name to (f.get(null) as Number).toLong() }.getOrNull()
+            }
+            if (consts.isEmpty()) continue
+            appendLine("# ${n.removePrefix("$prefix.")}")
+            for ((k, v) in consts) appendLine("  $k = 0x${java.lang.Long.toHexString(v)} ($v)")
+            total += consts.size
+        }
+        appendLine("(${names.size} lớp, $total hằng số)")
+    }
+
     fun dumpSupported() {
         if (!connected) {
             Log.w(TAG, "Chưa nối ICarFunction, bỏ qua dump")
