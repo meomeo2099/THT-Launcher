@@ -65,6 +65,10 @@ interface WidgetHost {
     /** Chạy chức năng của vùng ảnh (xem ImageActions). */
     fun runImageAction(id: String)
     fun radioLabel(): String?
+    /** View của widget Android đã gắn (id trong WidgetSpec.pkg). */
+    fun appWidgetView(id: Int): android.view.View?
+    /** Radio của đầu xe ECARX (không có dịch vụ thì available = false). */
+    val radio: vn.tht.launcher.radio.EcarxRadio
     /** 0..1; null = không đọc được. */
     fun volume(): Float?
     fun setVolume(v: Float)
@@ -128,6 +132,7 @@ abstract class HomeWidget(protected val host: WidgetHost) {
             WidgetType.BRIGHTNESS -> SliderWidget(host, brightness = true)
             WidgetType.RADIO -> RadioWidget(host)
             WidgetType.IMAGE -> ImageWidget(host, spec)
+            WidgetType.ANDROID_WIDGET -> AndroidAppWidget(host, spec)
             WidgetType.TOP_BAR, WidgetType.BOTTOM_BAR, WidgetType.SIDE_RAIL, WidgetType.CLIMATE_MINI, WidgetType.FAN_MINI ->
                 BarWidget(host, host.barView(spec.type))
             WidgetType.CLIMATE -> ClimateWidget(host)

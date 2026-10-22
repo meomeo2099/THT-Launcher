@@ -30,6 +30,7 @@ enum class WidgetType(val title: String, val group: String, val defaultW: Int, v
     APP("Lối tắt ứng dụng", "Ứng dụng", 200, 200),
     IMAGE("Ảnh có vùng chạm (ví dụ ảnh xe)", "Ứng dụng", 640, 360),
     SPLIT("Chia đôi màn hình", "Ứng dụng", 320, 200),
+    ANDROID_WIDGET("Widget Android (của app khác)", "Ứng dụng", 480, 260),
     TOP_BAR("Thanh trạng thái (trên)", "Thanh", 520, 48),
     BOTTOM_BAR("Thanh dưới (dock)", "Thanh", 1552, 100),
     CLIMATE_MINI("Cụm điều hoà gọn", "Thanh", 320, 100),
@@ -161,6 +162,7 @@ object WidgetSpecIcons {
         WidgetType.APP -> "apps"
         WidgetType.IMAGE -> "car"
         WidgetType.SPLIT -> "dual"
+        WidgetType.ANDROID_WIDGET -> "apps"
         WidgetType.TOP_BAR -> "chevron-up"
         WidgetType.BOTTOM_BAR -> "chevron-down"
         WidgetType.SIDE_RAIL -> "chevron-left"

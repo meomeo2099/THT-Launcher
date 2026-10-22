@@ -66,6 +66,20 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private lateinit var carSource: CarPropertySource
     private lateinit var ecarx: EcarxCarSource
     private lateinit var media: MediaWatcher
+    override val radio by lazy { vn.tht.launcher.radio.EcarxRadio(this) }
+    private val appWidgets by lazy { vn.tht.launcher.home.AppWidgets(this) }
+
+    override fun appWidgetView(id: Int): View? = appWidgets.createView(id)
+
+    override fun onStart() {
+        super.onStart()
+        appWidgets.startListening()
+    }
+
+    override fun onStop() {
+        appWidgets.stopListening()
+        super.onStop()
+    }
     private lateinit var dock: DockBar
     private lateinit var topBar: DockBar
     private lateinit var sideRail: DockBar
@@ -99,6 +113,33 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private val io = Handler(carIo.looper)
     /** Launcher đang hiện trên màn (giữa onResume và onPause). */
     private var inFront = false
+    /** Nhiệt độ/quạt/hướng gió lần đọc trước khi launcher bị che (cho khung nhiệt độ nổi). */
+    private var bgClimate: Triple<Float?, Int?, Int?>? = null
+    private val bgClimatePoll = object : Runnable {
+        override fun run() {
+            val f = vn.tht.launcher.vehicle.EcarxFunctions
+            val zone = if (ecarx.isSupported(f.HVAC_TEMP, f.ZONE_ROW_1_LEFT) == true) f.ZONE_ROW_1_LEFT else f.ZONE_ALL
+            val now = Triple(
+                ecarx.getFloat(f.HVAC_TEMP, zone)?.takeIf { it in f.TEMP_MIN..f.TEMP_MAX },
+                f.levelOf(f.HVAC_FAN_SPEED, ecarx.getInt(f.HVAC_FAN_SPEED)),
+                f.levelOf(f.HVAC_BLOWING_MODE, ecarx.getInt(f.HVAC_BLOWING_MODE)),
+            )
+            val before = bgClimate
+            bgClimate = now
+            if (before != null && now != before && (now.first != null || now.second != null)) handler.post { showTempInfo(now) }
+            io.postDelayed(this, 1000)
+        }
+    }
+
+    private fun showTempInfo(v: Triple<Float?, Int?, Int?>) {
+        val air = when (v.third) { 1 -> "air-upper"; 2 -> "air-lower"; 3 -> "air-both"; 4 -> "front-defrost"; else -> null }
+        val ok = vn.tht.launcher.system.NavAssistService.showTempInfo(
+            v.first?.let { String.format(java.util.Locale.US, "%.1f°", it) } ?: "--°",
+            v.second?.let { if (it == 0) "Quạt tắt" else "Quạt $it/${vn.tht.launcher.vehicle.EcarxFunctions.FAN_MAX}" } ?: "Quạt –",
+            air,
+        )
+        if (!ok) android.util.Log.i("MainActivity", "Khung nhiệt độ: dịch vụ trợ năng chưa chạy")
+    }
     private val ecarxPoll = object : Runnable {
         override fun run() {
             val info = ecarx.readInfo()
@@ -177,7 +218,10 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         canvas = HomeCanvas(this).apply {
             onLongPress = { setEditMode(true) }
             onChanged = { HomeLayout.save(this@MainActivity, specs()) }
-            onRemove = { widgets.remove(it.id) }
+            onRemove = {
+                widgets.remove(it.id)
+                if (it.type == WidgetType.ANDROID_WIDGET) it.pkg.toIntOrNull()?.let { id -> appWidgets.delete(id) }
+            }
             onWidgetTap = { exactDialog(it) }
         }
         findViewById<FrameLayout>(R.id.canvas_container).addView(canvas)
@@ -241,8 +285,10 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         refreshFloatingDock()
         // Khi ẩn chỉ ghi chuyến đi/tự động hoá; giờ hiện lại thì cập nhật giao diện theo dữ liệu mới nhất
         refreshVehicleUi(lastVehicle)
+        io.removeCallbacks(bgClimatePoll)
         if (ecarx.connected) { io.removeCallbacks(ecarxPoll); io.post(ecarxPoll) }
         media.start()
+        radio.start()
         if (appearanceDirty) applyAppearance() else { dock.reload(); topBar.reload(); sideRail.reload() }
         screensaver.setActive(true)
         vn.tht.launcher.system.NavAssistService.setLauncherInFront(true)
@@ -265,7 +311,13 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         rememberDockBounds()
         refreshFloatingDock()
         io.removeCallbacks(ecarxPoll)
+        // Khung nhiệt độ nổi: chỉ đọc 3 giá trị điều hoà mỗi giây khi launcher bị che
+        if (ecarx.connected && prefs.sp.getBoolean(vn.tht.launcher.system.NavAssistService.KEY_TEMP_INFO, false)) {
+            bgClimate = null
+            io.post(bgClimatePoll)
+        }
         media.stop()
+        radio.stop()
         screensaver.setActive(false)
         vn.tht.launcher.system.NavAssistService.setLauncherInFront(false)
         handler.removeCallbacks(tick)
@@ -338,6 +390,15 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
                 types.map { t -> vn.tht.launcher.ui.IconList.Item(t.title, with(vn.tht.launcher.home.WidgetSpecIcons) { t.iconKey }) }, columns = 2) { i ->
                 if (types[i].isBar && canvas.specs().any { it.type == types[i] }) {
                     toast("Thanh này đã có trên màn hình"); return@show
+                }
+                if (types[i] == WidgetType.ANDROID_WIDGET) {
+                    appWidgets.pick { id ->
+                        if (id == null) return@pick toast("Chưa thêm widget")
+                        addWidget(WidgetSpec.new(types[i]).also { it.pkg = id.toString() })
+                        canvas.setEditing(true)
+                        HomeLayout.save(this, canvas.specs())
+                    }
+                    return@show
                 }
                 addWidget(WidgetSpec.new(types[i]))
                 canvas.setEditing(true)
@@ -491,7 +552,10 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         }
     }
 
-    override fun openNativeHvac() = hvac.open { ok -> if (!ok) toast("Không mở được điều hoà") }
+    override fun openNativeHvac() {
+        vn.tht.launcher.system.NavAssistService.allowStockHvac(15_000)
+        hvac.open { ok -> if (!ok) toast("Không mở được điều hoà") }
+    }
 
     override fun openControlPanel(tab: Int) = ControlCenter(this, ecarx, controller, tab).show()
     override fun openControls() = inLauncher { openControlPanel() }
@@ -792,6 +856,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (appWidgets.onResult(requestCode, resultCode)) return
         if (requestCode == REQ_IMAGE) {
             val p = pendingImage ?: return
             pendingImage = null

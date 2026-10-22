@@ -32,7 +32,11 @@ data class NowPlaying(
     }
 }
 
-/** Theo dõi phiên phát nhạc đang hoạt động (Spotify, YouTube Music, Zing MP3, Bluetooth...). */
+/**
+ * Theo dõi phiên phát nhạc đang hoạt động (Spotify, YouTube Music, Zing MP3, Bluetooth...).
+ * Trình phát có sẵn của đầu xe (không có MediaSession chuẩn) đọc qua [MediaCenterSource]:
+ * dùng khi không app nào khác đang phát.
+ */
 class MediaWatcher(
     private val context: Context,
     private val onChange: (NowPlaying?) -> Unit,
@@ -40,6 +44,17 @@ class MediaWatcher(
     private val msm = context.getSystemService(MediaSessionManager::class.java)
     private val listenerComponent = ComponentName(context, MediaListenerService::class.java)
     private var controller: MediaController? = null
+    private var carState: MediaCenterSource.State? = null
+    private val car = MediaCenterSource(context) { carState = it; publish() }
+    private val audio = context.getSystemService(android.media.AudioManager::class.java)
+
+    /** Đang hiện nguồn của trình phát đầu xe (không phải MediaSession). */
+    private val showingCar: Boolean
+        get() {
+            val c = carState?.takeIf { it.hasContent } ?: return false
+            val sessionPlaying = controller?.playbackState?.state == PlaybackState.STATE_PLAYING
+            return !sessionPlaying && (c.playing || controller == null)
+        }
 
     private val callback = object : MediaController.Callback() {
         override fun onMetadataChanged(metadata: MediaMetadata?) = publish()
@@ -58,8 +73,9 @@ class MediaWatcher(
     }
 
     fun start() {
+        car.start()
         if (!hasPermission()) {
-            onChange(null); return
+            publish(); return
         }
         try {
             msm.addOnActiveSessionsChangedListener(sessionsListener, listenerComponent)
@@ -69,6 +85,8 @@ class MediaWatcher(
     }
 
     fun stop() {
+        car.stop()
+        carState = null
         try {
             msm.removeOnActiveSessionsChangedListener(sessionsListener)
         } catch (_: Throwable) {
@@ -94,6 +112,7 @@ class MediaWatcher(
     }
 
     private fun publish() {
+        if (showingCar) return onChange(carState!!.toNowPlaying())
         val c = controller ?: return onChange(null)
         val md = c.metadata
         val st = c.playbackState
@@ -118,12 +137,35 @@ class MediaWatcher(
         )
     }
 
+    private fun MediaCenterSource.State.toNowPlaying(): NowPlaying {
+        // Radio: tên đài làm tiêu đề, tần số ở dòng dưới; nhạc: tên bài
+        val head = title?.takeIf { it.isNotBlank() } ?: station?.takeIf { it.isNotBlank() } ?: frequency
+        val sub = listOfNotNull(station, frequency).filter { it.isNotBlank() && it != head }.joinToString(" · ")
+        return NowPlaying(title = head, artist = sub.ifBlank { null }, art = null, isPlaying = playing,
+            source = appName?.takeIf { it.isNotBlank() } ?: "Đầu xe", pkg = pkg)
+    }
+
+    /** Trình phát đầu xe không có MediaSession: gửi phím media chuẩn. */
+    private fun key(code: Int) {
+        for (action in intArrayOf(android.view.KeyEvent.ACTION_DOWN, android.view.KeyEvent.ACTION_UP)) {
+            runCatching { audio.dispatchMediaKeyEvent(android.view.KeyEvent(action, code)) }
+        }
+    }
+
     fun playPause() {
+        if (showingCar || controller == null) return key(android.view.KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE)
         val c = controller ?: return
         if (c.playbackState?.state == PlaybackState.STATE_PLAYING) c.transportControls.pause()
         else c.transportControls.play()
     }
 
-    fun next() = controller?.transportControls?.skipToNext()
-    fun previous() = controller?.transportControls?.skipToPrevious()
+    fun next() {
+        if (showingCar || controller == null) key(android.view.KeyEvent.KEYCODE_MEDIA_NEXT)
+        else controller?.transportControls?.skipToNext()
+    }
+
+    fun previous() {
+        if (showingCar || controller == null) key(android.view.KeyEvent.KEYCODE_MEDIA_PREVIOUS)
+        else controller?.transportControls?.skipToPrevious()
+    }
 }

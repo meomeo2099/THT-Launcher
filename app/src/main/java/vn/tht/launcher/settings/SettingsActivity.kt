@@ -59,6 +59,7 @@ class SettingsActivity : Activity() {
         action("Ảnh nền riêng – ngày", wallpaperState(DAY)) { pickWallpaper(DAY) }
         action("Ảnh nền riêng – đêm", wallpaperState(NIGHT)) { pickWallpaper(NIGHT) }
         action("Bộ biểu tượng", vn.tht.launcher.ui.Icons.packName ?: "Mặc định · chạm để nạp file .zip") { iconPack() }
+        action("Font chữ", vn.tht.launcher.ui.Fonts.name(this) ?: "Mặc định · chạm để nạp file .ttf/.otf (có tiếng Việt)") { fontMenu() }
         slider("Độ đặc nền widget", 0, 100, "%", { prefs.cardOpacity }) { prefs.cardOpacity = it }
         slider("Tỉ lệ giao diện", 75, 150, "%", { prefs.uiScale }) { prefs.uiScale = it }
 
@@ -163,6 +164,21 @@ class SettingsActivity : Activity() {
         toggle("Nhúng bản đồ vào ô Dẫn đường (cần APK ký khoá platform)", { prefs.sp.getBoolean("embed_map", true) }) {
             prefs.sp.edit().putBoolean("embed_map", it).apply()
         }
+
+        section("Điều hoà")
+        val nav = vn.tht.launcher.system.NavAssistService
+        toggle("Ẩn cửa sổ điều hoà gốc khi xe tự bật (cần dịch vụ trợ năng THT)", { prefs.sp.getBoolean(nav.KEY_HIDE_STOCK_HVAC, false) }) {
+            prefs.sp.edit().putBoolean(nav.KEY_HIDE_STOCK_HVAC, it).apply()
+            if (it) ensureNavAssist()
+        }
+        toggle("Khung nhiệt độ nổi trên app khi đổi nhiệt độ / quạt / hướng gió", { prefs.sp.getBoolean(nav.KEY_TEMP_INFO, false) }) {
+            prefs.sp.edit().putBoolean(nav.KEY_TEMP_INFO, it).apply()
+            if (it) ensureNavAssist()
+        }
+        action("Xem thử khung nhiệt độ", "Kéo khung bằng ngón tay – nó sẽ hiện ở chỗ đó") {
+            if (!nav.showTempInfo("24.0°", "Quạt 3/7", "air-both", preview = true)) ensureNavAssist()
+        }
+        action("Đưa khung nhiệt độ về chỗ cũ", "Giữa mép trái, cạnh nút điều hướng") { nav.resetTempInfo(); toast("Đã đặt lại vị trí") }
 
         section("Xe")
         action("Thống kê chuyến đi", "Quãng đường, tiêu hao, đổ xăng, bảo dưỡng") {
@@ -291,6 +307,15 @@ class SettingsActivity : Activity() {
         Dialogs.confirm(this, "Khôi phục mặc định", msg, okLabel = "Khôi phục", onOk = ok)
     }
 
+    /** Các tính năng nổi trên app chạy trong dịch vụ trợ năng: bật giúp (bản platform) hoặc mở Cài đặt trợ năng. */
+    private fun ensureNavAssist() {
+        val nav = vn.tht.launcher.system.NavAssistService
+        if (nav.isEnabled(this)) return
+        if (nav.tryEnable(this)) { toast("Đã bật dịch vụ trợ năng THT Launcher"); return }
+        toast("Hãy bật THT Launcher trong Trợ năng")
+        runCatching { startActivity(Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS)) }
+    }
+
     private fun toast(m: String) = Toast.makeText(this, m, Toast.LENGTH_SHORT).show()
 
     private fun appLabel(pkg: String): String? = if (pkg.isBlank()) null else runCatching {
@@ -372,6 +397,18 @@ class SettingsActivity : Activity() {
         }
     }
 
+    private fun fontMenu() {
+        val has = vn.tht.launcher.ui.Fonts.name(this) != null
+        val items = listOf(IconList.Item(if (has) "Nạp font khác" else "Nạp font (.ttf / .otf)", "apps",
+            summary = "Font phải có đủ dấu tiếng Việt")) +
+            (if (has) listOf(IconList.Item("Dùng font mặc định", "close", danger = true)) else emptyList())
+        IconList.show(this, "Font chữ", items) { i ->
+            if (i == 0) startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                .setType("*/*"), REQ_FONT)
+            else { vn.tht.launcher.ui.Fonts.remove(this); prefs.sp.edit().putLong("font_changed", System.currentTimeMillis()).apply(); recreate() }
+        }
+    }
+
     // ---- Ảnh nền ----
 
     private fun wallpaperState(which: String) =
@@ -408,6 +445,19 @@ class SettingsActivity : Activity() {
                 prefs.sp.edit().putLong("icons_changed", System.currentTimeMillis()).apply()
                 toast(err ?: "Đã nạp ${vn.tht.launcher.ui.Icons.packName}")
             }
+            REQ_FONT -> {
+                val name = runCatching {
+                    contentResolver.query(uri, arrayOf(android.provider.OpenableColumns.DISPLAY_NAME), null, null, null)
+                        ?.use { if (it.moveToFirst()) it.getString(0) else null }
+                }.getOrNull()
+                val err = vn.tht.launcher.ui.Fonts.install(this, uri, name)
+                if (err == null) {
+                    prefs.sp.edit().putLong("font_changed", System.currentTimeMillis()).apply()
+                    toast("Đã dùng font ${vn.tht.launcher.ui.Fonts.name(this)}")
+                    recreate(); return
+                }
+                toast(err)
+            }
             REQ_EXPORT -> toast(if (Backup.export(this, uri)) "Đã xuất cài đặt" else "Không ghi được file")
             REQ_IMPORT -> {
                 val err = Backup.import(this, uri)
@@ -426,6 +476,7 @@ class SettingsActivity : Activity() {
         private const val REQ_EXPORT = 3
         private const val REQ_IMPORT = 4
         private const val REQ_ICONS = 5
+        private const val REQ_FONT = 9
     }
 }
 
