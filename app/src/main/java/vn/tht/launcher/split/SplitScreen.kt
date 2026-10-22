@@ -38,6 +38,10 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
     /** Cặp đang mở (null = không chia đôi). */
     var openId: String? = null
         private set
+    /** Khoảng chừa ở đáy màn (px) cho dock nổi; vùng chia đôi kết thúc phía trên dock. */
+    var bottomInset: () -> Int = { 0 }
+    /** Gọi khi mở/thoát chia đôi (để hiện/ẩn dock nổi). */
+    var onStateChanged: () -> Unit = {}
     private var divider: View? = null
     private var dividerLp: WindowManager.LayoutParams? = null
     private var busy = false
@@ -64,8 +68,9 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
                     if (rightTask == null) return@ensureTask fail("Không mở được chia đôi: app chưa kịp khởi động")
                     moveToSplit(rightTask, WINDOWING_SECONDARY)
                     handler.postDelayed({
-                        place(split.ratio)
                         openId = split.id
+                        onStateChanged()
+                        place(split.ratio)
                         busy = false
                         showDivider(split)
                         handler.postDelayed(watch, WATCH_MS)
@@ -80,6 +85,7 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
         removeDivider()
         openId = null
         call("dismissSplitScreenMode", arrayOf(Boolean::class.javaPrimitiveType!!), false)
+        onStateChanged()
     }
 
     /** Launcher bị huỷ: gỡ thanh kéo, dừng theo dõi (không thoát chia đôi). */
@@ -98,7 +104,7 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
         override fun run() {
             if (openId == null) return
             if (stackId(WINDOWING_PRIMARY) == null) {
-                removeDivider(); openId = null
+                removeDivider(); openId = null; onStateChanged()
             } else handler.postDelayed(this, WATCH_MS)
         }
     }
@@ -185,15 +191,17 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
     fun place(ratio: Int) {
         val size = screen()
         val splitX = size.x * ratio.coerceIn(Split.MIN_RATIO, Split.MAX_RATIO) / 100
+        val bottom = (size.y - bottomInset()).coerceIn(size.y / 2, size.y)
         val rect = Rect::class.java
-        call("resizeDockedStack", arrayOf(rect, rect, rect, rect, rect), Rect(0, 0, splitX, size.y), null, null, null, null)
+        call("resizeDockedStack", arrayOf(rect, rect, rect, rect, rect), Rect(0, 0, splitX, bottom), null, null, null, null)
         stackId(WINDOWING_SECONDARY)?.let { id ->
             val b = Boolean::class.javaPrimitiveType!!
             call("resizeStack", arrayOf(Int::class.javaPrimitiveType!!, rect, b, b, b, Int::class.javaPrimitiveType!!),
-                id, Rect(splitX, 0, size.x, size.y), true, false, false, -1)
+                id, Rect(splitX, 0, size.x, bottom), true, false, false, -1)
         }
         dividerLp?.let { lp ->
             lp.x = splitX - lp.width / 2
+            lp.height = bottom
             divider?.let { runCatching { wm.updateViewLayout(it, lp) } }
         }
     }
@@ -225,7 +233,7 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
             addView(handleBar, FrameLayout.LayoutParams(Ui.dp(c, 6), Ui.dp(c, 96), Gravity.CENTER))
         }
         val lp = WindowManager.LayoutParams(
-            w, size.y, WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+            w, (size.y - bottomInset()).coerceIn(size.y / 2, size.y), WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             PixelFormat.TRANSLUCENT,

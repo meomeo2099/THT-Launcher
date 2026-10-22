@@ -31,6 +31,8 @@ class DockBar(
     private val compact: Boolean = false,
     /** Xếp dọc (thanh bên trái). */
     private val vertical: Boolean = false,
+    /** false = chỉ bấm (dock nổi trên app): không có "+" và nhấn giữ để sửa. */
+    private val editable: Boolean = true,
 ) {
     /** Các hành động nội bộ launcher mà nút dock có thể gọi. */
     interface Actions {
@@ -122,7 +124,7 @@ class DockBar(
                 else -> actions.openStats()
             }
         }
-        setOnLongClickListener { editDialog(index); true }
+        if (editable) setOnLongClickListener { editDialog(index); true }
     }
 
     fun reload() {
@@ -136,7 +138,7 @@ class DockBar(
         items.forEachIndexed { i, s ->
             container.addView(if (s.type == Shortcut.TYPE_STATUS) statusCell(s, i) else itemView(s, i))
         }
-        if (items.size < ShortcutStore.MAX) {
+        if (editable && items.size < ShortcutStore.MAX) {
             container.addView(cell(Icons.get(context, "plus"), "Thêm", if (compact) 0.35f else 0.6f).apply {
                 setOnClickListener { addDialog() }
             })
@@ -147,7 +149,7 @@ class DockBar(
         val icon = iconFor(s)
         cell(icon, s.label, if (s.configured && icon != null) 1f else 0.4f).apply {
             setOnClickListener { open(s) }
-            setOnLongClickListener { editDialog(index); true }
+            if (editable) setOnLongClickListener { editDialog(index); true }
         }
     }
 

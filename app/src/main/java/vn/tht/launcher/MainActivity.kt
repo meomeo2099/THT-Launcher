@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
@@ -40,6 +41,8 @@ import vn.tht.launcher.settings.Prefs
 import vn.tht.launcher.settings.SettingsActivity
 import vn.tht.launcher.settings.Wallpapers
 import vn.tht.launcher.shortcuts.DockBar
+import vn.tht.launcher.shortcuts.FloatingDock
+import vn.tht.launcher.ui.Bitmaps
 import vn.tht.launcher.shortcuts.Shortcut
 import vn.tht.launcher.split.Split
 import vn.tht.launcher.split.SplitScreen
@@ -235,6 +238,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     override fun onResume() {
         super.onResume()
         inFront = true
+        refreshFloatingDock()
         // Khi ẩn chỉ ghi chuyến đi/tự động hoá; giờ hiện lại thì cập nhật giao diện theo dữ liệu mới nhất
         refreshVehicleUi(lastVehicle)
         if (ecarx.connected) { io.removeCallbacks(ecarxPoll); io.post(ecarxPoll) }
@@ -258,6 +262,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     override fun onPause() {
         inFront = false
+        rememberDockBounds()
+        refreshFloatingDock()
         io.removeCallbacks(ecarxPoll)
         media.stop()
         screensaver.setActive(false)
@@ -268,6 +274,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     override fun onDestroy() {
         splitScreen.release()
+        floatingDock.hide()
         handler.removeCallbacksAndMessages(null)
         io.removeCallbacksAndMessages(null)
         carIo.quitSafely()
@@ -351,6 +358,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         app.recorder.onVehicle(d)
         automation.onVehicle(d)
         if (inFront) refreshVehicleUi(d)
+        else if (floatingDock.shown) updateDockStatus(d)
         else if (prefs.themeMode == "auto" && isNight() != appliedNight) appearanceDirty = true
     }
 
@@ -450,7 +458,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         appsAdapter.submit(if (key.isEmpty()) allApps else allApps.filter { key in it.label.lowercase() })
     }
 
-    override fun openAppDrawer() {
+    override fun openAppDrawer() = inLauncher {
         drawer.visibility = View.VISIBLE
     }
 
@@ -486,9 +494,9 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     override fun openNativeHvac() = hvac.open { ok -> if (!ok) toast("Không mở được điều hoà") }
 
     override fun openControlPanel(tab: Int) = ControlCenter(this, ecarx, controller, tab).show()
-    override fun openControls() = openControlPanel()
+    override fun openControls() = inLauncher { openControlPanel() }
 
-    override fun goHome() {
+    override fun goHome() = inLauncher {
         if (drawer.visibility == View.VISIBLE) closeDrawer()
         if (canvas.editing) setEditMode(false)
     }
@@ -525,6 +533,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         )
         lastStatus = status
         dock.update(status)
+        floatingDock.update(status)
         if (::sideRail.isInitialized) sideRail.update(status)
         topBar.update(status)
     }
@@ -743,7 +752,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         }
     }
 
-    override fun openClimate() = vn.tht.launcher.controls.ClimatePopup(this, ecarx, controller).show()
+    override fun openClimate() = vn.tht.launcher.controls.ClimatePopup(this, ecarx, controller, overlay = !inFront).show()
 
     override fun openStats() = startActivity(Intent(this, vn.tht.launcher.stats.StatsActivity::class.java))
 
@@ -815,7 +824,49 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     // ---- Chia đôi màn hình ----
 
-    private val splitScreen by lazy { SplitScreen(this, ::toast) }
+    private val splitScreen by lazy {
+        SplitScreen(this, ::toast).apply {
+            bottomInset = { if (floatingDock.shown) Bitmaps.screen(this@MainActivity).second - floatingDock.top else 0 }
+            onStateChanged = { refreshFloatingDock() }
+        }
+    }
+
+    // ---- Dock nổi trên app ----
+
+    private val floatingDock by lazy { FloatingDock(this, this) }
+
+    /** Vị trí thanh dưới trên màn hình chính, để dock nổi đặt đúng chỗ đó. */
+    private var dockBounds: Rect? = null
+
+    private fun rememberDockBounds() {
+        val v = bars.getValue(WidgetType.BOTTOM_BAR)
+        if (v.isShown && v.width > 0) {
+            val p = IntArray(2).also { v.getLocationOnScreen(it) }
+            dockBounds = Rect(p[0], p[1], p[0] + v.width, p[1] + v.height)
+        }
+    }
+
+    /** Hiện dock nổi khi launcher bị che, theo Cài đặt (mọi lúc / chỉ khi đang chia đôi). */
+    private fun refreshFloatingDock() {
+        val want = !inFront && when (prefs.dockOverlay) {
+            "always" -> true
+            "split" -> splitScreen.openId != null
+            else -> false
+        }
+        if (!want) return floatingDock.hide()
+        val (w, h) = Bitmaps.screen(this)
+        floatingDock.show(dockBounds ?: Rect(0, h - Ui.dp(this, 100), w, h))
+        lastStatusAt = 0L
+        updateDockStatus(lastVehicle)
+    }
+
+    /** Hành động cần màn hình launcher (ngăn kéo app, bảng điều khiển): đưa launcher lên trước nếu đang bị che. */
+    private fun inLauncher(action: () -> Unit) {
+        if (inFront) return action()
+        startActivity(Intent(this, MainActivity::class.java)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
+        handler.postDelayed(action, 350)
+    }
 
     private val splitUi: SplitUi by lazy {
         SplitUi(this, object : SplitUi.Host {

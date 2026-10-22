@@ -65,6 +65,17 @@ class SettingsActivity : Activity() {
         section("Dock")
         choice("Cỡ dock", mapOf("compact" to "Gọn", "normal" to "Thường", "large" to "Lớn"), { prefs.dockSize }) { prefs.dockSize = it }
         toggle("Hiện tên dưới biểu tượng", { prefs.dockLabels }) { prefs.dockLabels = it }
+        choice("Dock nổi trên app", mapOf("off" to "Tắt", "split" to "Chỉ khi đang chia đôi", "always" to "Mọi lúc"),
+            { prefs.dockOverlay }) {
+            prefs.dockOverlay = it
+            // Dock nổi là cửa sổ overlay: cần quyền hiển thị trên app khác (bản ký platform có sẵn)
+            if (it != "off" && !Settings.canDrawOverlays(this)) {
+                toast("Cho phép THT Launcher hiển thị trên ứng dụng khác")
+                runCatching {
+                    startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName")))
+                }
+            }
+        }
 
         slider("Độ đặc dock", 0, 100, "%", { prefs.dockOpacity }) { prefs.dockOpacity = it }
 
