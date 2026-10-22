@@ -40,6 +40,11 @@ import vn.tht.launcher.settings.Prefs
 import vn.tht.launcher.settings.SettingsActivity
 import vn.tht.launcher.settings.Wallpapers
 import vn.tht.launcher.shortcuts.DockBar
+import vn.tht.launcher.shortcuts.Shortcut
+import vn.tht.launcher.split.Split
+import vn.tht.launcher.split.SplitScreen
+import vn.tht.launcher.split.SplitStore
+import vn.tht.launcher.split.SplitUi
 import vn.tht.launcher.system.Autostart
 import vn.tht.launcher.system.Screensaver
 import vn.tht.launcher.ui.Dialogs
@@ -262,6 +267,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     }
 
     override fun onDestroy() {
+        splitScreen.release()
         handler.removeCallbacksAndMessages(null)
         io.removeCallbacksAndMessages(null)
         carIo.quitSafely()
@@ -806,6 +812,45 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     }
 
     override fun toast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+
+    // ---- Chia đôi màn hình ----
+
+    private val splitScreen by lazy { SplitScreen(this, ::toast) }
+
+    private val splitUi: SplitUi by lazy {
+        SplitUi(this, object : SplitUi.Host {
+            override val splitScreen get() = this@MainActivity.splitScreen
+            override fun pickApp(onPicked: (String) -> Unit) = this@MainActivity.pickApp(onPicked)
+            override fun appLabel(pkg: String) = this@MainActivity.appLabel(pkg)
+            override fun toast(msg: String) = this@MainActivity.toast(msg)
+            override fun addSplitWidget(id: String) {
+                addWidget(WidgetSpec.new(WidgetType.SPLIT).apply { pkg = id })
+                HomeLayout.save(this@MainActivity, canvas.specs())
+                setEditMode(true)
+                toast("Đã thêm lên màn hình chính – kéo để đặt chỗ")
+            }
+            override fun addSplitToDock(split: Split) =
+                dock.addShortcut(Shortcut("split_${split.id}", splitUi.label(split), Shortcut.TYPE_SPLIT, action = split.id))
+            override fun splitsChanged() {
+                val editing = canvas.editing
+                HomeLayout.save(this@MainActivity, canvas.specs())
+                buildWidgets(HomeLayout.load(this@MainActivity))
+                canvas.setEditing(editing)
+                dock.reload(); topBar.reload(); sideRail.reload()
+            }
+        })
+    }
+
+    override fun openSplit(id: String) {
+        val s = SplitStore.get(this, id) ?: return toast("Cặp chia đôi này đã bị xoá")
+        splitScreen.toggle(s)
+    }
+
+    override fun editSplit(id: String) = splitUi.edit(id)
+
+    override fun newSplit(onCreated: (String) -> Unit) = splitUi.create { onCreated(it.id) }
+
+    override fun chooseSplit(onPicked: (String, String) -> Unit) = splitUi.choose { onPicked(it.id, splitUi.label(it)) }
 
     private fun launch(pkg: String) {
         val intent = packageManager.getLaunchIntentForPackage(pkg) ?: return toast("Không tìm thấy ứng dụng")

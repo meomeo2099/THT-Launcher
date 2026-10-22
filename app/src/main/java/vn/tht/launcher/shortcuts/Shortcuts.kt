@@ -17,6 +17,7 @@ import java.io.File
  *  - "controls": mở bảng điều khiển xe (điều hoà, chế độ lái, đèn viền)
  *  - "apps":     mở ngăn kéo tất cả ứng dụng
  *  - "settings": mở cài đặt launcher
+ *  - "split":    mở/thoát cặp chia đôi có id [action]
  */
 data class Shortcut(
     val id: String,
@@ -31,7 +32,7 @@ data class Shortcut(
     val configured: Boolean
         get() = when (type) {
             TYPE_HVAC, TYPE_CONTROLS, TYPE_APPS, TYPE_SETTINGS, TYPE_STATS, TYPE_STATUS, TYPE_COLLAPSE, TYPE_CLEANUP -> true
-            TYPE_ACTION -> action.isNotBlank()
+            TYPE_ACTION, TYPE_SPLIT -> action.isNotBlank()
             else -> pkg.isNotBlank()
         }
 
@@ -54,6 +55,8 @@ data class Shortcut(
         const val TYPE_COLLAPSE = "collapse"
         /** Dọn dẹp: đóng app chạy nền. */
         const val TYPE_CLEANUP = "cleanup"
+        /** Cặp chia đôi màn hình; [action] là id cặp. */
+        const val TYPE_SPLIT = "split"
 
         fun fromJson(o: JSONObject) = Shortcut(
             id = o.optString("id"),

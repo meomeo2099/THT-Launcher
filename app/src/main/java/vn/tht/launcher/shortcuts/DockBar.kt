@@ -45,6 +45,10 @@ class DockBar(
         fun cleanup()
         fun isCollapsed(): Boolean
         fun pickApp(onPicked: (String) -> Unit)
+        fun openSplit(id: String)
+        fun editSplit(id: String)
+        /** Chọn/tạo cặp chia đôi; trả (id, tên hiển thị). */
+        fun chooseSplit(onPicked: (String, String) -> Unit)
     }
 
     private val pm = context.packageManager
@@ -183,15 +187,17 @@ class DockBar(
 
     private fun editDialog(index: Int) {
         val s = items[index]
+        val split = s.type == Shortcut.TYPE_SPLIT
         vn.tht.launcher.ui.IconList.show(context, s.label, listOf(
             vn.tht.launcher.ui.IconList.Item("Sang trái", "chevron-left"),
             vn.tht.launcher.ui.IconList.Item("Sang phải", "chevron-right"),
             vn.tht.launcher.ui.IconList.Item("Xoá", "close", danger = true),
-        )) { which ->
+        ) + if (split) listOf(vn.tht.launcher.ui.IconList.Item("Cài đặt chia đôi", "dual")) else emptyList()) { which ->
             when (which) {
                 0 -> if (index > 0) { items.add(index - 1, items.removeAt(index)); save() }
                 1 -> if (index < items.size - 1) { items.add(index + 1, items.removeAt(index)); save() }
                 2 -> { items.removeAt(index); save() }
+                3 -> actions.editSplit(s.action)
             }
         }
     }
@@ -199,6 +205,7 @@ class DockBar(
     private fun addDialog() {
         val choices = listOf(
             "Ứng dụng…" to null,
+            "Chia đôi màn hình…" to Shortcut("split", "Chia đôi", Shortcut.TYPE_SPLIT),
             "Tất cả ứng dụng" to Shortcut("apps", "Ứng dụng", Shortcut.TYPE_APPS),
             "Điều khiển xe" to Shortcut("controls", "Điều khiển", Shortcut.TYPE_CONTROLS),
             "Điều hoà gốc" to Shortcut("hvac", "Điều hoà", Shortcut.TYPE_HVAC),
@@ -224,18 +231,28 @@ class DockBar(
             sc.type == Shortcut.TYPE_STATS -> "trip"
             sc.type == Shortcut.TYPE_COLLAPSE -> "collapse"
             sc.type == Shortcut.TYPE_CLEANUP -> "cleanup"
+            sc.type == Shortcut.TYPE_SPLIT -> "dual"
             else -> "mic"
         }
         vn.tht.launcher.ui.IconList.show(context, "Thêm vào thanh",
             choices.map { vn.tht.launcher.ui.IconList.Item(it.first, iconOf(it.second)) }, columns = 2) { which ->
                 val s = choices[which].second
-                if (s == null) {
+                if (s?.type == Shortcut.TYPE_SPLIT) {
+                    actions.chooseSplit { id, label -> add(Shortcut("split_$id", label, Shortcut.TYPE_SPLIT, action = id)) }
+                } else if (s == null) {
                     actions.pickApp { pkg ->
                         val label = runCatching { pm.getApplicationLabel(pm.getApplicationInfo(pkg, 0)).toString() }.getOrDefault(pkg)
                         add(Shortcut("app_$pkg", label, Shortcut.TYPE_ACTIVITY, pkg = pkg))
                     }
                 } else add(s.copy(id = s.id + "_" + System.currentTimeMillis()))
             }
+    }
+
+    /** Thêm nút từ nơi khác (vd. bảng cài đặt chia đôi). */
+    fun addShortcut(s: Shortcut) {
+        if (items.any { it.id == s.id }) return toast("Đã có trên thanh")
+        add(s)
+        toast("Đã thêm vào thanh")
     }
 
     private fun add(s: Shortcut) {
@@ -260,6 +277,7 @@ class DockBar(
             Shortcut.TYPE_STATS -> actions.openStats()
             Shortcut.TYPE_COLLAPSE -> actions.toggleCollapsed()
             Shortcut.TYPE_CLEANUP -> actions.cleanup()
+            Shortcut.TYPE_SPLIT -> actions.openSplit(s.action)
             else -> start(intentFor(s), s.label)
         }
     }
@@ -290,6 +308,7 @@ class DockBar(
             Shortcut.TYPE_STATS -> return Icons.get(context, "trip")
             Shortcut.TYPE_COLLAPSE -> return Icons.get(context, if (actions.isCollapsed()) "expand" else "collapse")
             Shortcut.TYPE_CLEANUP -> return Icons.get(context, "cleanup")
+            Shortcut.TYPE_SPLIT -> return Icons.get(context, "dual")
         }
         val pkg = if (s.type == Shortcut.TYPE_HVAC) s.pkg.ifBlank { HvacOpener.DEFAULT_PACKAGE } else s.pkg
         if (pkg.isBlank()) return Icons.get(context, "plus")

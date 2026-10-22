@@ -70,6 +70,11 @@ interface WidgetHost {
     fun setVolume(v: Float)
     fun brightness(): Float?
     fun setBrightness(v: Float)
+    /** Mở cặp chia đôi [id]; đang mở thì thoát. */
+    fun openSplit(id: String)
+    fun editSplit(id: String)
+    /** Tạo cặp mới (chọn app trái, phải); trả id. */
+    fun newSplit(onCreated: (String) -> Unit)
 }
 
 /**
@@ -129,6 +134,7 @@ abstract class HomeWidget(protected val host: WidgetHost) {
             WidgetType.FUEL -> FuelWidget(host)
             WidgetType.CAR -> CarWidget(host)
             WidgetType.APP -> AppWidget(host, spec)
+            WidgetType.SPLIT -> SplitWidget(host, spec)
             WidgetType.TRIP -> TripWidget(host)
         }
     }
@@ -498,4 +504,47 @@ internal fun oval(color: Int) = GradientDrawable().apply { shape = GradientDrawa
 /** Thanh trên / dưới / dọc đặt như widget: di chuyển, đổi cỡ, xoá được. */
 class BarWidget(host: WidgetHost, bar: View) : HomeWidget(host) {
     override val view: View = bar.also { (it.parent as? android.view.ViewGroup)?.removeView(it) }
+}
+
+/** Widget cặp chia đôi: icon app trái | app phải. Chạm mở/thoát chia đôi, nhấn giữ để cài đặt. */
+class SplitWidget(host: WidgetHost, private val spec: WidgetSpec) : HomeWidget(host) {
+    private val leftIcon = ImageView(c)
+    private val rightIcon = ImageView(c)
+    private val label = Ui.text(c, "", 15f).apply { gravity = Gravity.CENTER; maxLines = 1 }
+
+    /** Thẻ bên trong: khung widget gắn nhấn giữ (vào chế độ sửa) lên view ngoài, nên nhấn giữ đặt ở đây. */
+    private val card = base(12, Gravity.CENTER).apply {
+        addView(Ui.hbox(c, Gravity.CENTER).apply {
+            addView(leftIcon, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f))
+            addView(View(c).apply { background = Ui.pill(c, Palette.textDim, 2) },
+                LinearLayout.LayoutParams(Ui.dp(c, 4), LinearLayout.LayoutParams.MATCH_PARENT).apply {
+                    marginStart = Ui.dp(c, 10); marginEnd = Ui.dp(c, 10)
+                })
+            addView(rightIcon, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f))
+        }, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f))
+        addView(label, matchW().apply { topMargin = Ui.dp(c, 6) })
+        setOnClickListener {
+            if (split() == null) host.newSplit { id -> spec.pkg = id; bind(); host.saveLayout() } else host.openSplit(spec.pkg)
+        }
+        setOnLongClickListener { if (split() != null) host.editSplit(spec.pkg); split() != null }
+    }
+
+    override val view: View = FrameLayout(c).apply { addView(card, FrameLayout.LayoutParams(-1, -1)) }
+
+    init { bind() }
+
+    private fun split() = spec.pkg.takeIf { it.isNotBlank() }?.let { vn.tht.launcher.split.SplitStore.get(c, it) }
+
+    private fun bind() {
+        val s = split()
+        if (s == null) {
+            leftIcon.setImageDrawable(Icons.get(c, "dual"))
+            rightIcon.setImageDrawable(Icons.get(c, "plus"))
+            label.textIfChanged = "Chạm để chọn hai app"
+        } else {
+            leftIcon.setImageDrawable(host.appIcon(s.left))
+            rightIcon.setImageDrawable(host.appIcon(s.right))
+            label.textIfChanged = "${host.appLabel(s.left) ?: s.left} | ${host.appLabel(s.right) ?: s.right}"
+        }
+    }
 }
