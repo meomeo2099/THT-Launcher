@@ -139,6 +139,7 @@ class SettingsActivity : Activity() {
         slider("Độ tối", 0, 90, "%", { prefs.saverDim }) { prefs.saverDim = it }
         toggle("Chỉ khi xe đỗ", { prefs.saverParkedOnly }) { prefs.saverParkedOnly = it }
         toggle("Hiện bài đang phát", { prefs.saverShowTrack }) { prefs.saverShowTrack = it }
+        toggle("Hiện thời tiết", { prefs.sp.getBoolean("saver_weather", true) }) { prefs.sp.edit().putBoolean("saver_weather", it).apply() }
 
         section("Tự động hoá sau khi nổ máy")
         val a = vn.tht.launcher.automation.AutomationPrefs(prefs)

@@ -163,7 +163,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
             handler.postDelayed(this, 1000)
         }
     }
-    private val appsAdapter = AppsAdapter({ launch(it.packageName); closeDrawer() }, ::openAppInfo)
+    private val appsAdapter = AppsAdapter({ launch(it.packageName); closeDrawer() }, ::appMenu)
 
     private val packageReceiver = object : BroadcastReceiver() {
         override fun onReceive(c: Context, i: Intent) = reloadApps()
@@ -383,28 +383,52 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         val groups = WidgetType.values().groupBy { it.group }
         val keys = groups.keys.toList()
         vn.tht.launcher.ui.IconList.show(this, "Thư viện widget",
-            keys.map { vn.tht.launcher.ui.IconList.Item(it, vn.tht.launcher.home.groupIcon(it), summary = "${groups.getValue(it).size} loại") },
+            listOf(vn.tht.launcher.ui.IconList.Item("Tìm widget", "apps", summary = "Gõ tên, vd: nhạc, xăng, radio")) +
+                keys.map { vn.tht.launcher.ui.IconList.Item(it, vn.tht.launcher.home.groupIcon(it), summary = "${groups.getValue(it).size} loại") },
             columns = 2) { gi ->
-            val types = groups.getValue(keys[gi])
-            vn.tht.launcher.ui.IconList.show(this, keys[gi],
-                types.map { t -> vn.tht.launcher.ui.IconList.Item(t.title, with(vn.tht.launcher.home.WidgetSpecIcons) { t.iconKey }) }, columns = 2) { i ->
-                if (types[i].isBar && canvas.specs().any { it.type == types[i] }) {
-                    toast("Thanh này đã có trên màn hình"); return@show
-                }
-                if (types[i] == WidgetType.ANDROID_WIDGET) {
-                    appWidgets.pick { id ->
-                        if (id == null) return@pick toast("Chưa thêm widget")
-                        addWidget(WidgetSpec.new(types[i]).also { it.pkg = id.toString() })
-                        canvas.setEditing(true)
-                        HomeLayout.save(this, canvas.specs())
-                    }
-                    return@show
-                }
-                addWidget(WidgetSpec.new(types[i]))
+            if (gi == 0) return@show searchWidgets()
+            showWidgetTypes(keys[gi - 1], groups.getValue(keys[gi - 1]))
+        }
+    }
+
+    /** Tìm loại widget theo tên (không phân biệt dấu). */
+    private fun searchWidgets() {
+        fun plain(s: String) = java.text.Normalizer.normalize(s.lowercase().replace('đ', 'd'), java.text.Normalizer.Form.NFD)
+            .replace(Regex("\\p{Mn}+"), "")
+        Dialogs.form(this, "Tìm widget", listOf(Dialogs.Field("Tên widget", hint = "vd: nhạc, xăng, radio")), listOf(
+            Dialogs.FormButton("Huỷ"),
+            Dialogs.FormButton("Tìm", Dialogs.Kind.PRIMARY) { (q) ->
+                val key = plain(q.trim())
+                val found = WidgetType.values().filter { key.isNotEmpty() && (key in plain(it.title) || key in plain(it.group)) }
+                if (found.isEmpty()) toast("Không thấy widget nào khớp \"${q.trim()}\"")
+                else showWidgetTypes("Kết quả: ${q.trim()}", found)
+            },
+        ))
+    }
+
+    private fun showWidgetTypes(title: String, types: List<WidgetType>) {
+        vn.tht.launcher.ui.IconList.show(this, title,
+            types.map { t -> vn.tht.launcher.ui.IconList.Item(t.title, with(vn.tht.launcher.home.WidgetSpecIcons) { t.iconKey }) }, columns = 2) { i ->
+            addWidgetOfType(types[i])
+        }
+    }
+
+    private fun addWidgetOfType(type: WidgetType) {
+        if (type.isBar && canvas.specs().any { it.type == type }) {
+            toast("Thanh này đã có trên màn hình"); return
+        }
+        if (type == WidgetType.ANDROID_WIDGET) {
+            appWidgets.pick { id ->
+                if (id == null) return@pick toast("Chưa thêm widget")
+                addWidget(WidgetSpec.new(type).also { it.pkg = id.toString() })
                 canvas.setEditing(true)
                 HomeLayout.save(this, canvas.specs())
             }
+            return
         }
+        addWidget(WidgetSpec.new(type))
+        canvas.setEditing(true)
+        HomeLayout.save(this, canvas.specs())
     }
 
     override fun saveLayout() = HomeLayout.save(this, canvas.specs())
@@ -514,9 +538,40 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         filterApps(findViewById<EditText>(R.id.drawer_search).text.toString())
     }
 
+    /** App ghim lên đầu ngăn kéo (theo thứ tự ghim). */
+    private var favoriteApps: List<String>
+        get() = prefs.sp.getString("drawer_favorites", "").orEmpty().split(',').filter { it.isNotBlank() }
+        set(v) = prefs.sp.edit().putString("drawer_favorites", v.joinToString(",")).apply()
+
     private fun filterApps(q: String) {
         val key = q.trim().lowercase()
-        appsAdapter.submit(if (key.isEmpty()) allApps else allApps.filter { key in it.label.lowercase() })
+        val favs = favoriteApps
+        val list = if (key.isEmpty()) {
+            val byPkg = allApps.associateBy { it.packageName }
+            favs.mapNotNull { byPkg[it] } + allApps.filter { it.packageName !in favs }
+        } else allApps.filter { key in it.label.lowercase() }
+        appsAdapter.submit(list, favs.toSet())
+    }
+
+    /** Nhấn giữ app trong ngăn kéo: ghim, thông tin, gỡ. */
+    private fun appMenu(app: AppEntry) {
+        val pinned = app.packageName in favoriteApps
+        vn.tht.launcher.ui.IconList.show(this, app.label, listOf(
+            vn.tht.launcher.ui.IconList.Item(if (pinned) "Bỏ ghim" else "Ghim lên đầu", if (pinned) "favorite-off" else "favorite-on"),
+            vn.tht.launcher.ui.IconList.Item("Thông tin ứng dụng", "settings"),
+            vn.tht.launcher.ui.IconList.Item("Gỡ ứng dụng", "close", danger = true),
+        )) { i ->
+            when (i) {
+                0 -> {
+                    favoriteApps = if (pinned) favoriteApps - app.packageName else favoriteApps + app.packageName
+                    filterApps(findViewById<EditText>(R.id.drawer_search).text.toString())
+                }
+                1 -> openAppInfo(app)
+                2 -> runCatching {
+                    startActivity(Intent(Intent.ACTION_DELETE, Uri.parse("package:${app.packageName}")))
+                }.onFailure { toast("Không gỡ được ứng dụng này") }
+            }
+        }
     }
 
     override fun openAppDrawer() = inLauncher {
@@ -713,17 +768,21 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
             Dialogs.Field("Cao", spec.h.toString(), number = true),
         ), listOf(
             Dialogs.FormButton("Huỷ"),
-            Dialogs.FormButton("Áp dụng", Dialogs.Kind.PRIMARY) { (x, y, w, h) ->
-                val nw = (w.toIntOrNull() ?: spec.w).coerceIn(HomeLayout.MIN_SIZE, HomeLayout.DESIGN_W)
-                val nh = (h.toIntOrNull() ?: spec.h).coerceIn(HomeLayout.MIN_SIZE, HomeLayout.DESIGN_H)
-                spec.w = nw; spec.h = nh
-                spec.x = (x.toIntOrNull() ?: spec.x).coerceIn(0, HomeLayout.DESIGN_W - nw)
-                spec.y = (y.toIntOrNull() ?: spec.y).coerceIn(0, HomeLayout.DESIGN_H - nh)
-                HomeLayout.save(this, canvas.specs())
-                // Thẻ nhạc đổi ngang/dọc theo tỉ lệ mới: dựng lại
-                buildWidgets(HomeLayout.load(this)); canvas.setEditing(true)
-            },
+            // Vuông: cao = rộng (theo số đang nhập ở ô Rộng)
+            Dialogs.FormButton("Vuông") { (x, y, w, _) -> applyExact(spec, x, y, w, w) },
+            Dialogs.FormButton("Áp dụng", Dialogs.Kind.PRIMARY) { (x, y, w, h) -> applyExact(spec, x, y, w, h) },
         ), note = "Đơn vị dp trên khung ${HomeLayout.DESIGN_W}×${HomeLayout.DESIGN_H}, nhỏ nhất ${HomeLayout.MIN_SIZE}", columns = 2)
+    }
+
+    private fun applyExact(spec: WidgetSpec, x: String, y: String, w: String, h: String) {
+        val nw = (w.toIntOrNull() ?: spec.w).coerceIn(HomeLayout.MIN_SIZE, HomeLayout.DESIGN_W)
+        val nh = (h.toIntOrNull() ?: spec.h).coerceIn(HomeLayout.MIN_SIZE, HomeLayout.DESIGN_H)
+        spec.w = nw; spec.h = nh
+        spec.x = (x.toIntOrNull() ?: spec.x).coerceIn(0, HomeLayout.DESIGN_W - nw)
+        spec.y = (y.toIntOrNull() ?: spec.y).coerceIn(0, HomeLayout.DESIGN_H - nh)
+        HomeLayout.save(this, canvas.specs())
+        // Thẻ nhạc đổi ngang/dọc theo tỉ lệ mới: dựng lại
+        buildWidgets(HomeLayout.load(this)); canvas.setEditing(true)
     }
 
     // ---- Widget: dẫn đường, âm lượng, độ sáng, cài đặt hệ thống ----

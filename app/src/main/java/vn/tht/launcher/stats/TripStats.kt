@@ -45,17 +45,35 @@ data class Refuel(val time: Long, val liters: Float, val full: Boolean, val odoK
     }
 }
 
+/** Một lần đo điện áp ắc quy: thời điểm, vôn, máy đang nổ không. */
+data class VoltagePoint(val time: Long, val volts: Float, val engine: Boolean)
+
 /** Lưu chuyến đi / đổ xăng dạng JSON từng dòng trong filesDir. */
 class StatsStore(private val c: Context) {
     private val tripsFile get() = File(c.filesDir, "trips.jsonl")
     private val refuelFile get() = File(c.filesDir, "refuels.jsonl")
+    private val voltFile get() = File(c.filesDir, "voltage.jsonl")
 
     fun trips(): List<Trip> = read(tripsFile) { Trip.fromJson(it) }
     fun refuels(): List<Refuel> = read(refuelFile) { Refuel.fromJson(it) }
     fun add(t: Trip) = tripsFile.appendText(t.toJson().toString() + "\n")
     fun add(r: Refuel) = refuelFile.appendText(r.toJson().toString() + "\n")
     fun deleteRefuel(r: Refuel) = rewrite(refuelFile, refuels().filter { it != r }.map { it.toJson().toString() })
-    fun clear() { tripsFile.delete(); refuelFile.delete() }
+    fun clear() { tripsFile.delete(); refuelFile.delete(); voltFile.delete() }
+
+    fun voltages(): List<VoltagePoint> = read(voltFile) {
+        VoltagePoint(it.getLong("t"), it.getDouble("v").toFloat(), it.optBoolean("e"))
+    }
+
+    fun add(p: VoltagePoint) = voltFile.appendText(
+        JSONObject().put("t", p.time).put("v", p.volts.toDouble()).put("e", p.engine).toString() + "\n")
+
+    /** Chỉ giữ [days] ngày gần nhất. */
+    fun trimVoltages(days: Int) {
+        val from = System.currentTimeMillis() - days * 86_400_000L
+        val keep = voltages().filter { it.time >= from }
+        rewrite(voltFile, keep.map { JSONObject().put("t", it.time).put("v", it.volts.toDouble()).put("e", it.engine).toString() })
+    }
 
     private fun <T> read(f: File, parse: (JSONObject) -> T): List<T> = if (!f.exists()) emptyList() else
         f.readLines().mapNotNull { line -> runCatching { parse(JSONObject(line)) }.getOrNull() }
@@ -83,6 +101,8 @@ class TripRecorder(private val c: Context) {
     private var lastOdo: Float? = null
     private var refuelBaseline: Float? = null
     private var engine: Boolean? = null
+    private var lastVoltAt = 0L
+    private var engineStartAt = 0L
 
     /** Chuyến đang chạy (null nếu máy tắt). */
     var current: Trip? = null
@@ -92,6 +112,7 @@ class TripRecorder(private val c: Context) {
         if (!prefs.sp.getBoolean("stats_on", true)) return
         val now = System.currentTimeMillis()
         val on = d?.engineOn ?: return
+        logVoltage(d, on, now)
         if (on && engine != true) begin(d, now)
         if (!on && engine == true) finish(now)
         engine = on
@@ -149,6 +170,20 @@ class TripRecorder(private val c: Context) {
             }
             refuelBaseline = pct
         }
+    }
+
+    /**
+     * Điện áp ắc quy: ghi mỗi phút; 30 giây đầu sau khi nổ máy ghi mỗi giây để bắt được lúc đề
+     * (sụt áp khi đề cho biết ắc quy còn khoẻ không). Giữ 30 ngày.
+     */
+    private fun logVoltage(d: VehicleData, on: Boolean, now: Long) {
+        val v = d.batteryVoltage ?: return
+        if (on && engine != true) engineStartAt = now
+        val starting = on && now - engineStartAt < 30_000
+        if (now - lastVoltAt < (if (starting) 1_000L else 60_000L)) return
+        if (lastVoltAt == 0L) runCatching { store.trimVoltages(30) }
+        lastVoltAt = now
+        runCatching { store.add(VoltagePoint(now, v, on)) }
     }
 
     private fun tankLiters(): Float = prefs.tankLiters.toFloat().takeIf { it > 0f } ?: DEFAULT_TANK_L
