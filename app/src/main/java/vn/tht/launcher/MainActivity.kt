@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private lateinit var carSource: CarPropertySource
     private lateinit var ecarx: EcarxCarSource
     private lateinit var media: MediaWatcher
+    override val radio by lazy { vn.tht.launcher.radio.EcarxRadio(this) }
     private lateinit var dock: DockBar
     private lateinit var topBar: DockBar
     private lateinit var sideRail: DockBar
@@ -243,6 +244,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         refreshVehicleUi(lastVehicle)
         if (ecarx.connected) { io.removeCallbacks(ecarxPoll); io.post(ecarxPoll) }
         media.start()
+        radio.start()
         if (appearanceDirty) applyAppearance() else { dock.reload(); topBar.reload(); sideRail.reload() }
         screensaver.setActive(true)
         vn.tht.launcher.system.NavAssistService.setLauncherInFront(true)
@@ -266,6 +268,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         refreshFloatingDock()
         io.removeCallbacks(ecarxPoll)
         media.stop()
+        radio.stop()
         screensaver.setActive(false)
         vn.tht.launcher.system.NavAssistService.setLauncherInFront(false)
         handler.removeCallbacks(tick)

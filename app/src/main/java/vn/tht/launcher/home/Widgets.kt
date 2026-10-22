@@ -65,6 +65,8 @@ interface WidgetHost {
     /** Chạy chức năng của vùng ảnh (xem ImageActions). */
     fun runImageAction(id: String)
     fun radioLabel(): String?
+    /** Radio của đầu xe ECARX (không có dịch vụ thì available = false). */
+    val radio: vn.tht.launcher.radio.EcarxRadio
     /** 0..1; null = không đọc được. */
     fun volume(): Float?
     fun setVolume(v: Float)
