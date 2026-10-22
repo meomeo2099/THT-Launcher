@@ -107,7 +107,34 @@ class CarPropertySource(
             rpm = float(ENGINE_RPM),
             fuelLiters = fuelMl?.let { it / 1000f }?.takeIf { it in 0f..200f },
             coolantTempC = float(ENGINE_COOLANT_TEMP)?.takeIf { it in -40f..150f },
+            batteryVoltage = voltage(bytes(VENDOR_BATTERY_VOLTAGE)),
         )
+    }
+
+    /** Thuộc tính dạng mảng byte (thuộc tính riêng của ECARX): getProperty(byte[].class, id, 0).getValue(). */
+    private fun bytes(prop: Int): ByteArray? = try {
+        val v = propertyManager!!.javaClass
+            .getMethod("getProperty", Class::class.java, Int::class.javaPrimitiveType, Int::class.javaPrimitiveType)
+            .invoke(propertyManager, ByteArray::class.java, prop, 0)
+        v?.javaClass?.getMethod("getValue")?.invoke(v) as? ByteArray
+    } catch (_: Throwable) {
+        null
+    }
+
+    /**
+     * Điện áp từ 1–4 byte little-endian. Đầu xe báo theo 0,1 V (vd. 141 = 14,1 V); một số bản báo mV.
+     * Chỉ nhận 6–17 V, ngoài khoảng đó coi như không đọc được.
+     */
+    private fun voltage(b: ByteArray?): Float? {
+        if (b == null || b.isEmpty() || b.size > 4) return null
+        var raw = 0
+        for (i in b.indices.reversed()) raw = (raw shl 8) or (b[i].toInt() and 0xFF)
+        val v = when {
+            raw > 1000 -> raw / 1000f
+            raw > 100 -> raw / 10f
+            else -> raw.toFloat()
+        }
+        return v.takeIf { it in 6f..17f }
     }
 
     private fun call(name: String, prop: Int): Any? = try {
@@ -143,5 +170,7 @@ class CarPropertySource(
         const val IGNITION_STATE = 0x11400409
         const val ENGINE_RPM = 0x11600305
         const val ENGINE_COOLANT_TEMP = 0x11600301      // °C
+        /** Thuộc tính riêng ECARX (byte[]): VPowerInfo – điện áp ắc quy, đơn vị 0,1 V. */
+        const val VENDOR_BATTERY_VOLTAGE = 0x287000E4
     }
 }

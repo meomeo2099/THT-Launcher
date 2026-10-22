@@ -524,10 +524,10 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     }.getOrNull()
 
     /**
-     * Điện áp nguồn: nhiều đầu xe báo điện áp ắc quy xe qua thông tin pin hệ thống (mV).
-     * Chỉ nhận giá trị 9–16 V; ngoài khoảng đó coi như không có. Chưa kiểm chứng trên Coolray.
+     * Điện áp ắc quy: ưu tiên số xe báo (thuộc tính VPowerInfo của ECARX), không có thì thử
+     * thông tin pin hệ thống (mV) mà một số đầu xe dùng. Chỉ nhận 9–16 V từ nguồn thứ hai.
      */
-    private fun supplyVoltage(): Float? = runCatching {
+    private fun supplyVoltage(): Float? = lastVehicle?.batteryVoltage ?: runCatching {
         val i = registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
         val mv = i?.getIntExtra(android.os.BatteryManager.EXTRA_VOLTAGE, -1) ?: -1
         (mv / 1000f).takeIf { it in 9f..16f }

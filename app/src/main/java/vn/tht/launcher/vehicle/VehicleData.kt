@@ -17,6 +17,8 @@ data class VehicleData(
     val coolantTempC: Float? = null,
     /** Xăng còn lại (lít), từ FUEL_LEVEL (ml). */
     val fuelLiters: Float? = null,
+    /** Điện áp ắc quy 12 V của xe (V), từ thuộc tính riêng ECARX VPowerInfo. */
+    val batteryVoltage: Float? = null,
 ) {
     /**
      * Máy đang nổ: ưu tiên khoá điện, rồi vòng tua, cuối cùng là xe đang chạy.
