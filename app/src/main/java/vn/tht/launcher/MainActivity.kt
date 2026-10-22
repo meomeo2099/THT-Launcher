@@ -163,7 +163,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
             handler.postDelayed(this, 1000)
         }
     }
-    private val appsAdapter = AppsAdapter({ launch(it.packageName); closeDrawer() }, ::openAppInfo)
+    private val appsAdapter = AppsAdapter({ launch(it.packageName); closeDrawer() }, ::appMenu)
 
     private val packageReceiver = object : BroadcastReceiver() {
         override fun onReceive(c: Context, i: Intent) = reloadApps()
@@ -514,9 +514,40 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         filterApps(findViewById<EditText>(R.id.drawer_search).text.toString())
     }
 
+    /** App ghim lên đầu ngăn kéo (theo thứ tự ghim). */
+    private var favoriteApps: List<String>
+        get() = prefs.sp.getString("drawer_favorites", "").orEmpty().split(',').filter { it.isNotBlank() }
+        set(v) = prefs.sp.edit().putString("drawer_favorites", v.joinToString(",")).apply()
+
     private fun filterApps(q: String) {
         val key = q.trim().lowercase()
-        appsAdapter.submit(if (key.isEmpty()) allApps else allApps.filter { key in it.label.lowercase() })
+        val favs = favoriteApps
+        val list = if (key.isEmpty()) {
+            val byPkg = allApps.associateBy { it.packageName }
+            favs.mapNotNull { byPkg[it] } + allApps.filter { it.packageName !in favs }
+        } else allApps.filter { key in it.label.lowercase() }
+        appsAdapter.submit(list, favs.toSet())
+    }
+
+    /** Nhấn giữ app trong ngăn kéo: ghim, thông tin, gỡ. */
+    private fun appMenu(app: AppEntry) {
+        val pinned = app.packageName in favoriteApps
+        vn.tht.launcher.ui.IconList.show(this, app.label, listOf(
+            vn.tht.launcher.ui.IconList.Item(if (pinned) "Bỏ ghim" else "Ghim lên đầu", if (pinned) "favorite-off" else "favorite-on"),
+            vn.tht.launcher.ui.IconList.Item("Thông tin ứng dụng", "settings"),
+            vn.tht.launcher.ui.IconList.Item("Gỡ ứng dụng", "close", danger = true),
+        )) { i ->
+            when (i) {
+                0 -> {
+                    favoriteApps = if (pinned) favoriteApps - app.packageName else favoriteApps + app.packageName
+                    filterApps(findViewById<EditText>(R.id.drawer_search).text.toString())
+                }
+                1 -> openAppInfo(app)
+                2 -> runCatching {
+                    startActivity(Intent(Intent.ACTION_DELETE, Uri.parse("package:${app.packageName}")))
+                }.onFailure { toast("Không gỡ được ứng dụng này") }
+            }
+        }
     }
 
     override fun openAppDrawer() = inLauncher {

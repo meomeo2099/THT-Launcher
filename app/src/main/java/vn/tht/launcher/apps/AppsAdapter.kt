@@ -40,9 +40,11 @@ class AppsAdapter(
 ) : RecyclerView.Adapter<AppsAdapter.VH>() {
 
     private var items: List<AppEntry> = emptyList()
+    private var pinned: Set<String> = emptySet()
 
-    fun submit(list: List<AppEntry>) {
+    fun submit(list: List<AppEntry>, favorites: Set<String> = pinned) {
         items = list
+        pinned = favorites
         notifyDataSetChanged()
     }
 
@@ -59,7 +61,7 @@ class AppsAdapter(
     override fun onBindViewHolder(holder: VH, position: Int) {
         val app = items[position]
         holder.icon.setImageDrawable(app.icon)
-        holder.label.text = app.label
+        holder.label.text = if (app.packageName in pinned) "★ " + app.label else app.label
         holder.label.setTextColor(vn.tht.launcher.ui.Palette.text)
         holder.itemView.setOnClickListener { onClick(app) }
         holder.itemView.setOnLongClickListener { onLongClick(app); true }

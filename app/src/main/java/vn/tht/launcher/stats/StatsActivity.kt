@@ -83,6 +83,25 @@ class StatsActivity : Activity() {
         ))
         list.addView(DistanceChart(this, trips), LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Ui.dp(this, 200)))
 
+        section("Ắc quy")
+        val volts = store.voltages()
+        if (volts.isEmpty()) note("Chưa có số đo điện áp (cần xe báo điện áp ắc quy).")
+        else {
+            val dayAgo = System.currentTimeMillis() - 86_400_000L
+            val today = volts.filter { it.time >= dayAgo }
+            val running = today.filter { it.engine }
+            val parked = today.filter { !it.engine }
+            val v = { x: Float? -> x?.let { String.format(Locale.US, "%.1f V", it) } ?: "–" }
+            cards(listOf(
+                "Hiện tại" to v(volts.last().volts),
+                "Máy nổ (24h)" to if (running.isEmpty()) "–" else "${v(running.minOf { it.volts })} – ${v(running.maxOf { it.volts })}",
+                "Đỗ xe thấp nhất (24h)" to v(parked.minOfOrNull { it.volts }),
+                "Lúc đề thấp nhất (7 ngày)" to v(crankMin(volts)),
+            ))
+            list.addView(VoltageChart(this, today), LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Ui.dp(this, 200)))
+            note("Khi máy nổ thường 13,5–14,7 V; đỗ xe lâu dưới 12,2 V hoặc lúc đề dưới 9,6 V là dấu hiệu ắc quy yếu.")
+        }
+
         section("Bảo dưỡng")
         val serviceKm = prefs.sp.getInt("service_km", 0)
         val serviceDay = prefs.sp.getLong("service_date", 0L)
@@ -117,7 +136,7 @@ class StatsActivity : Activity() {
 
         section("Dữ liệu")
         row("Xoá toàn bộ thống kê", "Chuyến đi và đổ xăng") {
-            confirm("Xoá toàn bộ chuyến đi và lịch sử đổ xăng?") { store.clear(); render() }
+            confirm("Xoá toàn bộ chuyến đi, lịch sử đổ xăng và điện áp?") { store.clear(); render() }
         }
     }
 
@@ -225,6 +244,62 @@ class StatsActivity : Activity() {
     private fun dur(sec: Long) = if (sec >= 3600) "${sec / 3600} giờ ${sec % 3600 / 60} phút" else "${sec / 60} phút"
     private fun date(t: Long) = SimpleDateFormat("dd/MM/yyyy", Locale.US).format(Date(t))
     private fun dateTime(t: Long) = SimpleDateFormat("dd/MM HH:mm", Locale.US).format(Date(t))
+
+    /** Điện áp thấp nhất trong 30 giây đầu mỗi lần nổ máy (lúc đề), 7 ngày gần nhất. */
+    private fun crankMin(volts: List<VoltagePoint>): Float? {
+        val from = System.currentTimeMillis() - 7 * 86_400_000L
+        var startAt = 0L
+        var prev = false
+        var min: Float? = null
+        for (p in volts) {
+            if (p.engine && !prev) startAt = p.time
+            prev = p.engine
+            if (p.time >= from && p.engine && p.time - startAt < 30_000) min = minOf(min ?: p.volts, p.volts)
+        }
+        return min
+    }
+
+    /** Đường điện áp 24 giờ qua (vùng tô khi máy nổ). */
+    private class VoltageChart(c: Context, private val points: List<VoltagePoint>) : View(c) {
+        private val line = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Palette.accent; strokeWidth = Ui.dp(c, 2).toFloat(); style = Paint.Style.STROKE }
+        private val engineFill = Paint().apply { color = Palette.withAlpha(Palette.ok, 40) }
+        private val grid = Paint().apply { color = Palette.withAlpha(Palette.textDim, 60); strokeWidth = 1f }
+        private val text = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Palette.textDim; textSize = Ui.dp(c, 13).toFloat() }
+
+        init { background = Ui.card(c, 16) }
+
+        override fun onDraw(canvas: Canvas) {
+            val pad = Ui.dp(context, 16).toFloat()
+            val left = pad + Ui.dp(context, 44)
+            val end = System.currentTimeMillis()
+            val start = end - 86_400_000L
+            val lo = 10f
+            val hi = 15.5f
+            val w = width - left - pad
+            val h = height - 2 * pad - Ui.dp(context, 20)
+            fun x(t: Long) = left + w * (t - start) / (end - start).toFloat()
+            fun y(v: Float) = pad + h * (1f - ((v.coerceIn(lo, hi) - lo) / (hi - lo)))
+            for (v in listOf(11f, 12f, 13f, 14f, 15f)) {
+                canvas.drawLine(left, y(v), left + w, y(v), grid)
+                canvas.drawText("${v.toInt()} V", pad, y(v) + text.textSize / 3, text)
+            }
+            val fmt = SimpleDateFormat("HH:mm", Locale.US)
+            for (i in 0..4) {
+                val t = start + (end - start) * i / 4
+                val s = fmt.format(Date(t))
+                canvas.drawText(s, (x(t) - text.measureText(s) / 2).coerceIn(left, left + w - text.measureText(s)), height - pad, text)
+            }
+            var prev: VoltagePoint? = null
+            for (p in points) {
+                val q = prev
+                if (q != null && p.time - q.time < 5 * 60_000L) {
+                    if (q.engine) canvas.drawRect(x(q.time), pad, x(p.time), pad + h, engineFill)
+                    canvas.drawLine(x(q.time), y(q.volts), x(p.time), y(p.volts), line)
+                }
+                prev = p
+            }
+        }
+    }
 
     /** Biểu đồ cột quãng đường 14 ngày gần nhất. */
     private class DistanceChart(c: Context, trips: List<Trip>) : View(c) {
