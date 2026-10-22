@@ -67,6 +67,16 @@ class Screensaver(
                     textSize = 28f
                     setTextColor(Color.argb(170, 255, 255, 255))
                 })
+                val w = vn.tht.launcher.system.Weather.current
+                if (prefs.sp.getBoolean("saver_weather", true) && w != null) addView(Ui.hbox(c, Gravity.CENTER).apply {
+                    setPadding(0, Ui.dp(c, 16), 0, 0)
+                    addView(android.widget.ImageView(c).apply {
+                        setImageDrawable(vn.tht.launcher.ui.Icons.get(c, w.icon, Color.argb(200, 255, 255, 255)))
+                    }, LinearLayout.LayoutParams(Ui.dp(c, 40), Ui.dp(c, 40)).apply { marginEnd = Ui.dp(c, 12) })
+                    addView(Ui.text(c, String.format(java.util.Locale.US, "%+.0f° · %s", w.tempC, w.text), 26f).apply {
+                        setTextColor(Color.argb(190, 255, 255, 255))
+                    })
+                })
                 if (prefs.saverShowTrack) addView(trackText.apply { setPadding(0, Ui.dp(c, 24), 0, 0) })
             }, FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT))
         }
