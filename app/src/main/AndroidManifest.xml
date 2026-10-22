@@ -9,6 +9,10 @@
     <uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW" />
     <!-- Gắn widget Android của app khác không cần hỏi (chỉ có hiệu lực với bản ký platform) -->
     <uses-permission android:name="android.permission.BIND_APPWIDGET" />
+    <!-- Nhúng app bản đồ vào ô Dẫn đường (ActivityView, Android 9): mở app không khai báo
+         allowEmbedded trên màn hình ảo, và chuyển thao tác chạm vào đó. Chỉ có hiệu lực với bản ký platform -->
+    <uses-permission android:name="android.permission.ACTIVITY_EMBEDDING" />
+    <uses-permission android:name="android.permission.INJECT_EVENTS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
