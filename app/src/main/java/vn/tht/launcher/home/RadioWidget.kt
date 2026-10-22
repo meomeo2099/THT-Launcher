@@ -35,7 +35,7 @@ class RadioWidget(host: WidgetHost) : HomeWidget(host) {
     private val listener: (EcarxRadio.State?) -> Unit = { render() }
 
     override val view: View = Ui.hbox(c).apply {
-        background = Ui.card(c)
+        background = cardBackground(this)
         val p = Ui.dp(c, 12)
         setPadding(p, p, p, p)
         addView(android.widget.FrameLayout(c).apply {

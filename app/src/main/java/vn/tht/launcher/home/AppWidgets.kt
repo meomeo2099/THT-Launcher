@@ -113,7 +113,7 @@ class AndroidAppWidget(host: WidgetHost, spec: WidgetSpec) : HomeWidget(host) {
                 }
             }
         } else {
-            background = Ui.card(c)
+            background = cardBackground(this)
             addView(Ui.text(c, "Widget không còn\n(app đã gỡ?) · xoá ô này trong chế độ sửa", 15f, dim = true).apply {
                 gravity = Gravity.CENTER
             }, FrameLayout.LayoutParams(-2, -2, Gravity.CENTER))

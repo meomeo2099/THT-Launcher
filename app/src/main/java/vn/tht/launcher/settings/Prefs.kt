@@ -24,6 +24,8 @@ class Prefs(context: Context) {
     var backgroundNight: String get() = str("bg_night", "mountains_dusk"); set(v) = put("bg_night", v)
     /** Độ đặc của nền widget, 0–100 (%). */
     var cardOpacity: Int get() = sp.getInt("card_opacity", 72); set(v) = put("card_opacity", v)
+    /** "solid" thẻ đặc, "frosted" kính mờ (làm mờ ảnh nền sau thẻ). */
+    var cardStyle: String get() = str("card_style", "solid"); set(v) = put("card_style", v)
     var dockOpacity: Int get() = sp.getInt("dock_opacity", 80); set(v) = put("dock_opacity", v)
     /** Tỉ lệ giao diện widget, 75–150 (%). */
     var uiScale: Int get() = sp.getInt("ui_scale", 100); set(v) = put("ui_scale", v)
