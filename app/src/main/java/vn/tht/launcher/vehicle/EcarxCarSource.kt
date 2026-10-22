@@ -311,6 +311,31 @@ class EcarxCarSource(
     /**
      * Dò toàn bộ catalog và in ra logcat (tag "EcarxCarSource"). Xem: `adb logcat -s EcarxCarSource`.
      */
+    /** Toàn bộ catalog dạng chữ (cho báo cáo chẩn đoán): trạng thái, giá trị, giá trị cho phép. Gọi ngoài luồng giao diện. */
+    fun report(): String = buildString {
+        if (!connected) { appendLine("(chưa nối ICarFunction)"); return@buildString }
+        for (fn in EcarxFunctions.ALL) {
+            val state = rawSupportState(fn.id, fn.zone) ?: "null"
+            append("${fn.name} ${EcarxFunctions.hex(fn.id)} zone=${fn.zone}: $state")
+            if (state.equals("active", true) || state.equals("notactive", true)) {
+                append(" int=${getInt(fn.id, fn.zone)} float=${getFloat(fn.id, fn.zone)}")
+                supportedValues(fn.id, fn.zone)?.let { v -> append(" values=[${v.joinToString(",") { EcarxFunctions.hex(it) }}]") }
+            }
+            appendLine()
+        }
+        // Mã chưa dùng trong app (xem docs/ecarx-reference.md): dò để biết xe còn hỗ trợ gì
+        appendLine("-- Dò thêm")
+        for (id in PROBE_IDS) {
+            val state = rawSupportState(id, EcarxFunctions.ZONE_ALL) ?: "null"
+            append("${EcarxFunctions.hex(id)}: $state")
+            if (state.equals("active", true) || state.equals("notactive", true)) {
+                append(" int=${getInt(id)} float=${getFloat(id)}")
+                supportedValues(id)?.let { v -> append(" values=[${v.joinToString(",") { EcarxFunctions.hex(it) }}]") }
+            }
+            appendLine()
+        }
+    }
+
     fun dumpSupported() {
         if (!connected) {
             Log.w(TAG, "Chưa nối ICarFunction, bỏ qua dump")
@@ -345,6 +370,12 @@ class EcarxCarSource(
             "/system/framework/ecarx.jar", "/system/framework/ecarxSignalAPI.jar",
         )
         const val CONNECT_WAIT_MS = 5000L
+        /** Mã chức năng thấy ở launcher khác nhưng app chưa dùng – chỉ để dò trong báo cáo chẩn đoán. */
+        val PROBE_IDS = intArrayOf(
+            0x10050300, 0x10060200, 0x10060300, 0x10060600, 0x10100300, 0x10140400, 0x10140500,
+            0x20020100, 0x20030600, 0x200a0200, 0x20150300, 0x20150400, 0x20150500, 0x20150600,
+            0x21030000, 0x21030300, 0x21030600, 0x28070400, 0x29030500, 0x2a010300, 0x2a040100, 0x2a080101,
+        )
         const val MAX_ATTEMPTS = 5
         const val RETRY_MS = 2000L
         val INT: Class<*> = Int::class.javaPrimitiveType!!

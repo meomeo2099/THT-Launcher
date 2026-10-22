@@ -182,6 +182,9 @@ class SettingsActivity : Activity() {
         action("Đưa khung nhiệt độ về chỗ cũ", "Giữa mép trái, cạnh nút điều hướng") { nav.resetTempInfo(); toast("Đã đặt lại vị trí") }
 
         section("Xe")
+        action("Chẩn đoán", "Chữ ký, kết nối ECARX, dữ liệu xe · lưu báo cáo gửi nhà phát triển") {
+            setResult(RESULT_DIAGNOSTICS); finish()
+        }
         action("Thống kê chuyến đi", "Quãng đường, tiêu hao, đổ xăng, bảo dưỡng") {
             startActivity(Intent(this, vn.tht.launcher.stats.StatsActivity::class.java))
         }
@@ -470,6 +473,7 @@ class SettingsActivity : Activity() {
 
     companion object {
         const val RESULT_EDIT_HOME = 100
+        const val RESULT_DIAGNOSTICS = 101
         const val DAY = "day"
         const val NIGHT = "night"
         private const val REQ_WP_DAY = 1
