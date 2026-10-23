@@ -107,3 +107,66 @@ Thuộc tính riêng ECARX, kiểu `byte[]`, đọc bằng `getProperty(byte[].c
 - Radio: `com.ecarx.radio.service` (`IRadioSvc`, `IRadioSvcCallback`), app `com.ecarx.radio`.
 - Thông tin nhạc: `ecarx.xsf.mediacenter` (`IMediaCenterWidgetApiSvc`, action `ecarx.xsf.ACTION_MEDIA_CENTER_WIDGET_API_SERVICE`).
 - Camera 360: `com.ecarx.avm.app`.
+
+## 7. Trình phát gốc – `ecarx.xsf.mediacenter` (quan sát)
+
+Bind `ComponentName("ecarx.xsf.mediacenter", "ecarx.xsf.mediacenter.MediaCenterService")` với action
+`ecarx.xsf.ACTION_MEDIA_CENTER_WIDGET_API_SERVICE` (dự phòng: `setPackage`). Kiểm tra `interfaceDescriptor`
+= `ecarx.xsf.mediacenter.IMediaCenterWidgetApiSvc`. Gọi binder trực tiếp (`writeInterfaceToken` → `transact` → `readException`):
+
+| Giao diện | Mã | Tham số | Trả về |
+|---|---|---|---|
+| `IMediaCenterWidgetApiSvc` | 2 | – | `IMusicPlaybackInfo` (strong binder) |
+| `IMediaCenterWidgetApiSvc` | 20 | int `3` | **chưa rõ** (gọi khi mở nguồn) |
+| `IMediaCenterWidgetApiSvc` | 19 | – | **chưa rõ** |
+| `IMusicPlaybackInfo` | 9 | – | int loại nguồn |
+| `IMusicPlaybackInfo` | 5 / 6 / 2 | – | chuỗi tần số / tên đài / tên bài |
+| `IMusicPlaybackInfo` | 11 | – | int đang phát (1 = có) |
+| `IMusicPlaybackInfo` | 27 / 25 | – | chuỗi tên gói / tên app |
+
+THT Launcher chỉ đọc (`media/MediaCenterSource.kt`); điều khiển bằng phím media chuẩn vì mã 19/20 chưa rõ nghĩa.
+
+## 8. Radio – `com.ecarx.radio.service` (quan sát)
+
+Bind action `android.intent.action.START_XCRADIO_SERVICE`, category `android.intent.category.XCRadio`,
+component `com.ecarx.radio.service/.RadioService`; descriptor `com.ecarx.radio.service.IRadioSvc`.
+
+| Mã | Ý nghĩa | Tham số | Trả về |
+|---|---|---|---|
+| 1 | Mở radio | strong binder (callback `IRadioSvcCallback`) | int ≠ 0 nếu nhận |
+| 3 | Đặt băng | int: AM = 0, FM = 1 | – |
+| 4 | Đặt tần số | int kHz | – |
+| 17 | Chuyển nguồn âm thanh sang radio | – | – |
+| 12 / 13 | Đọc băng / tần số (kHz) | – | int |
+| 20 | Trạng thái nguồn | – | int; `0x1001`, `0x2000`, `0x2001`, `0x4000` = radio đang giữ âm thanh |
+
+Tần số kHz: FM ≥ 30000 (98500 = 98,5 MHz), AM khoảng 522–1620. Lệnh dò kênh tự động chưa thấy. Dùng trong `radio/EcarxRadio.kt`.
+
+## 9. Popup điều hoà gốc (quan sát + suy luận)
+
+`IOpenHvacAidlInterface` (service `ecarx.hvac.app.service.HvacAppService`, dự phòng action `ecarx.hvac.app.HvacAppService`):
+giao dịch **1** được dùng cả để mở lẫn để đóng cửa sổ điều hoà, nên **suy luận** là bật/tắt. THT Launcher chỉ gửi lệnh đóng
+khi dịch vụ trợ năng thấy cửa sổ của `ecarx.hvac.app` vừa hiện (`TYPE_WINDOW_STATE_CHANGED`).
+
+## 10. Chia đôi màn hình (Android 9, API ẩn `IActivityManager`) (quan sát)
+
+1. Tìm task: `getAllStackInfos()` → `displayId`, `taskNames`, `taskIds`; app chưa chạy thì mở thường rồi chờ task xuất hiện.
+2. Đưa task vào vùng chia: `startActivityFromRecents(taskId, bundle)` với `"android.activity.windowingMode"` = 3 (trái/chính)
+   hoặc 4 (phải/phụ) và `"android:activity.splitScreenCreateMode"` = 0.
+3. Tỉ lệ: `resizeDockedStack(Rect trái, null, null, null, null)` + `resizeStack(stackId phụ, Rect phải, true, false, false, -1)`;
+   `stackId` phụ lấy từ `getStackInfo(4, 1)`. Tỉ lệ 20–80 %, mặc định 50.
+4. Thoát: `dismissSplitScreenMode(false)`.
+
+Quyền: `MANAGE_ACTIVITY_STACKS`, `START_TASKS_FROM_RECENTS`, `INTERNAL_SYSTEM_WINDOW` (bản ký platform). Dùng trong `split/`.
+
+## 11. Nhúng app vào ô (ActivityView, Android 9) (đã thử trên emulator)
+
+`android.app.ActivityView` cần 2 quyền hệ thống: `INJECT_EVENTS` (tạo bộ chuyển thao tác chạm cho màn hình ảo;
+thiếu thì `Requires INJECT_EVENTS permission`) và `ACTIVITY_EMBEDDING` (mở app không khai báo `allowEmbedded`, vd. Google Maps;
+thiếu thì `Permission Denial … launchDisplayId=…`). Cả hai chỉ có với bản ký platform.
+
+## 12. Cách lấy mã chuẩn trên xe
+
+Cài đặt → Xe → Chẩn đoán → **Lưu báo cáo đầy đủ**: báo cáo liệt kê toàn bộ hằng số số nguyên trong AdaptAPI của chính firmware
+(tên → mã), trạng thái hỗ trợ và giá trị của mọi chức năng app dùng, cùng các mã ở mục 3 chưa dùng. Đây là nguồn chuẩn để
+thay các mục "suy luận"/"chưa rõ" ở trên.
