@@ -191,6 +191,9 @@ class NavWidget(host: WidgetHost) : HomeWidget(host) {
         addView(label, matchW())
     }
     private var embedded: EmbeddedMap? = null
+    private var expand: View? = null
+    /** Đã đóng ô nhúng để mở toàn màn hình: nhúng lại khi launcher hiện lại. */
+    private var reembed = false
 
     override val view: View = android.widget.FrameLayout(c).apply {
         background = cardBackground(this)
@@ -208,9 +211,7 @@ class NavWidget(host: WidgetHost) : HomeWidget(host) {
         val frame = view as android.widget.FrameLayout
         val map = EmbeddedMap(c) { why ->
             // Không nhúng được: quay về nút mở bản đồ
-            embedded?.let { frame.removeView(it) }
-            embedded = null
-            fallback.visibility = View.VISIBLE
+            dropEmbed()
             host.toast("Không nhúng được bản đồ ($why); chạm ô để mở toàn màn hình")
         }
         if (!map.create()) return
@@ -218,14 +219,39 @@ class NavWidget(host: WidgetHost) : HomeWidget(host) {
         fallback.visibility = View.GONE
         frame.addView(map, android.widget.FrameLayout.LayoutParams(-1, -1))
         // Nút mở toàn màn hình ở góc
-        frame.addView(Ui.tile(c, "expand", "Mở toàn màn hình", 48) { host.openNav() },
+        expand = Ui.tile(c, "expand", "Mở toàn màn hình", 48) { openFull() }
+        frame.addView(expand,
             android.widget.FrameLayout.LayoutParams(Ui.dp(c, 48), Ui.dp(c, 48), Gravity.TOP or Gravity.END).apply {
                 topMargin = Ui.dp(c, 10); marginEnd = Ui.dp(c, 10)
             })
         map.start(intent)
     }
 
-    override fun onTick() { label.textIfChanged = host.navAppLabel() ?: "Nhấn giữ để chọn app bản đồ" }
+    private fun dropEmbed() {
+        val frame = view as android.widget.FrameLayout
+        embedded?.let { it.release(); frame.removeView(it) }
+        expand?.let { frame.removeView(it) }
+        embedded = null
+        expand = null
+        fallback.visibility = View.VISIBLE
+    }
+
+    /**
+     * Bản đồ đang chạy trong màn hình ảo của ô. Mở thẳng thì hệ thống kéo nguyên task đó sang màn hình
+     * chính, giữ kích thước của ô (bản đồ chỉ chiếm một phần, phần còn lại trống). Nên đóng ô trước
+     * (huỷ màn hình ảo cũng đóng task bên trong), đợi một nhịp rồi mở bản mới toàn màn hình.
+     */
+    private fun openFull() {
+        dropEmbed()
+        reembed = true
+        view.postDelayed({ host.openNav() }, 400)
+    }
+
+    override fun onTick() {
+        label.textIfChanged = host.navAppLabel() ?: "Nhấn giữ để chọn app bản đồ"
+        // onTick chỉ chạy khi launcher đang hiện: người dùng đã quay về từ bản đồ
+        if (reembed && view.hasWindowFocus()) { reembed = false; tryEmbed() }
+    }
     override fun onVehicle(d: VehicleData?) = onTick()
 }
 

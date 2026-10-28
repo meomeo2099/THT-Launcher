@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.util.Log
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -517,6 +518,24 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         } else 0
         if (prefs.fullScreen) window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         else window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        applyPolicyControl(prefs.fullScreen)
+    }
+
+    /**
+     * Thanh hệ thống của ECARX không chịu ẩn theo cờ của cửa sổ. Android 9 còn `policy_control` (cần
+     * WRITE_SECURE_SETTINGS, chỉ có ở bản ký platform): ép chế độ toàn màn hình cho riêng gói launcher.
+     * Không đè cấu hình của người khác: chỉ ghi khi trống hoặc đang là của mình.
+     */
+    private fun applyPolicyControl(on: Boolean) {
+        val mine = "immersive.full=$packageName"
+        runCatching {
+            val cur = Settings.Global.getString(contentResolver, "policy_control")
+            when {
+                on && cur.isNullOrEmpty() -> Settings.Global.putString(contentResolver, "policy_control", mine)
+                !on && cur == mine -> Settings.Global.putString(contentResolver, "policy_control", null)
+                else -> Unit
+            }
+        }.onFailure { Log.w("THT", "policy_control: $it") }
     }
 
     // ---- Ngăn kéo ứng dụng ----
