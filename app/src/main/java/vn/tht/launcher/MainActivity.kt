@@ -178,6 +178,13 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         vn.tht.launcher.system.NavAssistService.host = object : vn.tht.launcher.system.NavAssistService.Companion.Host {
             override fun openAppDrawer() = this@MainActivity.openAppDrawer()
             override fun openClimate() = this@MainActivity.openClimate()
+            override fun openControlPanel() = inLauncher { this@MainActivity.openControlPanel(0) }
+            override fun climateTemp(): Float? {
+                if (!ecarx.connected) return null
+                val f = vn.tht.launcher.vehicle.EcarxFunctions
+                val zone = if (ecarx.isSupported(f.HVAC_TEMP, f.ZONE_ROW_1_LEFT) == true) f.ZONE_ROW_1_LEFT else f.ZONE_ALL
+                return ecarx.getFloat(f.HVAC_TEMP, zone)?.takeIf { it in f.TEMP_MIN..f.TEMP_MAX }
+            }
         }
         // Gốc giao diện + ảnh nền đã phủ kín màn: bỏ nền cửa sổ để khỏi vẽ 1920×720 thêm một lần mỗi khung hình
         window.setBackgroundDrawable(null)

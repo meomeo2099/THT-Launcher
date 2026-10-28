@@ -116,6 +116,10 @@ class SettingsActivity : Activity() {
             "both" to "Cả hai",
             "off" to "Tắt",
         ), { prefs.sp.getString("nav_mode", "buttons") ?: "buttons" }) { prefs.sp.edit().putString("nav_mode", it).apply() }
+        val navBar = vn.tht.launcher.system.NavAssistService
+        action("Thanh bên: chọn và sắp xếp nút", navBar.barItems(prefs).joinToString(" · ") { navBar.BAR_ITEMS[it] ?: it }) {
+            editBarItems()
+        }
         toggle("Thanh bên: hiện cả trên màn chính", { prefs.sp.getBoolean(vn.tht.launcher.system.NavAssistService.KEY_BAR_HOME, false) }) {
             prefs.sp.edit().putBoolean(vn.tht.launcher.system.NavAssistService.KEY_BAR_HOME, it).apply()
         }
@@ -228,6 +232,52 @@ class SettingsActivity : Activity() {
     }
 
     // ---- Các loại dòng ----
+
+    /** Bật/tắt từng nút của thanh bên và đổi thứ tự bằng ↑ ↓ (trên xuống = trên xuống của thanh). */
+    private fun editBarItems() {
+        val navBar = vn.tht.launcher.system.NavAssistService
+        val on = navBar.barItems(prefs).toMutableList()
+        val order = (on + navBar.BAR_ITEMS.keys.filter { it !in on }).toMutableList()
+        val box = Ui.vbox(this)
+        fun small(key: String, enabled: Boolean, onClick: () -> Unit) = android.widget.ImageView(this).apply {
+            val p = Ui.dp(context, 8)
+            setPadding(p, p, p, p)
+            setImageDrawable(vn.tht.launcher.ui.Icons.get(context, key, if (enabled) Palette.text else Palette.withAlpha(Palette.textDim, 80)))
+            isEnabled = enabled
+            setOnClickListener { onClick() }
+        }
+        fun paint() {
+            box.removeAllViews()
+            order.forEachIndexed { i, id ->
+                val shown = id in on
+                box.addView(Ui.hbox(this).apply {
+                    setPadding(Ui.dp(context, 8), Ui.dp(context, 4), Ui.dp(context, 8), Ui.dp(context, 4))
+                    addView(small(if (shown) "check" else "plus", true) {
+                        if (shown) on.remove(id) else on.add(id)
+                        paint()
+                    }, LinearLayout.LayoutParams(Ui.dp(context, 44), Ui.dp(context, 44)))
+                    addView(Ui.text(context, navBar.BAR_ITEMS[id] ?: id, 19f, dim = !shown).apply {
+                        setPadding(Ui.dp(context, 12), 0, 0, 0)
+                    }, Ui.weight())
+                    addView(small("chevron-up", i > 0) { order.add(i - 1, order.removeAt(i)); paint() },
+                        LinearLayout.LayoutParams(Ui.dp(context, 44), Ui.dp(context, 44)))
+                    addView(small("chevron-down", i < order.size - 1) { order.add(i + 1, order.removeAt(i)); paint() },
+                        LinearLayout.LayoutParams(Ui.dp(context, 44), Ui.dp(context, 44)))
+                })
+            }
+        }
+        paint()
+        Dialogs.show(this, "Nút trên thanh bên (trên → dưới)", box, listOf(
+            Dialogs.Button("Mặc định") {
+                prefs.sp.edit().remove(navBar.KEY_BAR_ITEMS).apply(); render()
+            },
+            Dialogs.Button("Huỷ"),
+            Dialogs.Button("Lưu", Dialogs.Kind.PRIMARY) {
+                prefs.sp.edit().putString(navBar.KEY_BAR_ITEMS, order.filter { it in on }.joinToString(",")).apply()
+                render()
+            },
+        ))
+    }
 
     private fun section(title: String) {
         list.addView(Ui.text(this, title, 16f, dim = true, bold = true).apply {
