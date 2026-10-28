@@ -18,7 +18,6 @@ import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import vn.tht.launcher.settings.Prefs
 import vn.tht.launcher.ui.Icons
 import vn.tht.launcher.ui.Palette
@@ -82,7 +81,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
 
     override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
         if (key == KEY_MODE || key == KEY_BAR_COLLAPSED || key == KEY_BAR_ITEMS) rebuild()
-        if (key == KEY_BAR_HOME) applyVisibility()
+        if (key == KEY_BAR_HOME) rebuild()
     }
 
     private fun mode() = prefs.sp.getString(KEY_MODE, "buttons") ?: "buttons"
@@ -106,8 +105,9 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
 
     private fun removeAll() {
         listOfNotNull(pill, strip, bar).forEach { runCatching { wm.removeView(it) } }
+        if (bar != null && homeInset != 0) { homeInset = 0; host?.onBarInset() }
         pill = null; strip = null; bar = null
-        barTemp = null
+        tempBlocks.clear()
         barIo.removeCallbacks(tempPoll)
     }
 
@@ -170,47 +170,58 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
 
     // ---- Thanh bên (theo mẫu thanh của launcher gốc) ----
 
-    private var barTemp: TextView? = null
+    private val tempBlocks = mutableListOf<Pair<Int, TempBlock>>()
     /** Màu/theme lúc dựng thanh; launcher đổi theme thì dựng lại. */
     private var barStyle: List<Int>? = null
     private val main = Handler(Looper.getMainLooper())
     private val barIo by lazy { Handler(HandlerThread("nav-bar").apply { start() }.looper) }
     private val tempPoll = object : Runnable {
         override fun run() {
-            val t = runCatching { host?.climateTemp() }.getOrNull()
-            main.post { barTemp?.text = t?.let { String.format(Locale.US, "%.1f°C", it) } ?: "--°C" }
+            val cl = runCatching { host?.climate() }.getOrNull()
+            main.post {
+                for ((side, b) in tempBlocks) b.bind(if (side == 0) cl?.left else cl?.right, cl?.fan)
+            }
             barIo.postDelayed(this, 2000)
         }
     }
 
-    private fun style() = listOf(if (Palette.night) 1 else 0, Palette.dock, Palette.text, Palette.accent)
+    private fun style() = listOf(if (Palette.night) 1 else 0, Palette.text, Palette.accent)
+
+    /** Bề rộng thanh: bằng thanh hệ thống bên trái của xe nếu có (để nằm đúng chỗ đó, không che app). */
+    private fun barWidth(): Int {
+        val d = wm.defaultDisplay
+        val real = android.graphics.Point().also { d.getRealSize(it) }
+        val app = android.graphics.Point().also { d.getSize(it) }
+        val sys = real.x - app.x
+        return if (sys in Ui.dp(this, 60)..Ui.dp(this, 200)) sys else Ui.dp(this, 120)
+    }
 
     /**
-     * Khối bo tròn cách mép như thanh gốc (xe · nhiệt độ · ứng dụng · ⌂), các nút chia đều chiều cao.
-     * Nút nào hiện và thứ tự do người dùng chọn (khoá "nav_bar_items", xem [BAR_ITEMS]).
-     * Thu gọn: tab nhỏ giữa mép trái, chạm để mở lại. Đây là lớp phủ nên che phần mép trái của app.
+     * Thanh dọc sát mép trái, cao hết màn như thanh gốc ECARX: nhiệt độ ghế lái (trên), ứng dụng, xe,
+     * nhiệt độ ghế phụ, ⌂, nút ‹ quay lại (dưới). Nút nào hiện và thứ tự do người dùng chọn
+     * (khoá "nav_bar_items", xem [BAR_ITEMS]). Đặt đè đúng chỗ thanh của xe nên không che app; trên màn
+     * chính launcher tự chừa chỗ ([homeInset]). Thu gọn: tab nhỏ giữa mép trái, chạm để mở lại.
      */
     private fun addBar() {
         val c: Context = this
-        if (Palette.dock == 0) Palette.apply(prefs, Palette.systemNight(c))
+        if (Palette.text == 0) Palette.apply(prefs, Palette.systemNight(c))
         barStyle = style()
         val collapsed = prefs.sp.getBoolean(KEY_BAR_COLLAPSED, false)
         fun setCollapsed(v: Boolean) = prefs.sp.edit().putBoolean(KEY_BAR_COLLAPSED, v).apply()
+        val radius = Ui.dp(c, 20).toFloat()
         val bg = GradientDrawable().apply {
-            cornerRadius = Ui.dp(c, 22).toFloat()
-            setColor(Palette.withAlpha(Palette.dock, 255))
-            setStroke(Ui.dp(c, 1), Palette.withAlpha(Palette.text, 30))
+            cornerRadii = floatArrayOf(0f, 0f, radius, radius, radius, radius, 0f, 0f)
+            setColor(SideBarColors.bg)
         }
         fun icon(key: String, label: String, onClick: () -> Unit) = ImageView(c).apply {
-            setImageDrawable(Icons.get(c, key, Palette.text))
+            setImageDrawable(Icons.get(c, key, SideBarColors.fg))
             contentDescription = label
             scaleType = ImageView.ScaleType.FIT_CENTER
-            val p = Ui.dp(c, 24)
+            val p = Ui.dp(c, 30)
             setPadding(p, p, p, p)
             background = c.getDrawable(vn.tht.launcher.R.drawable.ripple)
             setOnClickListener { onClick() }
         }
-        val gap = Ui.dp(c, 8)
         val view: View
         val lp: WindowManager.LayoutParams
         if (collapsed) {
@@ -219,52 +230,46 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
                 val p = Ui.dp(c, 6)
                 setPadding(p, p, p, p)
             }
-            lp = params(Ui.dp(c, 30), Ui.dp(c, 110)).apply { gravity = Gravity.START or Gravity.CENTER_VERTICAL; x = gap / 2 }
+            lp = params(Ui.dp(c, 30), Ui.dp(c, 110)).apply { gravity = Gravity.START or Gravity.CENTER_VERTICAL }
+            homeInset = 0
         } else {
-            val w = Ui.dp(c, 84)
+            val w = barWidth()
             val col = LinearLayout(c).apply {
                 orientation = LinearLayout.VERTICAL
                 gravity = Gravity.CENTER_HORIZONTAL
                 background = bg
-                clipToOutline = true
-                val p = Ui.dp(c, 6)
+                val p = Ui.dp(c, 8)
                 setPadding(0, p, 0, p)
             }
+            tempBlocks.clear()
             for (id in barItems(prefs)) {
                 val v: View = when (id) {
-                    "back" -> icon("back", "Quay lại") { performGlobalAction(GLOBAL_ACTION_BACK) }
+                    "back" -> backSquare(c) { performGlobalAction(GLOBAL_ACTION_BACK) }
                     "home" -> icon("home", "Màn hình chính") { performGlobalAction(GLOBAL_ACTION_HOME) }
                     "apps" -> icon("apps", "Ứng dụng") { host?.openAppDrawer() ?: performGlobalAction(GLOBAL_ACTION_HOME) }
                     "car" -> icon("car", "Xe") { host?.openControlPanel() ?: performGlobalAction(GLOBAL_ACTION_HOME) }
                     "climate" -> icon("climate", "Điều hoà") { host?.openClimate() }
                     "recents" -> icon("split", "Đa nhiệm") { performGlobalAction(GLOBAL_ACTION_RECENTS) }
                     "notifications" -> icon("chevron-down", "Thông báo") { performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS) }
-                    "collapse" -> icon("chevron-left", "Thu gọn") { setCollapsed(true) }
-                    "temp" -> Ui.text(c, "--°C", 24f, bold = true).apply {
-                        gravity = Gravity.CENTER
-                        maxLines = 1
-                        setTextColor(Palette.text)
-                        background = c.getDrawable(vn.tht.launcher.R.drawable.ripple)
-                        setAutoSizeTextTypeUniformWithConfiguration(14, 24, 1, android.util.TypedValue.COMPLEX_UNIT_SP)
-                        setOnClickListener { host?.openClimate() }
-                        barTemp = this
-                    }
+                    "collapse" -> icon("minus", "Thu gọn") { setCollapsed(true) }
+                    "temp", "temp2" -> TempBlock(c) { host?.openClimate() }.also { tempBlocks += (if (id == "temp") 0 else 1) to it }
                     else -> continue
                 }
                 col.addView(v, LinearLayout.LayoutParams(w, 0, 1f))
             }
             view = col
-            val h = android.util.DisplayMetrics().also { wm.defaultDisplay.getRealMetrics(it) }.heightPixels
-            // Toạ độ tính từ mép màn hình (không phải dưới thanh trạng thái) để thanh cao vừa đủ, không bị cắt đáy
-            lp = params(w, h - 2 * gap).apply {
-                gravity = Gravity.START or Gravity.TOP; x = gap; y = gap
+            // Toạ độ tính từ mép màn hình (không phải dưới thanh trạng thái) để thanh cao hết màn
+            lp = params(w, WindowManager.LayoutParams.MATCH_PARENT).apply {
+                gravity = Gravity.START or Gravity.TOP
                 flags = flags or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
             }
+            homeInset = if (prefs.sp.getBoolean(KEY_BAR_HOME, false)) w else 0
         }
         runCatching { wm.addView(view, lp) }.onSuccess {
             bar = view
-            if (barTemp != null) { barIo.removeCallbacks(tempPoll); barIo.post(tempPoll) }
-        }
+            if (tempBlocks.isNotEmpty()) { barIo.removeCallbacks(tempPoll); barIo.post(tempPoll) }
+        }.onFailure { homeInset = 0 }
+        host?.onBarInset()
     }
 
     // ---- Dải cử chỉ ----
@@ -310,15 +315,24 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
             fun openAppDrawer()
             fun openClimate()
             fun openControlPanel()
-            /** Nhiệt độ điều hoà (°C) hoặc null; gọi từ luồng nền. */
-            fun climateTemp(): Float?
+            /** Nhiệt độ hai bên + mức quạt, hoặc null; gọi từ luồng nền. */
+            fun climate(): BarClimate?
+            /** [homeInset] đổi: màn chính chừa/bỏ chừa chỗ cho thanh bên. */
+            fun onBarInset()
         }
+
+        class BarClimate(val left: Float?, val right: Float?, val fan: Int?)
+
+        /** Bề rộng (px) thanh bên đang chiếm trên màn chính; 0 = không hiện ở màn chính. */
+        @Volatile var homeInset = 0
+            private set
         const val KEY_BAR_ITEMS = "nav_bar_items"
 
         /** Các nút có thể đặt lên thanh bên (khoá → tên hiển thị), theo thứ tự mặc định. */
         val BAR_ITEMS = linkedMapOf(
             "car" to "Xe (bảng điều khiển)",
-            "temp" to "Nhiệt độ điều hoà",
+            "temp" to "Nhiệt độ ghế lái",
+            "temp2" to "Nhiệt độ ghế phụ",
             "apps" to "Ứng dụng",
             "home" to "Màn hình chính",
             "back" to "Quay lại",
@@ -327,7 +341,8 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
             "notifications" to "Thông báo",
             "collapse" to "Thu gọn thanh",
         )
-        val BAR_DEFAULT = listOf("car", "temp", "apps", "home", "back", "collapse")
+        /** Như thanh gốc: nhiệt độ lái · ứng dụng · xe · nhiệt độ phụ · ⌂ · ‹ */
+        val BAR_DEFAULT = listOf("temp", "apps", "car", "temp2", "home", "back")
 
         fun barItems(p: Prefs): List<String> =
             p.sp.getString(KEY_BAR_ITEMS, null)?.split(',')?.filter { it in BAR_ITEMS } ?: BAR_DEFAULT

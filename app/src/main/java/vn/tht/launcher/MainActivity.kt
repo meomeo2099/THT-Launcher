@@ -179,12 +179,18 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
             override fun openAppDrawer() = this@MainActivity.openAppDrawer()
             override fun openClimate() = this@MainActivity.openClimate()
             override fun openControlPanel() = inLauncher { this@MainActivity.openControlPanel(0) }
-            override fun climateTemp(): Float? {
+            override fun climate(): vn.tht.launcher.system.NavAssistService.Companion.BarClimate? {
                 if (!ecarx.connected) return null
                 val f = vn.tht.launcher.vehicle.EcarxFunctions
-                val zone = if (ecarx.isSupported(f.HVAC_TEMP, f.ZONE_ROW_1_LEFT) == true) f.ZONE_ROW_1_LEFT else f.ZONE_ALL
-                return ecarx.getFloat(f.HVAC_TEMP, zone)?.takeIf { it in f.TEMP_MIN..f.TEMP_MAX }
+                fun temp(zone: Int) = ecarx.getFloat(f.HVAC_TEMP, zone)?.takeIf { it in f.TEMP_MIN..f.TEMP_MAX }
+                val dual = ecarx.isSupported(f.HVAC_TEMP, f.ZONE_ROW_1_LEFT) == true
+                val left = if (dual) temp(f.ZONE_ROW_1_LEFT) else temp(f.ZONE_ALL)
+                val right = if (ecarx.isSupported(f.HVAC_TEMP, f.ZONE_ROW_1_RIGHT) == true) temp(f.ZONE_ROW_1_RIGHT) else left
+                val on = ecarx.getInt(f.HVAC_POWER)?.let { it == f.ON }
+                val fan = if (on == false) 0 else f.levelOf(f.HVAC_FAN_SPEED, ecarx.getInt(f.HVAC_FAN_SPEED))
+                return vn.tht.launcher.system.NavAssistService.Companion.BarClimate(left, right, fan)
             }
+            override fun onBarInset() = runOnUiThread { applyBarInset() }
         }
         // Gốc giao diện + ảnh nền đã phủ kín màn: bỏ nền cửa sổ để khỏi vẽ 1920×720 thêm một lần mỗi khung hình
         window.setBackgroundDrawable(null)
@@ -522,6 +528,22 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         applyFullScreen()
     }
 
+    /**
+     * Thanh bên của THT hiện cả trên màn chính: lùi khung widget và ngăn ứng dụng sang phải cho khỏi bị che.
+     * Nếu cửa sổ launcher đã nằm sau thanh của xe (không toàn màn hình) thì chỉ lùi phần còn thiếu.
+     */
+    private fun applyBarInset() {
+        val root = findViewById<View>(R.id.root)
+        root.post {
+            val x = IntArray(2).also { root.getLocationOnScreen(it) }[0]
+            val pad = (vn.tht.launcher.system.NavAssistService.homeInset - x).coerceAtLeast(0)
+            for (id in intArrayOf(R.id.canvas_container, R.id.drawer)) {
+                val v = findViewById<View>(id)
+                if (v.paddingLeft != pad) v.setPadding(pad, v.paddingTop, v.paddingRight, v.paddingBottom)
+            }
+        }
+    }
+
     @Suppress("DEPRECATION")
     private fun applyFullScreen() {
         window.decorView.systemUiVisibility = if (prefs.fullScreen) {
@@ -531,6 +553,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         if (prefs.fullScreen) window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         else window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         applyPolicyControl(prefs.fullScreen)
+        applyBarInset()
     }
 
     /**
