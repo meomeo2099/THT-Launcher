@@ -75,7 +75,6 @@ object Frosted {
         private val clip = Path()
         private val image = Paint(Paint.FILTER_BITMAP_FLAG)
         private val tint = Paint(Paint.ANTI_ALIAS_FLAG)
-        private val stroke = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
 
         override fun draw(canvas: Canvas) {
             val bmp = blurred
@@ -94,14 +93,12 @@ object Frosted {
             clip.addRoundRect(dst, radiusPx, radiusPx, Path.Direction.CW)
             canvas.save()
             canvas.clipPath(clip)
+            image.alpha = android.graphics.Color.alpha(Palette.card)
             canvas.drawBitmap(bmp, src, dst, image)
-            // Lớp màu thẻ mỏng để chữ vẫn đọc rõ
-            tint.color = Palette.withAlpha(Palette.card, 110)
+            // The reference glass uses a restrained white veil over the blurred wallpaper.
+            tint.color = android.graphics.Color.argb(51 * image.alpha / 255, 255, 255, 255)
             canvas.drawRect(dst, tint)
             canvas.restore()
-            stroke.strokeWidth = host.resources.displayMetrics.density
-            stroke.color = if (Palette.night) 0x33FFFFFF else 0x22000000
-            canvas.drawRoundRect(dst, radiusPx, radiusPx, stroke)
         }
 
         override fun setAlpha(alpha: Int) {}

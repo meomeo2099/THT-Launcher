@@ -27,6 +27,7 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
     <!-- Quyền đọc dữ liệu xe (Android Automotive) -->
@@ -49,6 +50,7 @@
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/Theme.THT"
+        android:allowBackup="false"
         android:supportsRtl="false">
 
         <uses-library android:name="android.car" android:required="false" />
@@ -112,7 +114,7 @@
             android:name=".system.InstallResultReceiver"
             android:exported="false" />
 
-        <receiver android:name=".BootReceiver" android:exported="true">
+        <receiver android:name=".BootReceiver" android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />

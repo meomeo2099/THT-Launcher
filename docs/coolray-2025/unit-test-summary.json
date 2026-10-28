@@ -1,0 +1,55 @@
+{
+  "command": "gradle :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease -Pkotlin.compiler.execution.strategy=in-process",
+  "environment": "JDK 17 / Gradle 8.9 / Android SDK 34",
+  "suites": [
+    {
+      "name": "vn.tht.launcher.DecodeTest",
+      "tests": "6",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0"
+    },
+    {
+      "name": "vn.tht.launcher.GpsSpeedPolicyTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0"
+    },
+    {
+      "name": "vn.tht.launcher.VehicleProfileTest",
+      "tests": "2",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0"
+    },
+    {
+      "name": "vn.tht.launcher.automation.AutomationPolicyTest",
+      "tests": "7",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0"
+    },
+    {
+      "name": "vn.tht.launcher.home.HomeLayoutPolicyTest",
+      "tests": "5",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0"
+    },
+    {
+      "name": "vn.tht.launcher.settings.BackupArchivePolicyTest",
+      "tests": "5",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0"
+    },
+    {
+      "name": "vn.tht.launcher.system.StartupPolicyTest",
+      "tests": "4",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0"
+    }
+  ]
+}

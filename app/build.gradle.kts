@@ -14,7 +14,7 @@ android {
         // Số bản = số lần chạy CI, để bản sau luôn lớn hơn (tự cập nhật so sánh số này)
         val build = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: 1
         versionCode = build
-        versionName = "0.2.$build"
+        versionName = "0.3.$build"
     }
 
     // Ký release bằng keystore từ GitHub Secrets (THT_SIGN_*); không có thì dùng khóa debug

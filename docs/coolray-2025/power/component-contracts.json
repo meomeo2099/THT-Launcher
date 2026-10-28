@@ -1,0 +1,66 @@
+[
+  {
+    "kind": "service",
+    "line": 17,
+    "name": "ecarx.power.service.ECarXPowerManagerService",
+    "exported_declared": null,
+    "enabled_declared": true,
+    "permission": null,
+    "actions": [
+      "android.intent.action.START_ECARX_POWER_MANAGER_SERVICE"
+    ],
+    "categories": [
+      "android.intent.category.ECARXPOWER"
+    ]
+  },
+  {
+    "kind": "service",
+    "line": 26,
+    "name": "ecarx.power.service.screen_projection.ECarXScreenProjectionService",
+    "exported_declared": null,
+    "enabled_declared": true,
+    "permission": null,
+    "actions": [
+      "android.intent.action.START_ECARX_SCREEN_PROJECTION_SERVICE"
+    ],
+    "categories": [
+      "android.intent.category.ECARX_SCREEN_PROJECTION"
+    ]
+  },
+  {
+    "kind": "service",
+    "line": 35,
+    "name": "ecarx.power.service.ecall_screen.ECarXECallScreenService",
+    "exported_declared": null,
+    "enabled_declared": true,
+    "permission": null,
+    "actions": [
+      "android.intent.action.START_ECARX_ECALL_SCREEN_SERVICE"
+    ],
+    "categories": [
+      "android.intent.category.ECARX_ECALL_SCREEN"
+    ]
+  },
+  {
+    "kind": "service",
+    "line": 45,
+    "name": "ecarx.power.service.BTPhoneServiceImpl",
+    "exported_declared": true,
+    "enabled_declared": null,
+    "permission": "android.permission.BIND_INCALL_SERVICE",
+    "actions": [
+      "android.telecom.InCallService"
+    ],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 54,
+    "name": "ecarx.power.service.ui.DayNightDialog",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  }
+]

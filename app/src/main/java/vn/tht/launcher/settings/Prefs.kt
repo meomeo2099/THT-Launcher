@@ -20,16 +20,16 @@ class Prefs(context: Context) {
     // ---- Giao diện ----
     /** "auto" (theo đèn xe / hệ thống), "day", "night". */
     var themeMode: String get() = str("theme_mode", "auto"); set(v) = put("theme_mode", v)
-    var backgroundDay: String get() = str("bg_day", "mountains_day"); set(v) = put("bg_day", v)
-    var backgroundNight: String get() = str("bg_night", "mountains_dusk"); set(v) = put("bg_night", v)
+    var backgroundDay: String get() = str("bg_day", "waterfront_day"); set(v) = put("bg_day", v)
+    var backgroundNight: String get() = str("bg_night", "waterfront_night"); set(v) = put("bg_night", v)
     /** Độ đặc của nền widget, 0–100 (%). */
-    var cardOpacity: Int get() = sp.getInt("card_opacity", 72); set(v) = put("card_opacity", v)
+    var cardOpacity: Int get() = sp.getInt("card_opacity", 100); set(v) = put("card_opacity", v)
     /** "solid" thẻ đặc, "frosted" kính mờ (làm mờ ảnh nền sau thẻ). */
     var cardStyle: String get() = str("card_style", "solid"); set(v) = put("card_style", v)
-    var dockOpacity: Int get() = sp.getInt("dock_opacity", 80); set(v) = put("dock_opacity", v)
+    var dockOpacity: Int get() = sp.getInt("dock_opacity", 100); set(v) = put("dock_opacity", v)
     /** Tỉ lệ giao diện widget, 75–150 (%). */
     var uiScale: Int get() = sp.getInt("ui_scale", 100); set(v) = put("ui_scale", v)
-    var accent: String get() = str("accent", "blue"); set(v) = put("accent", v)
+    var accent: String get() = str("accent", "teal"); set(v) = put("accent", v)
 
     // ---- Dock ----
     /** "compact", "normal", "large". */
@@ -49,7 +49,7 @@ class Prefs(context: Context) {
     var clockShowDate: Boolean get() = sp.getBoolean("clock_date", true); set(v) = put("clock_date", v)
 
     // ---- Hệ thống ----
-    var fullScreen: Boolean get() = sp.getBoolean("full_screen", false); set(v) = put("full_screen", v)
+    var fullScreen: Boolean get() = sp.getBoolean("full_screen", true); set(v) = put("full_screen", v)
     var openOnBoot: Boolean get() = sp.getBoolean("open_on_boot", true); set(v) = put("open_on_boot", v)
 
     // ---- Bảo vệ màn hình ----

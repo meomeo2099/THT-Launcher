@@ -29,37 +29,74 @@ class SettingsActivity : Activity() {
 
     private lateinit var prefs: Prefs
     private lateinit var list: LinearLayout
+    private lateinit var sectionHost: LinearLayout
+    private lateinit var sectionNav: LinearLayout
+    private val sectionPanes = linkedMapOf<String, LinearLayout>()
+    private val sectionButtons = linkedMapOf<String, TextView>()
+    private var selectedSection: String? = null
+    private val fileWorker = java.util.concurrent.Executors.newSingleThreadExecutor()
+    private var fileBusy = false
+    private var fileProgress: android.app.ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         prefs = Prefs(this)
+        selectedSection = savedInstanceState?.getString("selected_section")
         render()
     }
 
     private fun render() {
         // Theme "tự động" giữ ngày/đêm hiện tại của màn hình chính
         Palette.apply(prefs, when (prefs.themeMode) { "day" -> false; "night" -> true; else -> Palette.night })
-        list = Ui.vbox(this, 24)
+        sectionPanes.clear()
+        sectionButtons.clear()
+        sectionHost = Ui.vbox(this)
+        sectionNav = Ui.vbox(this, 12)
         window.decorView.setBackgroundColor(Palette.bg)
-        setContentView(ScrollView(this).apply { addView(list) })
-
-        list.addView(Ui.hbox(this).apply {
+        val body = Ui.vbox(this, 24)
+        body.addView(Ui.hbox(this).apply {
             addView(Ui.text(this@SettingsActivity, "Cài đặt THT Launcher", 30f, bold = true), Ui.weight())
             addView(Ui.button(this@SettingsActivity, "Xong") { finish() })
         })
+        body.addView(ScrollView(this).apply {
+            isFillViewport = true
+            addView(sectionHost)
+        }, LinearLayout.LayoutParams(-1, 0, 1f).apply { topMargin = Ui.dp(this@SettingsActivity, 18) })
+        val sidebar = Ui.vbox(this, 16).apply {
+            background = Ui.card(context, 26)
+            addView(Ui.text(context, "THT Launcher", 24f, bold = true))
+            addView(Ui.text(context, "COOLRAY 2025", 12f, dim = true).apply {
+                setPadding(0, Ui.dp(context, 6), 0, Ui.dp(context, 18))
+            })
+            addView(ScrollView(context).apply { addView(sectionNav) }, LinearLayout.LayoutParams(-1, 0, 1f))
+        }
+        setContentView(Ui.hbox(this, Gravity.TOP).apply {
+            setPadding(Ui.dp(context, 16), Ui.dp(context, 16), Ui.dp(context, 16), Ui.dp(context, 16))
+            addView(sidebar, LinearLayout.LayoutParams(Ui.dp(context, 260), -1))
+            addView(body, LinearLayout.LayoutParams(0, -1, 1f))
+        })
+        if (prefs.fullScreen) window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+            View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 
         section("Giao diện")
         choice("Theme", mapOf("auto" to "Tự động (theo đèn xe)", "day" to "Ngày", "night" to "Đêm"), { prefs.themeMode }) { prefs.themeMode = it }
         choice("Màu nhấn", Palette.ACCENTS.mapValues { it.value.first }, { prefs.accent },
             icon = { k -> swatch(Palette.ACCENTS.getValue(k).second) }) { prefs.accent = it }
         choice("Nền ban ngày", Palette.BACKGROUNDS.mapValues { it.value.first }, { prefs.backgroundDay },
-            icon = { k -> Palette.background(k) }) { prefs.backgroundDay = it }
+            icon = { k -> Palette.background(k) }) {
+            prefs.backgroundDay = it
+            prefs.sp.edit().putBoolean("use_wallpaper_day", false).apply()
+        }
         choice("Nền ban đêm", Palette.BACKGROUNDS.mapValues { it.value.first }, { prefs.backgroundNight },
-            icon = { k -> Palette.background(k) }) { prefs.backgroundNight = it }
+            icon = { k -> Palette.background(k) }) {
+            prefs.backgroundNight = it
+            prefs.sp.edit().putBoolean("use_wallpaper_night", false).apply()
+        }
         action("Ảnh nền riêng – ngày", wallpaperState(DAY)) { pickWallpaper(DAY) }
         action("Ảnh nền riêng – đêm", wallpaperState(NIGHT)) { pickWallpaper(NIGHT) }
         action("Bộ biểu tượng", vn.tht.launcher.ui.Icons.packName ?: "Mặc định · chạm để nạp file .zip") { iconPack() }
-        action("Font chữ", vn.tht.launcher.ui.Fonts.name(this) ?: "Mặc định · chạm để nạp file .ttf/.otf (có tiếng Việt)") { fontMenu() }
+        action("Font chữ", vn.tht.launcher.ui.Fonts.name(this) ?: "Manrope · đồng hồ Elastre · chạm để nạp font riêng") { fontMenu() }
         choice("Kiểu thẻ widget", mapOf("solid" to "Đặc", "frosted" to "Kính mờ (làm mờ ảnh nền phía sau)"), { prefs.cardStyle }) { prefs.cardStyle = it }
         slider("Độ đặc nền widget", 0, 100, "%", { prefs.cardOpacity }) { prefs.cardOpacity = it }
         slider("Tỉ lệ giao diện", 75, 150, "%", { prefs.uiScale }) { prefs.uiScale = it }
@@ -96,6 +133,21 @@ class SettingsActivity : Activity() {
         toggle("Hiện ngày tháng", { prefs.clockShowDate }) { prefs.clockShowDate = it }
 
         section("Màn hình chính")
+        action("Áp dụng giao diện tham chiếu", "Bố cục 1920×720, nền bờ sông, thẻ bo góc, dock điều hòa và hai ghế") {
+            confirm("Thay bố cục widget, dock và giao diện? Cài đặt xe, ứng dụng và ảnh riêng đã lưu vẫn được giữ.") {
+                applyReferencePreset()
+                render()
+                toast("Đã áp dụng giao diện tham chiếu")
+            }
+        }
+        action("Bố cục THT dạng lưới", "Thanh trên, hai cụm điều hòa và dock riêng") {
+            confirm("Chuyển widget và dock về bố cục THT dạng lưới?") {
+                HomeLayout.save(this, HomeLayout.classicDefaults())
+                vn.tht.launcher.shortcuts.ShortcutStore.save(this, vn.tht.launcher.shortcuts.ShortcutStore.EXTENDED_DEFAULTS)
+                prefs.sp.edit().putLong("home_preset_changed", System.currentTimeMillis()).apply()
+                toast("Đã đổi bố cục")
+            }
+        }
         action("Sửa widget", "Di chuyển, đổi cỡ, thêm, xoá") { setResult(RESULT_EDIT_HOME); finish() }
         action("Khôi phục bố cục mặc định", "Giữ nguyên dock và cài đặt") {
             confirm("Đưa widget về bố cục mặc định?") { HomeLayout.reset(this); toast("Đã khôi phục") }
@@ -125,6 +177,11 @@ class SettingsActivity : Activity() {
         }
 
         section("Khởi động & hệ thống")
+        action("Chọn launcher mặc định", "Mở cài đặt màn hình chính của Android") {
+            runCatching { startActivity(Intent(Settings.ACTION_HOME_SETTINGS)) }.onFailure {
+                if (!vn.tht.launcher.vehicle.OemFirmware.openSettings(this)) toast("Ấn Home rồi chọn THT Launcher làm mặc định")
+            }
+        }
         action("Dọn dẹp ngay", "Đóng app chạy nền để giải phóng RAM (giữ nhạc, bản đồ, THT Voice)") {
             Thread {
                 val r = vn.tht.launcher.system.Cleaner.clean(this, emptySet())
@@ -153,21 +210,30 @@ class SettingsActivity : Activity() {
         section("Tự động hoá sau khi nổ máy")
         val a = vn.tht.launcher.automation.AutomationPrefs(prefs)
         toggle("Bật tự động hoá", { a.enabled }) { a.enabled = it }
+        toggle("Mở danh sách ứng dụng khi nổ máy", { a.appsEnabled }) { a.appsEnabled = it }
         slider("Chỉ chạy khi đã đỗ ít nhất (0 = mỗi lần nổ máy)", 0, 240, " phút", { a.parkedMinutes }) { a.parkedMinutes = it }
         toggle("Bật điều hoà AUTO", { a.climateAuto }) { a.climateAuto = it }
+        slider("Nhiệt độ sau khi bật AUTO", 17, 32, "°C", { a.climateTempC }) { a.climateTempC = it }
         slider("Sưởi khi ngoài trời dưới", -20, 25, "°C", { a.heatBelowC }) { a.heatBelowC = it }
         slider("Sưởi ghế lái (0 = không)", 0, 3, "", { a.heatDriver }) { a.heatDriver = it }
         slider("Sưởi ghế phụ (0 = không)", 0, 3, "", { a.heatPassenger }) { a.heatPassenger = it }
         slider("Sưởi vô lăng (0 = không)", 0, 3, "", { a.heatWheel }) { a.heatWheel = it }
+        toggle("Sưởi kính sau khi trời lạnh", { a.heatRearGlass }) { a.heatRearGlass = it }
         slider("Tắt sưởi sau (0 = không tắt)", 0, 60, " phút", { a.heatOffMinutes }) { a.heatOffMinutes = it }
         slider("Làm mát khi ngoài trời từ", 15, 45, "°C", { a.ventAboveC }) { a.ventAboveC = it }
         slider("Làm mát ghế lái (0 = không)", 0, 3, "", { a.ventDriver }) { a.ventDriver = it }
         slider("Làm mát ghế phụ (0 = không)", 0, 3, "", { a.ventPassenger }) { a.ventPassenger = it }
         slider("Tắt làm mát sau (0 = không tắt)", 0, 60, " phút", { a.ventOffMinutes }) { a.ventOffMinutes = it }
         toggle("Xả nóng: hé cửa sổ trời + bật quạt khi trời nóng", { a.airOut }) { a.airOut = it }
+        slider("Chỉ xả nóng khi ngoài trời từ", -10, 60, "°C", { a.airOutAboveC }) { a.airOutAboveC = it }
         slider("Mức quạt khi xả nóng", 1, 7, "", { a.airOutFan }) { a.airOutFan = it }
         slider("Đóng cửa sổ trời sau", 1, 30, " phút", { a.airOutMinutes }) { a.airOutMinutes = it }
-        slider("Đóng cửa sổ trời khi chạy từ (0 = không)", 0, 120, " km/h", { a.closeRoofAtSpeed }) { a.closeRoofAtSpeed = it }
+        slider("Đóng cửa sổ trời khi chạy từ (0 = không)", 0, 120, " km/h", { a.closeRoofAtSpeed }) {
+            a.closeRoofAtSpeed = it
+            if (it > 0 && checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), REQ_GPS_SPEED)
+            }
+        }
 
         section("Thời tiết & bản đồ")
         action("Vị trí thời tiết", prefs.sp.getString("weather_place", null) ?: "Tự động (cần quyền vị trí) · chạm để chọn thành phố") { weatherPlace() }
@@ -191,6 +257,15 @@ class SettingsActivity : Activity() {
         action("Đưa khung nhiệt độ về chỗ cũ", "Giữa mép trái, cạnh nút điều hướng") { nav.resetTempInfo(); toast("Đã đặt lại vị trí") }
 
         section("Xe")
+        action("Màn hình gốc của xe", "Mở launcher ECARX đã xác nhận từ APK Coolray 2025") {
+            if (!vn.tht.launcher.vehicle.OemFirmware.openStockLauncher(this)) toast("Không tìm thấy màn hình gốc khả dụng")
+        }
+        action("Cài đặt đầu xe", "Mở ứng dụng cài đặt OEM đang được cài") {
+            if (!vn.tht.launcher.vehicle.OemFirmware.openSettings(this)) {
+                runCatching { startActivity(Intent(Settings.ACTION_SETTINGS)) }.onFailure { toast("Không mở được cài đặt đầu xe") }
+            }
+        }
+        action("Ứng dụng gốc của xe", "Điện thoại, nhạc, cài đặt xe, camera và các ứng dụng OEM khả dụng") { oemApps() }
         action("Chẩn đoán", "Chữ ký, kết nối ECARX, dữ liệu xe · lưu báo cáo gửi nhà phát triển") {
             setResult(RESULT_DIAGNOSTICS); finish()
         }
@@ -221,14 +296,71 @@ class SettingsActivity : Activity() {
         }
 
         section("Sao lưu")
-        action("Xuất cài đặt", "Cài đặt, bố cục widget và dock ra file JSON") {
+        action("Xuất bản sao lưu", "Cài đặt, bố cục, dock, ảnh, font và icon riêng trong một file ZIP") {
             startActivityForResult(Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
-                .setType("application/json").putExtra(Intent.EXTRA_TITLE, "tht-launcher-backup.json"), REQ_EXPORT)
+                .setType(Backup.MIME_TYPE).putExtra(Intent.EXTRA_TITLE, Backup.DEFAULT_FILE_NAME), REQ_EXPORT)
         }
         action("Nhập cài đặt", "Thay toàn bộ cài đặt hiện tại") {
             startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
                 .setType("*/*"), REQ_IMPORT)
         }
+        selectSection(selectedSection?.takeIf { it in sectionPanes } ?: sectionPanes.keys.first())
+    }
+
+    private fun applyReferencePreset() {
+        HomeLayout.save(this, HomeLayout.referenceDefaults())
+        vn.tht.launcher.shortcuts.ShortcutStore.save(this, vn.tht.launcher.shortcuts.ShortcutStore.DEFAULTS)
+        prefs.sp.edit().putString("bg_day", "waterfront_day").putString("bg_night", "waterfront_night")
+            .putString("accent", "teal").putString("card_style", "solid")
+            .putInt("card_opacity", 100).putInt("dock_opacity", 100).putInt("ui_scale", 100)
+            .putBoolean("full_screen", true).putBoolean("collapsed", false)
+            .putBoolean("use_wallpaper_day", false).putBoolean("use_wallpaper_night", false)
+            .putLong("home_preset_changed", System.currentTimeMillis()).apply()
+    }
+
+    private fun oemApps() {
+        val apps = vn.tht.launcher.vehicle.OemFirmware.App.entries.filter {
+            vn.tht.launcher.vehicle.OemFirmware.available(this, it)
+        }
+        if (apps.isEmpty()) return toast("Chưa tìm thấy ứng dụng OEM khả dụng trên thiết bị này")
+        IconList.show(this, "Ứng dụng của đầu xe", apps.map { IconList.Item(it.title, "apps") }, columns = 2) { index ->
+            if (!vn.tht.launcher.vehicle.OemFirmware.open(this, apps[index])) toast("Không mở được ứng dụng")
+        }
+    }
+
+    @Suppress("DEPRECATION")
+    private fun runFileOperation(label: String, work: () -> String?, success: () -> Unit = {}) {
+        if (fileBusy) return toast("Đang xử lý file, vui lòng chờ")
+        fileBusy = true
+        fileProgress = android.app.ProgressDialog(this).apply {
+            setMessage(label)
+            isIndeterminate = true
+            setCancelable(false)
+            show()
+        }
+        fileWorker.execute {
+            val error = runCatching { work() }.getOrElse { "Không xử lý được file: ${it.message ?: "lỗi đọc/ghi"}" }
+            runOnUiThread {
+                fileBusy = false
+                if (!isFinishing && !isDestroyed) {
+                    fileProgress?.dismiss()
+                    fileProgress = null
+                    if (error == null) success() else toast(error)
+                }
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        fileProgress?.dismiss()
+        fileProgress = null
+        fileWorker.shutdown()
+        super.onDestroy()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("selected_section", selectedSection)
+        super.onSaveInstanceState(outState)
     }
 
     // ---- Các loại dòng ----
@@ -280,10 +412,32 @@ class SettingsActivity : Activity() {
     }
 
     private fun section(title: String) {
-        list.addView(Ui.text(this, title, 16f, dim = true, bold = true).apply {
-            setPadding(0, Ui.dp(context, 28), 0, Ui.dp(context, 8))
-            setTextColor(Palette.accent)
+        list = Ui.vbox(this)
+        list.visibility = View.GONE
+        sectionPanes[title] = list
+        sectionHost.addView(list, LinearLayout.LayoutParams(-1, -2))
+        list.addView(Ui.text(this, title, 24f, bold = true).apply {
+            setPadding(0, 0, 0, Ui.dp(context, 16))
         })
+        val item = Ui.text(this, title, 18f).apply {
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(Ui.dp(context, 14), Ui.dp(context, 12), Ui.dp(context, 14), Ui.dp(context, 12))
+            minHeight = Ui.dp(context, 56)
+            setOnClickListener { selectSection(title) }
+        }
+        sectionButtons[title] = item
+        sectionNav.addView(item, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = Ui.dp(this@SettingsActivity, 4) })
+    }
+
+    private fun selectSection(title: String) {
+        selectedSection = title
+        sectionPanes.forEach { (name, pane) -> pane.visibility = if (name == title) View.VISIBLE else View.GONE }
+        sectionButtons.forEach { (name, button) ->
+            val active = name == title
+            button.background = Ui.pill(this, if (active) Palette.withAlpha(Palette.accent, 30) else android.graphics.Color.TRANSPARENT, 16)
+            button.setTextColor(if (active) Palette.accent else Palette.text)
+            button.isSelected = active
+        }
     }
 
     private fun row(title: String, summary: String?, right: View? = null, onClick: (() -> Unit)? = null): LinearLayout {
@@ -471,15 +625,23 @@ class SettingsActivity : Activity() {
     // ---- Ảnh nền ----
 
     private fun wallpaperState(which: String) =
-        if (Wallpapers.file(this, which).exists()) "Đang dùng ảnh riêng · chạm để đổi/xoá" else "Chưa có · chạm để chọn ảnh"
+        if (Wallpapers.file(this, which).exists()) {
+            if (prefs.sp.getBoolean("use_wallpaper_$which", true)) "Đang dùng ảnh riêng · chạm để đổi/xoá"
+            else "Có ảnh riêng đã lưu · chạm để dùng lại"
+        } else "Chưa có · chạm để chọn ảnh"
 
     private fun pickWallpaper(which: String) {
         if (Wallpapers.file(this, which).exists()) {
             IconList.show(this, if (which == DAY) "Ảnh nền ban ngày" else "Ảnh nền ban đêm", listOf(
+                IconList.Item("Dùng ảnh đã lưu", "image"),
                 IconList.Item("Chọn ảnh khác", "sun"),
                 IconList.Item("Xoá ảnh riêng", "close", danger = true),
             )) { i ->
-                if (i == 0) openImage(which) else { Wallpapers.file(this, which).delete(); render() }
+                when (i) {
+                    0 -> { prefs.sp.edit().putBoolean("use_wallpaper_$which", true).apply(); render() }
+                    1 -> openImage(which)
+                    else -> { Wallpapers.file(this, which).delete(); render() }
+                }
             }
         } else openImage(which)
     }
@@ -497,6 +659,7 @@ class SettingsActivity : Activity() {
         when (requestCode) {
             REQ_WP_DAY, REQ_WP_NIGHT -> {
                 val ok = Wallpapers.save(this, uri, if (requestCode == REQ_WP_DAY) DAY else NIGHT)
+                if (ok) prefs.sp.edit().putBoolean("use_wallpaper_${if (requestCode == REQ_WP_DAY) DAY else NIGHT}", true).apply()
                 toast(if (ok) "Đã lưu ảnh nền" else "Không đọc được ảnh")
             }
             REQ_ICONS -> {
@@ -517,10 +680,20 @@ class SettingsActivity : Activity() {
                 }
                 toast(err)
             }
-            REQ_EXPORT -> toast(if (Backup.export(this, uri)) "Đã xuất cài đặt" else "Không ghi được file")
+            REQ_EXPORT -> {
+                runFileOperation("Đang tạo bản sao lưu…", { if (Backup.export(this, uri)) null else "Không ghi được file" }) {
+                    toast("Đã xuất bản sao lưu")
+                }
+                return
+            }
             REQ_IMPORT -> {
-                val err = Backup.import(this, uri)
-                toast(err ?: "Đã nhập cài đặt")
+                runFileOperation("Đang khôi phục bản sao lưu…", { Backup.import(this, uri) }) {
+                    vn.tht.launcher.ui.Icons.init(this)
+                    prefs.sp.edit().putLong("backup_restored_at", System.currentTimeMillis()).apply()
+                    toast("Đã khôi phục bản sao lưu")
+                    recreate()
+                }
+                return
             }
         }
         render()
@@ -537,6 +710,7 @@ class SettingsActivity : Activity() {
         private const val REQ_IMPORT = 4
         private const val REQ_ICONS = 5
         private const val REQ_FONT = 9
+        private const val REQ_GPS_SPEED = 11
     }
 }
 

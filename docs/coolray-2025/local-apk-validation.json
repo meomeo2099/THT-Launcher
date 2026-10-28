@@ -1,0 +1,18 @@
+[
+  {
+    "file": "THT-Launcher-0.3.1-debug.apk",
+    "bytes": 15793278,
+    "sha256": "de0b8b3b667bd9f8fbd6f09423f9dc82fc9392ef330b1efa5e477728aff7c580",
+    "signer_sha256": "27bd3d4b9c2447b957c2646e4a734ca3081e8e6ea8450e5efe78874fa760ec0d",
+    "verification": "apksigner verify --verbose --print-certs: Verifies, v2=true",
+    "key": "local debug fallback; not vehicle platform proof"
+  },
+  {
+    "file": "THT-Launcher-0.3.1-release.apk",
+    "bytes": 7339656,
+    "sha256": "1dfe058aab031a45cd4744de46c7fc91108bcd2fe8c146dff2cb63b6dbc9de85",
+    "signer_sha256": "27bd3d4b9c2447b957c2646e4a734ca3081e8e6ea8450e5efe78874fa760ec0d",
+    "verification": "apksigner verify --verbose --print-certs: Verifies, v2=true",
+    "key": "local debug fallback; not vehicle platform proof"
+  }
+]

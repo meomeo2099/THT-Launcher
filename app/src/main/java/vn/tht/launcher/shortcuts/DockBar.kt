@@ -51,6 +51,7 @@ class DockBar(
         fun editSplit(id: String)
         /** Chọn/tạo cặp chia đôi; trả (id, tên hiển thị). */
         fun chooseSplit(onPicked: (String, String) -> Unit)
+        fun runDockAction(action: String)
     }
 
     private val pm = context.packageManager
@@ -58,6 +59,7 @@ class DockBar(
     private var items: MutableList<Shortcut> = mutableListOf()
     /** Ô trạng thái đang hiện: chỉ số -> (icon, chữ). */
     private val statusViews = mutableListOf<Pair<String, Pair<ImageView, android.widget.TextView>>>()
+    private val climateCells = mutableListOf<ClimateDockCell>()
     private var last: Status = Status()
 
     /** Giá trị cho các ô trạng thái. null = không đọc được (hiện "–"). */
@@ -67,11 +69,16 @@ class DockBar(
         val fuelL: Float? = null,
         val voltage: Float? = null,
         val seatHeatLevel: Int? = null,
+        val passengerSeatHeatLevel: Int? = null,
+        val temperatureC: Float? = null,
+        val fanLevel: Int? = null,
+        val hvacOn: Boolean? = null,
     )
 
     fun update(s: Status) {
         last = s
         statusViews.forEach { (metric, v) -> bindStatus(metric, v.first, v.second) }
+        climateCells.forEach { it.bind(s) }
     }
 
     private fun bindStatus(metric: String, icon: ImageView, text: android.widget.TextView) {
@@ -82,10 +89,12 @@ class DockBar(
             "fuel_l" -> "fuel" to (s.fuelL?.let { "${it.toInt()} L" } ?: "–")
             "voltage" -> "battery" to (s.voltage?.let { String.format(java.util.Locale.US, "%.1f V", it) } ?: "–")
             "seat_heat" -> "seat-heat-left" to (s.seatHeatLevel?.takeIf { it > 0 }?.toString() ?: "")
+            "seat_heat_passenger" -> "seat-heat-right" to (s.passengerSeatHeatLevel?.takeIf { it > 0 }?.toString() ?: "")
             "home" -> "home" to ""
             else -> "plus" to "?"
         }
-        val active = metric == "seat_heat" && (s.seatHeatLevel ?: 0) > 0
+        val active = (metric == "seat_heat" && (s.seatHeatLevel ?: 0) > 0) ||
+            (metric == "seat_heat_passenger" && (s.passengerSeatHeatLevel ?: 0) > 0)
         val tint = if (active) vn.tht.launcher.ui.Palette.accent else vn.tht.launcher.ui.Palette.text
         if (icon.tag != "$key/$tint") { icon.tag = "$key/$tint"; icon.setImageDrawable(Icons.get(context, key, tint)) }
         text.textIfChanged = value
@@ -120,6 +129,7 @@ class DockBar(
             when (s.action) {
                 "wifi" -> actions.openWifiSettings()
                 "seat_heat" -> actions.cycleDriverSeatHeat()
+                "seat_heat_passenger" -> actions.runDockAction("seat_heat_passenger")
                 "home" -> actions.goHome()
                 else -> actions.openStats()
             }
@@ -135,13 +145,28 @@ class DockBar(
     private fun render() {
         container.removeAllViews()
         statusViews.clear()
+        climateCells.clear()
         items.forEachIndexed { i, s ->
-            container.addView(if (s.type == Shortcut.TYPE_STATUS) statusCell(s, i) else itemView(s, i))
+            container.addView(when (s.type) {
+                Shortcut.TYPE_STATUS -> statusCell(s, i)
+                Shortcut.TYPE_CLIMATE -> ClimateDockCell(context, s.action == "airflow", actions).also { cell ->
+                    climateCells += cell
+                    cell.bind(last)
+                    if (editable) cell.setOnLongClickListener { editDialog(i); true }
+                }
+                else -> itemView(s, i)
+            })
         }
         if (editable && items.size < ShortcutStore.MAX) {
             container.addView(cell(Icons.get(context, "plus"), "Thêm", if (compact) 0.35f else 0.6f).apply {
                 setOnClickListener { addDialog() }
             })
+        }
+        // Fill the wide reference dock while retaining natural cell widths and scrolling on small screens.
+        if (!compact && !vertical && items.any { it.type == Shortcut.TYPE_CLIMATE }) {
+            for (index in container.childCount - 1 downTo 1) {
+                container.addView(android.view.View(context), index, LinearLayout.LayoutParams(0, 1, 1f))
+            }
         }
     }
 
@@ -211,6 +236,8 @@ class DockBar(
             "Tất cả ứng dụng" to Shortcut("apps", "Ứng dụng", Shortcut.TYPE_APPS),
             "Điều khiển xe" to Shortcut("controls", "Điều khiển", Shortcut.TYPE_CONTROLS),
             "Điều hoà gốc" to Shortcut("hvac", "Điều hoà", Shortcut.TYPE_HVAC),
+            "Cụm nhiệt độ" to Shortcut("temperature", "Nhiệt độ", Shortcut.TYPE_CLIMATE, action = "temperature"),
+            "Cụm quạt gió" to Shortcut("airflow", "Quạt gió", Shortcut.TYPE_CLIMATE, action = "airflow"),
             "Cài đặt launcher" to Shortcut("settings", "Cài đặt", Shortcut.TYPE_SETTINGS),
             "Thống kê chuyến đi" to Shortcut("stats", "Thống kê", Shortcut.TYPE_STATS),
             "Nút ẩn/hiện tất cả" to Shortcut("collapse", "Ẩn/hiện tất cả", Shortcut.TYPE_COLLAPSE),
@@ -218,7 +245,7 @@ class DockBar(
         ) + STATUS.map { (metric, label) ->
             "Trạng thái: $label" to Shortcut("status_$metric", label, Shortcut.TYPE_STATUS, action = metric)
         } + listOf(
-            "THT Voice" to ShortcutStore.DEFAULTS.first { it.id == "voice" },
+            "THT Voice" to ShortcutStore.EXTENDED_DEFAULTS.first { it.id == "voice" },
         )
         fun iconOf(sc: Shortcut?): String = when {
             sc == null -> "apps"
@@ -229,6 +256,7 @@ class DockBar(
             sc.type == Shortcut.TYPE_APPS -> "apps"
             sc.type == Shortcut.TYPE_CONTROLS -> "shortcut"
             sc.type == Shortcut.TYPE_HVAC -> "climate"
+            sc.type == Shortcut.TYPE_CLIMATE -> if (sc.action == "airflow") "fan" else "thermometer"
             sc.type == Shortcut.TYPE_SETTINGS -> "settings"
             sc.type == Shortcut.TYPE_STATS -> "trip"
             sc.type == Shortcut.TYPE_COLLAPSE -> "collapse"
@@ -280,6 +308,7 @@ class DockBar(
             Shortcut.TYPE_COLLAPSE -> actions.toggleCollapsed()
             Shortcut.TYPE_CLEANUP -> actions.cleanup()
             Shortcut.TYPE_SPLIT -> actions.openSplit(s.action)
+            Shortcut.TYPE_CLIMATE -> actions.runDockAction("climate")
             else -> start(intentFor(s), s.label)
         }
     }
@@ -341,7 +370,7 @@ class DockBar(
         /** Các ô trạng thái có thể thêm vào dock: chỉ số -> tên. */
         val STATUS = listOf(
             "wifi" to "Wi-Fi", "coolant" to "Nhiệt độ máy", "fuel_l" to "Xăng (lít)",
-            "voltage" to "Điện áp ắc quy", "seat_heat" to "Sưởi ghế lái", "home" to "Màn hình chính",
+            "voltage" to "Điện áp ắc quy", "seat_heat" to "Sưởi ghế lái", "seat_heat_passenger" to "Sưởi ghế phụ", "home" to "Màn hình chính",
         )
 
         /** Chiều cao dock (dp) theo cài đặt. */

@@ -1,0 +1,40 @@
+{
+  "sha256": "ed76fe22239d21d46bd35d6a8d0bb22525b1380004b94a2bb63f9012828a2f61",
+  "bytes": 19699358,
+  "entries": 1401,
+  "dex": [],
+  "libs": [
+    {
+      "name": "lib/arm64-v8a/libc++_shared.so",
+      "bytes": 1058904
+    },
+    {
+      "name": "lib/arm64-v8a/libmarsxlog_increase.so",
+      "bytes": 337728
+    },
+    {
+      "name": "lib/armeabi-v7a/libc++_shared.so",
+      "bytes": 657000
+    },
+    {
+      "name": "lib/armeabi-v7a/libmarsxlog_increase.so",
+      "bytes": 91800
+    },
+    {
+      "name": "lib/x86/libc++_shared.so",
+      "bytes": 1095276
+    },
+    {
+      "name": "lib/x86/libmarsxlog_increase.so",
+      "bytes": 218664
+    },
+    {
+      "name": "lib/x86_64/libc++_shared.so",
+      "bytes": 1116520
+    },
+    {
+      "name": "lib/x86_64/libmarsxlog_increase.so",
+      "bytes": 202912
+    }
+  ]
+}

@@ -38,6 +38,8 @@ class EcarxCarSource(
     private var mGetIntNoZone: Method? = null
     private var mSetIntNoZone: Method? = null
     private var attempts = 0
+    private val connecting = java.util.concurrent.atomic.AtomicBoolean(false)
+    @Volatile private var stopped = false
     private val supportCache = java.util.concurrent.ConcurrentHashMap<Long, Boolean>()
 
     /** true khi APK ký bằng khoá platform của firmware; tính một lần lúc tạo. */
@@ -51,7 +53,9 @@ class EcarxCarSource(
         private set
 
     fun start() {
-        if (connected) return
+        if (connected || !connecting.compareAndSet(false, true)) return
+        stopped = false
+        attempts = 0
         try {
             val cl = loader ?: adaptApiLoader().also { loader = it }
             val c = car ?: createCar(cl).also { car = it }
@@ -71,6 +75,7 @@ class EcarxCarSource(
                 fetchFunction(c)
             }
         } catch (t: Throwable) {
+            connecting.set(false)
             Log.w(TAG, "ECARX AdaptAPI không khả dụng: $t")
             status = "không có AdaptAPI (${t.javaClass.simpleName}: ${t.message})"
             if (DemoCarFunction.enabled(context)) {
@@ -85,6 +90,8 @@ class EcarxCarSource(
     }
 
     fun stop() {
+        stopped = true
+        connecting.set(false)
         handler.removeCallbacksAndMessages(null)
         carFunction = null
         supportCache.clear()
@@ -134,6 +141,8 @@ class EcarxCarSource(
     }
 
     private fun onDisconnected() {
+        if (stopped) return
+        connecting.set(false)
         Log.w(TAG, "Mất kết nối dịch vụ xe, nối lại sau ${RETRY_MS} ms")
         carFunction = null
         supportCache.clear()
@@ -143,7 +152,7 @@ class EcarxCarSource(
     }
 
     private fun fetchFunction(c: Any) {
-        if (connected) return
+        if (stopped || connected) return
         val fn = try {
             c.javaClass.methods.firstOrNull { it.name == "getICarFunction" && it.parameterTypes.isEmpty() }?.invoke(c)
         } catch (t: Throwable) {
@@ -154,7 +163,9 @@ class EcarxCarSource(
     }
 
     private fun retry(reason: String, again: () -> Unit) {
+        if (stopped) return
         if (++attempts > MAX_ATTEMPTS) {
+            connecting.set(false)
             Log.w(TAG, "$reason, bỏ cuộc sau $MAX_ATTEMPTS lần")
             status = "$reason (đã thử $MAX_ATTEMPTS lần)"
             onReady(false)
@@ -165,6 +176,8 @@ class EcarxCarSource(
     }
 
     private fun bind(fn: Any) {
+        if (stopped) return
+        connecting.set(false)
         val methods = fn.javaClass.methods
         fun find(name: String, vararg types: Class<*>) =
             methods.firstOrNull { it.name == name && it.parameterTypes.contentEquals(arrayOf(*types)) }

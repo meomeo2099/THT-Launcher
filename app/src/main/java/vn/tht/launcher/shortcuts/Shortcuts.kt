@@ -31,7 +31,7 @@ data class Shortcut(
     /** Chưa điền package/action: hiện mờ, chạm vào chỉ nhắc cách cấu hình. */
     val configured: Boolean
         get() = when (type) {
-            TYPE_HVAC, TYPE_CONTROLS, TYPE_APPS, TYPE_SETTINGS, TYPE_STATS, TYPE_STATUS, TYPE_COLLAPSE, TYPE_CLEANUP -> true
+            TYPE_HVAC, TYPE_CONTROLS, TYPE_APPS, TYPE_SETTINGS, TYPE_STATS, TYPE_STATUS, TYPE_COLLAPSE, TYPE_CLEANUP, TYPE_CLIMATE -> true
             TYPE_ACTION, TYPE_SPLIT -> action.isNotBlank()
             else -> pkg.isNotBlank()
         }
@@ -57,6 +57,8 @@ data class Shortcut(
         const val TYPE_CLEANUP = "cleanup"
         /** Cặp chia đôi màn hình; [action] là id cặp. */
         const val TYPE_SPLIT = "split"
+        /** Inline temperature/fan control group in the main dashboard dock. */
+        const val TYPE_CLIMATE = "climate_inline"
 
         fun fromJson(o: JSONObject) = Shortcut(
             id = o.optString("id"),
@@ -87,7 +89,7 @@ object ShortcutStore {
      * Mặc định cho Coolray 2025. Package lấy từ danh sách gói trên đầu xe (Coolray2025-Voice-Spec.md
      * mục 7); activity để trống = mở activity chính của app. Chưa thử mở trên xe.
      */
-    val DEFAULTS = listOf(
+    val EXTENDED_DEFAULTS = listOf(
         Shortcut("status_fuel_l", "Xăng", Shortcut.TYPE_STATUS, action = "fuel_l"),
         Shortcut("status_seat_heat", "Sưởi ghế lái", Shortcut.TYPE_STATUS, action = "seat_heat"),
         Shortcut(
@@ -104,6 +106,17 @@ object ShortcutStore {
         Shortcut("stats", "Thống kê", Shortcut.TYPE_STATS),
         Shortcut("cleanup", "Dọn dẹp", Shortcut.TYPE_CLEANUP),
         Shortcut("collapse", "Ẩn/hiện tất cả", Shortcut.TYPE_COLLAPSE),
+    )
+
+    /** Reference dashboard: temperature, airflow, two front seats and home controls. */
+    val DEFAULTS = listOf(
+        Shortcut("temperature", "Nhiệt độ", Shortcut.TYPE_CLIMATE, action = "temperature"),
+        Shortcut("airflow", "Quạt gió", Shortcut.TYPE_CLIMATE, action = "airflow"),
+        Shortcut("status_seat_heat", "Sưởi ghế lái", Shortcut.TYPE_STATUS, action = "seat_heat"),
+        Shortcut("apps", "Ứng dụng", Shortcut.TYPE_APPS),
+        Shortcut("status_seat_heat_passenger", "Sưởi ghế phụ", Shortcut.TYPE_STATUS, action = "seat_heat_passenger"),
+        Shortcut("collapse", "Ẩn/hiện tất cả", Shortcut.TYPE_COLLAPSE),
+        Shortcut("settings", "Cài đặt", Shortcut.TYPE_SETTINGS),
     )
 
     /** Thanh dọc bên trái (kiểu thanh bên của launcher tham chiếu). */

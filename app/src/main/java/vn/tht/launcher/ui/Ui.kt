@@ -23,11 +23,9 @@ object Ui {
             else if (bold) typeface = android.graphics.Typeface.create("sans-serif-medium", android.graphics.Typeface.NORMAL)
         }
 
-    fun card(c: Context, radiusDp: Int = 24): GradientDrawable = GradientDrawable().apply {
+    fun card(c: Context, radiusDp: Int = Palette.CARD_RADIUS_DP): GradientDrawable = GradientDrawable().apply {
         cornerRadius = dp(c, radiusDp).toFloat()
         setColor(Palette.card)
-        // Viền mảnh cho thẻ nổi trên nền ảnh/gradient
-        setStroke(dp(c, 1), if (Palette.night) 0x1FFFFFFF else 0x14000000)
     }
 
     /** Tiêu đề widget: icon nhỏ + chữ mờ. */
@@ -57,7 +55,7 @@ object Ui {
             shape = GradientDrawable.OVAL
             setColor(if (active) Palette.accent else Palette.button)
         }
-        v.setImageDrawable(Icons.get(c, v.tag as String, if (active) android.graphics.Color.WHITE else Palette.text))
+        v.setImageDrawable(Icons.get(c, v.tag as String, if (active) Palette.onAccent() else Palette.text))
         if (label != null) v.contentDescription = label
     }
 
@@ -81,7 +79,7 @@ object Ui {
     fun setTileActive(v: android.widget.ImageView, active: Boolean) {
         val c = v.context
         v.background = pill(c, if (active) Palette.accent else Palette.button, 16)
-        v.setImageDrawable(Icons.get(c, v.tag as String, if (active) android.graphics.Color.WHITE else Palette.text))
+        v.setImageDrawable(Icons.get(c, v.tag as String, if (active) Palette.onAccent() else Palette.text))
     }
 
     /** Ô icon + chữ nhỏ (chế độ lái, nút nhanh). */
@@ -97,8 +95,8 @@ object Ui {
         val c = v.context
         v.background = pill(c, if (active) Palette.accent else Palette.button, 18)
         (v.getChildAt(0) as android.widget.ImageView).setImageDrawable(
-            Icons.get(c, v.tag as String, if (active) android.graphics.Color.WHITE else Palette.text))
-        (v.getChildAt(1) as TextView).setTextColor(if (active) android.graphics.Color.WHITE else Palette.text)
+            Icons.get(c, v.tag as String, if (active) Palette.onAccent() else Palette.text))
+        (v.getChildAt(1) as TextView).setTextColor(if (active) Palette.onAccent() else Palette.text)
     }
 
     fun pill(c: Context, color: Int, radiusDp: Int = 14) = GradientDrawable().apply {
@@ -135,6 +133,7 @@ object Ui {
     fun setActive(b: View, active: Boolean) {
         val c = b.context
         b.background = pill(c, if (active) Palette.accent else Palette.button)
+        if (b is TextView) b.setTextColor(if (active) Palette.onAccent() else Palette.text)
     }
 
     fun weight(w: Float = 1f) = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, w)

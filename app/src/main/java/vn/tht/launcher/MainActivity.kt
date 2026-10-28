@@ -106,6 +106,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private var lastVehicle: VehicleData? = null
     private var lastEcarx: EcarxInfo? = null
     private var lastMedia: NowPlaying? = null
+    private val gpsSpeed by lazy { vn.tht.launcher.vehicle.GpsSpeedSource(applicationContext) }
     private var allApps: List<AppEntry> = emptyList()
 
     private val handler = Handler(Looper.getMainLooper())
@@ -149,6 +150,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
                 widgets.values.forEach { it.onEcarx(info) }
                 if (::climateMini.isInitialized) climateMini.bind(info)
                 if (::fanMini.isInitialized) fanMini.bind(info)
+                updateDockStatus(lastVehicle)
             }
             io.postDelayed(this, ECARX_POLL_MS)
         }
@@ -157,6 +159,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private val tick = object : Runnable {
         override fun run() {
             widgets.values.forEach { it.onTick() }
+            updateDockStatus(lastVehicle)
             // Thời tiết: kiểm tra mỗi phút, chỉ tải khi dữ liệu cũ hơn 30 phút
             if (tickCount++ % 60 == 0) vn.tht.launcher.system.Weather.refreshIfStale(this@MainActivity) {
                 runOnUiThread { widgets.values.forEach { it.onTick() } }
@@ -224,7 +227,14 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
             }
         }
         controller = EcarxController(ecarx, { lastVehicle?.speedKmh }, { lastVehicle?.gearText })
-        automation = vn.tht.launcher.automation.AutomationEngine(prefs, controller, vn.tht.launcher.automation.AutomationEngine::defaultLog)
+        automation = vn.tht.launcher.automation.AutomationEngine(prefs, controller,
+            vn.tht.launcher.automation.AutomationEngine::defaultLog,
+            readValue = { id, zone -> ecarx.getInt(id, zone) },
+            bootCount = runCatching { Settings.Global.getInt(contentResolver, Settings.Global.BOOT_COUNT, -1) }
+                .getOrNull()?.takeIf { it >= 0 },
+            onApps = { current -> Autostart.runForEngine(applicationContext, current) },
+            onCancelApps = { Autostart.cancelEngine() },
+            gpsSpeedKmh = { gpsSpeed.speedKmh() })
         requestCarPermissions()
         media = MediaWatcher(this) { np ->
             runOnUiThread {
@@ -301,6 +311,9 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     override fun onResume() {
         super.onResume()
         inFront = true
+        val automationPrefs = vn.tht.launcher.automation.AutomationPrefs(prefs)
+        gpsSpeed.setEnabled(automationPrefs.enabled && automationPrefs.closeRoofAtSpeed > 0)
+        if (::ecarx.isInitialized && !ecarx.connected) ecarx.start()
         refreshFloatingDock()
         // Khi ẩn chỉ ghi chuyến đi/tự động hoá; giờ hiện lại thì cập nhật giao diện theo dữ liệu mới nhất
         refreshVehicleUi(lastVehicle)
@@ -349,11 +362,13 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         floatingDock.hide()
         handler.removeCallbacksAndMessages(null)
         io.removeCallbacksAndMessages(null)
+        automation.stop()
+        Autostart.cancel()
+        gpsSpeed.stop()
         carIo.quitSafely()
         carSource.stop()
         ecarx.stop()
         controller.shutdown()
-        automation.stop()
         unregisterReceiver(packageReceiver)
         prefs.sp.unregisterOnSharedPreferenceChangeListener(prefsListener)
         super.onDestroy()
@@ -491,7 +506,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
         findViewById<View>(R.id.root).setBackgroundColor(Palette.bg)
         val wp = findViewById<ImageView>(R.id.wallpaper)
-        val custom = Wallpapers.load(this, if (night) SettingsActivity.NIGHT else SettingsActivity.DAY)
+        val which = if (night) SettingsActivity.NIGHT else SettingsActivity.DAY
+        val custom = if (prefs.sp.getBoolean("use_wallpaper_$which", true)) Wallpapers.load(this, which) else null
         if (custom != null) wp.setImageBitmap(custom)
         else wp.setImageDrawable(Palette.background(if (night) prefs.backgroundNight else prefs.backgroundDay))
 
@@ -549,7 +565,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private fun applyFullScreen() {
         window.decorView.systemUiVisibility = if (prefs.fullScreen) {
             View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_FULLSCREEN or
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         } else 0
         if (prefs.fullScreen) window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         else window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -647,6 +664,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     override fun mediaPlayPause() { media.playPause() }
     override fun mediaNext() { media.next() }
     override fun mediaPrevious() { media.previous() }
+    override fun canSeekMedia(): Boolean = media.canSeek()
+    override fun mediaSeekTo(positionMs: Long): Boolean = media.seekTo(positionMs)
     override fun hasMediaPermission() = media.hasPermission()
     override fun requestMediaPermission() = startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
 
@@ -684,6 +703,24 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         3, "Sưởi ghế lái",
     ) { toast((if (it.ok) "✔ " else "✖ ") + it.message) }
 
+    override fun runDockAction(action: String) {
+        val f = vn.tht.launcher.vehicle.EcarxFunctions
+        val report: (vn.tht.launcher.vehicle.EcarxController.Result) -> Unit = {
+            if (!it.ok) toast(it.message)
+        }
+        when {
+            action == "seat_heat_passenger" -> controller.cycleLevel(
+                f.HVAC_SEAT_HEATING, f.ZONE_ROW_1_RIGHT, 3, "Sưởi ghế phụ", report)
+            action.startsWith("temp_set_") -> action.removePrefix("temp_set_").toFloatOrNull()
+                ?.takeIf { it.isFinite() && it in f.TEMP_MIN..f.TEMP_MAX }?.let { controller.setTemp(it, report) }
+            action.startsWith("fan_set_") -> action.removePrefix("fan_set_").toIntOrNull()
+                ?.takeIf { it in 0..f.FAN_MAX }?.let {
+                    controller.setValue(f.HVAC_FAN_SPEED, f.ZONE_ALL, f.level(f.HVAC_FAN_SPEED, it), "Quạt mức $it", done = report)
+                }
+            else -> runImageAction(action)
+        }
+    }
+
     override fun openWifiSettings() {
         runCatching { startActivity(Intent(Settings.ACTION_WIFI_SETTINGS)) }
     }
@@ -696,18 +733,17 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         if (now - lastStatusAt < 1000) return
         lastStatusAt = now
         val tank = prefs.tankLiters.toFloat()
-        val seat = lastEcarx?.let {
-            vn.tht.launcher.vehicle.EcarxFunctions.levelOf(
-                vn.tht.launcher.vehicle.EcarxFunctions.HVAC_SEAT_HEATING,
-                ecarx.getInt(vn.tht.launcher.vehicle.EcarxFunctions.HVAC_SEAT_HEATING, vn.tht.launcher.vehicle.EcarxFunctions.ZONE_ROW_1_LEFT),
-            )
-        }
+        val seat = lastEcarx?.seatHeatLeft
         val status = DockBar.Status(
             wifi = wifiConnected(),
             coolantC = d?.coolantTempC,
             fuelL = d?.fuelLiters ?: if (tank > 0f) d?.fuelPercent?.let { it / 100f * tank } else null,
             voltage = supplyVoltage(),
             seatHeatLevel = seat,
+            passengerSeatHeatLevel = lastEcarx?.seatHeatRight,
+            temperatureC = lastEcarx?.tempC,
+            fanLevel = lastEcarx?.fanLevel,
+            hvacOn = lastEcarx?.hvacOn,
         )
         lastStatus = status
         dock.update(status)
@@ -853,7 +889,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     }
 
     private val navCandidates = listOf(
-        "vn.vietmap.live", "com.google.android.apps.maps", "com.waze", "ru.yandex.yandexnavi", "ru.yandex.yandexmaps",
+        "com.autonavi.amapauto", "vn.vietmap.live", "com.google.android.apps.maps", "com.waze", "ru.yandex.yandexnavi", "ru.yandex.yandexmaps",
     )
 
     /** Gói + tên app đã dò; giữ lại vì widget hỏi mỗi giây (mỗi lần dò là vài lời gọi PackageManager). */
@@ -1052,6 +1088,9 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         appendLine("Khớp platform: ${PlatformSignature.verify(this@MainActivity)}")
         appendLine("Firmware: ${PlatformSignature.certSha256(this@MainActivity, "android")}")
         appendLine("App: ${PlatformSignature.certSha256(this@MainActivity, packageName)}")
+        appendLine()
+        appendLine("== Hợp đồng OEM Coolray")
+        appendLine(vn.tht.launcher.vehicle.OemFirmware.diagnosticReport(this@MainActivity))
         appendLine()
         appendLine("== ECARX")
         appendLine("Trạng thái: ${ecarx.status} · ghi=${ecarx.writeAllowed}")

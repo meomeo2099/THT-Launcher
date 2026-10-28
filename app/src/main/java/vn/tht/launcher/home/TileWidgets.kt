@@ -16,6 +16,7 @@ import vn.tht.launcher.ui.Icons
 import vn.tht.launcher.ui.textIfChanged
 import vn.tht.launcher.ui.Palette
 import vn.tht.launcher.ui.Ui
+import vn.tht.launcher.ui.Fonts
 import vn.tht.launcher.vehicle.VehicleData
 import java.util.Locale
 
@@ -23,7 +24,7 @@ import java.util.Locale
  * Ô nhỏ kiểu thẻ: icon tròn màu + tiêu đề + giá trị lớn + vạch trạng thái dưới.
  * Dùng cho xăng, điện áp, nhiệt độ máy, Bluetooth, Wi-Fi.
  */
-abstract class SmallTile(host: WidgetHost, iconKey: String, title: String) : HomeWidget(host) {
+abstract class SmallTile(host: WidgetHost, iconKey: String, title: String, private val showMeter: Boolean = true) : HomeWidget(host) {
     protected val badge = ImageView(c).apply {
         val p = Ui.dp(c, 6)
         setPadding(p, p, p, p)
@@ -34,7 +35,7 @@ abstract class SmallTile(host: WidgetHost, iconKey: String, title: String) : Hom
     protected val value = auto(Ui.text(c, "–", 28f, bold = true).apply { includeFontPadding = false }, 14, 40)
     protected val line = View(c)
 
-    override val view: View = base(14).apply {
+    override val view: View = base(16).apply {
         addView(Ui.hbox(c).apply {
             addView(badge, LinearLayout.LayoutParams(Ui.dp(c, 30), Ui.dp(c, 30)).apply { marginEnd = Ui.dp(c, 8) })
             addView(titleView, Ui.weight())
@@ -42,7 +43,7 @@ abstract class SmallTile(host: WidgetHost, iconKey: String, title: String) : Hom
                 LinearLayout.LayoutParams(Ui.dp(c, 20), Ui.dp(c, 20)))
         }, matchW())
         addView(value, fill(1f))
-        addView(line, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Ui.dp(c, 4)))
+        if (showMeter) addView(line, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Ui.dp(c, 3)))
         setOnClickListener { onTap() }
     }
 
@@ -51,14 +52,20 @@ abstract class SmallTile(host: WidgetHost, iconKey: String, title: String) : Hom
     /** Đặt trạng thái: [ok] = xanh lá, false = đỏ, null = xám. [frac] = độ dài vạch 0..1. */
     private var lastState: Triple<String, Boolean?, Int>? = null
 
-    protected fun state(text: String, ok: Boolean?, frac: Float = 1f) {
+    protected fun state(text: String, ok: Boolean?, frac: Float = 1f, warnWhenFalse: Boolean = true) {
         val key = Triple(text, ok, (frac.coerceIn(0f, 1f) * 100).toInt())
         if (key == lastState) return
         lastState = key
         value.textIfChanged = text
-        val color = when (ok) { true -> Palette.ok; false -> Palette.danger; null -> Palette.textDim }
-        badge.background = oval(if (ok == null) Palette.button else color)
-        badge.drawable?.setTint(if (ok == null) Palette.text else Color.WHITE)
+        value.typeface = if (text.any { it.isDigit() }) Fonts.display(c) else Fonts.bold(c)
+        val color = when {
+            ok == true -> Palette.ok
+            ok == false && warnWhenFalse -> Palette.danger
+            else -> Palette.textDim
+        }
+        val muted = ok == null || (ok == false && !warnWhenFalse)
+        badge.background = oval(if (muted) Palette.button else color)
+        badge.drawable?.setTint(if (muted) Palette.text else Color.WHITE)
         line.background = android.graphics.drawable.LayerDrawable(arrayOf(
             Ui.pill(c, Palette.withAlpha(Palette.textDim, 70), 2),
             android.graphics.drawable.ClipDrawable(Ui.pill(c, color, 2), Gravity.START, android.graphics.drawable.ClipDrawable.HORIZONTAL)
@@ -102,29 +109,29 @@ class StatTile(host: WidgetHost, private val metric: String) : SmallTile(
     }
 }
 
-class BluetoothTile(host: WidgetHost) : SmallTile(host, "bluetooth", "Bluetooth") {
+class BluetoothTile(host: WidgetHost) : SmallTile(host, "bluetooth", "Bluetooth", showMeter = false) {
     override fun onTap() = host.openSystemSettings(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS)
     @Suppress("MissingPermission", "DEPRECATION")
     override fun onTick() {
         val on = runCatching { android.bluetooth.BluetoothAdapter.getDefaultAdapter()?.isEnabled }.getOrNull()
-        state(when (on) { true -> "Bật"; false -> "Tắt"; null -> "–" }, on)
+        state(when (on) { true -> "Bật"; false -> "Tắt"; null -> "–" }, on, warnWhenFalse = false)
     }
 }
 
-class WifiTile(host: WidgetHost) : SmallTile(host, "wifi", "Wi-Fi") {
+class WifiTile(host: WidgetHost) : SmallTile(host, "wifi", "Wi-Fi", showMeter = false) {
     override fun onTap() = host.openSystemSettings(android.provider.Settings.ACTION_WIFI_SETTINGS)
     override fun onTick() {
         val on = host.lastStatus()?.wifi
-        state(when (on) { true -> "Đã kết nối"; false -> "Chưa nối"; null -> "–" }, on)
+        state(when (on) { true -> "Đã kết nối"; false -> "Chưa nối"; null -> "–" }, on, warnWhenFalse = false)
     }
 }
 
 /** Ô đồng hồ gọn: giờ, ngày tiếng Việt, thời tiết (Open-Meteo) hoặc nhiệt độ ngoài xe. */
 class ClockTile(host: WidgetHost) : HomeWidget(host) {
-    private val time = auto(Ui.text(c, "", 48f).apply { includeFontPadding = false }, 20, 120)
+    private val time = auto(Ui.text(c, "", 48f).apply { includeFontPadding = false; typeface = Fonts.display(c) }, 20, 126)
     private val date = auto(Ui.text(c, "", 18f, dim = true), 10, 28)
     private val wIcon = ImageView(c)
-    private val wTemp = auto(Ui.text(c, "", 26f, bold = true).apply { gravity = Gravity.END }, 14, 40)
+    private val wTemp = auto(Ui.text(c, "", 26f, bold = true).apply { gravity = Gravity.END; typeface = Fonts.display(c) }, 14, 40)
     private val wText = Ui.text(c, "", 14f, dim = true).apply { gravity = Gravity.END; maxLines = 1 }
     private var outsideC: Float? = null
     private var fmt24: Boolean? = null
@@ -281,33 +288,77 @@ class VerticalSlider(
     private val track = Paint(Paint.ANTI_ALIAS_FLAG)
     private val fill = Paint(Paint.ANTI_ALIAS_FLAG)
     private val rect = RectF()
+    private var preview: Float? = null
+    private var lastWrite = 0L
+    private val clearPreview = Runnable { preview = null; invalidate() }
+
+    init {
+        isFocusable = true
+        contentDescription = if (iconKey == "sun") "Độ sáng màn hình" else "Âm lượng nhạc"
+    }
 
     override fun onDraw(canvas: Canvas) {
-        val radius = minOf(width, height) * 0.32f
-        track.color = Palette.card
-        fill.color = Palette.withAlpha(if (Palette.night) Color.WHITE else Palette.text, 235)
+        val radius = minOf(width * 0.42f, height / 2f)
+        track.color = Color.rgb(32, 38, 49)
+        fill.color = Color.WHITE
         rect.set(0f, 0f, width.toFloat(), height.toFloat())
         canvas.drawRoundRect(rect, radius, radius, track)
-        val frac = (get() ?: 0f).coerceIn(0f, 1f)
+        val frac = (preview ?: get() ?: 0f).takeIf { it.isFinite() }?.coerceIn(0f, 1f) ?: 0f
         canvas.save()
         canvas.clipRect(0f, height * (1f - frac), width.toFloat(), height.toFloat())
         canvas.drawRoundRect(rect, radius, radius, fill)
         canvas.restore()
-        val s = (width * 0.5f).toInt()
-        Icons.get(context, iconKey, if (frac > 0.12f) Palette.bg else Palette.text)?.apply {
-            val l = (width - s) / 2
-            setBounds(l, height - s - l, l + s, height - l)
+        val s = minOf(width * 0.78f, height * 0.12f).toInt()
+        val l = (width - s) / 2
+        val top = (height - s - height * 0.05f).toInt()
+        fun drawIcon(color: Int) = Icons.get(context, iconKey, color)?.apply {
+            setBounds(l, top, l + s, top + s)
             draw(canvas)
         }
+        drawIcon(Color.rgb(232, 235, 240))
+        canvas.save()
+        canvas.clipRect(0f, height * (1f - frac), width.toFloat(), height.toFloat())
+        drawIcon(Color.rgb(48, 52, 59))
+        canvas.restore()
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(e: MotionEvent): Boolean {
-        if (e.actionMasked == MotionEvent.ACTION_DOWN || e.actionMasked == MotionEvent.ACTION_MOVE) {
-            parent?.requestDisallowInterceptTouchEvent(true)
-            set((1f - e.y / height).coerceIn(0f, 1f))
-            invalidate()
+        if (height <= 0 || !isEnabled) return false
+        val fraction = (1f - e.y / height).coerceIn(0f, 1f)
+        when (e.actionMasked) {
+            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
+                parent?.requestDisallowInterceptTouchEvent(true)
+                removeCallbacks(clearPreview)
+                preview = fraction
+                val now = android.os.SystemClock.uptimeMillis()
+                if (e.actionMasked == MotionEvent.ACTION_DOWN || now - lastWrite >= 50L) {
+                    lastWrite = now
+                    set(fraction)
+                }
+                invalidate()
+            }
+            MotionEvent.ACTION_UP -> {
+                set(fraction)
+                preview = fraction
+                postDelayed(clearPreview, 300L)
+                parent?.requestDisallowInterceptTouchEvent(false)
+                performClick()
+            }
+            MotionEvent.ACTION_CANCEL -> {
+                preview = null
+                parent?.requestDisallowInterceptTouchEvent(false)
+                invalidate()
+            }
         }
         return true
+    }
+
+    override fun performClick(): Boolean { super.performClick(); return true }
+
+    override fun onDetachedFromWindow() {
+        removeCallbacks(clearPreview)
+        preview = null
+        super.onDetachedFromWindow()
     }
 }
