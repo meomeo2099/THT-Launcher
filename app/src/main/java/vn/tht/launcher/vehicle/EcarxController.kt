@@ -157,6 +157,14 @@ class EcarxController(
         setFloatVerified(F.HVAC_TEMP, zone, target, String.format(Locale.US, "Nhiệt độ %.1f°C", target))
     }
 
+    /** Đặt nhiệt độ (cùng vùng với [tempStep]). */
+    fun setTemp(target: Float, done: (Result) -> Unit) = run(done) {
+        val zone = if (supported(F.HVAC_TEMP, F.ZONE_ROW_1_LEFT)) F.ZONE_ROW_1_LEFT else F.ZONE_ALL
+        if (!supported(F.HVAC_TEMP, zone)) return@run unsupported()
+        val t = target.coerceIn(F.TEMP_MIN, F.TEMP_MAX)
+        setFloatVerified(F.HVAC_TEMP, zone, t, String.format(Locale.US, "Nhiệt độ %.1f°C", t))
+    }
+
     /** Tăng/giảm quạt một mức, kẹp 1–7. */
     fun fanStep(direction: Int, done: (Result) -> Unit) = run(done) {
         if (!supported(F.HVAC_FAN_SPEED)) return@run unsupported()
