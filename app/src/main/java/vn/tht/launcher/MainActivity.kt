@@ -1069,6 +1069,14 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         appendLine("Trợ năng THT: ${vn.tht.launcher.system.NavAssistService.isEnabled(this@MainActivity)}")
         appendLine("Vẽ trên app khác: ${android.provider.Settings.canDrawOverlays(this@MainActivity)}")
         appendLine("Nhúng bản đồ: bật=${prefs.sp.getBoolean("embed_map", true)} lỗi gần nhất=${vn.tht.launcher.home.EmbeddedMap.lastError ?: "không"}")
+        run {
+            val real = android.graphics.Point().also { windowManager.defaultDisplay.getRealSize(it) }
+            val app = android.graphics.Point().also { windowManager.defaultDisplay.getSize(it) }
+            val os = vn.tht.launcher.system.Overscan.applied(prefs)
+            appendLine("Thanh bên: kiểu=${prefs.sp.getString("nav_mode", "buttons")} màn=${real.x}x${real.y} vùng app=${app.x}x${app.y} " +
+                "overscan THT=$os thanh hệ thống trái≈${real.x - app.x - os}px chừa màn chính=${vn.tht.launcher.system.NavAssistService.homeInset}px " +
+                "policy_control=${Settings.Global.getString(contentResolver, "policy_control")}")
+        }
         appendLine("App bản đồ: ${navPackage() ?: "(chưa có)"} · app radio: ${radioPackage() ?: "(chưa có)"}")
         appendLine("Gói ECARX đã cài: " + listOf("ecarx.hvac.app", "ecarx.xsf.mediacenter", "com.ecarx.radio.service", "com.ecarx.radio", "ecarx.launcher3")
             .joinToString(", ") { p -> p + if (runCatching { packageManager.getPackageInfo(p, 0) }.isSuccess) "✔" else "✖" })
