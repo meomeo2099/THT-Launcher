@@ -45,6 +45,8 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
     private var divider: View? = null
     private var dividerLp: WindowManager.LayoutParams? = null
     private var busy = false
+    /** Cặp đang mở; giữ cả cặp chưa lưu (chia đôi nhanh từ thanh bên) để đổi bên / kéo tỉ lệ vẫn dùng được. */
+    private var current: Split? = null
 
     // ---- Mở / đóng ----
 
@@ -64,10 +66,13 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
             if (leftTask == null) return@ensureTask fail("Không mở được chia đôi: app chưa kịp khởi động")
             if (!moveToSplit(leftTask, WINDOWING_PRIMARY)) return@ensureTask fail("Đầu xe không mở app này ở chế độ chia đôi")
             handler.postDelayed({
+                // Bên trái đã vào nửa chính: bên phải hỏng thì phải thoát chia đôi, nếu không màn hình kẹt
+                // ở nửa app + nửa trống (nút Home của Android 9 không thoát được)
                 ensureTask(split.right) { rightTask ->
-                    if (rightTask == null) return@ensureTask fail("Không mở được chia đôi: app chưa kịp khởi động")
-                    moveToSplit(rightTask, WINDOWING_SECONDARY)
+                    if (rightTask == null) return@ensureTask abort("Không mở được chia đôi: app bên phải chưa kịp khởi động")
+                    if (!moveToSplit(rightTask, WINDOWING_SECONDARY)) return@ensureTask abort("Đầu xe không mở app bên phải ở chế độ chia đôi")
                     handler.postDelayed({
+                        current = split
                         openId = split.id
                         onStateChanged()
                         place(split.ratio)
@@ -84,6 +89,7 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
         handler.removeCallbacks(watch)
         removeDivider()
         openId = null
+        current = null
         call("dismissSplitScreenMode", arrayOf(Boolean::class.javaPrimitiveType!!), false)
         onStateChanged()
     }
@@ -99,12 +105,18 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
         toast(msg)
     }
 
+    /** Hỏng giữa chừng (đã có app trong nửa chính): thoát chia đôi, trả màn hình như cũ. */
+    private fun abort(msg: String) {
+        call("dismissSplitScreenMode", arrayOf(Boolean::class.javaPrimitiveType!!), false)
+        fail(msg)
+    }
+
     /** Thoát chia đôi bằng cách khác (nút Home, app tự đóng…): bỏ thanh kéo. */
     private val watch = object : Runnable {
         override fun run() {
             if (openId == null) return
             if (stackId(WINDOWING_PRIMARY) == null) {
-                removeDivider(); openId = null; onStateChanged()
+                removeDivider(); openId = null; current = null; onStateChanged()
             } else handler.postDelayed(this, WATCH_MS)
         }
     }
@@ -255,6 +267,7 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
                 }
                 MotionEvent.ACTION_UP -> {
                     val ratio = ((lp.x + w / 2) * 100f / size.x).toInt().coerceIn(Split.MIN_RATIO, Split.MAX_RATIO)
+                    current = current?.copy(ratio = ratio)
                     SplitStore.get(c, split.id)?.let { SplitStore.put(c, it.copy(ratio = ratio)) }
                     place(ratio)
                 }
@@ -272,9 +285,10 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
     }
 
     private fun swap() {
-        val s = openId?.let { SplitStore.get(context, it) } ?: return
+        val s = openId?.let { SplitStore.get(context, it) } ?: current ?: return
         val swapped = s.copy(left = s.right, right = s.left, ratio = 100 - s.ratio)
-        SplitStore.put(context, swapped)
+        // Cặp đã lưu thì lưu chiều mới; cặp chia đôi nhanh không lưu
+        if (SplitStore.get(context, s.id) != null) SplitStore.put(context, swapped)
         close()
         handler.postDelayed({ open(swapped) }, SETTLE_MS)
     }

@@ -191,6 +191,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
                 return vn.tht.launcher.system.NavAssistService.Companion.BarClimate(left, right, fan)
             }
             override fun onBarInset() = runOnUiThread { applyBarInset() }
+            override fun quickSplit(current: String?) = runOnUiThread { this@MainActivity.quickSplit(current) }
         }
         // Gốc giao diện + ảnh nền đã phủ kín màn: bỏ nền cửa sổ để khỏi vẽ 1920×720 thêm một lần mỗi khung hình
         window.setBackgroundDrawable(null)
@@ -1098,6 +1099,18 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         SplitScreen(this, ::toast).apply {
             bottomInset = { if (floatingDock.shown) Bitmaps.screen(this@MainActivity).second - floatingDock.top else 0 }
             onStateChanged = { refreshFloatingDock() }
+        }
+    }
+
+    /**
+     * Chia đôi nhanh từ thanh bên: app đang dùng sang trái, chọn app bên phải (đang ở launcher thì chọn cả
+     * hai). Đang chia đôi thì bấm lần nữa để thoát. Cặp không lưu; muốn lưu dùng widget/nút "Chia đôi".
+     */
+    private fun quickSplit(current: String?) {
+        if (splitScreen.openId != null) return splitScreen.close()
+        inLauncher {
+            fun open(left: String) = pickApp { right -> splitScreen.open(vn.tht.launcher.split.Split.new(left, right)) }
+            if (current != null) open(current) else { toast("Chọn app bên trái"); pickApp { open(it) } }
         }
     }
 

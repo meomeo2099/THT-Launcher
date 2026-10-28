@@ -78,6 +78,12 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
      */
     override fun onAccessibilityEvent(e: AccessibilityEvent?) {
         if (e?.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return
+        // Nhớ app đang ở trước (cho nút chia đôi): bỏ qua launcher, thanh hệ thống, bàn phím
+        e.packageName?.toString()?.let { pkg ->
+            if (pkg != packageName && pkg != "android" && !pkg.startsWith("com.android.systemui") &&
+                packageManager.getLaunchIntentForPackage(pkg) != null) foregroundApp = pkg
+            else if (pkg == packageName) foregroundApp = null
+        }
         if (e.packageName?.toString() != HVAC_PACKAGE) return
         if (!prefs.sp.getBoolean(KEY_HIDE_STOCK_HVAC, false)) return
         if (android.os.SystemClock.elapsedRealtime() < allowStockUntil) return
@@ -267,9 +273,10 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
                     "apps" -> icon("apps", "Ứng dụng") { host?.openAppDrawer() ?: performGlobalAction(GLOBAL_ACTION_HOME) }
                     "car" -> icon("car", "Xe") { host?.openControlPanel() ?: performGlobalAction(GLOBAL_ACTION_HOME) }
                     "climate" -> icon("climate", "Điều hoà") { host?.openClimate() }
-                    "recents" -> icon("split", "Đa nhiệm") { performGlobalAction(GLOBAL_ACTION_RECENTS) }
+                    "recents" -> icon("chevron-up", "Đa nhiệm") { performGlobalAction(GLOBAL_ACTION_RECENTS) }
                     "notifications" -> icon("chevron-down", "Thông báo") { performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS) }
                     "collapse" -> icon("minus", "Thu gọn") { setCollapsed(true) }
+                    "split" -> icon("dual", "Chia đôi màn hình") { host?.quickSplit(foregroundApp) }
                     "temp", "temp2" -> TempBlock(c) { host?.openClimate() }.also { tempBlocks += (if (id == "temp") 0 else 1) to it }
                     else -> continue
                 }
@@ -339,12 +346,18 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
             fun climate(): BarClimate?
             /** [homeInset] đổi: màn chính chừa/bỏ chừa chỗ cho thanh bên. */
             fun onBarInset()
+            /** Nút chia đôi: đang chia thì thoát; không thì [current] sang trái, chọn app cho bên phải. */
+            fun quickSplit(current: String?)
         }
 
         class BarClimate(val left: Float?, val right: Float?, val fan: Int?)
 
         /** Bề rộng (px) thanh bên đang chiếm trên màn chính; 0 = không hiện ở màn chính. */
         @Volatile var homeInset = 0
+            private set
+
+        /** App đang ở trước (không phải launcher), null nếu đang ở launcher hoặc chưa biết. */
+        @Volatile var foregroundApp: String? = null
             private set
         const val KEY_BAR_ITEMS = "nav_bar_items"
         /** WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN (ẩn trong SDK): cho phép vẽ vào phần overscan. */
@@ -361,10 +374,11 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
             "climate" to "Điều hoà (biểu tượng)",
             "recents" to "Đa nhiệm",
             "notifications" to "Thông báo",
+            "split" to "Chia đôi màn hình",
             "collapse" to "Thu gọn thanh",
         )
         /** Như thanh gốc: nhiệt độ lái · ứng dụng · xe · nhiệt độ phụ · ⌂ · ‹ */
-        val BAR_DEFAULT = listOf("temp", "apps", "car", "temp2", "home", "back")
+        val BAR_DEFAULT = listOf("temp", "apps", "car", "temp2", "split", "home", "back")
 
         fun barItems(p: Prefs): List<String> =
             p.sp.getString(KEY_BAR_ITEMS, null)?.split(',')?.filter { it in BAR_ITEMS } ?: BAR_DEFAULT
