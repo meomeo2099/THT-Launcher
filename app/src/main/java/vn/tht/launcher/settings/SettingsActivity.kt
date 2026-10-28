@@ -112,9 +112,13 @@ class SettingsActivity : Activity() {
         choice("Kiểu điều hướng", mapOf(
             "buttons" to "Nút nổi ← ⌂ (nhấn giữ để kéo)",
             "gestures" to "Cử chỉ: vuốt lên = Home, vuốt ngang = Quay lại",
+            "bar" to "Thanh bên như của xe: ← ⌂ ▦ điều hoà (‹ để thu gọn)",
             "both" to "Cả hai",
             "off" to "Tắt",
         ), { prefs.sp.getString("nav_mode", "buttons") ?: "buttons" }) { prefs.sp.edit().putString("nav_mode", it).apply() }
+        toggle("Thanh bên: hiện cả trên màn chính", { prefs.sp.getBoolean(vn.tht.launcher.system.NavAssistService.KEY_BAR_HOME, false) }) {
+            prefs.sp.edit().putBoolean(vn.tht.launcher.system.NavAssistService.KEY_BAR_HOME, it).apply()
+        }
 
         section("Khởi động & hệ thống")
         action("Dọn dẹp ngay", "Đóng app chạy nền để giải phóng RAM (giữ nhạc, bản đồ, THT Voice)") {

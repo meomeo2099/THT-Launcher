@@ -175,6 +175,10 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        vn.tht.launcher.system.NavAssistService.host = object : vn.tht.launcher.system.NavAssistService.Companion.Host {
+            override fun openAppDrawer() = this@MainActivity.openAppDrawer()
+            override fun openClimate() = this@MainActivity.openClimate()
+        }
         // Gốc giao diện + ảnh nền đã phủ kín màn: bỏ nền cửa sổ để khỏi vẽ 1920×720 thêm một lần mỗi khung hình
         window.setBackgroundDrawable(null)
         // Thanh trên: hàng icon nằm trong khung tự thu nhỏ, thêm ô trạng thái không bị cắt hai đầu
@@ -326,6 +330,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     }
 
     override fun onDestroy() {
+        vn.tht.launcher.system.NavAssistService.host = null
         splitScreen.release()
         floatingDock.hide()
         handler.removeCallbacksAndMessages(null)

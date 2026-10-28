@@ -26,8 +26,9 @@ import kotlin.math.abs
  * Kiểu (Cài đặt → Điều hướng, khoá "nav_mode"):
  *  - "buttons": viên nổi có ← và ⌂, nhấn giữ để kéo, vị trí được nhớ.
  *  - "gestures": dải mỏng giữa mép dưới; vuốt lên = Home, vuốt ngang = Back.
+ *  - "bar": thanh dọc mép trái như thanh của xe (← ⌂ ▦ điều hoà), thu gọn thành tab nhỏ được.
  *  - "both" / "off".
- * Tự ẩn khi launcher đang ở trước. Không đọc nội dung màn hình (chỉ nghe sự kiện đổi cửa sổ).
+ * Tự ẩn khi launcher đang ở trước (thanh bên có thể hiện cả trên màn chính, khoá "nav_bar_home"). Không đọc nội dung màn hình (chỉ nghe sự kiện đổi cửa sổ).
  */
 class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -35,6 +36,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
     private lateinit var prefs: Prefs
     private var pill: View? = null
     private var strip: View? = null
+    private var bar: View? = null
     private var tempInfo: TempInfoOverlay? = null
     override fun onServiceConnected() {
         instance = this
@@ -72,7 +74,8 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
     }
 
     override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
-        if (key == KEY_MODE) rebuild()
+        if (key == KEY_MODE || key == KEY_BAR_COLLAPSED) rebuild()
+        if (key == KEY_BAR_HOME) applyVisibility()
     }
 
     private fun mode() = prefs.sp.getString(KEY_MODE, "buttons") ?: "buttons"
@@ -82,6 +85,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
         val m = mode()
         if (m == "buttons" || m == "both") addPill()
         if (m == "gestures" || m == "both") addStrip()
+        if (m == "bar") addBar()
         applyVisibility()
     }
 
@@ -89,11 +93,12 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
         val v = if (launcherInFront) View.GONE else View.VISIBLE
         pill?.visibility = v
         strip?.visibility = v
+        bar?.visibility = if (launcherInFront && !prefs.sp.getBoolean(KEY_BAR_HOME, false)) View.GONE else View.VISIBLE
     }
 
     private fun removeAll() {
-        listOfNotNull(pill, strip).forEach { runCatching { wm.removeView(it) } }
-        pill = null; strip = null
+        listOfNotNull(pill, strip, bar).forEach { runCatching { wm.removeView(it) } }
+        pill = null; strip = null; bar = null
     }
 
     private fun params(w: Int, h: Int) = WindowManager.LayoutParams(
@@ -153,6 +158,55 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
         runCatching { wm.addView(view, lp) }.onSuccess { pill = view }
     }
 
+    // ---- Thanh bên (như thanh của xe) ----
+
+    /**
+     * Mở rộng: thanh dọc cao hết màn ở mép trái, nút ← ⌂ ▦ điều hoà, dưới cùng là ‹ để thu gọn.
+     * Thu gọn: tab nhỏ giữa mép trái, chạm để mở lại. Trạng thái được nhớ (khoá "nav_bar_collapsed").
+     * Đây là lớp phủ nên không chừa chỗ như thanh hệ thống: app bên dưới bị che phần mép trái.
+     */
+    private fun addBar() {
+        val c: Context = this
+        val collapsed = prefs.sp.getBoolean(KEY_BAR_COLLAPSED, false)
+        fun setCollapsed(v: Boolean) = prefs.sp.edit().putBoolean(KEY_BAR_COLLAPSED, v).apply()
+        fun btn(icon: String, label: String, onClick: () -> Unit) = ImageView(c).apply {
+            setImageDrawable(Icons.get(c, icon, Color.WHITE))
+            contentDescription = label
+            val p = Ui.dp(c, 18)
+            setPadding(p, p, p, p)
+            setOnClickListener { onClick() }
+        }
+        val radius = Ui.dp(c, 18).toFloat()
+        val bg = GradientDrawable().apply {
+            cornerRadii = floatArrayOf(0f, 0f, radius, radius, radius, radius, 0f, 0f)
+            setColor(0xCC000000.toInt())
+        }
+        val view: View
+        val lp: WindowManager.LayoutParams
+        if (collapsed) {
+            view = btn("chevron-right", "Mở thanh bên") { setCollapsed(false) }.apply {
+                background = bg
+                val p = Ui.dp(c, 4)
+                setPadding(p, p, p, p)
+            }
+            lp = params(Ui.dp(c, 28), Ui.dp(c, 96)).apply { gravity = Gravity.START or Gravity.CENTER_VERTICAL }
+        } else {
+            val w = Ui.dp(c, 72)
+            fun row() = LinearLayout.LayoutParams(w, 0, 1f)
+            view = LinearLayout(c).apply {
+                orientation = LinearLayout.VERTICAL
+                background = bg
+                addView(btn("back", "Quay lại") { performGlobalAction(GLOBAL_ACTION_BACK) }, row())
+                addView(btn("home", "Màn hình chính") { performGlobalAction(GLOBAL_ACTION_HOME) }, row())
+                addView(btn("apps", "Ứng dụng") { host?.openAppDrawer() ?: performGlobalAction(GLOBAL_ACTION_HOME) }, row())
+                addView(btn("climate", "Điều hoà") { host?.openClimate() }, row())
+                addView(btn("chevron-left", "Thu gọn") { setCollapsed(true) }, row())
+            }
+            lp = params(w, WindowManager.LayoutParams.MATCH_PARENT).apply { gravity = Gravity.START or Gravity.TOP }
+        }
+        runCatching { wm.addView(view, lp) }.onSuccess { bar = view }
+    }
+
     // ---- Dải cử chỉ ----
 
     @SuppressLint("ClickableViewAccessibility")
@@ -188,6 +242,15 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
         const val KEY_MODE = "nav_mode"
         const val KEY_HIDE_STOCK_HVAC = "hide_stock_hvac"
         const val KEY_TEMP_INFO = "temp_info"
+        const val KEY_BAR_HOME = "nav_bar_home"
+        private const val KEY_BAR_COLLAPSED = "nav_bar_collapsed"
+
+        /** Việc thanh bên nhờ launcher làm (cùng tiến trình); MainActivity gắn khi tạo, gỡ khi huỷ. */
+        interface Host {
+            fun openAppDrawer()
+            fun openClimate()
+        }
+        @Volatile var host: Host? = null
         private const val HVAC_PACKAGE = "ecarx.hvac.app"
         @Volatile private var allowStockUntil = 0L
 
