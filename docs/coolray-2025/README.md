@@ -20,7 +20,7 @@ Hai APK OEM không chứa DEX. Chưa có ODEX/VDEX, trace dịch vụ, đầu xe
 | Nhạc | Session đang hoạt động, album, tiến trình, seek khi session cho phép | Phụ thuộc quyền thông báo và player |
 | OEM | Resolve activity có kiểm tra enabled/exported; quay về Home gốc | Package thực tế và quyền cần xác nhận trên xe |
 | Điều khiển | Giữ ECARX IDs có sẵn, kiểm tra chữ ký/capability/an toàn, ghi và đọc lại | Không chứng minh hai APK cung cấp toàn bộ giao thức xe |
-| Tự động hóa | Chu kỳ động cơ, hủy callback cũ, kiểm tra lại trên worker, tắt hẹn giờ khi vẫn sở hữu mức hiện tại | ECU, lịch đánh thức và hành vi firmware chưa kiểm thử |
+| Tự động hóa | Chu kỳ động cơ, hủy callback cũ, kiểm tra lại trên worker, tắt hẹn giờ khi mức hiện tại vẫn trùng mức đã bật | ECU, lịch đánh thức và hành vi firmware chưa kiểm thử |
 | Tốc độ GPS | Tùy chọn cho đóng cửa sổ trời; chỉ mẫu thật còn mới ≤5 giây, có quyền vị trí chính xác | Không thay trạng thái động cơ; giới hạn chạy nền Android vẫn áp dụng |
 | Khởi động app | Theo boot/chu kỳ động cơ, chỉ package được người dùng chọn | Autoplay phụ thuộc media session/browser của player |
 | Sao lưu | ZIP v2, đọc JSON v1, whitelist, giới hạn giải nén, staging và rollback | Không bảo đảm giao dịch nhiều file nguyên tử khi mất điện đột ngột |

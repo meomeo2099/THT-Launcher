@@ -19,3 +19,12 @@ Máy ảo từng báo System UI không phản hồi khi chạy đồng thời tr
 Chưa có kiểm thử trên xe thật: chữ ký framework, tốc độ/gear, điều hòa/ghế/cửa sổ trời, media OEM, wake/sleep, camera lùi, nhiều app và nâng cấp từ bản cài thực tế vẫn cần xác nhận. Chưa có đối chiếu từng pixel với ảnh ứng dụng tham chiếu đang chạy; các màn hình phụ chưa hoàn toàn tương đương.
 
 Quét các file văn bản mới/thay đổi bằng package và nhãn sản phẩm gốc từ badging APK tham chiếu: không thấy khớp. Phép quét này không khẳng định loại bỏ mọi dấu vết nhận diện gián tiếp.
+
+## Ảnh và hình học thực tế
+
+- [Trang chính](screenshots/home-day.png): preset tham chiếu, chưa cấp quyền thông báo, không có dữ liệu xe.
+- [Thu gọn](screenshots/collapsed-day.png): chỉ giữ nền và dock; đã kiểm tra mở lại các widget.
+- [Cài đặt](screenshots/settings-day.png): menu danh mục và font tiếng Việt.
+- [Tọa độ view](view-geometry.txt): cửa sổ/canvas 1920×720, dock `(60,572)–(1860,700)`, các widget trùng tọa độ preset.
+
+Kiểm tra tay thêm: mở/đóng ngăn ứng dụng; quay lại cài đặt; đổi trạng thái thu gọn; cài đè APK debug trên máy ảo. Không thấy `AndroidRuntime` fatal exception trong log thu sau lượt chạy cuối. Một lần cài streamed qua ADB bị treo; chuyển sang `install --no-streaming` thành công. Có khung hình cũ trên software GPU sau thay kích thước cửa sổ/hiện lại widget; ảnh trang chính được chụp lại sau mở Activity mới. Chưa dùng lần chạy này để kết luận về độ mượt trên phần cứng xe.
