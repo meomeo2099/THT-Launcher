@@ -43,6 +43,12 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
     private var strip: View? = null
     private var bar: View? = null
     private var tempInfo: TempInfoOverlay? = null
+    override fun onUnbind(intent: android.content.Intent?): Boolean {
+        // Dịch vụ bị tắt trong Trợ năng: trả lại toàn màn hình cho app
+        Overscan.set(this, Prefs(this), 0)
+        return super.onUnbind(intent)
+    }
+
     override fun onServiceConnected() {
         instance = this
         wm = getSystemService(WindowManager::class.java)
@@ -100,12 +106,15 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
         val v = if (launcherInFront) View.GONE else View.VISIBLE
         pill?.visibility = v
         strip?.visibility = v
-        bar?.visibility = if (launcherInFront && !prefs.sp.getBoolean(KEY_BAR_HOME, false)) View.GONE else View.VISIBLE
+        // Đã thu hẹp màn hình cho thanh: luôn hiện (kể cả màn chính), nếu không sẽ còn dải trống
+        bar?.visibility = if (launcherInFront && !barEverywhere && !prefs.sp.getBoolean(KEY_BAR_HOME, false)) View.GONE else View.VISIBLE
     }
 
     private fun removeAll() {
         listOfNotNull(pill, strip, bar).forEach { runCatching { wm.removeView(it) } }
         if (bar != null && homeInset != 0) { homeInset = 0; host?.onBarInset() }
+        if (bar != null) Overscan.set(this, prefs, 0)
+        barEverywhere = false
         pill = null; strip = null; bar = null
         tempBlocks.clear()
         barIo.removeCallbacks(tempPoll)
@@ -171,6 +180,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
     // ---- Thanh bên (theo mẫu thanh của launcher gốc) ----
 
     private val tempBlocks = mutableListOf<Pair<Int, TempBlock>>()
+    private var barEverywhere = false
     /** Màu/theme lúc dựng thanh; launcher đổi theme thì dựng lại. */
     private var barStyle: List<Int>? = null
     private val main = Handler(Looper.getMainLooper())
@@ -187,13 +197,16 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
 
     private fun style() = listOf(if (Palette.night) 1 else 0, Palette.text, Palette.accent)
 
-    /** Bề rộng thanh: bằng thanh hệ thống bên trái của xe nếu có (để nằm đúng chỗ đó, không che app). */
-    private fun barWidth(): Int {
+    /**
+     * Bề rộng thanh hệ thống bên trái của xe (px), 0 nếu không có. Trừ phần overscan do chính mình đặt,
+     * nếu không lần sau sẽ tưởng đó là thanh của xe.
+     */
+    private fun systemRailWidth(): Int {
         val d = wm.defaultDisplay
         val real = android.graphics.Point().also { d.getRealSize(it) }
         val app = android.graphics.Point().also { d.getSize(it) }
-        val sys = real.x - app.x
-        return if (sys in Ui.dp(this, 60)..Ui.dp(this, 200)) sys else Ui.dp(this, 120)
+        val sys = real.x - app.x - Overscan.applied(prefs)
+        return if (sys in Ui.dp(this, 60)..Ui.dp(this, 200)) sys else 0
     }
 
     /**
@@ -232,8 +245,13 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
             }
             lp = params(Ui.dp(c, 30), Ui.dp(c, 110)).apply { gravity = Gravity.START or Gravity.CENTER_VERTICAL }
             homeInset = 0
+            Overscan.set(c, prefs, 0)
         } else {
-            val w = barWidth()
+            // Xe có thanh trái riêng: nằm đè đúng chỗ đó (app đã chừa sẵn). Không có: thu hẹp màn hình bên
+            // trái bằng overscan để MỌI app lùi vào, thanh vẽ vào phần được chừa.
+            val rail = systemRailWidth()
+            val w = if (rail > 0) rail else Ui.dp(c, 120)
+            val shifted = rail == 0 && Overscan.set(c, prefs, w)
             val col = LinearLayout(c).apply {
                 orientation = LinearLayout.VERTICAL
                 gravity = Gravity.CENTER_HORIZONTAL
@@ -261,9 +279,11 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
             // Toạ độ tính từ mép màn hình (không phải dưới thanh trạng thái) để thanh cao hết màn
             lp = params(w, WindowManager.LayoutParams.MATCH_PARENT).apply {
                 gravity = Gravity.START or Gravity.TOP
-                flags = flags or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                // IN_OVERSCAN: toạ độ tính từ mép thật của màn hình, thanh nằm trọn trong phần đã chừa
+                flags = flags or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or FLAG_LAYOUT_IN_OVERSCAN
             }
-            homeInset = if (prefs.sp.getBoolean(KEY_BAR_HOME, false)) w else 0
+            barEverywhere = shifted
+            homeInset = if (shifted || prefs.sp.getBoolean(KEY_BAR_HOME, false)) w else 0
         }
         runCatching { wm.addView(view, lp) }.onSuccess {
             bar = view
@@ -327,6 +347,8 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
         @Volatile var homeInset = 0
             private set
         const val KEY_BAR_ITEMS = "nav_bar_items"
+        /** WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN (ẩn trong SDK): cho phép vẽ vào phần overscan. */
+        private const val FLAG_LAYOUT_IN_OVERSCAN = 0x02000000
 
         /** Các nút có thể đặt lên thanh bên (khoá → tên hiển thị), theo thứ tự mặc định. */
         val BAR_ITEMS = linkedMapOf(
