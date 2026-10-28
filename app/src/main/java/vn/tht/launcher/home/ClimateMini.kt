@@ -15,7 +15,8 @@ import java.util.Locale
 import vn.tht.launcher.vehicle.EcarxFunctions as F
 
 /**
- * Cụm điều hoà gọn ở đầu thanh dưới: nút nguồn tròn · − · nhiệt độ · + và hàng chấm mức quạt.
+ * Cụm điều hoà gọn ở đầu thanh dưới: nút nguồn tròn · − · nhiệt độ · + và hàng chấm nhiệt độ
+ * (mức quạt đã có ở cụm quạt; hai hàng chấm phải chỉ hai thứ khác nhau).
  * Chạm nhiệt độ để mở cửa sổ điều hoà.
  */
 class ClimateMini(
@@ -34,9 +35,7 @@ class ClimateMini(
         gravity = Gravity.CENTER
         setOnClickListener { openPopup() }
     }
-    private val fan = FanDots(c) { lvl ->
-        ctl.setValue(F.HVAC_FAN_SPEED, F.ZONE_ALL, F.level(F.HVAC_FAN_SPEED, lvl), "Quạt mức $lvl", done = ::report)
-    }
+    private val tempDots = FanDots(c, ramp = false) { i -> ctl.setTemp(TEMP_DOTS[i - 1], ::report) }
 
     init {
         orientation = VERTICAL
@@ -48,7 +47,7 @@ class ClimateMini(
             addView(temp, LayoutParams(Ui.dp(c, 84), LayoutParams.WRAP_CONTENT))
             addView(small("plus") { ctl.tempStep(+1, ::report) }, LayoutParams(Ui.dp(c, 44), Ui.dp(c, 44)))
         })
-        addView(fan, LayoutParams(Ui.dp(c, 250), Ui.dp(c, 18)).apply { topMargin = Ui.dp(c, 6) })
+        addView(tempDots, LayoutParams(Ui.dp(c, 250), Ui.dp(c, 18)).apply { topMargin = Ui.dp(c, 6) })
         bind(null)
     }
 
@@ -64,16 +63,21 @@ class ClimateMini(
 
     fun bind(e: EcarxInfo?) {
         val on = e?.hvacOn == true
-        val key = listOf(on, e?.tempC, e?.fanLevel, Palette.night, Palette.accent)
+        val key = listOf(on, e?.tempC, Palette.night, Palette.accent)
         if (key == drawn) return
         drawn = key
         power.background = oval(if (on) Palette.ok else Palette.button)
         power.setImageDrawable(Icons.get(context, "power", if (on) Color.WHITE else Palette.text))
         temp.textIfChanged = e?.tempC?.let { String.format(Locale.US, "%.1f°", it) } ?: "--°"
-        fan.level = if (on) e?.fanLevel ?: 0 else 0
+        tempDots.level = if (on) e?.tempC?.let { t -> TEMP_DOTS.count { it <= t + 0.01f } } ?: 0 else 0
     }
 
     private fun report(r: EcarxController.Result) {
         if (!r.ok) toast("✖ " + r.message)
+    }
+
+    private companion object {
+        /** Nhiệt độ của từng chấm (chạm chấm thứ i để đặt); số chấm sáng = số mốc ≤ nhiệt độ hiện tại. */
+        val TEMP_DOTS = listOf(18f, 20f, 22f, 24f, 26f, 28f, 30f)
     }
 }

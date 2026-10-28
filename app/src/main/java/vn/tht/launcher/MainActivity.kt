@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.util.Log
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -174,6 +175,23 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        vn.tht.launcher.system.NavAssistService.host = object : vn.tht.launcher.system.NavAssistService.Companion.Host {
+            override fun openAppDrawer() = this@MainActivity.openAppDrawer()
+            override fun openClimate() = this@MainActivity.openClimate()
+            override fun openControlPanel() = inLauncher { this@MainActivity.openControlPanel(0) }
+            override fun climate(): vn.tht.launcher.system.NavAssistService.Companion.BarClimate? {
+                if (!ecarx.connected) return null
+                val f = vn.tht.launcher.vehicle.EcarxFunctions
+                fun temp(zone: Int) = ecarx.getFloat(f.HVAC_TEMP, zone)?.takeIf { it in f.TEMP_MIN..f.TEMP_MAX }
+                val dual = ecarx.isSupported(f.HVAC_TEMP, f.ZONE_ROW_1_LEFT) == true
+                val left = if (dual) temp(f.ZONE_ROW_1_LEFT) else temp(f.ZONE_ALL)
+                val right = if (ecarx.isSupported(f.HVAC_TEMP, f.ZONE_ROW_1_RIGHT) == true) temp(f.ZONE_ROW_1_RIGHT) else left
+                val on = ecarx.getInt(f.HVAC_POWER)?.let { it == f.ON }
+                val fan = if (on == false) 0 else f.levelOf(f.HVAC_FAN_SPEED, ecarx.getInt(f.HVAC_FAN_SPEED))
+                return vn.tht.launcher.system.NavAssistService.Companion.BarClimate(left, right, fan)
+            }
+            override fun onBarInset() = runOnUiThread { applyBarInset() }
+        }
         // Gốc giao diện + ảnh nền đã phủ kín màn: bỏ nền cửa sổ để khỏi vẽ 1920×720 thêm một lần mỗi khung hình
         window.setBackgroundDrawable(null)
         // Thanh trên: hàng icon nằm trong khung tự thu nhỏ, thêm ô trạng thái không bị cắt hai đầu
@@ -325,6 +343,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     }
 
     override fun onDestroy() {
+        vn.tht.launcher.system.NavAssistService.host = null
         splitScreen.release()
         floatingDock.hide()
         handler.removeCallbacksAndMessages(null)
@@ -509,6 +528,22 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         applyFullScreen()
     }
 
+    /**
+     * Thanh bên của THT hiện cả trên màn chính: lùi khung widget và ngăn ứng dụng sang phải cho khỏi bị che.
+     * Nếu cửa sổ launcher đã nằm sau thanh của xe (không toàn màn hình) thì chỉ lùi phần còn thiếu.
+     */
+    private fun applyBarInset() {
+        val root = findViewById<View>(R.id.root)
+        root.post {
+            val x = IntArray(2).also { root.getLocationOnScreen(it) }[0]
+            val pad = (vn.tht.launcher.system.NavAssistService.homeInset - x).coerceAtLeast(0)
+            for (id in intArrayOf(R.id.canvas_container, R.id.drawer)) {
+                val v = findViewById<View>(id)
+                if (v.paddingLeft != pad) v.setPadding(pad, v.paddingTop, v.paddingRight, v.paddingBottom)
+            }
+        }
+    }
+
     @Suppress("DEPRECATION")
     private fun applyFullScreen() {
         window.decorView.systemUiVisibility = if (prefs.fullScreen) {
@@ -517,6 +552,25 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         } else 0
         if (prefs.fullScreen) window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         else window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        applyPolicyControl(prefs.fullScreen)
+        applyBarInset()
+    }
+
+    /**
+     * Thanh hệ thống của ECARX không chịu ẩn theo cờ của cửa sổ. Android 9 còn `policy_control` (cần
+     * WRITE_SECURE_SETTINGS, chỉ có ở bản ký platform): ép chế độ toàn màn hình cho riêng gói launcher.
+     * Không đè cấu hình của người khác: chỉ ghi khi trống hoặc đang là của mình.
+     */
+    private fun applyPolicyControl(on: Boolean) {
+        val mine = "immersive.full=$packageName"
+        runCatching {
+            val cur = Settings.Global.getString(contentResolver, "policy_control")
+            when {
+                on && cur.isNullOrEmpty() -> Settings.Global.putString(contentResolver, "policy_control", mine)
+                !on && cur == mine -> Settings.Global.putString(contentResolver, "policy_control", null)
+                else -> Unit
+            }
+        }.onFailure { Log.w("THT", "policy_control: $it") }
     }
 
     // ---- Ngăn kéo ứng dụng ----
@@ -1015,9 +1069,25 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         appendLine("Trợ năng THT: ${vn.tht.launcher.system.NavAssistService.isEnabled(this@MainActivity)}")
         appendLine("Vẽ trên app khác: ${android.provider.Settings.canDrawOverlays(this@MainActivity)}")
         appendLine("Nhúng bản đồ: bật=${prefs.sp.getBoolean("embed_map", true)} lỗi gần nhất=${vn.tht.launcher.home.EmbeddedMap.lastError ?: "không"}")
+        run {
+            val real = android.graphics.Point().also { windowManager.defaultDisplay.getRealSize(it) }
+            val app = android.graphics.Point().also { windowManager.defaultDisplay.getSize(it) }
+            val os = vn.tht.launcher.system.Overscan.applied(prefs)
+            appendLine("Thanh bên: kiểu=${prefs.sp.getString("nav_mode", "buttons")} màn=${real.x}x${real.y} vùng app=${app.x}x${app.y} " +
+                "overscan THT=$os thanh hệ thống trái≈${real.x - app.x - os}px chừa màn chính=${vn.tht.launcher.system.NavAssistService.homeInset}px " +
+                "policy_control=${Settings.Global.getString(contentResolver, "policy_control")}")
+        }
         appendLine("App bản đồ: ${navPackage() ?: "(chưa có)"} · app radio: ${radioPackage() ?: "(chưa có)"}")
         appendLine("Gói ECARX đã cài: " + listOf("ecarx.hvac.app", "ecarx.xsf.mediacenter", "com.ecarx.radio.service", "com.ecarx.radio", "ecarx.launcher3")
             .joinToString(", ") { p -> p + if (runCatching { packageManager.getPackageInfo(p, 0) }.isSuccess) "✔" else "✖" })
+        appendLine()
+        appendLine("== Danh mục hằng số AdaptAPI của xe")
+        append(ecarx.constantsCatalog())
+        // Bản debug với xe giả: chạy cùng cách liệt kê trên lớp của chính app để chắc nó hoạt động
+        if (vn.tht.launcher.vehicle.DemoCarFunction.enabled(this@MainActivity)) {
+            appendLine("-- tự kiểm tra (bản debug): EcarxFunctions")
+            append(ecarx.catalog(classLoader, "vn.tht.launcher.vehicle.EcarxFunctions"))
+        }
     }
 
     override fun toast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()

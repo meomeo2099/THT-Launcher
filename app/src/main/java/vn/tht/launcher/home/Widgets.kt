@@ -351,7 +351,8 @@ class ClimateWidget(host: WidgetHost) : HomeWidget(host) {
 }
 
 /** Hàng chấm mức quạt, chạm vào chấm để đặt mức (1–7). */
-class FanDots(c: Context, private val onSet: (Int) -> Unit) : LinearLayout(c) {
+/** Hàng chấm mức (mặc định quạt: 2 chấm đầu thấp hơn; [ramp] = false thì các chấm cao bằng nhau). */
+class FanDots(c: Context, private val ramp: Boolean = true, private val onSet: (Int) -> Unit) : LinearLayout(c) {
     private val dots = List(F.FAN_MAX) { i ->
         View(c).apply { setOnClickListener { onSet(i + 1) } }
     }
@@ -362,7 +363,7 @@ class FanDots(c: Context, private val onSet: (Int) -> Unit) : LinearLayout(c) {
         orientation = HORIZONTAL
         gravity = Gravity.CENTER_VERTICAL
         dots.forEachIndexed { i, d ->
-            addView(d, LayoutParams(0, Ui.dp(c, if (i < 2) 10 else 16), 1f).apply { marginEnd = Ui.dp(c, 6) })
+            addView(d, LayoutParams(0, Ui.dp(c, if (ramp && i < 2) 10 else 16), 1f).apply { marginEnd = Ui.dp(c, 6) })
         }
         paint()
     }
