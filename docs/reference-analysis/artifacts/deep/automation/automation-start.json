@@ -1,0 +1,147 @@
+{
+  "evidence_id": "ev_dc65fb23e6e7ea9bf6e6eca6440a6cf07a2cea88469a0c32ea67eb49a121d067",
+  "subject": {
+    "name": "reference.apk",
+    "digest": {
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+    },
+    "local_path": "reference.apk",
+    "format": "apk",
+    "architecture": null
+  },
+  "provider": {
+    "id": "jadx",
+    "name": "JADX headless",
+    "version": "0.7.1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_android_method",
+  "parameters": {
+    "path": "reference.apk",
+    "class_name": "org.reference.panel.AutomationService",
+    "method_name": "onStartCommand"
+  },
+  "raw_result": {
+    "server": {
+      "name": "rea-jadx-bridge",
+      "version": "7"
+    },
+    "bridge_sha256": "e5044a8312dd0731f53af3f095508b3e5cff54df6b971c95d4305e2f39b4fa30",
+    "jar_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "loaded": {
+      "state": "LOADED",
+      "apk_path": "<temporary-analysis-session>/target.apk",
+      "class_count": 485,
+      "resource_count": 264,
+      "threads": 1,
+      "resources": "full"
+    },
+    "calls": [
+      {
+        "operation": "rea_jvm_status",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"engine_reported_version\":\"0.7.1\",\"available_processors\":2,\"java_version\":\"21.0.12.1\",\"max_heap_bytes\":2147483648,\"metadata_scope\":\"parsed_members\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "load_apk",
+        "input": {
+          "path": "<temporary-analysis-session>/target.apk",
+          "threads": 1,
+          "resources": "full"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"state\":\"LOADED\",\"apk_path\":\"<temporary-analysis-session>/target.apk\",\"class_count\":485,\"raw_class_count\":485,\"resource_count\":264,\"load_duration_ms\":1038,\"decompile_timeout_ms\":90000,\"threads\":1,\"code_cache_size\":64,\"resources\":\"full\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_class_summary",
+        "input": {
+          "class_name": "org.reference.panel.AutomationService"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"inner_classes\":[],\"methods\":[{\"dex_descriptor\":\"()V\",\"is_constructor\":true,\"name\":\"<init>\",\"def_pos\":0,\"signature\":\"<init>(): void\"},{\"dex_descriptor\":\"(Landroid/content/Intent;)Landroid/os/IBinder;\",\"is_constructor\":false,\"name\":\"onBind\",\"def_pos\":0,\"signature\":\"onBind(android.content.Intent): android.os.IBinder\"},{\"dex_descriptor\":\"()V\",\"is_constructor\":false,\"name\":\"onDestroy\",\"def_pos\":0,\"signature\":\"onDestroy(): void\"},{\"dex_descriptor\":\"(Landroid/content/Intent;II)I\",\"is_constructor\":false,\"name\":\"onStartCommand\",\"def_pos\":0,\"signature\":\"onStartCommand(android.content.Intent, int, int): int\"}],\"fields\":[{\"name\":\"a\",\"def_pos\":0,\"type\":\"s1\"},{\"name\":\"b\",\"def_pos\":0,\"type\":\"s1\"},{\"name\":\"c\",\"def_pos\":0,\"type\":\"int\"}],\"raw_name\":\"org.reference.panel.AutomationService\",\"method_count\":4,\"full_name\":\"org.reference.panel.AutomationService\",\"field_count\":3,\"name\":\"AutomationService\",\"inner_class_count\":0}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_method_body",
+        "input": {
+          "class_name": "org.reference.panel.AutomationService",
+          "method_name": "onStartCommand",
+          "overload_index": 0,
+          "smali_fallback": true
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"markers\":[],\"body\":\"    @Override // android.app.Service\\n    public final int onStartCommand(Intent intent, int i, int i2) {\\n        CopyOnWriteArraySet copyOnWriteArraySet;\\n        Object ffVar;\\n        ti tiVar;\\n        Object ffVar2;\\n        Integer numValueOf;\\n        if (!k8.X(this)) {\\n            stopSelf();\\n            return 2;\\n        }\\n        ((NotificationManager) getSystemService(NotificationManager.class)).createNotificationChannel(new NotificationChannel(\\\"automation\\\", si.a(\\\"automations_27\\\", new Object[0]), 1));\\n        startForeground(42, new Notification.Builder(this, \\\"automation\\\").setContentTitle(si.a(\\\"ReferencePanel_automations\\\", new Object[0])).setContentText(si.a(\\\"monitoring_engine_starts\\\", new Object[0])).setSmallIcon(R.drawable.ic_notification).build());\\n        s1 s1Var = this.a;\\n        if (s1Var != null) {\\n            s1Var.j();\\n        } else {\\n            Context applicationContext = getApplicationContext();\\n            applicationContext.getClass();\\n            s1 s1Var2 = new s1(applicationContext, 0);\\n            Handler handler = s1Var2.b;\\n            r1 r1Var = (r1) s1Var2.j;\\n            handler.removeCallbacks(r1Var);\\n            handler.post(r1Var);\\n            s1Var2.j();\\n            this.a = s1Var2;\\n        }\\n        if (this.b == null) {\\n            Context applicationContext2 = getApplicationContext();\\n            applicationContext2.getClass();\\n            s1 s1Var3 = new s1(applicationContext2, 1);\\n            TelephonyManager telephonyManager = (TelephonyManager) s1Var3.f;\\n            if (telephonyManager != null) {\\n                try {\\n                    telephonyManager.listen((k2) s1Var3.i, 32);\\n                    tiVar = ti.a;\\n                } catch (Throwable th) {\\n                    ffVar = new ff(th);\\n                }\\n            } else {\\n                tiVar = null;\\n            }\\n            ffVar = tiVar;\\n            Throwable thA = gf.a(ffVar);\\n            if (thA != null) {\\n                Log.w(\\\"ReferencePanel.Call\\\", \\\"call state unavailable\\\", thA);\\n            }\\n            if (telephonyManager != null) {\\n                try {\\n                    numValueOf = Integer.valueOf(telephonyManager.getCallState());\\n                } catch (Throwable th2) {\\n                    ffVar2 = new ff(th2);\\n                }\\n            } else {\\n                numValueOf = null;\\n            }\\n            ffVar2 = numValueOf;\\n            Integer num = (Integer) (ffVar2 instanceof ff ? null : ffVar2);\\n            if (num != null) {\\n                s1Var3.f(num.intValue());\\n            }\\n            this.b = s1Var3;\\n        }\\n        boolean z = q.a;\\n        if (!q.c(this)) {\\n            q.f();\\n        } else if (q.d == null) {\\n            q.e = getApplicationContext();\\n            HandlerThread handlerThread = new HandlerThread(\\\"ReferencePanel-anton\\\");\\n            handlerThread.start();\\n            Handler handler2 = new Handler(handlerThread.getLooper());\\n            handler2.post(q.l);\\n            q.d = handler2;\\n            r4 r4VarP = r4.C.p(this);\\n            if (r4VarP != null && (copyOnWriteArraySet = r4VarP.w) != null) {\\n                copyOnWriteArraySet.add(q.j);\\n            }\\n        }\\n        return 1;\\n    }\",\"mode\":\"java\",\"class_name\":\"org.reference.panel.AutomationService\",\"dex_descriptor\":\"(Landroid/content/Intent;II)I\",\"overload_count\":1,\"method_name\":\"onStartCommand\",\"overload_index\":0,\"full_name\":\"org.reference.panel.AutomationService.onStartCommand\",\"fell_back\":false}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "normalized_result": {
+    "engine": {
+      "name": "jadx-headless-mcp",
+      "version": "0.7.1",
+      "artifact_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+      "source_revision": "5844800a486d2248fa949b74c9896285f5b54de2",
+      "worker_count": 1,
+      "heap_limit_mib": 2048
+    },
+    "class_name": "org.reference.panel.AutomationService",
+    "method": {
+      "name": "onStartCommand",
+      "reported_signature": "onStartCommand(android.content.Intent, int, int): int",
+      "overload_index": 0,
+      "is_constructor": false,
+      "dex_descriptor": "(Landroid/content/Intent;II)I"
+    },
+    "overload_count": 1,
+    "representation": "java",
+    "body_status": "available",
+    "fell_back": false,
+    "markers": [],
+    "source": {
+      "status": "complete",
+      "text": "    @Override // android.app.Service\n    public final int onStartCommand(Intent intent, int i, int i2) {\n        CopyOnWriteArraySet copyOnWriteArraySet;\n        Object ffVar;\n        ti tiVar;\n        Object ffVar2;\n        Integer numValueOf;\n        if (!k8.X(this)) {\n            stopSelf();\n            return 2;\n        }\n        ((NotificationManager) getSystemService(NotificationManager.class)).createNotificationChannel(new NotificationChannel(\"automation\", si.a(\"automations_27\", new Object[0]), 1));\n        startForeground(42, new Notification.Builder(this, \"automation\").setContentTitle(si.a(\"ReferencePanel_automations\", new Object[0])).setContentText(si.a(\"monitoring_engine_starts\", new Object[0])).setSmallIcon(R.drawable.ic_notification).build());\n        s1 s1Var = this.a;\n        if (s1Var != null) {\n            s1Var.j();\n        } else {\n            Context applicationContext = getApplicationContext();\n            applicationContext.getClass();\n            s1 s1Var2 = new s1(applicationContext, 0);\n            Handler handler = s1Var2.b;\n            r1 r1Var = (r1) s1Var2.j;\n            handler.removeCallbacks(r1Var);\n            handler.post(r1Var);\n            s1Var2.j();\n            this.a = s1Var2;\n        }\n        if (this.b == null) {\n            Context applicationContext2 = getApplicationContext();\n            applicationContext2.getClass();\n            s1 s1Var3 = new s1(applicationContext2, 1);\n            TelephonyManager telephonyManager = (TelephonyManager) s1Var3.f;\n            if (telephonyManager != null) {\n                try {\n                    telephonyManager.listen((k2) s1Var3.i, 32);\n                    tiVar = ti.a;\n                } catch (Throwable th) {\n                    ffVar = new ff(th);\n                }\n            } else {\n                tiVar = null;\n            }\n            ffVar = tiVar;\n            Throwable thA = gf.a(ffVar);\n            if (thA != null) {\n                Log.w(\"ReferencePanel.Call\", \"call state unavailable\", thA);\n            }\n            if (telephonyManager != null) {\n                try {\n                    numValueOf = Integer.valueOf(telephonyManager.getCallState());\n                } catch (Throwable th2) {\n                    ffVar2 = new ff(th2);\n                }\n            } else {\n                numValueOf = null;\n            }\n            ffVar2 = numValueOf;\n            Integer num = (Integer) (ffVar2 instanceof ff ? null : ffVar2);\n            if (num != null) {\n                s1Var3.f(num.intValue());\n            }\n            this.b = s1Var3;\n        }\n        boolean z = q.a;\n        if (!q.c(this)) {\n            q.f();\n        } else if (q.d == null) {\n            q.e = getApplicationContext();\n            HandlerThread handlerThread = new HandlerThread(\"ReferencePanel-anton\");\n            handlerThread.start();\n            Handler handler2 = new Handler(handlerThread.getLooper());\n            handler2.post(q.l);\n            q.d = handler2;\n            r4 r4VarP = r4.C.p(this);\n            if (r4VarP != null && (copyOnWriteArraySet = r4VarP.w) != null) {\n                copyOnWriteArraySet.add(q.j);\n            }\n        }\n        return 1;\n    }",
+      "reported_total_bytes": null
+    }
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Static decompiler observations do not establish runtime behavior; the APK is never executed.",
+    "Method signatures use provider display types; DEX prototypes come from frozen JADX metadata. Display names may be aliases, and overload indices are local to this engine and artifact.",
+    "Class inventories use parsed metadata before code generation, including synthetic members that may be omitted from decompiled source. Source positions remain unknown.",
+    "Incoming reference totals count JADX using nodes. Direct invoke entries within a using method report raw DEX code-unit offsets and method indexes, but coverage is limited to those nodes and directly matched invokes; it does not establish every possible dynamic or reflective call site.",
+    "Manifest summaries are parsed once by REA's bridge from the exact root AndroidManifest.xml resource, using namespace-aware XML attributes; decoded XML is retained. APK signatures, split APKs, native libraries and Android runtime capture are not verified by this provider."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

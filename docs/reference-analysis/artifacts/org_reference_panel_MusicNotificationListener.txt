@@ -1,0 +1,975 @@
+Class #395            -
+  Class descriptor  : 'Lorg/reference/panel/MusicNotificationListener;'
+  Access flags      : 0x0011 (PUBLIC FINAL)
+  Superclass        : 'Landroid/service/notification/NotificationListenerService;'
+  Interfaces        -
+  Static fields     -
+    #0              : (in Lorg/reference/panel/MusicNotificationListener;)
+      name          : 'a'
+      type          : 'Ljava/lang/Object;'
+      access        : 0x0019 (PUBLIC STATIC FINAL)
+    #1              : (in Lorg/reference/panel/MusicNotificationListener;)
+      name          : 'b'
+      type          : 'Ljava/util/LinkedHashMap;'
+      access        : 0x0019 (PUBLIC STATIC FINAL)
+    #2              : (in Lorg/reference/panel/MusicNotificationListener;)
+      name          : 'c'
+      type          : 'Lac;'
+      access        : 0x0009 (PUBLIC STATIC)
+    #3              : (in Lorg/reference/panel/MusicNotificationListener;)
+      name          : 'd'
+      type          : 'Lac;'
+      access        : 0x0009 (PUBLIC STATIC)
+  Instance fields   -
+  Direct methods    -
+    #0              : (in Lorg/reference/panel/MusicNotificationListener;)
+      name          : '<clinit>'
+      type          : '()V'
+      access        : 0x10008 (STATIC CONSTRUCTOR)
+      code          -
+      registers     : 1
+      ins           : 0
+      outs          : 1
+      insns size    : 15 16-bit code units
+0a5884:                                        |[0a5884] org.reference.panel.MusicNotificationListener.<clinit>:()V
+0a5894: 2200 0002                              |0000: new-instance v0, Ljava/lang/Object; // type@0200
+0a5898: 7010 8707 0000                         |0002: invoke-direct {v0}, Ljava/lang/Object;.<init>:()V // method@0787
+0a589e: 6900 f306                              |0005: sput-object v0, Lorg/reference/panel/MusicNotificationListener;.a:Ljava/lang/Object; // field@06f3
+0a58a2: 2200 4002                              |0007: new-instance v0, Ljava/util/LinkedHashMap; // type@0240
+0a58a6: 7010 5d08 0000                         |0009: invoke-direct {v0}, Ljava/util/LinkedHashMap;.<init>:()V // method@085d
+0a58ac: 6900 f406                              |000c: sput-object v0, Lorg/reference/panel/MusicNotificationListener;.b:Ljava/util/LinkedHashMap; // field@06f4
+0a58b0: 0e00                                   |000e: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+      locals        :
+
+    #1              : (in Lorg/reference/panel/MusicNotificationListener;)
+      name          : '<init>'
+      type          : '()V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      code          -
+      registers     : 1
+      ins           : 1
+      outs          : 1
+      insns size    : 4 16-bit code units
+0a58b4:                                        |[0a58b4] org.reference.panel.MusicNotificationListener.<init>:()V
+0a58c4: 7010 8202 0000                         |0000: invoke-direct {v0}, Landroid/service/notification/NotificationListenerService;.<init>:()V // method@0282
+0a58ca: 0e00                                   |0003: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+      locals        :
+        0x0000 - 0x0004 reg=0 this Lorg/reference/panel/MusicNotificationListener;
+
+    #2              : (in Lorg/reference/panel/MusicNotificationListener;)
+      name          : 'a'
+      type          : '(Landroid/service/notification/StatusBarNotification;)Lhc;'
+      access        : 0x0009 (PUBLIC STATIC)
+      code          -
+      registers     : 16
+      ins           : 1
+      outs          : 10
+      insns size    : 256 16-bit code units
+0a5660:                                        |[0a5660] org.reference.panel.MusicNotificationListener.a:(Landroid/service/notification/StatusBarNotification;)Lhc;
+0a5670: 1201                                   |0000: const/4 v1, #int 0 // #0
+0a5672: 6e10 8802 0f00                         |0001: invoke-virtual {v15}, Landroid/service/notification/StatusBarNotification;.getNotification:()Landroid/app/Notification; // method@0288
+0a5678: 0c00                                   |0004: move-result-object v0
+0a567a: 3900 0400                              |0005: if-nez v0, 0009 // +0004
+0a567e: 2900 a000                              |0007: goto/16 00a7 // +00a0
+0a5682: 5402 4500                              |0009: iget-object v2, v0, Landroid/app/Notification;.extras:Landroid/os/Bundle; // field@0045
+0a5686: 3802 1000                              |000b: if-eqz v2, 001b // +0010
+0a568a: 1a03 ff08                              |000d: const-string v3, "android.mediaSession" // string@08ff
+0a568e: 6e20 5702 3200                         |000f: invoke-virtual {v2, v3}, Landroid/os/Bundle;.getParcelable:(Ljava/lang/String;)Landroid/os/Parcelable; // method@0257
+0a5694: 0c03                                   |0012: move-result-object v3
+0a5696: 1f03 a500                              |0013: check-cast v3, Landroid/media/session/MediaSession$Token; // type@00a5
+0a569a: 073a                                   |0015: move-object v10, v3
+0a569c: 2806                                   |0016: goto 001c // +0006
+0a569e: 0d00                                   |0017: move-exception v0
+0a56a0: 070f                                   |0018: move-object v15, v0
+0a56a2: 2900 d900                              |0019: goto/16 00f2 // +00d9
+0a56a6: 071a                                   |001b: move-object v10, v1
+0a56a8: 1213                                   |001c: const/4 v3, #int 1 // #1
+0a56aa: 1204                                   |001d: const/4 v4, #int 0 // #0
+0a56ac: 3802 1400                              |001e: if-eqz v2, 0032 // +0014
+0a56b0: 1a05 1909                              |0020: const-string v5, "android.template" // string@0919
+0a56b4: 6e20 4f02 5200                         |0022: invoke-virtual {v2, v5}, Landroid/os/BaseBundle;.getString:(Ljava/lang/String;)Ljava/lang/String; // method@024f
+0a56ba: 0c05                                   |0025: move-result-object v5
+0a56bc: 3805 0c00                              |0026: if-eqz v5, 0032 // +000c
+0a56c0: 1a06 8306                              |0028: const-string v6, "MediaStyle" // string@0683
+0a56c4: 7130 7c0d 6504                         |002a: invoke-static {v5, v6, v4}, Lth;.v:(Ljava/lang/CharSequence;Ljava/lang/CharSequence;Z)Z // method@0d7c
+0a56ca: 0a05                                   |002d: move-result v5
+0a56cc: 3335 0400                              |002e: if-ne v5, v3, 0032 // +0004
+0a56d0: 0135                                   |0030: move v5, v3
+0a56d2: 2802                                   |0031: goto 0033 // +0002
+0a56d4: 0145                                   |0032: move v5, v4
+0a56d6: 220b 4002                              |0033: new-instance v11, Ljava/util/LinkedHashMap; // type@0240
+0a56da: 7010 5d08 0b00                         |0035: invoke-direct {v11}, Ljava/util/LinkedHashMap;.<init>:()V // method@085d
+0a56e0: 5406 4300                              |0038: iget-object v6, v0, Landroid/app/Notification;.actions:[Landroid/app/Notification$Action; // field@0043
+0a56e4: 3906 0400                              |003a: if-nez v6, 003e // +0004
+0a56e8: 2346 cc03                              |003c: new-array v6, v4, [Landroid/app/Notification$Action; // type@03cc
+0a56ec: 2167                                   |003e: array-length v7, v6
+0a56ee: 0148                                   |003f: move v8, v4
+0a56f0: 3578 4000                              |0040: if-ge v8, v7, 0080 // +0040
+0a56f4: 4609 0608                              |0042: aget-object v9, v6, v8
+0a56f8: 620c 8308                              |0044: sget-object v12, Lwb;.a:Ljava/util/Map; // field@0883
+0a56fc: 549c 4200                              |0046: iget-object v12, v9, Landroid/app/Notification$Action;.title:Ljava/lang/CharSequence; // field@0042
+0a5700: 380c 1500                              |0048: if-eqz v12, 005d // +0015
+0a5704: 6e10 8c07 0c00                         |004a: invoke-virtual {v12}, Ljava/lang/Object;.toString:()Ljava/lang/String; // method@078c
+0a570a: 0c0c                                   |004d: move-result-object v12
+0a570c: 380c 0f00                              |004e: if-eqz v12, 005d // +000f
+0a5710: 620d 8308                              |0050: sget-object v13, Lwb;.a:Ljava/util/Map; // field@0883
+0a5714: 7110 950e 0c00                         |0052: invoke-static {v12}, Lwb;.a:(Ljava/lang/String;)Ljava/lang/String; // method@0e95
+0a571a: 0c0c                                   |0055: move-result-object v12
+0a571c: 7220 7d08 cd00                         |0056: invoke-interface {v13, v12}, Ljava/util/Map;.get:(Ljava/lang/Object;)Ljava/lang/Object; // method@087d
+0a5722: 0c0c                                   |0059: move-result-object v12
+0a5724: 1f0c 9103                              |005a: check-cast v12, Lxb; // type@0391
+0a5728: 2802                                   |005c: goto 005e // +0002
+0a572a: 071c                                   |005d: move-object v12, v1
+0a572c: 390c 0300                              |005e: if-nez v12, 0061 // +0003
+0a5730: 281d                                   |0060: goto 007d // +001d
+0a5732: 5499 4100                              |0061: iget-object v9, v9, Landroid/app/Notification$Action;.actionIntent:Landroid/app/PendingIntent; // field@0041
+0a5736: 3909 0300                              |0063: if-nez v9, 0066 // +0003
+0a573a: 2818                                   |0065: goto 007d // +0018
+0a573c: 6e10 9100 0900                         |0066: invoke-virtual {v9}, Landroid/app/PendingIntent;.getCreatorPackage:()Ljava/lang/String; // method@0091
+0a5742: 0c0d                                   |0069: move-result-object v13
+0a5744: 6e10 8902 0f00                         |006a: invoke-virtual {v15}, Landroid/service/notification/StatusBarNotification;.getPackageName:()Ljava/lang/String; // method@0289
+0a574a: 0c0e                                   |006d: move-result-object v14
+0a574c: 7120 2209 ed00                         |006e: invoke-static {v13, v14}, Lk8;.e:(Ljava/lang/Object;Ljava/lang/Object;)Z // method@0922
+0a5752: 0a0d                                   |0071: move-result v13
+0a5754: 380d 0b00                              |0072: if-eqz v13, 007d // +000b
+0a5758: 7110 7c06 0900                         |0074: invoke-static {v9}, Lic;.a:(Landroid/app/PendingIntent;)Z // method@067c
+0a575e: 0a0d                                   |0077: move-result v13
+0a5760: 390d 0500                              |0078: if-nez v13, 007d // +0005
+0a5764: 7230 8108 cb09                         |007a: invoke-interface {v11, v12, v9}, Ljava/util/Map;.putIfAbsent:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object; // method@0881
+0a576a: d808 0801                              |007d: add-int/lit8 v8, v8, #int 1 // #01
+0a576e: 28c1                                   |007f: goto 0040 // -003f
+0a5770: 6206 8308                              |0080: sget-object v6, Lwb;.a:Ljava/util/Map; // field@0883
+0a5774: 380a 0300                              |0082: if-eqz v10, 0085 // +0003
+0a5778: 2802                                   |0084: goto 0086 // +0002
+0a577a: 0143                                   |0085: move v3, v4
+0a577c: 5404 4400                              |0086: iget-object v4, v0, Landroid/app/Notification;.category:Ljava/lang/String; // field@0044
+0a5780: 1a06 8713                              |0088: const-string v6, "transport" // string@1387
+0a5784: 7120 2209 6400                         |008a: invoke-static {v4, v6}, Lk8;.e:(Ljava/lang/Object;Ljava/lang/Object;)Z // method@0922
+0a578a: 0a04                                   |008d: move-result v4
+0a578c: 6e10 6308 0b00                         |008e: invoke-virtual {v11}, Ljava/util/LinkedHashMap;.keySet:()Ljava/util/Set; // method@0863
+0a5792: 0c06                                   |0091: move-result-object v6
+0a5794: 6e10 8a07 0600                         |0092: invoke-virtual {v6}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+0a579a: 3903 0c00                              |0095: if-nez v3, 00a1 // +000c
+0a579e: 3905 0a00                              |0097: if-nez v5, 00a1 // +000a
+0a57a2: 3804 0e00                              |0099: if-eqz v4, 00a7 // +000e
+0a57a6: 7210 4508 0600                         |009b: invoke-interface {v6}, Ljava/util/Collection;.isEmpty:()Z // method@0845
+0a57ac: 0a03                                   |009e: move-result v3
+0a57ae: 3903 0800                              |009f: if-nez v3, 00a7 // +0008
+0a57b2: 5203 4600                              |00a1: iget v3, v0, Landroid/app/Notification;.flags:I // field@0046
+0a57b6: d533 0002                              |00a3: and-int/lit16 v3, v3, #int 512 // #0200
+0a57ba: 3803 0300                              |00a5: if-eqz v3, 00a8 // +0003
+0a57be: 1101                                   |00a7: return-object v1
+0a57c0: 0723                                   |00a8: move-object v3, v2
+0a57c2: 2202 a901                              |00a9: new-instance v2, Lhc; // type@01a9
+0a57c6: 0734                                   |00ab: move-object v4, v3
+0a57c8: 6e10 8702 0f00                         |00ac: invoke-virtual {v15}, Landroid/service/notification/StatusBarNotification;.getKey:()Ljava/lang/String; // method@0287
+0a57ce: 0c03                                   |00af: move-result-object v3
+0a57d0: 6e10 8a07 0300                         |00b0: invoke-virtual {v3}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+0a57d6: 0745                                   |00b3: move-object v5, v4
+0a57d8: 6e10 8902 0f00                         |00b4: invoke-virtual {v15}, Landroid/service/notification/StatusBarNotification;.getPackageName:()Ljava/lang/String; // method@0289
+0a57de: 0c04                                   |00b7: move-result-object v4
+0a57e0: 6e10 8a07 0400                         |00b8: invoke-virtual {v4}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+0a57e6: 6e10 8a02 0f00                         |00bb: invoke-virtual {v15}, Landroid/service/notification/StatusBarNotification;.getPostTime:()J // method@028a
+0a57ec: 0b06                                   |00be: move-result-wide v6
+0a57ee: 3805 0f00                              |00bf: if-eqz v5, 00ce // +000f
+0a57f2: 1a0f 1b09                              |00c1: const-string v15, "android.title" // string@091b
+0a57f6: 6e20 5602 f500                         |00c3: invoke-virtual {v5, v15}, Landroid/os/Bundle;.getCharSequence:(Ljava/lang/String;)Ljava/lang/CharSequence; // method@0256
+0a57fc: 0c0f                                   |00c6: move-result-object v15
+0a57fe: 380f 0700                              |00c7: if-eqz v15, 00ce // +0007
+0a5802: 6e10 8c07 0f00                         |00c9: invoke-virtual {v15}, Ljava/lang/Object;.toString:()Ljava/lang/String; // method@078c
+0a5808: 0c0f                                   |00cc: move-result-object v15
+0a580a: 2802                                   |00cd: goto 00cf // +0002
+0a580c: 071f                                   |00ce: move-object v15, v1
+0a580e: 1a08 0000                              |00cf: const-string v8, "" // string@0000
+0a5812: 390f 0300                              |00d1: if-nez v15, 00d4 // +0003
+0a5816: 078f                                   |00d3: move-object v15, v8
+0a5818: 3805 0f00                              |00d4: if-eqz v5, 00e3 // +000f
+0a581c: 1a09 1a09                              |00d6: const-string v9, "android.text" // string@091a
+0a5820: 6e20 5602 9500                         |00d8: invoke-virtual {v5, v9}, Landroid/os/Bundle;.getCharSequence:(Ljava/lang/String;)Ljava/lang/CharSequence; // method@0256
+0a5826: 0c05                                   |00db: move-result-object v5
+0a5828: 3805 0700                              |00dc: if-eqz v5, 00e3 // +0007
+0a582c: 6e10 8c07 0500                         |00de: invoke-virtual {v5}, Ljava/lang/Object;.toString:()Ljava/lang/String; // method@078c
+0a5832: 0c05                                   |00e1: move-result-object v5
+0a5834: 2802                                   |00e2: goto 00e4 // +0002
+0a5836: 0715                                   |00e3: move-object v5, v1
+0a5838: 3905 0300                              |00e4: if-nez v5, 00e7 // +0003
+0a583c: 2802                                   |00e6: goto 00e8 // +0002
+0a583e: 0758                                   |00e7: move-object v8, v5
+0a5840: 6e10 8c00 0000                         |00e8: invoke-virtual {v0}, Landroid/app/Notification;.getLargeIcon:()Landroid/graphics/drawable/Icon; // method@008c
+0a5846: 0c09                                   |00eb: move-result-object v9
+0a5848: 0465                                   |00ec: move-wide v5, v6
+0a584a: 07f7                                   |00ed: move-object v7, v15
+0a584c: 760a fd05 0200                         |00ee: invoke-direct/range {v2, v3, v4, v5, v6, v7, v8, v9, v10, v11}, Lhc;.<init>:(Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Landroid/graphics/drawable/Icon;Landroid/media/session/MediaSession$Token;Ljava/util/LinkedHashMap;)V // method@05fd
+0a5852: 2806                                   |00f1: goto 00f7 // +0006
+0a5854: 2202 8201                              |00f2: new-instance v2, Lff; // type@0182
+0a5858: 7020 4a05 f200                         |00f4: invoke-direct {v2, v15}, Lff;.<init>:(Ljava/lang/Throwable;)V // method@054a
+0a585e: 202f 8201                              |00f7: instance-of v15, v2, Lff; // type@0182
+0a5862: 380f 0300                              |00f9: if-eqz v15, 00fc // +0003
+0a5866: 2802                                   |00fb: goto 00fd // +0002
+0a5868: 0721                                   |00fc: move-object v1, v2
+0a586a: 1f01 a901                              |00fd: check-cast v1, Lhc; // type@01a9
+0a586e: 1101                                   |00ff: return-object v1
+      catches       : 2
+        0x0001 - 0x00cd
+          <any> -> 0x0017
+        0x00d6 - 0x00f1
+          <any> -> 0x0017
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+        0x0042 line=67
+        0x0043 line=68
+        0x0044 line=69
+        0x0045 line=70
+        0x0046 line=71
+        0x0047 line=72
+        0x0048 line=73
+        0x0049 line=74
+        0x004a line=75
+        0x004b line=76
+        0x004c line=77
+        0x004d line=78
+        0x004e line=79
+        0x004f line=80
+        0x0050 line=81
+        0x0051 line=82
+        0x0052 line=83
+        0x0053 line=84
+        0x0054 line=85
+        0x0055 line=86
+        0x0056 line=87
+        0x0057 line=88
+        0x0058 line=89
+        0x0059 line=90
+        0x005a line=91
+        0x005b line=92
+        0x005c line=93
+        0x005d line=94
+        0x005e line=95
+        0x005f line=96
+        0x0060 line=97
+        0x0061 line=98
+        0x0062 line=99
+        0x0063 line=100
+        0x0064 line=101
+        0x0065 line=102
+        0x0066 line=103
+        0x0067 line=104
+        0x0068 line=105
+        0x0069 line=106
+        0x006a line=107
+        0x006b line=108
+        0x006c line=109
+        0x006d line=110
+        0x006e line=111
+        0x006f line=112
+        0x0070 line=113
+        0x0071 line=114
+        0x0072 line=115
+        0x0073 line=116
+        0x0074 line=117
+        0x0075 line=118
+        0x0076 line=119
+        0x0077 line=120
+        0x0078 line=121
+        0x0079 line=122
+        0x007a line=123
+        0x007b line=124
+        0x007c line=125
+        0x007d line=126
+        0x007e line=127
+        0x007f line=128
+        0x0080 line=129
+        0x0081 line=130
+        0x0082 line=131
+        0x0083 line=132
+        0x0084 line=133
+        0x0085 line=134
+        0x0086 line=135
+        0x0087 line=136
+        0x0088 line=137
+        0x0089 line=138
+        0x008a line=139
+        0x008b line=140
+        0x008c line=141
+        0x008d line=142
+        0x008e line=143
+        0x008f line=144
+        0x0090 line=145
+        0x0091 line=146
+        0x0092 line=147
+        0x0093 line=148
+        0x0094 line=149
+        0x0095 line=150
+        0x0096 line=151
+        0x0097 line=152
+        0x0098 line=153
+        0x0099 line=154
+        0x009a line=155
+        0x009b line=156
+        0x009c line=157
+        0x009d line=158
+        0x009e line=159
+        0x009f line=160
+        0x00a0 line=161
+        0x00a1 line=162
+        0x00a2 line=163
+        0x00a3 line=164
+        0x00a4 line=165
+        0x00a5 line=166
+        0x00a6 line=167
+        0x00a7 line=168
+        0x00a8 line=169
+        0x00a9 line=170
+        0x00aa line=171
+        0x00ab line=172
+        0x00ac line=173
+        0x00ad line=174
+        0x00ae line=175
+        0x00af line=176
+        0x00b0 line=177
+        0x00b1 line=178
+        0x00b2 line=179
+        0x00b3 line=180
+        0x00b4 line=181
+        0x00b5 line=182
+        0x00b6 line=183
+        0x00b7 line=184
+        0x00b8 line=185
+        0x00b9 line=186
+        0x00ba line=187
+        0x00bb line=188
+        0x00bc line=189
+        0x00bd line=190
+        0x00be line=191
+        0x00bf line=192
+        0x00c0 line=193
+        0x00c1 line=194
+        0x00c2 line=195
+        0x00c3 line=196
+        0x00c4 line=197
+        0x00c5 line=198
+        0x00c6 line=199
+        0x00c7 line=200
+        0x00c8 line=201
+        0x00c9 line=202
+        0x00ca line=203
+        0x00cb line=204
+        0x00cc line=205
+        0x00cd line=206
+        0x00ce line=207
+        0x00cf line=208
+        0x00d0 line=209
+        0x00d1 line=210
+        0x00d2 line=211
+        0x00d3 line=212
+        0x00d4 line=213
+        0x00d5 line=214
+        0x00d6 line=215
+        0x00d7 line=216
+        0x00d8 line=217
+        0x00d9 line=218
+        0x00da line=219
+        0x00db line=220
+        0x00dc line=221
+        0x00dd line=222
+        0x00de line=223
+        0x00df line=224
+        0x00e0 line=225
+        0x00e1 line=226
+        0x00e2 line=227
+        0x00e3 line=228
+        0x00e4 line=229
+        0x00e5 line=230
+        0x00e6 line=231
+        0x00e7 line=232
+        0x00e8 line=233
+        0x00e9 line=234
+        0x00ea line=235
+        0x00eb line=236
+        0x00ec line=237
+        0x00ed line=238
+        0x00ee line=239
+        0x00ef line=240
+        0x00f0 line=241
+        0x00f1 line=242
+        0x00f2 line=243
+        0x00f3 line=244
+        0x00f4 line=245
+        0x00f5 line=246
+        0x00f6 line=247
+        0x00f7 line=248
+        0x00f8 line=249
+        0x00f9 line=250
+        0x00fa line=251
+        0x00fb line=252
+        0x00fc line=253
+        0x00fd line=254
+        0x00fe line=255
+        0x00ff line=256
+      locals        :
+        0x0000 - 0x0100 reg=15 (null) Landroid/service/notification/StatusBarNotification;
+
+  Virtual methods   -
+    #0              : (in Lorg/reference/panel/MusicNotificationListener;)
+      name          : 'onDestroy'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 3
+      ins           : 1
+      outs          : 1
+      insns size    : 30 16-bit code units
+0a58cc:                                        |[0a58cc] org.reference.panel.MusicNotificationListener.onDestroy:()V
+0a58dc: 6200 f306                              |0000: sget-object v0, Lorg/reference/panel/MusicNotificationListener;.a:Ljava/lang/Object; // field@06f3
+0a58e0: 1d00                                   |0002: monitor-enter v0
+0a58e2: 6201 f406                              |0003: sget-object v1, Lorg/reference/panel/MusicNotificationListener;.b:Ljava/util/LinkedHashMap; // field@06f4
+0a58e6: 6e10 6008 0100                         |0005: invoke-virtual {v1}, Ljava/util/LinkedHashMap;.clear:()V // method@0860
+0a58ec: 1e00                                   |0008: monitor-exit v0
+0a58ee: 6200 f506                              |0009: sget-object v0, Lorg/reference/panel/MusicNotificationListener;.c:Lac; // field@06f5
+0a58f2: 3800 0500                              |000b: if-eqz v0, 0010 // +0005
+0a58f6: 6e10 2200 0000                         |000d: invoke-virtual {v0}, Lac;.a:()Ljava/lang/Object; // method@0022
+0a58fc: 6200 f606                              |0010: sget-object v0, Lorg/reference/panel/MusicNotificationListener;.d:Lac; // field@06f6
+0a5900: 3800 0500                              |0012: if-eqz v0, 0017 // +0005
+0a5904: 6e10 2200 0000                         |0014: invoke-virtual {v0}, Lac;.a:()Ljava/lang/Object; // method@0022
+0a590a: 6f10 8402 0200                         |0017: invoke-super {v2}, Landroid/service/notification/NotificationListenerService;.onDestroy:()V // method@0284
+0a5910: 0e00                                   |001a: return-void
+0a5912: 0d02                                   |001b: move-exception v2
+0a5914: 1e00                                   |001c: monitor-exit v0
+0a5916: 2702                                   |001d: throw v2
+      catches       : 1
+        0x0003 - 0x0008
+          <any> -> 0x001b
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+      locals        :
+        0x0000 - 0x001e reg=2 this Lorg/reference/panel/MusicNotificationListener;
+
+    #1              : (in Lorg/reference/panel/MusicNotificationListener;)
+      name          : 'onListenerConnected'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 5
+      ins           : 1
+      outs          : 3
+      insns size    : 104 16-bit code units
+0a5924:                                        |[0a5924] org.reference.panel.MusicNotificationListener.onListenerConnected:()V
+0a5934: 6f10 8502 0400                         |0000: invoke-super {v4}, Landroid/service/notification/NotificationListenerService;.onListenerConnected:()V // method@0285
+0a593a: 6e10 8302 0400                         |0003: invoke-virtual {v4}, Landroid/service/notification/NotificationListenerService;.getActiveNotifications:()[Landroid/service/notification/StatusBarNotification; // method@0283
+0a5940: 0c04                                   |0006: move-result-object v4
+0a5942: 1200                                   |0007: const/4 v0, #int 0 // #0
+0a5944: 3904 0400                              |0008: if-nez v4, 000c // +0004
+0a5948: 2304 d003                              |000a: new-array v4, v0, [Landroid/service/notification/StatusBarNotification; // type@03d0
+0a594c: 2201 3302                              |000c: new-instance v1, Ljava/util/ArrayList; // type@0233
+0a5950: 7010 1908 0100                         |000e: invoke-direct {v1}, Ljava/util/ArrayList;.<init>:()V // method@0819
+0a5956: 2142                                   |0011: array-length v2, v4
+0a5958: 3520 1900                              |0012: if-ge v0, v2, 002b // +0019
+0a595c: 4603 0400                              |0014: aget-object v3, v4, v0
+0a5960: 6e10 8a07 0300                         |0016: invoke-virtual {v3}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+0a5966: 7110 990c 0300                         |0019: invoke-static {v3}, Lorg/reference/panel/MusicNotificationListener;.a:(Landroid/service/notification/StatusBarNotification;)Lhc; // method@0c99
+0a596c: 0c03                                   |001c: move-result-object v3
+0a596e: 3803 0500                              |001d: if-eqz v3, 0022 // +0005
+0a5972: 6e20 1d08 3100                         |001f: invoke-virtual {v1, v3}, Ljava/util/ArrayList;.add:(Ljava/lang/Object;)Z // method@081d
+0a5978: d800 0001                              |0022: add-int/lit8 v0, v0, #int 1 // #01
+0a597c: 28ee                                   |0024: goto 0012 // -0012
+0a597e: 0d04                                   |0025: move-exception v4
+0a5980: 2201 8201                              |0026: new-instance v1, Lff; // type@0182
+0a5984: 7020 4a05 4100                         |0028: invoke-direct {v1, v4}, Lff;.<init>:(Ljava/lang/Throwable;)V // method@054a
+0a598a: 6204 da07                              |002b: sget-object v4, Lu4;.a:Lu4; // field@07da
+0a598e: 2010 8201                              |002d: instance-of v0, v1, Lff; // type@0182
+0a5992: 3800 0300                              |002f: if-eqz v0, 0032 // +0003
+0a5996: 0741                                   |0031: move-object v1, v4
+0a5998: 1f01 4202                              |0032: check-cast v1, Ljava/util/List; // type@0242
+0a599c: 6204 f306                              |0034: sget-object v4, Lorg/reference/panel/MusicNotificationListener;.a:Ljava/lang/Object; // field@06f3
+0a59a0: 1d04                                   |0036: monitor-enter v4
+0a59a2: 6200 f406                              |0037: sget-object v0, Lorg/reference/panel/MusicNotificationListener;.b:Ljava/util/LinkedHashMap; // field@06f4
+0a59a6: 6e10 6008 0000                         |0039: invoke-virtual {v0}, Ljava/util/LinkedHashMap;.clear:()V // method@0860
+0a59ac: 7210 6607 0100                         |003c: invoke-interface {v1}, Ljava/lang/Iterable;.iterator:()Ljava/util/Iterator; // method@0766
+0a59b2: 0c00                                   |003f: move-result-object v0
+0a59b4: 7210 5b08 0000                         |0040: invoke-interface {v0}, Ljava/util/Iterator;.hasNext:()Z // method@085b
+0a59ba: 0a01                                   |0043: move-result v1
+0a59bc: 3801 1200                              |0044: if-eqz v1, 0056 // +0012
+0a59c0: 7210 5c08 0000                         |0046: invoke-interface {v0}, Ljava/util/Iterator;.next:()Ljava/lang/Object; // method@085c
+0a59c6: 0c01                                   |0049: move-result-object v1
+0a59c8: 1f01 a901                              |004a: check-cast v1, Lhc; // type@01a9
+0a59cc: 6202 f406                              |004c: sget-object v2, Lorg/reference/panel/MusicNotificationListener;.b:Ljava/util/LinkedHashMap; // field@06f4
+0a59d0: 5413 c702                              |004e: iget-object v3, v1, Lhc;.a:Ljava/lang/String; // field@02c7
+0a59d4: 7230 8008 3201                         |0050: invoke-interface {v2, v3, v1}, Ljava/util/Map;.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object; // method@0880
+0a59da: 28ed                                   |0053: goto 0040 // -0013
+0a59dc: 0d00                                   |0054: move-exception v0
+0a59de: 2811                                   |0055: goto 0066 // +0011
+0a59e0: 1e04                                   |0056: monitor-exit v4
+0a59e2: 6204 f506                              |0057: sget-object v4, Lorg/reference/panel/MusicNotificationListener;.c:Lac; // field@06f5
+0a59e6: 3804 0500                              |0059: if-eqz v4, 005e // +0005
+0a59ea: 6e10 2200 0400                         |005b: invoke-virtual {v4}, Lac;.a:()Ljava/lang/Object; // method@0022
+0a59f0: 6204 f606                              |005e: sget-object v4, Lorg/reference/panel/MusicNotificationListener;.d:Lac; // field@06f6
+0a59f4: 3804 0500                              |0060: if-eqz v4, 0065 // +0005
+0a59f8: 6e10 2200 0400                         |0062: invoke-virtual {v4}, Lac;.a:()Ljava/lang/Object; // method@0022
+0a59fe: 0e00                                   |0065: return-void
+0a5a00: 1e04                                   |0066: monitor-exit v4
+0a5a02: 2700                                   |0067: throw v0
+      catches       : 2
+        0x0003 - 0x0022
+          <any> -> 0x0025
+        0x0037 - 0x0053
+          <any> -> 0x0054
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+        0x0042 line=67
+        0x0043 line=68
+        0x0044 line=69
+        0x0045 line=70
+        0x0046 line=71
+        0x0047 line=72
+        0x0048 line=73
+        0x0049 line=74
+        0x004a line=75
+        0x004b line=76
+        0x004c line=77
+        0x004d line=78
+        0x004e line=79
+        0x004f line=80
+        0x0050 line=81
+        0x0051 line=82
+        0x0052 line=83
+        0x0053 line=84
+        0x0054 line=85
+        0x0055 line=86
+        0x0056 line=87
+        0x0057 line=88
+        0x0058 line=89
+        0x0059 line=90
+        0x005a line=91
+        0x005b line=92
+        0x005c line=93
+        0x005d line=94
+        0x005e line=95
+        0x005f line=96
+        0x0060 line=97
+        0x0061 line=98
+        0x0062 line=99
+        0x0063 line=100
+        0x0064 line=101
+        0x0065 line=102
+        0x0066 line=103
+        0x0067 line=104
+      locals        :
+        0x0000 - 0x0068 reg=4 this Lorg/reference/panel/MusicNotificationListener;
+
+    #2              : (in Lorg/reference/panel/MusicNotificationListener;)
+      name          : 'onListenerDisconnected'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 2
+      ins           : 1
+      outs          : 1
+      insns size    : 30 16-bit code units
+0a5a1c:                                        |[0a5a1c] org.reference.panel.MusicNotificationListener.onListenerDisconnected:()V
+0a5a2c: 6f10 8602 0100                         |0000: invoke-super {v1}, Landroid/service/notification/NotificationListenerService;.onListenerDisconnected:()V // method@0286
+0a5a32: 6201 f306                              |0003: sget-object v1, Lorg/reference/panel/MusicNotificationListener;.a:Ljava/lang/Object; // field@06f3
+0a5a36: 1d01                                   |0005: monitor-enter v1
+0a5a38: 6200 f406                              |0006: sget-object v0, Lorg/reference/panel/MusicNotificationListener;.b:Ljava/util/LinkedHashMap; // field@06f4
+0a5a3c: 6e10 6008 0000                         |0008: invoke-virtual {v0}, Ljava/util/LinkedHashMap;.clear:()V // method@0860
+0a5a42: 1e01                                   |000b: monitor-exit v1
+0a5a44: 6201 f506                              |000c: sget-object v1, Lorg/reference/panel/MusicNotificationListener;.c:Lac; // field@06f5
+0a5a48: 3801 0500                              |000e: if-eqz v1, 0013 // +0005
+0a5a4c: 6e10 2200 0100                         |0010: invoke-virtual {v1}, Lac;.a:()Ljava/lang/Object; // method@0022
+0a5a52: 6201 f606                              |0013: sget-object v1, Lorg/reference/panel/MusicNotificationListener;.d:Lac; // field@06f6
+0a5a56: 3801 0500                              |0015: if-eqz v1, 001a // +0005
+0a5a5a: 6e10 2200 0100                         |0017: invoke-virtual {v1}, Lac;.a:()Ljava/lang/Object; // method@0022
+0a5a60: 0e00                                   |001a: return-void
+0a5a62: 0d00                                   |001b: move-exception v0
+0a5a64: 1e01                                   |001c: monitor-exit v1
+0a5a66: 2700                                   |001d: throw v0
+      catches       : 1
+        0x0006 - 0x000b
+          <any> -> 0x001b
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+      locals        :
+        0x0000 - 0x001e reg=1 this Lorg/reference/panel/MusicNotificationListener;
+
+    #3              : (in Lorg/reference/panel/MusicNotificationListener;)
+      name          : 'onNotificationPosted'
+      type          : '(Landroid/service/notification/StatusBarNotification;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 5
+      ins           : 2
+      outs          : 3
+      insns size    : 50 16-bit code units
+0a5a74:                                        |[0a5a74] org.reference.panel.MusicNotificationListener.onNotificationPosted:(Landroid/service/notification/StatusBarNotification;)V
+0a5a84: 6e10 8a07 0400                         |0000: invoke-virtual {v4}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+0a5a8a: 7110 990c 0400                         |0003: invoke-static {v4}, Lorg/reference/panel/MusicNotificationListener;.a:(Landroid/service/notification/StatusBarNotification;)Lhc; // method@0c99
+0a5a90: 0c03                                   |0006: move-result-object v3
+0a5a92: 6200 f306                              |0007: sget-object v0, Lorg/reference/panel/MusicNotificationListener;.a:Ljava/lang/Object; // field@06f3
+0a5a96: 1d00                                   |0009: monitor-enter v0
+0a5a98: 1211                                   |000a: const/4 v1, #int 1 // #1
+0a5a9a: 3903 1300                              |000b: if-nez v3, 001e // +0013
+0a5a9e: 6203 f406                              |000d: sget-object v3, Lorg/reference/panel/MusicNotificationListener;.b:Ljava/util/LinkedHashMap; // field@06f4
+0a5aa2: 6e10 8702 0400                         |000f: invoke-virtual {v4}, Landroid/service/notification/StatusBarNotification;.getKey:()Ljava/lang/String; // method@0287
+0a5aa8: 0c04                                   |0012: move-result-object v4
+0a5aaa: 6e20 0f08 4300                         |0013: invoke-virtual {v3, v4}, Ljava/util/AbstractMap;.remove:(Ljava/lang/Object;)Ljava/lang/Object; // method@080f
+0a5ab0: 0c03                                   |0016: move-result-object v3
+0a5ab2: 3803 0300                              |0017: if-eqz v3, 001a // +0003
+0a5ab6: 280c                                   |0019: goto 0025 // +000c
+0a5ab8: 1201                                   |001a: const/4 v1, #int 0 // #0
+0a5aba: 280a                                   |001b: goto 0025 // +000a
+0a5abc: 0d03                                   |001c: move-exception v3
+0a5abe: 2813                                   |001d: goto 0030 // +0013
+0a5ac0: 6204 f406                              |001e: sget-object v4, Lorg/reference/panel/MusicNotificationListener;.b:Ljava/util/LinkedHashMap; // field@06f4
+0a5ac4: 5432 c702                              |0020: iget-object v2, v3, Lhc;.a:Ljava/lang/String; // field@02c7
+0a5ac8: 7230 8008 2403                         |0022: invoke-interface {v4, v2, v3}, Ljava/util/Map;.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object; // method@0880
+0a5ace: 1e00                                   |0025: monitor-exit v0
+0a5ad0: 3801 0900                              |0026: if-eqz v1, 002f // +0009
+0a5ad4: 6203 f606                              |0028: sget-object v3, Lorg/reference/panel/MusicNotificationListener;.d:Lac; // field@06f6
+0a5ad8: 3803 0500                              |002a: if-eqz v3, 002f // +0005
+0a5adc: 6e10 2200 0300                         |002c: invoke-virtual {v3}, Lac;.a:()Ljava/lang/Object; // method@0022
+0a5ae2: 0e00                                   |002f: return-void
+0a5ae4: 1e00                                   |0030: monitor-exit v0
+0a5ae6: 2703                                   |0031: throw v3
+      catches       : 1
+        0x000d - 0x0025
+          <any> -> 0x001c
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+      locals        :
+        0x0000 - 0x0032 reg=3 this Lorg/reference/panel/MusicNotificationListener;
+        0x0000 - 0x0032 reg=4 (null) Landroid/service/notification/StatusBarNotification;
+
+    #4              : (in Lorg/reference/panel/MusicNotificationListener;)
+      name          : 'onNotificationRemoved'
+      type          : '(Landroid/service/notification/StatusBarNotification;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 3
+      ins           : 2
+      outs          : 2
+      insns size    : 35 16-bit code units
+0a5af4:                                        |[0a5af4] org.reference.panel.MusicNotificationListener.onNotificationRemoved:(Landroid/service/notification/StatusBarNotification;)V
+0a5b04: 6e10 8a07 0200                         |0000: invoke-virtual {v2}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+0a5b0a: 6201 f306                              |0003: sget-object v1, Lorg/reference/panel/MusicNotificationListener;.a:Ljava/lang/Object; // field@06f3
+0a5b0e: 1d01                                   |0005: monitor-enter v1
+0a5b10: 6200 f406                              |0006: sget-object v0, Lorg/reference/panel/MusicNotificationListener;.b:Ljava/util/LinkedHashMap; // field@06f4
+0a5b14: 6e10 8702 0200                         |0008: invoke-virtual {v2}, Landroid/service/notification/StatusBarNotification;.getKey:()Ljava/lang/String; // method@0287
+0a5b1a: 0c02                                   |000b: move-result-object v2
+0a5b1c: 6e20 0f08 2000                         |000c: invoke-virtual {v0, v2}, Ljava/util/AbstractMap;.remove:(Ljava/lang/Object;)Ljava/lang/Object; // method@080f
+0a5b22: 0c02                                   |000f: move-result-object v2
+0a5b24: 3802 0400                              |0010: if-eqz v2, 0014 // +0004
+0a5b28: 1212                                   |0012: const/4 v2, #int 1 // #1
+0a5b2a: 2802                                   |0013: goto 0015 // +0002
+0a5b2c: 1202                                   |0014: const/4 v2, #int 0 // #0
+0a5b2e: 1e01                                   |0015: monitor-exit v1
+0a5b30: 3802 0900                              |0016: if-eqz v2, 001f // +0009
+0a5b34: 6201 f606                              |0018: sget-object v1, Lorg/reference/panel/MusicNotificationListener;.d:Lac; // field@06f6
+0a5b38: 3801 0500                              |001a: if-eqz v1, 001f // +0005
+0a5b3c: 6e10 2200 0100                         |001c: invoke-virtual {v1}, Lac;.a:()Ljava/lang/Object; // method@0022
+0a5b42: 0e00                                   |001f: return-void
+0a5b44: 0d02                                   |0020: move-exception v2
+0a5b46: 1e01                                   |0021: monitor-exit v1
+0a5b48: 2702                                   |0022: throw v2
+      catches       : 1
+        0x0006 - 0x0010
+          <any> -> 0x0020
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+      locals        :
+        0x0000 - 0x0023 reg=1 this Lorg/reference/panel/MusicNotificationListener;
+        0x0000 - 0x0023 reg=2 (null) Landroid/service/notification/StatusBarNotification;
+
+  source_file_idx   : 4152 (r8-map-id-df02db20992efcdad8c8628fa158af402193d9214b2257c75897211101eb46a6)

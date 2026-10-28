@@ -1,0 +1,52 @@
+      name          : 'a'
+      type          : 'I'
+      name          : 'b'
+      type          : 'I'
+      name          : 'c'
+      type          : 'Ljava/lang/Object;'
+      name          : '<init>'
+      type          : '(ILorg/reference/panel/BootPlaybackService;)V'
+02f45c:                                        |[02f45c] i2.<init>:(ILorg/reference/panel/BootPlaybackService;)V
+02f46c: 1200                                   |0000: const/4 v0, #int 0 // #0
+02f46e: 5910 fb02                              |0001: iput v0, v1, Li2;.a:I // field@02fb
+02f472: 7010 8707 0100                         |0003: invoke-direct {v1}, Ljava/lang/Object;.<init>:()V // method@0787
+02f478: 5912 fc02                              |0006: iput v2, v1, Li2;.b:I // field@02fc
+02f47c: 5b13 fd02                              |0008: iput-object v3, v1, Li2;.c:Ljava/lang/Object; // field@02fd
+02f480: 0e00                                   |000a: return-void
+      name          : '<init>'
+      type          : '(Ljava/lang/Object;II)V'
+02f484:                                        |[02f484] i2.<init>:(Ljava/lang/Object;II)V
+02f494: 5903 fb02                              |0000: iput v3, v0, Li2;.a:I // field@02fb
+02f498: 5b01 fd02                              |0002: iput-object v1, v0, Li2;.c:Ljava/lang/Object; // field@02fd
+02f49c: 5902 fc02                              |0004: iput v2, v0, Li2;.b:I // field@02fc
+02f4a0: 7010 8707 0000                         |0006: invoke-direct {v0}, Ljava/lang/Object;.<init>:()V // method@0787
+02f4a6: 0e00                                   |0009: return-void
+      name          : 'a'
+      type          : '()Ljava/lang/Object;'
+02f3d8:                                        |[02f3d8] i2.a:()Ljava/lang/Object;
+02f3e8: 5270 fb02                              |0000: iget v0, v7, Li2;.a:I // field@02fb
+02f3ec: 6201 ca07                              |0002: sget-object v1, Lti;.a:Lti; // field@07ca
+02f3f0: 5272 fc02                              |0004: iget v2, v7, Li2;.b:I // field@02fc
+02f3f4: 5477 fd02                              |0006: iget-object v7, v7, Li2;.c:Ljava/lang/Object; // field@02fd
+02f3f8: 2b00 2a00 0000                         |0008: packed-switch v0, 00000032 // +0000002a
+02f3fe: 1f07 8200                              |000b: check-cast v7, Landroid/graphics/Rect; // type@0082
+02f402: 7120 f904 2700                         |000d: invoke-static {v7, v2}, Leh;.g:(Landroid/graphics/Rect;I)V // method@04f9
+02f408: 1101                                   |0010: return-object v1
+02f40a: 1f07 1401                              |0011: check-cast v7, Landroid/widget/SeekBar; // type@0114
+02f40e: d802 02b5                              |0013: add-int/lit8 v2, v2, #int -75 // #b5
+02f412: 6e20 8003 2700                         |0015: invoke-virtual {v7, v2}, Landroid/widget/ProgressBar;.setProgress:(I)V // method@0380
+02f418: 1101                                   |0018: return-object v1
+02f41a: 1f07 0d03                              |0019: check-cast v7, Lorg/reference/panel/BootPlaybackService; // type@030d
+02f41e: 1210                                   |001b: const/4 v0, #int 1 // #1
+02f420: 3702 0f00                              |001c: if-le v2, v0, 002b // +000f
+02f424: 5473 9506                              |001e: iget-object v3, v7, Lorg/reference/panel/BootPlaybackService;.a:Landroid/os/Handler; // field@0695
+02f428: 2204 3103                              |0020: new-instance v4, Lt0; // type@0331
+02f42c: 7040 380d 2407                         |0022: invoke-direct {v4, v2, v7, v0}, Lt0;.<init>:(ILjava/lang/Object;I)V // method@0d38
+02f432: 1605 b80b                              |0025: const-wide/16 v5, #int 3000 // #bb8
+02f436: 6e40 5c02 4365                         |0027: invoke-virtual {v3, v4, v5, v6}, Landroid/os/Handler;.postDelayed:(Ljava/lang/Runnable;J)Z // method@025c
+02f43c: 2806                                   |002a: goto 0030 // +0006
+02f43e: 6000 9b06                              |002b: sget v0, Lorg/reference/panel/BootPlaybackService;.g:I // field@069b
+02f442: 6e10 9a00 0700                         |002d: invoke-virtual {v7}, Landroid/app/Service;.stopSelf:()V // method@009a
+02f448: 1101                                   |0030: return-object v1
+02f44a: 0000                                   |0031: nop // spacer
+02f44c: 0001 0200 0000 0000 1100 0000 0900 ... |0032: packed-switch-data (8 units)

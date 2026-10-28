@@ -1,0 +1,147 @@
+{
+  "evidence_id": "ev_db881a38c5caaead7613ebb7ac4a39aa72506804421c777e593d3149a05b61a4",
+  "subject": {
+    "name": "reference.apk",
+    "digest": {
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+    },
+    "local_path": "reference.apk",
+    "format": "apk",
+    "architecture": null
+  },
+  "provider": {
+    "id": "jadx",
+    "name": "JADX headless",
+    "version": "0.7.1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_android_method",
+  "parameters": {
+    "path": "reference.apk",
+    "class_name": "jd",
+    "method_name": "onReceive"
+  },
+  "raw_result": {
+    "server": {
+      "name": "rea-jadx-bridge",
+      "version": "7"
+    },
+    "bridge_sha256": "e5044a8312dd0731f53af3f095508b3e5cff54df6b971c95d4305e2f39b4fa30",
+    "jar_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "loaded": {
+      "state": "LOADED",
+      "apk_path": "<temporary-analysis-session>/target.apk",
+      "class_count": 485,
+      "resource_count": 264,
+      "threads": 1,
+      "resources": "full"
+    },
+    "calls": [
+      {
+        "operation": "rea_jvm_status",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"engine_reported_version\":\"0.7.1\",\"available_processors\":2,\"java_version\":\"21.0.12.1\",\"max_heap_bytes\":2147483648,\"metadata_scope\":\"parsed_members\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "load_apk",
+        "input": {
+          "path": "<temporary-analysis-session>/target.apk",
+          "threads": 1,
+          "resources": "full"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"state\":\"LOADED\",\"apk_path\":\"<temporary-analysis-session>/target.apk\",\"class_count\":485,\"raw_class_count\":485,\"resource_count\":264,\"load_duration_ms\":4400,\"decompile_timeout_ms\":90000,\"threads\":1,\"code_cache_size\":64,\"resources\":\"full\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_class_summary",
+        "input": {
+          "class_name": "jd"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"inner_classes\":[],\"methods\":[{\"dex_descriptor\":\"(Landroid/content/Context;Landroid/content/Intent;)V\",\"is_constructor\":false,\"name\":\"onReceive\",\"def_pos\":0,\"signature\":\"onReceive(android.content.Context, android.content.Intent): void\"}],\"fields\":[],\"raw_name\":\"jd\",\"method_count\":1,\"full_name\":\"defpackage.jd\",\"field_count\":0,\"name\":\"jd\",\"inner_class_count\":0}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_method_body",
+        "input": {
+          "class_name": "jd",
+          "method_name": "onReceive",
+          "overload_index": 0,
+          "smali_fallback": true
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"markers\":[],\"body\":\"/* JADX INFO: compiled from: r8-map-id-df02db20992efcdad8c8628fa158af402193d9214b2257c75897211101eb46a6 */\\n/* JADX INFO: loaded from: classes.dex */\\npublic final class jd extends BroadcastReceiver {\\n    @Override // android.content.BroadcastReceiver\\n    public final void onReceive(Context context, Intent intent) {\\n        String action;\\n        context.getClass();\\n        intent.getClass();\\n        if (intent.getPackage() == null && intent.getComponent() == null && (action = intent.getAction()) != null) {\\n            String strC = th.C(action, \\\"org.reference.panel.\\\");\\n            Set set = RadioCommandReceiver.a;\\n            if (RadioCommandReceiver.a.contains(strC)) {\\n                fi fiVar = pd.a;\\n                pd.c(context, strC, 10);\\n            }\\n        }\\n    }\",\"mode\":\"java\",\"class_name\":\"defpackage.jd\",\"dex_descriptor\":\"(Landroid/content/Context;Landroid/content/Intent;)V\",\"overload_count\":1,\"method_name\":\"onReceive\",\"overload_index\":0,\"full_name\":\"jd.onReceive\",\"fell_back\":false}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "normalized_result": {
+    "engine": {
+      "name": "jadx-headless-mcp",
+      "version": "0.7.1",
+      "artifact_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+      "source_revision": "5844800a486d2248fa949b74c9896285f5b54de2",
+      "worker_count": 1,
+      "heap_limit_mib": 2048
+    },
+    "class_name": "defpackage.jd",
+    "method": {
+      "name": "onReceive",
+      "reported_signature": "onReceive(android.content.Context, android.content.Intent): void",
+      "overload_index": 0,
+      "is_constructor": false,
+      "dex_descriptor": "(Landroid/content/Context;Landroid/content/Intent;)V"
+    },
+    "overload_count": 1,
+    "representation": "java",
+    "body_status": "available",
+    "fell_back": false,
+    "markers": [],
+    "source": {
+      "status": "complete",
+      "text": "/* JADX INFO: compiled from: r8-map-id-df02db20992efcdad8c8628fa158af402193d9214b2257c75897211101eb46a6 */\n/* JADX INFO: loaded from: classes.dex */\npublic final class jd extends BroadcastReceiver {\n    @Override // android.content.BroadcastReceiver\n    public final void onReceive(Context context, Intent intent) {\n        String action;\n        context.getClass();\n        intent.getClass();\n        if (intent.getPackage() == null && intent.getComponent() == null && (action = intent.getAction()) != null) {\n            String strC = th.C(action, \"org.reference.panel.\");\n            Set set = RadioCommandReceiver.a;\n            if (RadioCommandReceiver.a.contains(strC)) {\n                fi fiVar = pd.a;\n                pd.c(context, strC, 10);\n            }\n        }\n    }",
+      "reported_total_bytes": null
+    }
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Static decompiler observations do not establish runtime behavior; the APK is never executed.",
+    "Method signatures use provider display types; DEX prototypes come from frozen JADX metadata. Display names may be aliases, and overload indices are local to this engine and artifact.",
+    "Class inventories use parsed metadata before code generation, including synthetic members that may be omitted from decompiled source. Source positions remain unknown.",
+    "Incoming reference totals count JADX using nodes. Direct invoke entries within a using method report raw DEX code-unit offsets and method indexes, but coverage is limited to those nodes and directly matched invokes; it does not establish every possible dynamic or reflective call site.",
+    "Manifest summaries are parsed once by REA's bridge from the exact root AndroidManifest.xml resource, using namespace-aware XML attributes; decoded XML is retained. APK signatures, split APKs, native libraries and Android runtime capture are not verified by this provider."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

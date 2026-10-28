@@ -1,0 +1,103 @@
+    #3              : (in Lorg/reference/panel/MainActivity;)
+      name          : 'f'
+      type          : '(I)Ljava/lang/String;'
+      access        : 0x0009 (PUBLIC STATIC)
+      code          -
+      registers     : 3
+      ins           : 1
+      outs          : 2
+      insns size    : 59 16-bit code units
+09e92c:                                        |[09e92c] org.reference.panel.MainActivity.f:(I)Ljava/lang/String;
+09e93c: 1260                                   |0000: const/4 v0, #int 6 // #6
+09e93e: 1241                                   |0001: const/4 v1, #int 4 // #4
+09e940: 3621 1400                              |0002: if-gt v1, v2, 0016 // +0014
+09e944: 3502 1200                              |0004: if-ge v2, v0, 0016 // +0012
+09e948: b112                                   |0006: sub-int/2addr v2, v1
+09e94a: 2200 0902                              |0007: new-instance v0, Ljava/lang/StringBuilder; // type@0209
+09e94e: 1a01 1b0b                              |0009: const-string v1, "dock_" // string@0b1b
+09e952: 7020 b507 1000                         |000b: invoke-direct {v0, v1}, Ljava/lang/StringBuilder;.<init>:(Ljava/lang/String;)V // method@07b5
+09e958: 6e20 ba07 2000                         |000e: invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;.append:(I)Ljava/lang/StringBuilder; // method@07ba
+09e95e: 6e10 c107 0000                         |0011: invoke-virtual {v0}, Ljava/lang/StringBuilder;.toString:()Ljava/lang/String; // method@07c1
+09e964: 0c02                                   |0014: move-result-object v2
+09e966: 1102                                   |0015: return-object v2
+09e968: 3620 1600                              |0016: if-gt v0, v2, 002c // +0016
+09e96c: 1301 0800                              |0018: const/16 v1, #int 8 // #8
+09e970: 3512 1200                              |001a: if-ge v2, v1, 002c // +0012
+09e974: b102                                   |001c: sub-int/2addr v2, v0
+09e976: 2200 0902                              |001d: new-instance v0, Ljava/lang/StringBuilder; // type@0209
+09e97a: 1a01 5c13                              |001f: const-string v1, "tile_" // string@135c
+09e97e: 7020 b507 1000                         |0021: invoke-direct {v0, v1}, Ljava/lang/StringBuilder;.<init>:(Ljava/lang/String;)V // method@07b5
+09e984: 6e20 ba07 2000                         |0024: invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;.append:(I)Ljava/lang/StringBuilder; // method@07ba
+09e98a: 6e10 c107 0000                         |0027: invoke-virtual {v0}, Ljava/lang/StringBuilder;.toString:()Ljava/lang/String; // method@07c1
+09e990: 0c02                                   |002a: move-result-object v2
+09e992: 1102                                   |002b: return-object v2
+09e994: 2200 0902                              |002c: new-instance v0, Ljava/lang/StringBuilder; // type@0209
+09e998: 1a01 7a12                              |002e: const-string v1, "slot_" // string@127a
+09e99c: 7020 b507 1000                         |0030: invoke-direct {v0, v1}, Ljava/lang/StringBuilder;.<init>:(Ljava/lang/String;)V // method@07b5
+09e9a2: 6e20 ba07 2000                         |0033: invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;.append:(I)Ljava/lang/StringBuilder; // method@07ba
+09e9a8: 6e10 c107 0000                         |0036: invoke-virtual {v0}, Ljava/lang/StringBuilder;.toString:()Ljava/lang/String; // method@07c1
+09e9ae: 0c02                                   |0039: move-result-object v2
+09e9b0: 1102                                   |003a: return-object v2
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+      locals        :
+        0x0000 - 0x003b reg=2 (null) I

@@ -1,0 +1,147 @@
+{
+  "evidence_id": "ev_c54f125e9141e6b42220e09780ab614b5d62e6105ea9e4a19180455e6ca62782",
+  "subject": {
+    "name": "reference.apk",
+    "digest": {
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+    },
+    "local_path": "reference.apk",
+    "format": "apk",
+    "architecture": null
+  },
+  "provider": {
+    "id": "jadx",
+    "name": "JADX headless",
+    "version": "0.7.1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_android_method",
+  "parameters": {
+    "path": "reference.apk",
+    "class_name": "u2",
+    "method_name": "a"
+  },
+  "raw_result": {
+    "server": {
+      "name": "rea-jadx-bridge",
+      "version": "7"
+    },
+    "bridge_sha256": "e5044a8312dd0731f53af3f095508b3e5cff54df6b971c95d4305e2f39b4fa30",
+    "jar_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "loaded": {
+      "state": "LOADED",
+      "apk_path": "<temporary-analysis-session>/target.apk",
+      "class_count": 485,
+      "resource_count": 264,
+      "threads": 1,
+      "resources": "full"
+    },
+    "calls": [
+      {
+        "operation": "rea_jvm_status",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"metadata_scope\":\"parsed_members\",\"max_heap_bytes\":2147483648,\"java_version\":\"21.0.12.1\",\"available_processors\":2,\"engine_reported_version\":\"0.7.1\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "load_apk",
+        "input": {
+          "path": "<temporary-analysis-session>/target.apk",
+          "threads": 1,
+          "resources": "full"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"state\":\"LOADED\",\"apk_path\":\"<temporary-analysis-session>/target.apk\",\"class_count\":485,\"raw_class_count\":485,\"resource_count\":264,\"load_duration_ms\":3954,\"decompile_timeout_ms\":90000,\"threads\":1,\"code_cache_size\":64,\"resources\":\"full\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_class_summary",
+        "input": {
+          "class_name": "u2"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"inner_class_count\":0,\"name\":\"u2\",\"field_count\":3,\"full_name\":\"defpackage.u2\",\"method_count\":13,\"raw_name\":\"u2\",\"fields\":[{\"type\":\"java.lang.Object\",\"def_pos\":0,\"name\":\"a\"},{\"type\":\"java.lang.Object\",\"def_pos\":0,\"name\":\"b\"},{\"type\":\"java.lang.Object\",\"def_pos\":0,\"name\":\"c\"}],\"methods\":[{\"signature\":\"<init>(android.app.Activity, boolean, java.lang.String, int, j6, j6): void\",\"def_pos\":0,\"name\":\"<init>\",\"is_constructor\":true,\"dex_descriptor\":\"(Landroid/app/Activity;ZLjava/lang/String;ILj6;Lj6;)V\"},{\"signature\":\"<init>(android.content.Context): void\",\"def_pos\":0,\"name\":\"<init>\",\"is_constructor\":true,\"dex_descriptor\":\"(Landroid/content/Context;)V\"},{\"signature\":\"<init>(java.lang.Object, java.lang.Object, java.lang.Object): void\",\"def_pos\":0,\"name\":\"<init>\",\"is_constructor\":true,\"dex_descriptor\":\"(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V\"},{\"signature\":\"a(org.json.JSONObject): java.util.LinkedHashMap\",\"def_pos\":0,\"name\":\"a\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/json/JSONObject;)Ljava/util/LinkedHashMap;\"},{\"signature\":\"b(java.util.Map): org.json.JSONObject\",\"def_pos\":0,\"name\":\"b\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/util/Map;)Lorg/json/JSONObject;\"},{\"signature\":\"c(android.net.Uri): void\",\"def_pos\":0,\"name\":\"c\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/net/Uri;)V\"},{\"signature\":\"d(): java.util.ArrayList\",\"def_pos\":0,\"name\":\"d\",\"is_constructor\":false,\"dex_descriptor\":\"()Ljava/util/ArrayList;\"},{\"signature\":\"e(android.net.Uri): void\",\"def_pos\":0,\"name\":\"e\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/net/Uri;)V\"},{\"signature\":\"f(int, int): boolean\",\"def_pos\":0,\"name\":\"f\",\"is_constructor\":false,\"dex_descriptor\":\"(II)Z\"},{\"signature\":\"g(int, int): boolean\",\"def_pos\":0,\"name\":\"g\",\"is_constructor\":false,\"dex_descriptor\":\"(II)Z\"},{\"signature\":\"h(int): java.lang.Integer\",\"def_pos\":0,\"name\":\"h\",\"is_constructor\":false,\"dex_descriptor\":\"(I)Ljava/lang/Integer;\"},{\"signature\":\"i(java.util.Map): void\",\"def_pos\":0,\"name\":\"i\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/util/Map;)V\"},{\"signature\":\"j(int): java.lang.Integer\",\"def_pos\":0,\"name\":\"j\",\"is_constructor\":false,\"dex_descriptor\":\"(I)Ljava/lang/Integer;\"}],\"inner_classes\":[]}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_method_body",
+        "input": {
+          "class_name": "u2",
+          "method_name": "a",
+          "overload_index": 0,
+          "smali_fallback": true
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"fell_back\":false,\"full_name\":\"u2.a\",\"overload_index\":0,\"method_name\":\"a\",\"overload_count\":1,\"dex_descriptor\":\"(Lorg/json/JSONObject;)Ljava/util/LinkedHashMap;\",\"class_name\":\"defpackage.u2\",\"mode\":\"java\",\"body\":\"    /* JADX WARN: Failed to restore switch over string. Please report as a decompilation issue */\\n    public static LinkedHashMap a(JSONObject jSONObject) throws JSONException {\\n        Iterator<String> itKeys = jSONObject.keys();\\n        itKeys.getClass();\\n        o5 o5Var = new o5(new s3(new y0(4, itKeys)), true, new w(29));\\n        LinkedHashMap linkedHashMap = new LinkedHashMap();\\n        n5 n5Var = new n5(o5Var);\\n        while (n5Var.hasNext()) {\\n            Object next = n5Var.next();\\n            String str = (String) next;\\n            if (str.length() > 200 || jSONObject.length() > 20000) {\\n                throw new IllegalArgumentException(si.a(\\\"too_many_settings\\\", new Object[0]).toString());\\n            }\\n            JSONObject jSONObject2 = jSONObject.getJSONObject(str);\\n            String strE0 = pi.e0(str);\\n            if (strE0 == null || !strE0.equals(jSONObject2.getString(\\\"type\\\"))) {\\n                throw new IllegalArgumentException(si.a(\\\"incompatible_setting_0\\\", str).toString());\\n            }\\n            Object objValueOf = jSONObject2.get(\\\"value\\\");\\n            switch (strE0.hashCode()) {\\n                case -891985903:\\n                    if (!strE0.equals(\\\"string\\\")) {\\n                        throw new IllegalStateException(si.a(\\\"unknown_setting_type\\\", new Object[0]).toString());\\n                    }\\n                    if (!(objValueOf instanceof String) || ((String) objValueOf).length() > 16384) {\\n                        w.a(\\\"Failed requirement.\\\");\\n                        return null;\\n                    }\\n                    linkedHashMap.put(next, objValueOf);\\n                    break;\\n                    break;\\n                case 104431:\\n                    if (!strE0.equals(\\\"int\\\")) {\\n                        throw new IllegalStateException(si.a(\\\"unknown_setting_type\\\", new Object[0]).toString());\\n                    }\\n                    if (objValueOf instanceof Number) {\\n                        Number number = (Number) objValueOf;\\n                        if (number.doubleValue() == number.intValue()) {\\n                            int iIntValue = number.intValue();\\n                            if (str.equals(\\\"menu_count\\\") && (1 > iIntValue || iIntValue >= 20001)) {\\n                                throw new IllegalArgumentException(si.a(\\\"invalid_button_count_in_archive\\\", new Object[0]).toString());\\n                            }\\n                            if (str.startsWith(\\\"tile_opacity_\\\") && (iIntValue < 0 || iIntValue >= 101)) {\\n                                w.a(\\\"Failed requirement.\\\");\\n                                return null;\\n                            }\\n                            objValueOf = Integer.valueOf(iIntValue);\\n                            linkedHashMap.put(next, objValueOf);\\n                            break;\\n                        }\\n                    }\\n                    w.a(\\\"Failed requirement.\\\");\\n                    return null;\\n                case 113762:\\n                    if (!strE0.equals(\\\"set\\\")) {\\n                        throw new IllegalStateException(si.a(\\\"unknown_setting_type\\\", new Object[0]).toString());\\n                    }\\n                    if (objValueOf instanceof JSONArray) {\\n                        JSONArray jSONArray = (JSONArray) objValueOf;\\n                        if (jSONArray.length() <= 20000) {\\n                            j8 j8VarF0 = pi.f0(0, jSONArray.length());\\n                            ArrayList arrayList = new ArrayList(k3.n0(j8VarF0));\\n                            Iterator it = j8VarF0.iterator();\\n                            while (true) {\\n                                i8 i8Var = (i8) it;\\n                                if (!i8Var.c) {\\n                                    objValueOf = i3.L0(arrayList);\\n                                    break;\\n                                }\\n                                Object obj = jSONArray.get(i8Var.nextInt());\\n                                if (obj instanceof String) {\\n                                    String str2 = (String) obj;\\n                                    if (str2.length() <= 500) {\\n                                        arrayList.add(str2);\\n                                    }\\n                                }\\n                                w.a(\\\"Failed requirement.\\\");\\n                                return null;\\n                            }\\n                            linkedHashMap.put(next, objValueOf);\\n                            break;\\n                        }\\n                    }\\n                    w.a(\\\"Failed requirement.\\\");\\n                    return null;\\n                case 64711720:\\n                    if (!strE0.equals(\\\"boolean\\\")) {\\n                        throw new IllegalStateException(si.a(\\\"unknown_setting_type\\\", new Object[0]).toString());\\n                    }\\n                    if (!(objValueOf instanceof Boolean)) {\\n                        w.a(\\\"Failed requirement.\\\");\\n                        return null;\\n                    }\\n                    linkedHashMap.put(next, objValueOf);\\n                    break;\\n                    break;\\n                case 97526364:\\n                    if (!strE0.equals(\\\"float\\\")) {\\n                        throw new IllegalStateException(si.a(\\\"unknown_setting_type\\\", new Object[0]).toString());\\n                    }\\n                    if (objValueOf instanceof Number) {\\n                        Number number2 = (Number) objValueOf;\\n                        float fFloatValue = number2.floatValue();\\n                        if (Math.abs(fFloatValue) <= Float.MAX_VALUE) {\\n                            String strK = uh.k(str);\\n                            if (strK == null) {\\n                                strK = str;\\n                            }\\n                            if (strK.equals(\\\"ui_scale\\\")) {\\n                                if (0.75f > fFloatValue || fFloatValue > 1.5f) {\\n                                }\\n                                objValueOf = Float.valueOf(number2.floatValue());\\n                            } else if (strK.equals(\\\"tank_liters\\\")) {\\n                                if (20.0f > fFloatValue || fFloatValue > 150.0f) {\\n                                }\\n                                objValueOf = Float.valueOf(number2.floatValue());\\n                            } else {\\n                                if (0.0f > fFloatValue || fFloatValue > 1.0f) {\\n                                }\\n                                objValueOf = Float.valueOf(number2.floatValue());\\n                            }\\n                            linkedHashMap.put(next, objValueOf);\\n                            break;\\n                        }\\n                    }\\n                    throw new IllegalArgumentException(si.a(\\\"invalid_value_0\\\", str).toString());\\n                default:\\n                    throw new IllegalStateException(si.a(\\\"unknown_setting_type\\\", new Object[0]).toString());\\n            }\\n        }\\n        return linkedHashMap;\\n    }\",\"markers\":[]}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "normalized_result": {
+    "engine": {
+      "name": "jadx-headless-mcp",
+      "version": "0.7.1",
+      "artifact_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+      "source_revision": "5844800a486d2248fa949b74c9896285f5b54de2",
+      "worker_count": 1,
+      "heap_limit_mib": 2048
+    },
+    "class_name": "defpackage.u2",
+    "method": {
+      "name": "a",
+      "reported_signature": "a(org.json.JSONObject): java.util.LinkedHashMap",
+      "overload_index": 0,
+      "is_constructor": false,
+      "dex_descriptor": "(Lorg/json/JSONObject;)Ljava/util/LinkedHashMap;"
+    },
+    "overload_count": 1,
+    "representation": "java",
+    "body_status": "available",
+    "fell_back": false,
+    "markers": [],
+    "source": {
+      "status": "complete",
+      "text": "    /* JADX WARN: Failed to restore switch over string. Please report as a decompilation issue */\n    public static LinkedHashMap a(JSONObject jSONObject) throws JSONException {\n        Iterator<String> itKeys = jSONObject.keys();\n        itKeys.getClass();\n        o5 o5Var = new o5(new s3(new y0(4, itKeys)), true, new w(29));\n        LinkedHashMap linkedHashMap = new LinkedHashMap();\n        n5 n5Var = new n5(o5Var);\n        while (n5Var.hasNext()) {\n            Object next = n5Var.next();\n            String str = (String) next;\n            if (str.length() > 200 || jSONObject.length() > 20000) {\n                throw new IllegalArgumentException(si.a(\"too_many_settings\", new Object[0]).toString());\n            }\n            JSONObject jSONObject2 = jSONObject.getJSONObject(str);\n            String strE0 = pi.e0(str);\n            if (strE0 == null || !strE0.equals(jSONObject2.getString(\"type\"))) {\n                throw new IllegalArgumentException(si.a(\"incompatible_setting_0\", str).toString());\n            }\n            Object objValueOf = jSONObject2.get(\"value\");\n            switch (strE0.hashCode()) {\n                case -891985903:\n                    if (!strE0.equals(\"string\")) {\n                        throw new IllegalStateException(si.a(\"unknown_setting_type\", new Object[0]).toString());\n                    }\n                    if (!(objValueOf instanceof String) || ((String) objValueOf).length() > 16384) {\n                        w.a(\"Failed requirement.\");\n                        return null;\n                    }\n                    linkedHashMap.put(next, objValueOf);\n                    break;\n                    break;\n                case 104431:\n                    if (!strE0.equals(\"int\")) {\n                        throw new IllegalStateException(si.a(\"unknown_setting_type\", new Object[0]).toString());\n                    }\n                    if (objValueOf instanceof Number) {\n                        Number number = (Number) objValueOf;\n                        if (number.doubleValue() == number.intValue()) {\n                            int iIntValue = number.intValue();\n                            if (str.equals(\"menu_count\") && (1 > iIntValue || iIntValue >= 20001)) {\n                                throw new IllegalArgumentException(si.a(\"invalid_button_count_in_archive\", new Object[0]).toString());\n                            }\n                            if (str.startsWith(\"tile_opacity_\") && (iIntValue < 0 || iIntValue >= 101)) {\n                                w.a(\"Failed requirement.\");\n                                return null;\n                            }\n                            objValueOf = Integer.valueOf(iIntValue);\n                            linkedHashMap.put(next, objValueOf);\n                            break;\n                        }\n                    }\n                    w.a(\"Failed requirement.\");\n                    return null;\n                case 113762:\n                    if (!strE0.equals(\"set\")) {\n                        throw new IllegalStateException(si.a(\"unknown_setting_type\", new Object[0]).toString());\n                    }\n                    if (objValueOf instanceof JSONArray) {\n                        JSONArray jSONArray = (JSONArray) objValueOf;\n                        if (jSONArray.length() <= 20000) {\n                            j8 j8VarF0 = pi.f0(0, jSONArray.length());\n                            ArrayList arrayList = new ArrayList(k3.n0(j8VarF0));\n                            Iterator it = j8VarF0.iterator();\n                            while (true) {\n                                i8 i8Var = (i8) it;\n                                if (!i8Var.c) {\n                                    objValueOf = i3.L0(arrayList);\n                                    break;\n                                }\n                                Object obj = jSONArray.get(i8Var.nextInt());\n                                if (obj instanceof String) {\n                                    String str2 = (String) obj;\n                                    if (str2.length() <= 500) {\n                                        arrayList.add(str2);\n                                    }\n                                }\n                                w.a(\"Failed requirement.\");\n                                return null;\n                            }\n                            linkedHashMap.put(next, objValueOf);\n                            break;\n                        }\n                    }\n                    w.a(\"Failed requirement.\");\n                    return null;\n                case 64711720:\n                    if (!strE0.equals(\"boolean\")) {\n                        throw new IllegalStateException(si.a(\"unknown_setting_type\", new Object[0]).toString());\n                    }\n                    if (!(objValueOf instanceof Boolean)) {\n                        w.a(\"Failed requirement.\");\n                        return null;\n                    }\n                    linkedHashMap.put(next, objValueOf);\n                    break;\n                    break;\n                case 97526364:\n                    if (!strE0.equals(\"float\")) {\n                        throw new IllegalStateException(si.a(\"unknown_setting_type\", new Object[0]).toString());\n                    }\n                    if (objValueOf instanceof Number) {\n                        Number number2 = (Number) objValueOf;\n                        float fFloatValue = number2.floatValue();\n                        if (Math.abs(fFloatValue) <= Float.MAX_VALUE) {\n                            String strK = uh.k(str);\n                            if (strK == null) {\n                                strK = str;\n                            }\n                            if (strK.equals(\"ui_scale\")) {\n                                if (0.75f > fFloatValue || fFloatValue > 1.5f) {\n                                }\n                                objValueOf = Float.valueOf(number2.floatValue());\n                            } else if (strK.equals(\"tank_liters\")) {\n                                if (20.0f > fFloatValue || fFloatValue > 150.0f) {\n                                }\n                                objValueOf = Float.valueOf(number2.floatValue());\n                            } else {\n                                if (0.0f > fFloatValue || fFloatValue > 1.0f) {\n                                }\n                                objValueOf = Float.valueOf(number2.floatValue());\n                            }\n                            linkedHashMap.put(next, objValueOf);\n                            break;\n                        }\n                    }\n                    throw new IllegalArgumentException(si.a(\"invalid_value_0\", str).toString());\n                default:\n                    throw new IllegalStateException(si.a(\"unknown_setting_type\", new Object[0]).toString());\n            }\n        }\n        return linkedHashMap;\n    }",
+      "reported_total_bytes": null
+    }
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Static decompiler observations do not establish runtime behavior; the APK is never executed.",
+    "Method signatures use provider display types; DEX prototypes come from frozen JADX metadata. Display names may be aliases, and overload indices are local to this engine and artifact.",
+    "Class inventories use parsed metadata before code generation, including synthetic members that may be omitted from decompiled source. Source positions remain unknown.",
+    "Incoming reference totals count JADX using nodes. Direct invoke entries within a using method report raw DEX code-unit offsets and method indexes, but coverage is limited to those nodes and directly matched invokes; it does not establish every possible dynamic or reflective call site.",
+    "Manifest summaries are parsed once by REA's bridge from the exact root AndroidManifest.xml resource, using namespace-aware XML attributes; decoded XML is retained. APK signatures, split APKs, native libraries and Android runtime capture are not verified by this provider."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

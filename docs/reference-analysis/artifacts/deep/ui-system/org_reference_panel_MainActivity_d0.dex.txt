@@ -1,0 +1,54 @@
+    #32              : (in Lorg/reference/panel/MainActivity;)
+      name          : 'd0'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 3
+      ins           : 1
+      outs          : 2
+      insns size    : 25 16-bit code units
+0a2818:                                        |[0a2818] org.reference.panel.MainActivity.d0:()V
+0a2828: 5420 e006                              |0000: iget-object v0, v2, Lorg/reference/panel/MainActivity;.q0:Lv8; // field@06e0
+0a282c: 3900 0300                              |0002: if-nez v0, 0005 // +0003
+0a2830: 2814                                   |0004: goto 0018 // +0014
+0a2832: 1201                                   |0005: const/4 v1, #int 0 // #0
+0a2834: 5b21 e006                              |0006: iput-object v1, v2, Lorg/reference/panel/MainActivity;.q0:Lv8; // field@06e0
+0a2838: 6e10 8a0c 0200                         |0008: invoke-virtual {v2}, Lorg/reference/panel/MainActivity;.t0:()V // method@0c8a
+0a283e: 1c01 f600                              |000b: const-class v1, Landroid/view/WindowManager; // type@00f6
+0a2842: 6e20 c500 1200                         |000d: invoke-virtual {v2, v1}, Landroid/content/Context;.getSystemService:(Ljava/lang/Class;)Ljava/lang/Object; // method@00c5
+0a2848: 0c02                                   |0010: move-result-object v2
+0a284a: 1f02 f600                              |0011: check-cast v2, Landroid/view/WindowManager; // type@00f6
+0a284e: 3802 0500                              |0013: if-eqz v2, 0018 // +0005
+0a2852: 7220 2e03 0200                         |0015: invoke-interface {v2, v0}, Landroid/view/ViewManager;.removeView:(Landroid/view/View;)V // method@032e
+0a2858: 0e00                                   |0018: return-void
+      catches       : 1
+        0x000b - 0x0018
+          <any> -> 0x0018
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+      locals        :
+        0x0000 - 0x0019 reg=2 this Lorg/reference/panel/MainActivity;

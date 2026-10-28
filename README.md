@@ -95,3 +95,7 @@ app/src/main/java/vn/tht/launcher/
 ```
 
 Thành phần bên thứ ba: xem `docs/THIRD_PARTY.md`.
+
+## Hồ sơ phân tích tham chiếu
+
+[Tài liệu phân tích bằng REA](docs/reference-analysis/README.md) tổng hợp kiến trúc, điều khiển xe, tự động hóa, cập nhật, GPS, dữ liệu, bảo mật và bằng chứng đối chiếu của một ứng dụng tham chiếu. Hồ sơ dùng tên trung tính và tách rõ quan sát tĩnh với hành vi chưa kiểm chứng trên firmware; mã phục hồi nằm trong tài liệu, không thuộc mã chạy của THT Launcher.

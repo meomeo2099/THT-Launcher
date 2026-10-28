@@ -1,0 +1,147 @@
+{
+  "evidence_id": "ev_55b0e68a30e9f191747468d79adea41279f021cabb9a599bcdabfdaeea0d9bce",
+  "subject": {
+    "name": "reference.apk",
+    "digest": {
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+    },
+    "local_path": "reference.apk",
+    "format": "apk",
+    "architecture": null
+  },
+  "provider": {
+    "id": "jadx",
+    "name": "JADX headless",
+    "version": "0.7.1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_android_method",
+  "parameters": {
+    "path": "reference.apk",
+    "class_name": "l0",
+    "method_name": "r"
+  },
+  "raw_result": {
+    "server": {
+      "name": "rea-jadx-bridge",
+      "version": "7"
+    },
+    "bridge_sha256": "e5044a8312dd0731f53af3f095508b3e5cff54df6b971c95d4305e2f39b4fa30",
+    "jar_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "loaded": {
+      "state": "LOADED",
+      "apk_path": "<temporary-analysis-session>/target.apk",
+      "class_count": 485,
+      "resource_count": 264,
+      "threads": 1,
+      "resources": "full"
+    },
+    "calls": [
+      {
+        "operation": "rea_jvm_status",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"available_processors\":2,\"java_version\":\"21.0.12.1\",\"max_heap_bytes\":2147483648,\"metadata_scope\":\"parsed_members\",\"engine_reported_version\":\"0.7.1\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "load_apk",
+        "input": {
+          "path": "<temporary-analysis-session>/target.apk",
+          "threads": 1,
+          "resources": "full"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"state\":\"LOADED\",\"apk_path\":\"<temporary-analysis-session>/target.apk\",\"class_count\":485,\"raw_class_count\":485,\"resource_count\":264,\"load_duration_ms\":979,\"decompile_timeout_ms\":90000,\"threads\":1,\"code_cache_size\":64,\"resources\":\"full\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_class_summary",
+        "input": {
+          "class_name": "l0"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"raw_name\":\"l0\",\"method_count\":29,\"full_name\":\"defpackage.l0\",\"field_count\":5,\"name\":\"l0\",\"inner_class_count\":0,\"inner_classes\":[],\"methods\":[{\"def_pos\":0,\"signature\":\"<clinit>(): void\",\"dex_descriptor\":\"()V\",\"is_constructor\":false,\"name\":\"<clinit>\"},{\"def_pos\":0,\"signature\":\"A(java.lang.String): java.lang.String\",\"dex_descriptor\":\"(Ljava/lang/String;)Ljava/lang/String;\",\"is_constructor\":false,\"name\":\"A\"},{\"def_pos\":0,\"signature\":\"B(uj, boolean): java.lang.String\",\"dex_descriptor\":\"(Luj;Z)Ljava/lang/String;\",\"is_constructor\":false,\"name\":\"B\"},{\"def_pos\":0,\"signature\":\"a(double[]): java.util.ArrayList\",\"dex_descriptor\":\"([D)Ljava/util/ArrayList;\",\"is_constructor\":false,\"name\":\"a\"},{\"def_pos\":0,\"signature\":\"b(java.lang.Object): java.lang.Object\",\"dex_descriptor\":\"(Ljava/lang/Object;)Ljava/lang/Object;\",\"is_constructor\":false,\"name\":\"b\"},{\"def_pos\":0,\"signature\":\"c(java.lang.Object, java.lang.Object): java.lang.Object\",\"dex_descriptor\":\"(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;\",\"is_constructor\":false,\"name\":\"c\"},{\"def_pos\":0,\"signature\":\"d(double[]): java.util.ArrayList\",\"dex_descriptor\":\"([D)Ljava/util/ArrayList;\",\"is_constructor\":false,\"name\":\"d\"},{\"def_pos\":0,\"signature\":\"e(double[], double, double): boolean\",\"dex_descriptor\":\"([DDD)Z\",\"is_constructor\":false,\"name\":\"e\"},{\"def_pos\":0,\"signature\":\"f(int, java.lang.String): byte[]\",\"dex_descriptor\":\"(ILjava/lang/String;)[B\",\"is_constructor\":false,\"name\":\"f\"},{\"def_pos\":0,\"signature\":\"g(android.content.Context, k0, q0): java.io.File\",\"dex_descriptor\":\"(Landroid/content/Context;Lk0;Lq0;)Ljava/io/File;\",\"is_constructor\":false,\"name\":\"g\"},{\"def_pos\":0,\"signature\":\"h(android.graphics.Canvas, android.graphics.RectF, float, boolean, android.graphics.Paint, boolean, int, int, boolean, android.view.View): void\",\"dex_descriptor\":\"(Landroid/graphics/Canvas;Landroid/graphics/RectF;FZLandroid/graphics/Paint;ZIIZLandroid/view/View;)V\",\"is_constructor\":false,\"name\":\"h\"},{\"def_pos\":0,\"signature\":\"i(android.graphics.Canvas, android.graphics.RectF, float, boolean, android.graphics.Paint, boolean, int, int, boolean, android.view.View, int): void\",\"dex_descriptor\":\"(Landroid/graphics/Canvas;Landroid/graphics/RectF;FZLandroid/graphics/Paint;ZIIZLandroid/view/View;I)V\",\"is_constructor\":false,\"name\":\"i\"},{\"def_pos\":0,\"signature\":\"j(android.graphics.Canvas, java.lang.String, java.lang.String, int, float, float, float): boolean\",\"dex_descriptor\":\"(Landroid/graphics/Canvas;Ljava/lang/String;Ljava/lang/String;IFFF)Z\",\"is_constructor\":false,\"name\":\"j\"},{\"def_pos\":0,\"signature\":\"k(org.reference.panel.MainActivity): boolean\",\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)Z\",\"is_constructor\":false,\"name\":\"k\"},{\"def_pos\":0,\"signature\":\"l(): k0\",\"dex_descriptor\":\"()Lk0;\",\"is_constructor\":false,\"name\":\"l\"},{\"def_pos\":0,\"signature\":\"m(l0, j4): j4\",\"dex_descriptor\":\"(Ll0;Lj4;)Lj4;\",\"is_constructor\":false,\"name\":\"m\"},{\"def_pos\":0,\"signature\":\"n(): java.lang.String\",\"dex_descriptor\":\"()Ljava/lang/String;\",\"is_constructor\":false,\"name\":\"n\"},{\"def_pos\":0,\"signature\":\"o(android.content.Context): boolean\",\"dex_descriptor\":\"(Landroid/content/Context;)Z\",\"is_constructor\":false,\"name\":\"o\"},{\"def_pos\":0,\"signature\":\"p(android.content.Context): r4\",\"dex_descriptor\":\"(Landroid/content/Context;)Lr4;\",\"is_constructor\":false,\"name\":\"p\"},{\"def_pos\":0,\"signature\":\"q(android.content.ContextWrapper): void\",\"dex_descriptor\":\"(Landroid/content/ContextWrapper;)V\",\"is_constructor\":false,\"name\":\"q\"},{\"def_pos\":0,\"signature\":\"r(android.content.Context, java.io.File): void\",\"dex_descriptor\":\"(Landroid/content/Context;Ljava/io/File;)V\",\"is_constructor\":false,\"name\":\"r\"},{\"def_pos\":0,\"signature\":\"s(android.content.Context, java.io.File): void\",\"dex_descriptor\":\"(Landroid/content/Context;Ljava/io/File;)V\",\"is_constructor\":false,\"name\":\"s\"},{\"def_pos\":0,\"signature\":\"t(org.reference.panel.MainActivity): int\",\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)I\",\"is_constructor\":false,\"name\":\"t\"},{\"def_pos\":0,\"signature\":\"u(java.lang.String): java.net.HttpURLConnection\",\"dex_descriptor\":\"(Ljava/lang/String;)Ljava/net/HttpURLConnection;\",\"is_constructor\":false,\"name\":\"u\"},{\"def_pos\":0,\"signature\":\"v(java.io.InputStreamReader): xe\",\"dex_descriptor\":\"(Ljava/io/InputStreamReader;)Lxe;\",\"is_constructor\":false,\"name\":\"v\"},{\"def_pos\":0,\"signature\":\"w(j4, float): j4\",\"dex_descriptor\":\"(Lj4;F)Lj4;\",\"is_constructor\":false,\"name\":\"w\"},{\"def_pos\":0,\"signature\":\"x(android.content.Context): fe\",\"dex_descriptor\":\"(Landroid/content/Context;)Lfe;\",\"is_constructor\":false,\"name\":\"x\"},{\"def_pos\":0,\"signature\":\"y(l0, byte[], java.lang.String): boolean\",\"dex_descriptor\":\"(Ll0;[BLjava/lang/String;)Z\",\"is_constructor\":false,\"name\":\"y\"},{\"def_pos\":0,\"signature\":\"z(float): float\",\"dex_descriptor\":\"(F)F\",\"is_constructor\":false,\"name\":\"z\"}],\"fields\":[{\"type\":\"l0\",\"name\":\"a\",\"def_pos\":0},{\"type\":\"l0\",\"name\":\"b\",\"def_pos\":0},{\"type\":\"l0\",\"name\":\"c\",\"def_pos\":0},{\"type\":\"l0\",\"name\":\"d\",\"def_pos\":0},{\"type\":\"l0\",\"name\":\"e\",\"def_pos\":0}]}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_method_body",
+        "input": {
+          "class_name": "l0",
+          "method_name": "r",
+          "overload_index": 0,
+          "smali_fallback": true
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"overload_count\":1,\"method_name\":\"r\",\"overload_index\":0,\"full_name\":\"l0.r\",\"fell_back\":false,\"markers\":[],\"body\":\"    public static void r(Context context, File file) throws IOException {\\n        file.getClass();\\n        PackageInstaller packageInstaller = context.getPackageManager().getPackageInstaller();\\n        packageInstaller.getClass();\\n        PackageInstaller.SessionParams sessionParams = new PackageInstaller.SessionParams(1);\\n        sessionParams.setAppPackageName(context.getPackageName());\\n        sessionParams.setSize(file.length());\\n        int iCreateSession = packageInstaller.createSession(sessionParams);\\n        PackageInstaller.Session sessionOpenSession = packageInstaller.openSession(iCreateSession);\\n        try {\\n            OutputStream outputStreamOpenWrite = sessionOpenSession.openWrite(\\\"base.apk\\\", 0L, file.length());\\n            try {\\n                FileInputStream fileInputStream = new FileInputStream(file);\\n                try {\\n                    outputStreamOpenWrite.getClass();\\n                    pi.u(fileInputStream, outputStreamOpenWrite);\\n                    fileInputStream.close();\\n                    sessionOpenSession.fsync(outputStreamOpenWrite);\\n                    outputStreamOpenWrite.close();\\n                    Intent action = new Intent(context, (Class<?>) UpdateInstallReceiver.class).setAction(\\\"org.reference.panel.UPDATE_STATUS\\\");\\n                    action.getClass();\\n                    sessionOpenSession.commit(PendingIntent.getBroadcast(context, iCreateSession, action, 134217728).getIntentSender());\\n                    sessionOpenSession.close();\\n                } catch (Throwable th) {\\n                    try {\\n                        throw th;\\n                    } catch (Throwable th2) {\\n                        k8.p(fileInputStream, th);\\n                        throw th2;\\n                    }\\n                }\\n            } catch (Throwable th3) {\\n                try {\\n                    throw th3;\\n                } catch (Throwable th4) {\\n                    k8.p(outputStreamOpenWrite, th3);\\n                    throw th4;\\n                }\\n            }\\n        } catch (Throwable th5) {\\n            try {\\n                throw th5;\\n            } catch (Throwable th6) {\\n                k8.p(sessionOpenSession, th5);\\n                throw th6;\\n            }\\n        }\\n    }\",\"mode\":\"java\",\"class_name\":\"defpackage.l0\",\"dex_descriptor\":\"(Landroid/content/Context;Ljava/io/File;)V\"}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "normalized_result": {
+    "engine": {
+      "name": "jadx-headless-mcp",
+      "version": "0.7.1",
+      "artifact_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+      "source_revision": "5844800a486d2248fa949b74c9896285f5b54de2",
+      "worker_count": 1,
+      "heap_limit_mib": 2048
+    },
+    "class_name": "defpackage.l0",
+    "method": {
+      "name": "r",
+      "reported_signature": "r(android.content.Context, java.io.File): void",
+      "overload_index": 0,
+      "is_constructor": false,
+      "dex_descriptor": "(Landroid/content/Context;Ljava/io/File;)V"
+    },
+    "overload_count": 1,
+    "representation": "java",
+    "body_status": "available",
+    "fell_back": false,
+    "markers": [],
+    "source": {
+      "status": "complete",
+      "text": "    public static void r(Context context, File file) throws IOException {\n        file.getClass();\n        PackageInstaller packageInstaller = context.getPackageManager().getPackageInstaller();\n        packageInstaller.getClass();\n        PackageInstaller.SessionParams sessionParams = new PackageInstaller.SessionParams(1);\n        sessionParams.setAppPackageName(context.getPackageName());\n        sessionParams.setSize(file.length());\n        int iCreateSession = packageInstaller.createSession(sessionParams);\n        PackageInstaller.Session sessionOpenSession = packageInstaller.openSession(iCreateSession);\n        try {\n            OutputStream outputStreamOpenWrite = sessionOpenSession.openWrite(\"base.apk\", 0L, file.length());\n            try {\n                FileInputStream fileInputStream = new FileInputStream(file);\n                try {\n                    outputStreamOpenWrite.getClass();\n                    pi.u(fileInputStream, outputStreamOpenWrite);\n                    fileInputStream.close();\n                    sessionOpenSession.fsync(outputStreamOpenWrite);\n                    outputStreamOpenWrite.close();\n                    Intent action = new Intent(context, (Class<?>) UpdateInstallReceiver.class).setAction(\"org.reference.panel.UPDATE_STATUS\");\n                    action.getClass();\n                    sessionOpenSession.commit(PendingIntent.getBroadcast(context, iCreateSession, action, 134217728).getIntentSender());\n                    sessionOpenSession.close();\n                } catch (Throwable th) {\n                    try {\n                        throw th;\n                    } catch (Throwable th2) {\n                        k8.p(fileInputStream, th);\n                        throw th2;\n                    }\n                }\n            } catch (Throwable th3) {\n                try {\n                    throw th3;\n                } catch (Throwable th4) {\n                    k8.p(outputStreamOpenWrite, th3);\n                    throw th4;\n                }\n            }\n        } catch (Throwable th5) {\n            try {\n                throw th5;\n            } catch (Throwable th6) {\n                k8.p(sessionOpenSession, th5);\n                throw th6;\n            }\n        }\n    }",
+      "reported_total_bytes": null
+    }
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Static decompiler observations do not establish runtime behavior; the APK is never executed.",
+    "Method signatures use provider display types; DEX prototypes come from frozen JADX metadata. Display names may be aliases, and overload indices are local to this engine and artifact.",
+    "Class inventories use parsed metadata before code generation, including synthetic members that may be omitted from decompiled source. Source positions remain unknown.",
+    "Incoming reference totals count JADX using nodes. Direct invoke entries within a using method report raw DEX code-unit offsets and method indexes, but coverage is limited to those nodes and directly matched invokes; it does not establish every possible dynamic or reflective call site.",
+    "Manifest summaries are parsed once by REA's bridge from the exact root AndroidManifest.xml resource, using namespace-aware XML attributes; decoded XML is retained. APK signatures, split APKs, native libraries and Android runtime capture are not verified by this provider."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

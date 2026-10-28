@@ -1,0 +1,147 @@
+{
+  "evidence_id": "ev_e381cf090332814dc63315eb9d9ea632339d1e0aa7c2daa5fbb11b406770be65",
+  "subject": {
+    "name": "reference.apk",
+    "digest": {
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+    },
+    "local_path": "reference.apk",
+    "format": "apk",
+    "architecture": null
+  },
+  "provider": {
+    "id": "jadx",
+    "name": "JADX headless",
+    "version": "0.7.1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_android_method",
+  "parameters": {
+    "path": "reference.apk",
+    "class_name": "x3",
+    "method_name": "f"
+  },
+  "raw_result": {
+    "server": {
+      "name": "rea-jadx-bridge",
+      "version": "7"
+    },
+    "bridge_sha256": "e5044a8312dd0731f53af3f095508b3e5cff54df6b971c95d4305e2f39b4fa30",
+    "jar_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "loaded": {
+      "state": "LOADED",
+      "apk_path": "<temporary-analysis-session>/target.apk",
+      "class_count": 485,
+      "resource_count": 264,
+      "threads": 1,
+      "resources": "full"
+    },
+    "calls": [
+      {
+        "operation": "rea_jvm_status",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"metadata_scope\":\"parsed_members\",\"max_heap_bytes\":2147483648,\"java_version\":\"21.0.12.1\",\"available_processors\":2,\"engine_reported_version\":\"0.7.1\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "load_apk",
+        "input": {
+          "path": "<temporary-analysis-session>/target.apk",
+          "threads": 1,
+          "resources": "full"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"state\":\"LOADED\",\"apk_path\":\"<temporary-analysis-session>/target.apk\",\"class_count\":485,\"raw_class_count\":485,\"resource_count\":264,\"load_duration_ms\":2031,\"decompile_timeout_ms\":90000,\"threads\":1,\"code_cache_size\":64,\"resources\":\"full\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_class_summary",
+        "input": {
+          "class_name": "x3"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"fields\":[{\"name\":\"a\",\"type\":\"java.util.ArrayList\",\"def_pos\":0},{\"name\":\"b\",\"type\":\"java.util.List\",\"def_pos\":0}],\"methods\":[{\"is_constructor\":false,\"dex_descriptor\":\"()V\",\"signature\":\"<clinit>(): void\",\"def_pos\":0,\"name\":\"<clinit>\"},{\"is_constructor\":false,\"dex_descriptor\":\"([B)Ljava/util/Set;\",\"signature\":\"a(byte[]): java.util.Set\",\"def_pos\":0,\"name\":\"a\"},{\"is_constructor\":false,\"dex_descriptor\":\"([B)Ljava/util/Set;\",\"signature\":\"b(byte[]): java.util.Set\",\"def_pos\":0,\"name\":\"b\"},{\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;)Z\",\"signature\":\"c(android.content.Context): boolean\",\"def_pos\":0,\"name\":\"c\"},{\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;)Ljava/io/File;\",\"signature\":\"d(android.content.Context): java.io.File\",\"def_pos\":0,\"name\":\"d\"},{\"is_constructor\":false,\"dex_descriptor\":\"([B)Ljava/lang/String;\",\"signature\":\"e(byte[]): java.lang.String\",\"def_pos\":0,\"name\":\"e\"},{\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;Landroid/net/Uri;)Ljava/lang/String;\",\"signature\":\"f(android.content.Context, android.net.Uri): java.lang.String\",\"def_pos\":0,\"name\":\"f\"},{\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)Z\",\"signature\":\"g(org.reference.panel.MainActivity): boolean\",\"def_pos\":0,\"name\":\"g\"},{\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)Ljava/lang/String;\",\"signature\":\"h(org.reference.panel.MainActivity): java.lang.String\",\"def_pos\":0,\"name\":\"h\"},{\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/io/InputStream;)[B\",\"signature\":\"i(java.io.InputStream): byte[]\",\"def_pos\":0,\"name\":\"i\"},{\"is_constructor\":false,\"dex_descriptor\":\"([BLjava/lang/String;)Ljava/lang/Integer;\",\"signature\":\"j(byte[], java.lang.String): java.lang.Integer\",\"def_pos\":0,\"name\":\"j\"}],\"inner_classes\":[],\"inner_class_count\":0,\"name\":\"x3\",\"field_count\":2,\"full_name\":\"defpackage.x3\",\"method_count\":11,\"raw_name\":\"x3\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_method_body",
+        "input": {
+          "class_name": "x3",
+          "method_name": "f",
+          "overload_index": 0,
+          "smali_fallback": true
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"mode\":\"java\",\"body\":\"    public static String f(Context context, Uri uri) throws IllegalAccessException, IOException, InvocationTargetException {\\n        int i;\\n        Object ffVar;\\n        Object ffVar2;\\n        Object ffVar3;\\n        Object ffVar4;\\n        uri.getClass();\\n        InputStream inputStreamOpenInputStream = context.getContentResolver().openInputStream(uri);\\n        boolean z = false;\\n        if (inputStreamOpenInputStream == null) {\\n            w.a(si.a(\\\"file_unavailable\\\", new Object[0]));\\n            return null;\\n        }\\n        try {\\n            byte[] bArrI = i(inputStreamOpenInputStream);\\n            inputStreamOpenInputStream.close();\\n            if (bArrI.length >= 2 && bArrI[0] == 80 && bArrI[1] == 75) {\\n                ArrayList arrayList = new ArrayList();\\n                ZipInputStream zipInputStream = new ZipInputStream(new ByteArrayInputStream(bArrI));\\n                while (true) {\\n                    try {\\n                        ZipEntry nextEntry = zipInputStream.getNextEntry();\\n                        if (nextEntry == null) {\\n                            break;\\n                        }\\n                        String name = nextEntry.getName();\\n                        name.getClass();\\n                        String lowerCase = th.E(name, '/').toLowerCase(Locale.ROOT);\\n                        lowerCase.getClass();\\n                        if (!nextEntry.isDirectory() && (lowerCase.endsWith(\\\".ttf\\\") || lowerCase.endsWith(\\\".otf\\\"))) {\\n                            arrayList.add(new yc(lowerCase, i(zipInputStream)));\\n                            if (arrayList.size() >= 20) {\\n                                break;\\n                            }\\n                        }\\n                    } catch (Throwable th) {\\n                        try {\\n                            throw th;\\n                        } catch (Throwable th2) {\\n                            k8.p(zipInputStream, th);\\n                            throw th2;\\n                        }\\n                    }\\n                }\\n                zipInputStream.close();\\n                ArrayList arrayList2 = new ArrayList();\\n                int size = arrayList.size();\\n                int i2 = 0;\\n                while (i2 < size) {\\n                    Object obj = arrayList.get(i2);\\n                    i2++;\\n                    String str = (String) ((yc) obj).a;\\n                    if (!th.v(str, \\\"italic\\\", false) && !th.v(str, \\\"oblique\\\", false)) {\\n                        arrayList2.add(obj);\\n                    }\\n                }\\n                if (!arrayList2.isEmpty()) {\\n                    arrayList = arrayList2;\\n                }\\n                yc ycVar = (yc) i3.v0(arrayList);\\n                if (ycVar == null || (bArrI = (byte[]) ycVar.b) == null) {\\n                    w.a(si.a(\\\"font_not_font\\\", new Object[0]));\\n                    return null;\\n                }\\n            }\\n            if (bArrI.length < 12 || !((i = ByteBuffer.wrap(bArrI, 0, 4).getInt()) == 65536 || i == 1330926671 || i == 1953658213)) {\\n                w.a(si.a(\\\"font_not_font\\\", new Object[0]));\\n                return null;\\n            }\\n            try {\\n                ffVar = b(bArrI);\\n            } catch (Throwable th3) {\\n                ffVar = new ff(th3);\\n            }\\n            if (ffVar instanceof ff) {\\n                ffVar = null;\\n            }\\n            Set set = (Set) ffVar;\\n            if (set == null) {\\n                w.a(si.a(\\\"font_not_font\\\", new Object[0]));\\n                return null;\\n            }\\n            ArrayList arrayList3 = a;\\n            if (arrayList3 == null || !arrayList3.isEmpty()) {\\n                int size2 = arrayList3.size();\\n                int i3 = 0;\\n                while (i3 < size2) {\\n                    Object obj2 = arrayList3.get(i3);\\n                    i3++;\\n                    if (!set.contains(Integer.valueOf(((Number) obj2).intValue()))) {\\n                        w.a(si.a(\\\"font_no_cyrillic\\\", new Object[0]));\\n                        return null;\\n                    }\\n                }\\n            }\\n            File fileD = d(context);\\n            File parentFile = fileD.getParentFile();\\n            if (parentFile != null) {\\n                parentFile.mkdirs();\\n            }\\n            File file = new File(fileD.getParentFile(), \\\"custom.part\\\");\\n            FileOutputStream fileOutputStream = new FileOutputStream(file);\\n            try {\\n                fileOutputStream.write(bArrI);\\n                fileOutputStream.close();\\n                try {\\n                    ffVar2 = new Typeface.Builder(file).build();\\n                    if (ffVar2 == null) {\\n                        throw new IllegalStateException(\\\"no typeface\\\");\\n                    }\\n                } catch (Throwable th4) {\\n                    ffVar2 = new ff(th4);\\n                }\\n                if (gf.a(ffVar2) != null) {\\n                    file.delete();\\n                    w.a(si.a(\\\"font_not_font\\\", new Object[0]));\\n                    return null;\\n                }\\n                if (!file.renameTo(fileD)) {\\n                    fileD.delete();\\n                    if (!file.renameTo(fileD)) {\\n                        throw new IllegalStateException(si.a(\\\"file_unavailable\\\", new Object[0]).toString());\\n                    }\\n                }\\n                try {\\n                    ffVar3 = e(bArrI);\\n                } catch (Throwable th5) {\\n                    ffVar3 = new ff(th5);\\n                }\\n                if (ffVar3 instanceof ff) {\\n                    ffVar3 = null;\\n                }\\n                String strA = (String) ffVar3;\\n                if (strA == null) {\\n                    String lastPathSegment = uri.getLastPathSegment();\\n                    String strH = lastPathSegment != null ? th.H(th.E(lastPathSegment, '/'), '.') : null;\\n                    strA = strH == null ? si.a(\\\"font_custom\\\", new Object[0]) : strH;\\n                }\\n                SharedPreferences.Editor editorPutString = context.getSharedPreferences(\\\"panel\\\", 0).edit().putString(\\\"font_choice\\\", \\\"custom\\\").putString(\\\"font_custom_name\\\", strA);\\n                List list = b;\\n                if (list != null && list.isEmpty()) {\\n                    z = true;\\n                    break;\\n                }\\n                Iterator it = list.iterator();\\n                do {\\n                    if (!it.hasNext()) {\\n                        z = true;\\n                        break;\\n                    }\\n                } while (set.contains(Integer.valueOf(((Number) it.next()).intValue())));\\n                SharedPreferences.Editor editorPutBoolean = editorPutString.putBoolean(\\\"font_custom_kk\\\", z);\\n                try {\\n                    ffVar4 = a(bArrI);\\n                } catch (Throwable th6) {\\n                    ffVar4 = new ff(th6);\\n                }\\n                if (ffVar4 instanceof ff) {\\n                    ffVar4 = x4.a;\\n                }\\n                editorPutBoolean.putBoolean(\\\"font_custom_wght\\\", ((Set) ffVar4).contains(\\\"wght\\\")).apply();\\n                return strA;\\n            } catch (Throwable th7) {\\n                try {\\n                    throw th7;\\n                } catch (Throwable th8) {\\n                    k8.p(fileOutputStream, th7);\\n                    throw th8;\\n                }\\n            }\\n        } catch (Throwable th9) {\\n            try {\\n                throw th9;\\n            } catch (Throwable th10) {\\n                k8.p(inputStreamOpenInputStream, th9);\\n                throw th10;\\n            }\\n        }\\n    }\",\"markers\":[],\"fell_back\":false,\"full_name\":\"x3.f\",\"overload_index\":0,\"method_name\":\"f\",\"overload_count\":1,\"dex_descriptor\":\"(Landroid/content/Context;Landroid/net/Uri;)Ljava/lang/String;\",\"class_name\":\"defpackage.x3\"}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "normalized_result": {
+    "engine": {
+      "name": "jadx-headless-mcp",
+      "version": "0.7.1",
+      "artifact_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+      "source_revision": "5844800a486d2248fa949b74c9896285f5b54de2",
+      "worker_count": 1,
+      "heap_limit_mib": 2048
+    },
+    "class_name": "defpackage.x3",
+    "method": {
+      "name": "f",
+      "reported_signature": "f(android.content.Context, android.net.Uri): java.lang.String",
+      "overload_index": 0,
+      "is_constructor": false,
+      "dex_descriptor": "(Landroid/content/Context;Landroid/net/Uri;)Ljava/lang/String;"
+    },
+    "overload_count": 1,
+    "representation": "java",
+    "body_status": "available",
+    "fell_back": false,
+    "markers": [],
+    "source": {
+      "status": "complete",
+      "text": "    public static String f(Context context, Uri uri) throws IllegalAccessException, IOException, InvocationTargetException {\n        int i;\n        Object ffVar;\n        Object ffVar2;\n        Object ffVar3;\n        Object ffVar4;\n        uri.getClass();\n        InputStream inputStreamOpenInputStream = context.getContentResolver().openInputStream(uri);\n        boolean z = false;\n        if (inputStreamOpenInputStream == null) {\n            w.a(si.a(\"file_unavailable\", new Object[0]));\n            return null;\n        }\n        try {\n            byte[] bArrI = i(inputStreamOpenInputStream);\n            inputStreamOpenInputStream.close();\n            if (bArrI.length >= 2 && bArrI[0] == 80 && bArrI[1] == 75) {\n                ArrayList arrayList = new ArrayList();\n                ZipInputStream zipInputStream = new ZipInputStream(new ByteArrayInputStream(bArrI));\n                while (true) {\n                    try {\n                        ZipEntry nextEntry = zipInputStream.getNextEntry();\n                        if (nextEntry == null) {\n                            break;\n                        }\n                        String name = nextEntry.getName();\n                        name.getClass();\n                        String lowerCase = th.E(name, '/').toLowerCase(Locale.ROOT);\n                        lowerCase.getClass();\n                        if (!nextEntry.isDirectory() && (lowerCase.endsWith(\".ttf\") || lowerCase.endsWith(\".otf\"))) {\n                            arrayList.add(new yc(lowerCase, i(zipInputStream)));\n                            if (arrayList.size() >= 20) {\n                                break;\n                            }\n                        }\n                    } catch (Throwable th) {\n                        try {\n                            throw th;\n                        } catch (Throwable th2) {\n                            k8.p(zipInputStream, th);\n                            throw th2;\n                        }\n                    }\n                }\n                zipInputStream.close();\n                ArrayList arrayList2 = new ArrayList();\n                int size = arrayList.size();\n                int i2 = 0;\n                while (i2 < size) {\n                    Object obj = arrayList.get(i2);\n                    i2++;\n                    String str = (String) ((yc) obj).a;\n                    if (!th.v(str, \"italic\", false) && !th.v(str, \"oblique\", false)) {\n                        arrayList2.add(obj);\n                    }\n                }\n                if (!arrayList2.isEmpty()) {\n                    arrayList = arrayList2;\n                }\n                yc ycVar = (yc) i3.v0(arrayList);\n                if (ycVar == null || (bArrI = (byte[]) ycVar.b) == null) {\n                    w.a(si.a(\"font_not_font\", new Object[0]));\n                    return null;\n                }\n            }\n            if (bArrI.length < 12 || !((i = ByteBuffer.wrap(bArrI, 0, 4).getInt()) == 65536 || i == 1330926671 || i == 1953658213)) {\n                w.a(si.a(\"font_not_font\", new Object[0]));\n                return null;\n            }\n            try {\n                ffVar = b(bArrI);\n            } catch (Throwable th3) {\n                ffVar = new ff(th3);\n            }\n            if (ffVar instanceof ff) {\n                ffVar = null;\n            }\n            Set set = (Set) ffVar;\n            if (set == null) {\n                w.a(si.a(\"font_not_font\", new Object[0]));\n                return null;\n            }\n            ArrayList arrayList3 = a;\n            if (arrayList3 == null || !arrayList3.isEmpty()) {\n                int size2 = arrayList3.size();\n                int i3 = 0;\n                while (i3 < size2) {\n                    Object obj2 = arrayList3.get(i3);\n                    i3++;\n                    if (!set.contains(Integer.valueOf(((Number) obj2).intValue()))) {\n                        w.a(si.a(\"font_no_cyrillic\", new Object[0]));\n                        return null;\n                    }\n                }\n            }\n            File fileD = d(context);\n            File parentFile = fileD.getParentFile();\n            if (parentFile != null) {\n                parentFile.mkdirs();\n            }\n            File file = new File(fileD.getParentFile(), \"custom.part\");\n            FileOutputStream fileOutputStream = new FileOutputStream(file);\n            try {\n                fileOutputStream.write(bArrI);\n                fileOutputStream.close();\n                try {\n                    ffVar2 = new Typeface.Builder(file).build();\n                    if (ffVar2 == null) {\n                        throw new IllegalStateException(\"no typeface\");\n                    }\n                } catch (Throwable th4) {\n                    ffVar2 = new ff(th4);\n                }\n                if (gf.a(ffVar2) != null) {\n                    file.delete();\n                    w.a(si.a(\"font_not_font\", new Object[0]));\n                    return null;\n                }\n                if (!file.renameTo(fileD)) {\n                    fileD.delete();\n                    if (!file.renameTo(fileD)) {\n                        throw new IllegalStateException(si.a(\"file_unavailable\", new Object[0]).toString());\n                    }\n                }\n                try {\n                    ffVar3 = e(bArrI);\n                } catch (Throwable th5) {\n                    ffVar3 = new ff(th5);\n                }\n                if (ffVar3 instanceof ff) {\n                    ffVar3 = null;\n                }\n                String strA = (String) ffVar3;\n                if (strA == null) {\n                    String lastPathSegment = uri.getLastPathSegment();\n                    String strH = lastPathSegment != null ? th.H(th.E(lastPathSegment, '/'), '.') : null;\n                    strA = strH == null ? si.a(\"font_custom\", new Object[0]) : strH;\n                }\n                SharedPreferences.Editor editorPutString = context.getSharedPreferences(\"panel\", 0).edit().putString(\"font_choice\", \"custom\").putString(\"font_custom_name\", strA);\n                List list = b;\n                if (list != null && list.isEmpty()) {\n                    z = true;\n                    break;\n                }\n                Iterator it = list.iterator();\n                do {\n                    if (!it.hasNext()) {\n                        z = true;\n                        break;\n                    }\n                } while (set.contains(Integer.valueOf(((Number) it.next()).intValue())));\n                SharedPreferences.Editor editorPutBoolean = editorPutString.putBoolean(\"font_custom_kk\", z);\n                try {\n                    ffVar4 = a(bArrI);\n                } catch (Throwable th6) {\n                    ffVar4 = new ff(th6);\n                }\n                if (ffVar4 instanceof ff) {\n                    ffVar4 = x4.a;\n                }\n                editorPutBoolean.putBoolean(\"font_custom_wght\", ((Set) ffVar4).contains(\"wght\")).apply();\n                return strA;\n            } catch (Throwable th7) {\n                try {\n                    throw th7;\n                } catch (Throwable th8) {\n                    k8.p(fileOutputStream, th7);\n                    throw th8;\n                }\n            }\n        } catch (Throwable th9) {\n            try {\n                throw th9;\n            } catch (Throwable th10) {\n                k8.p(inputStreamOpenInputStream, th9);\n                throw th10;\n            }\n        }\n    }",
+      "reported_total_bytes": null
+    }
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Static decompiler observations do not establish runtime behavior; the APK is never executed.",
+    "Method signatures use provider display types; DEX prototypes come from frozen JADX metadata. Display names may be aliases, and overload indices are local to this engine and artifact.",
+    "Class inventories use parsed metadata before code generation, including synthetic members that may be omitted from decompiled source. Source positions remain unknown.",
+    "Incoming reference totals count JADX using nodes. Direct invoke entries within a using method report raw DEX code-unit offsets and method indexes, but coverage is limited to those nodes and directly matched invokes; it does not establish every possible dynamic or reflective call site.",
+    "Manifest summaries are parsed once by REA's bridge from the exact root AndroidManifest.xml resource, using namespace-aware XML attributes; decoded XML is retained. APK signatures, split APKs, native libraries and Android runtime capture are not verified by this provider."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

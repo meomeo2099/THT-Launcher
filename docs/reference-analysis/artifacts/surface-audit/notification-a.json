@@ -1,0 +1,147 @@
+{
+  "evidence_id": "ev_32898f15eae20958554617bd4842b6a5418f4727e299de9589f4bddee981c421",
+  "subject": {
+    "name": "reference.apk",
+    "digest": {
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+    },
+    "local_path": "reference.apk",
+    "format": "apk",
+    "architecture": null
+  },
+  "provider": {
+    "id": "jadx",
+    "name": "JADX headless",
+    "version": "0.7.1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_android_method",
+  "parameters": {
+    "path": "reference.apk",
+    "class_name": "org.reference.panel.MusicNotificationListener",
+    "method_name": "a"
+  },
+  "raw_result": {
+    "server": {
+      "name": "rea-jadx-bridge",
+      "version": "7"
+    },
+    "bridge_sha256": "e5044a8312dd0731f53af3f095508b3e5cff54df6b971c95d4305e2f39b4fa30",
+    "jar_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "loaded": {
+      "state": "LOADED",
+      "apk_path": "<temporary-analysis-session>/target.apk",
+      "class_count": 485,
+      "resource_count": 264,
+      "threads": 1,
+      "resources": "full"
+    },
+    "calls": [
+      {
+        "operation": "rea_jvm_status",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"metadata_scope\":\"parsed_members\",\"max_heap_bytes\":2615148544,\"java_version\":\"17.0.18\",\"available_processors\":3,\"engine_reported_version\":\"0.7.1\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "load_apk",
+        "input": {
+          "path": "<temporary-analysis-session>/target.apk",
+          "threads": 1,
+          "resources": "full"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"state\":\"LOADED\",\"apk_path\":\"<temporary-analysis-session>/target.apk\",\"class_count\":485,\"raw_class_count\":485,\"resource_count\":264,\"load_duration_ms\":7799,\"decompile_timeout_ms\":90000,\"threads\":1,\"code_cache_size\":64,\"resources\":\"full\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_class_summary",
+        "input": {
+          "class_name": "org.reference.panel.MusicNotificationListener"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"methods\":[{\"dex_descriptor\":\"()V\",\"signature\":\"<clinit>(): void\",\"def_pos\":0,\"name\":\"<clinit>\",\"is_constructor\":false},{\"dex_descriptor\":\"()V\",\"signature\":\"<init>(): void\",\"def_pos\":0,\"name\":\"<init>\",\"is_constructor\":true},{\"dex_descriptor\":\"(Landroid/service/notification/StatusBarNotification;)Lhc;\",\"signature\":\"a(android.service.notification.StatusBarNotification): hc\",\"def_pos\":0,\"name\":\"a\",\"is_constructor\":false},{\"dex_descriptor\":\"()V\",\"signature\":\"onDestroy(): void\",\"def_pos\":0,\"name\":\"onDestroy\",\"is_constructor\":false},{\"dex_descriptor\":\"()V\",\"signature\":\"onListenerConnected(): void\",\"def_pos\":0,\"name\":\"onListenerConnected\",\"is_constructor\":false},{\"dex_descriptor\":\"()V\",\"signature\":\"onListenerDisconnected(): void\",\"def_pos\":0,\"name\":\"onListenerDisconnected\",\"is_constructor\":false},{\"dex_descriptor\":\"(Landroid/service/notification/StatusBarNotification;)V\",\"signature\":\"onNotificationPosted(android.service.notification.StatusBarNotification): void\",\"def_pos\":0,\"name\":\"onNotificationPosted\",\"is_constructor\":false},{\"dex_descriptor\":\"(Landroid/service/notification/StatusBarNotification;)V\",\"signature\":\"onNotificationRemoved(android.service.notification.StatusBarNotification): void\",\"def_pos\":0,\"name\":\"onNotificationRemoved\",\"is_constructor\":false}],\"inner_classes\":[],\"inner_class_count\":0,\"name\":\"MusicNotificationListener\",\"field_count\":4,\"full_name\":\"org.reference.panel.MusicNotificationListener\",\"method_count\":8,\"raw_name\":\"org.reference.panel.MusicNotificationListener\",\"fields\":[{\"type\":\"java.lang.Object\",\"def_pos\":0,\"name\":\"a\"},{\"type\":\"java.util.LinkedHashMap\",\"def_pos\":0,\"name\":\"b\"},{\"type\":\"ac\",\"def_pos\":0,\"name\":\"c\"},{\"type\":\"ac\",\"def_pos\":0,\"name\":\"d\"}]}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_method_body",
+        "input": {
+          "class_name": "org.reference.panel.MusicNotificationListener",
+          "method_name": "a",
+          "overload_index": 0,
+          "smali_fallback": true
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"mode\":\"java\",\"body\":\"    public static hc a(StatusBarNotification statusBarNotification) {\\n        Object ffVar;\\n        CharSequence charSequence;\\n        CharSequence charSequence2;\\n        PendingIntent pendingIntent;\\n        String string;\\n        String string2;\\n        try {\\n            Notification notification = statusBarNotification.getNotification();\\n            if (notification != null) {\\n                Bundle bundle = notification.extras;\\n                MediaSession.Token token = bundle != null ? (MediaSession.Token) bundle.getParcelable(\\\"android.mediaSession\\\") : null;\\n                boolean z = true;\\n                boolean z2 = (bundle == null || (string2 = bundle.getString(\\\"android.template\\\")) == null || !th.v(string2, \\\"MediaStyle\\\", false)) ? false : true;\\n                LinkedHashMap linkedHashMap = new LinkedHashMap();\\n                Notification.Action[] actionArr = notification.actions;\\n                if (actionArr == null) {\\n                    actionArr = new Notification.Action[0];\\n                }\\n                for (Notification.Action action : actionArr) {\\n                    Map map = wb.a;\\n                    CharSequence charSequence3 = action.title;\\n                    xb xbVar = (charSequence3 == null || (string = charSequence3.toString()) == null) ? null : (xb) wb.a.get(wb.a(string));\\n                    if (xbVar != null && (pendingIntent = action.actionIntent) != null && k8.e(pendingIntent.getCreatorPackage(), statusBarNotification.getPackageName()) && !pendingIntent.isActivity()) {\\n                        linkedHashMap.putIfAbsent(xbVar, pendingIntent);\\n                    }\\n                }\\n                Map map2 = wb.a;\\n                if (token == null) {\\n                    z = false;\\n                }\\n                boolean zE = k8.e(notification.category, \\\"transport\\\");\\n                Set setKeySet = linkedHashMap.keySet();\\n                setKeySet.getClass();\\n                if ((z || z2 || (zE && !setKeySet.isEmpty())) && (notification.flags & 512) == 0) {\\n                    String key = statusBarNotification.getKey();\\n                    key.getClass();\\n                    String packageName = statusBarNotification.getPackageName();\\n                    packageName.getClass();\\n                    long postTime = statusBarNotification.getPostTime();\\n                    String string3 = (bundle == null || (charSequence2 = bundle.getCharSequence(\\\"android.title\\\")) == null) ? null : charSequence2.toString();\\n                    String str = \\\"\\\";\\n                    if (string3 == null) {\\n                        string3 = \\\"\\\";\\n                    }\\n                    String string4 = (bundle == null || (charSequence = bundle.getCharSequence(\\\"android.text\\\")) == null) ? null : charSequence.toString();\\n                    if (string4 != null) {\\n                        str = string4;\\n                    }\\n                    ffVar = new hc(key, packageName, postTime, string3, str, notification.getLargeIcon(), token, linkedHashMap);\\n                    return (hc) (ffVar instanceof ff ? null : ffVar);\\n                }\\n            }\\n            return null;\\n        } catch (Throwable th) {\\n            ffVar = new ff(th);\\n        }\\n    }\",\"markers\":[],\"fell_back\":false,\"full_name\":\"org.reference.panel.MusicNotificationListener.a\",\"overload_index\":0,\"method_name\":\"a\",\"overload_count\":1,\"dex_descriptor\":\"(Landroid/service/notification/StatusBarNotification;)Lhc;\",\"class_name\":\"org.reference.panel.MusicNotificationListener\"}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "normalized_result": {
+    "engine": {
+      "name": "jadx-headless-mcp",
+      "version": "0.7.1",
+      "artifact_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+      "source_revision": "5844800a486d2248fa949b74c9896285f5b54de2",
+      "worker_count": 1,
+      "heap_limit_mib": 2494
+    },
+    "class_name": "org.reference.panel.MusicNotificationListener",
+    "method": {
+      "name": "a",
+      "reported_signature": "a(android.service.notification.StatusBarNotification): hc",
+      "overload_index": 0,
+      "is_constructor": false,
+      "dex_descriptor": "(Landroid/service/notification/StatusBarNotification;)Lhc;"
+    },
+    "overload_count": 1,
+    "representation": "java",
+    "body_status": "available",
+    "fell_back": false,
+    "markers": [],
+    "source": {
+      "status": "complete",
+      "text": "    public static hc a(StatusBarNotification statusBarNotification) {\n        Object ffVar;\n        CharSequence charSequence;\n        CharSequence charSequence2;\n        PendingIntent pendingIntent;\n        String string;\n        String string2;\n        try {\n            Notification notification = statusBarNotification.getNotification();\n            if (notification != null) {\n                Bundle bundle = notification.extras;\n                MediaSession.Token token = bundle != null ? (MediaSession.Token) bundle.getParcelable(\"android.mediaSession\") : null;\n                boolean z = true;\n                boolean z2 = (bundle == null || (string2 = bundle.getString(\"android.template\")) == null || !th.v(string2, \"MediaStyle\", false)) ? false : true;\n                LinkedHashMap linkedHashMap = new LinkedHashMap();\n                Notification.Action[] actionArr = notification.actions;\n                if (actionArr == null) {\n                    actionArr = new Notification.Action[0];\n                }\n                for (Notification.Action action : actionArr) {\n                    Map map = wb.a;\n                    CharSequence charSequence3 = action.title;\n                    xb xbVar = (charSequence3 == null || (string = charSequence3.toString()) == null) ? null : (xb) wb.a.get(wb.a(string));\n                    if (xbVar != null && (pendingIntent = action.actionIntent) != null && k8.e(pendingIntent.getCreatorPackage(), statusBarNotification.getPackageName()) && !pendingIntent.isActivity()) {\n                        linkedHashMap.putIfAbsent(xbVar, pendingIntent);\n                    }\n                }\n                Map map2 = wb.a;\n                if (token == null) {\n                    z = false;\n                }\n                boolean zE = k8.e(notification.category, \"transport\");\n                Set setKeySet = linkedHashMap.keySet();\n                setKeySet.getClass();\n                if ((z || z2 || (zE && !setKeySet.isEmpty())) && (notification.flags & 512) == 0) {\n                    String key = statusBarNotification.getKey();\n                    key.getClass();\n                    String packageName = statusBarNotification.getPackageName();\n                    packageName.getClass();\n                    long postTime = statusBarNotification.getPostTime();\n                    String string3 = (bundle == null || (charSequence2 = bundle.getCharSequence(\"android.title\")) == null) ? null : charSequence2.toString();\n                    String str = \"\";\n                    if (string3 == null) {\n                        string3 = \"\";\n                    }\n                    String string4 = (bundle == null || (charSequence = bundle.getCharSequence(\"android.text\")) == null) ? null : charSequence.toString();\n                    if (string4 != null) {\n                        str = string4;\n                    }\n                    ffVar = new hc(key, packageName, postTime, string3, str, notification.getLargeIcon(), token, linkedHashMap);\n                    return (hc) (ffVar instanceof ff ? null : ffVar);\n                }\n            }\n            return null;\n        } catch (Throwable th) {\n            ffVar = new ff(th);\n        }\n    }",
+      "reported_total_bytes": null
+    }
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Static decompiler observations do not establish runtime behavior; the APK is never executed.",
+    "Method signatures use provider display types; DEX prototypes come from frozen JADX metadata. Display names may be aliases, and overload indices are local to this engine and artifact.",
+    "Class inventories use parsed metadata before code generation, including synthetic members that may be omitted from decompiled source. Source positions remain unknown.",
+    "Incoming reference totals count JADX using nodes. Direct invoke entries within a using method report raw DEX code-unit offsets and method indexes, but coverage is limited to those nodes and directly matched invokes; it does not establish every possible dynamic or reflective call site.",
+    "Manifest summaries are parsed once by REA's bridge from the exact root AndroidManifest.xml resource, using namespace-aware XML attributes; decoded XML is retained. APK signatures, split APKs, native libraries and Android runtime capture are not verified by this provider."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

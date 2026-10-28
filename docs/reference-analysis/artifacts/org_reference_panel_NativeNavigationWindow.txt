@@ -1,0 +1,873 @@
+Class #397            -
+  Class descriptor  : 'Lorg/reference/panel/NativeNavigationWindow;'
+  Access flags      : 0x0011 (PUBLIC FINAL)
+  Superclass        : 'Landroid/widget/FrameLayout;'
+  Interfaces        -
+  Static fields     -
+  Instance fields   -
+    #0              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'cornerRadius'
+      type          : 'F'
+      access        : 0x0002 (PRIVATE)
+    #1              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'embedded'
+      type          : 'Landroid/app/ActivityView;'
+      access        : 0x0012 (PRIVATE FINAL)
+    #2              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'opaqueCorners'
+      type          : 'Landroid/graphics/Region;'
+      access        : 0x0012 (PRIVATE FINAL)
+    #3              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'positionedClip'
+      type          : 'Landroid/graphics/Path;'
+      access        : 0x0012 (PRIVATE FINAL)
+    #4              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'released'
+      type          : 'Z'
+      access        : 0x0002 (PRIVATE)
+    #5              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'roundedWindow'
+      type          : 'Landroid/graphics/Region;'
+      access        : 0x0012 (PRIVATE FINAL)
+    #6              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'windowBounds'
+      type          : 'Landroid/graphics/Rect;'
+      access        : 0x0012 (PRIVATE FINAL)
+    #7              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'windowClip'
+      type          : 'Landroid/graphics/Path;'
+      access        : 0x0012 (PRIVATE FINAL)
+    #8              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'windowLocation'
+      type          : '[I'
+      access        : 0x0012 (PRIVATE FINAL)
+  Direct methods    -
+    #0              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : '<init>'
+      type          : '(Landroid/content/Context;Lorg/reference/panel/NativeNavigationWindow$Listener;)V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      code          -
+      registers     : 6
+      ins           : 3
+      outs          : 3
+      insns size    : 93 16-bit code units
+0a5db8:                                        |[0a5db8] org.reference.panel.NativeNavigationWindow.<init>:(Landroid/content/Context;Lorg/reference/panel/NativeNavigationWindow$Listener;)V
+0a5dc8: 7020 6003 4300                         |0000: invoke-direct {v3, v4}, Landroid/widget/FrameLayout;.<init>:(Landroid/content/Context;)V // method@0360
+0a5dce: 2200 7c00                              |0003: new-instance v0, Landroid/graphics/Path; // type@007c
+0a5dd2: 7010 9201 0000                         |0005: invoke-direct {v0}, Landroid/graphics/Path;.<init>:()V // method@0192
+0a5dd8: 5b30 fe06                              |0008: iput-object v0, v3, Lorg/reference/panel/NativeNavigationWindow;.windowClip:Landroid/graphics/Path; // field@06fe
+0a5ddc: 2200 7c00                              |000a: new-instance v0, Landroid/graphics/Path; // type@007c
+0a5de0: 7010 9201 0000                         |000c: invoke-direct {v0}, Landroid/graphics/Path;.<init>:()V // method@0192
+0a5de6: 5b30 fa06                              |000f: iput-object v0, v3, Lorg/reference/panel/NativeNavigationWindow;.positionedClip:Landroid/graphics/Path; // field@06fa
+0a5dea: 2200 8200                              |0011: new-instance v0, Landroid/graphics/Rect; // type@0082
+0a5dee: 7010 a501 0000                         |0013: invoke-direct {v0}, Landroid/graphics/Rect;.<init>:()V // method@01a5
+0a5df4: 5b30 fd06                              |0016: iput-object v0, v3, Lorg/reference/panel/NativeNavigationWindow;.windowBounds:Landroid/graphics/Rect; // field@06fd
+0a5df8: 2200 8500                              |0018: new-instance v0, Landroid/graphics/Region; // type@0085
+0a5dfc: 7010 b701 0000                         |001a: invoke-direct {v0}, Landroid/graphics/Region;.<init>:()V // method@01b7
+0a5e02: 5b30 f906                              |001d: iput-object v0, v3, Lorg/reference/panel/NativeNavigationWindow;.opaqueCorners:Landroid/graphics/Region; // field@06f9
+0a5e06: 2200 8500                              |001f: new-instance v0, Landroid/graphics/Region; // type@0085
+0a5e0a: 7010 b701 0000                         |0021: invoke-direct {v0}, Landroid/graphics/Region;.<init>:()V // method@01b7
+0a5e10: 5b30 fc06                              |0024: iput-object v0, v3, Lorg/reference/panel/NativeNavigationWindow;.roundedWindow:Landroid/graphics/Region; // field@06fc
+0a5e14: 1220                                   |0026: const/4 v0, #int 2 // #2
+0a5e16: 2300 cb03                              |0027: new-array v0, v0, [I // type@03cb
+0a5e1a: 5b30 ff06                              |0029: iput-object v0, v3, Lorg/reference/panel/NativeNavigationWindow;.windowLocation:[I // field@06ff
+0a5e1e: 1500 0600                              |002b: const/high16 v0, #int 393216 // #6
+0a5e22: 6e20 2c03 0300                         |002d: invoke-virtual {v3, v0}, Landroid/view/ViewGroup;.setDescendantFocusability:(I)V // method@032c
+0a5e28: 1201                                   |0030: const/4 v1, #int 0 // #0
+0a5e2a: 6e20 0203 1300                         |0031: invoke-virtual {v3, v1}, Landroid/view/View;.setFocusable:(Z)V // method@0302
+0a5e30: 6e20 0303 1300                         |0034: invoke-virtual {v3, v1}, Landroid/view/View;.setFocusableInTouchMode:(Z)V // method@0303
+0a5e36: 1242                                   |0037: const/4 v2, #int 4 // #4
+0a5e38: 6e20 0503 2300                         |0038: invoke-virtual {v3, v2}, Landroid/view/View;.setImportantForAccessibility:(I)V // method@0305
+0a5e3e: 2202 2800                              |003b: new-instance v2, Landroid/app/ActivityView; // type@0028
+0a5e42: 7020 6500 4200                         |003d: invoke-direct {v2, v4}, Landroid/app/ActivityView;.<init>:(Landroid/content/Context;)V // method@0065
+0a5e48: 5b32 f806                              |0040: iput-object v2, v3, Lorg/reference/panel/NativeNavigationWindow;.embedded:Landroid/app/ActivityView; // field@06f8
+0a5e4c: 6e20 0203 1200                         |0042: invoke-virtual {v2, v1}, Landroid/view/View;.setFocusable:(Z)V // method@0302
+0a5e52: 6e20 0303 1200                         |0045: invoke-virtual {v2, v1}, Landroid/view/View;.setFocusableInTouchMode:(Z)V // method@0303
+0a5e58: 6e20 2c03 0200                         |0048: invoke-virtual {v2, v0}, Landroid/view/ViewGroup;.setDescendantFocusability:(I)V // method@032c
+0a5e5e: 2204 1b03                              |004b: new-instance v4, Lorg/reference/panel/c; // type@031b
+0a5e62: 7030 e30c 3405                         |004d: invoke-direct {v4, v3, v5}, Lorg/reference/panel/c;.<init>:(Lorg/reference/panel/NativeNavigationWindow;Lorg/reference/panel/NativeNavigationWindow$Listener;)V // method@0ce3
+0a5e68: 6e20 6700 4200                         |0050: invoke-virtual {v2, v4}, Landroid/app/ActivityView;.setCallback:(Landroid/app/ActivityView$StateCallback;)V // method@0067
+0a5e6e: 2204 0501                              |0053: new-instance v4, Landroid/widget/FrameLayout$LayoutParams; // type@0105
+0a5e72: 12f5                                   |0055: const/4 v5, #int -1 // #ff
+0a5e74: 7030 5e03 5405                         |0056: invoke-direct {v4, v5, v5}, Landroid/widget/FrameLayout$LayoutParams;.<init>:(II)V // method@035e
+0a5e7a: 6e30 2103 2304                         |0059: invoke-virtual {v3, v2, v4}, Landroid/view/ViewGroup;.addView:(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V // method@0321
+0a5e80: 0e00                                   |005c: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+        0x0042 line=67
+        0x0043 line=68
+        0x0044 line=69
+        0x0045 line=70
+        0x0046 line=71
+        0x0047 line=72
+        0x0048 line=73
+        0x0049 line=74
+        0x004a line=75
+        0x004b line=76
+        0x004c line=77
+        0x004d line=78
+        0x004e line=79
+        0x004f line=80
+        0x0050 line=81
+        0x0051 line=82
+        0x0052 line=83
+        0x0053 line=84
+        0x0054 line=85
+        0x0055 line=86
+        0x0056 line=87
+        0x0057 line=88
+        0x0058 line=89
+        0x0059 line=90
+        0x005a line=91
+        0x005b line=92
+        0x005c line=93
+      locals        :
+        0x0000 - 0x005d reg=3 this Lorg/reference/panel/NativeNavigationWindow;
+        0x0000 - 0x005d reg=4 (null) Landroid/content/Context;
+        0x0000 - 0x005d reg=5 (null) Lorg/reference/panel/NativeNavigationWindow$Listener;
+
+    #1              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'a'
+      type          : '(Lorg/reference/panel/NativeNavigationWindow;)Z'
+      access        : 0x1049 (PUBLIC STATIC BRIDGE SYNTHETIC)
+      code          -
+      registers     : 1
+      ins           : 1
+      outs          : 0
+      insns size    : 3 16-bit code units
+0a5c90:                                        |[0a5c90] org.reference.panel.NativeNavigationWindow.a:(Lorg/reference/panel/NativeNavigationWindow;)Z
+0a5ca0: 5500 fb06                              |0000: iget-boolean v0, v0, Lorg/reference/panel/NativeNavigationWindow;.released:Z // field@06fb
+0a5ca4: 0f00                                   |0002: return v0
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+      locals        :
+        0x0000 - 0x0003 reg=0 (null) Lorg/reference/panel/NativeNavigationWindow;
+
+    #2              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'surface'
+      type          : '(Landroid/view/ViewGroup;)Landroid/view/SurfaceView;'
+      access        : 0x000a (PRIVATE STATIC)
+      code          -
+      registers     : 4
+      ins           : 1
+      outs          : 2
+      insns size    : 36 16-bit code units
+0a5c38:                                        |[0a5c38] org.reference.panel.NativeNavigationWindow.surface:(Landroid/view/ViewGroup;)Landroid/view/SurfaceView;
+0a5c48: 1200                                   |0000: const/4 v0, #int 0 // #0
+0a5c4a: 6e10 2503 0300                         |0001: invoke-virtual {v3}, Landroid/view/ViewGroup;.getChildCount:()I // method@0325
+0a5c50: 0a01                                   |0004: move-result v1
+0a5c52: 3510 1d00                              |0005: if-ge v0, v1, 0022 // +001d
+0a5c56: 6e20 2403 0300                         |0007: invoke-virtual {v3, v0}, Landroid/view/ViewGroup;.getChildAt:(I)Landroid/view/View; // method@0324
+0a5c5c: 0c01                                   |000a: move-result-object v1
+0a5c5e: 2012 e100                              |000b: instance-of v2, v1, Landroid/view/SurfaceView; // type@00e1
+0a5c62: 3802 0500                              |000d: if-eqz v2, 0012 // +0005
+0a5c66: 1f01 e100                              |000f: check-cast v1, Landroid/view/SurfaceView; // type@00e1
+0a5c6a: 1101                                   |0011: return-object v1
+0a5c6c: 2012 ec00                              |0012: instance-of v2, v1, Landroid/view/ViewGroup; // type@00ec
+0a5c70: 3802 0b00                              |0014: if-eqz v2, 001f // +000b
+0a5c74: 1f01 ec00                              |0016: check-cast v1, Landroid/view/ViewGroup; // type@00ec
+0a5c78: 7110 ae0c 0100                         |0018: invoke-static {v1}, Lorg/reference/panel/NativeNavigationWindow;.surface:(Landroid/view/ViewGroup;)Landroid/view/SurfaceView; // method@0cae
+0a5c7e: 0c01                                   |001b: move-result-object v1
+0a5c80: 3801 0300                              |001c: if-eqz v1, 001f // +0003
+0a5c84: 1101                                   |001e: return-object v1
+0a5c86: d800 0001                              |001f: add-int/lit8 v0, v0, #int 1 // #01
+0a5c8a: 28e0                                   |0021: goto 0001 // -0020
+0a5c8c: 1203                                   |0022: const/4 v3, #int 0 // #0
+0a5c8e: 1103                                   |0023: return-object v3
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+      locals        :
+        0x0000 - 0x0024 reg=3 (null) Landroid/view/ViewGroup;
+
+    #3              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'updateWindowClip'
+      type          : '()V'
+      access        : 0x0002 (PRIVATE)
+      code          -
+      registers     : 7
+      ins           : 1
+      outs          : 5
+      insns size    : 67 16-bit code units
+0a5fb8:                                        |[0a5fb8] org.reference.panel.NativeNavigationWindow.updateWindowClip:()V
+0a5fc8: 5260 f706                              |0000: iget v0, v6, Lorg/reference/panel/NativeNavigationWindow;.cornerRadius:F // field@06f7
+0a5fcc: 6e10 e102 0600                         |0002: invoke-virtual {v6}, Landroid/view/View;.getWidth:()I // method@02e1
+0a5fd2: 0a01                                   |0005: move-result v1
+0a5fd4: 6e10 d002 0600                         |0006: invoke-virtual {v6}, Landroid/view/View;.getHeight:()I // method@02d0
+0a5fda: 0a02                                   |0009: move-result v2
+0a5fdc: 7120 7a07 2100                         |000a: invoke-static {v1, v2}, Ljava/lang/Math;.min:(II)I // method@077a
+0a5fe2: 0a01                                   |000d: move-result v1
+0a5fe4: 8211                                   |000e: int-to-float v1, v1
+0a5fe6: 1502 0040                              |000f: const/high16 v2, #int 1073741824 // #4000
+0a5fea: c921                                   |0011: div-float/2addr v1, v2
+0a5fec: 7120 7907 1000                         |0012: invoke-static {v0, v1}, Ljava/lang/Math;.min:(FF)F // method@0779
+0a5ff2: 0a00                                   |0015: move-result v0
+0a5ff4: 5461 fe06                              |0016: iget-object v1, v6, Lorg/reference/panel/NativeNavigationWindow;.windowClip:Landroid/graphics/Path; // field@06fe
+0a5ff8: 6e10 9d01 0100                         |0018: invoke-virtual {v1}, Landroid/graphics/Path;.reset:()V // method@019d
+0a5ffe: 5461 fe06                              |001b: iget-object v1, v6, Lorg/reference/panel/NativeNavigationWindow;.windowClip:Landroid/graphics/Path; // field@06fe
+0a6002: 2202 8300                              |001d: new-instance v2, Landroid/graphics/RectF; // type@0083
+0a6006: 6e10 e102 0600                         |001f: invoke-virtual {v6}, Landroid/view/View;.getWidth:()I // method@02e1
+0a600c: 0a03                                   |0022: move-result v3
+0a600e: 8233                                   |0023: int-to-float v3, v3
+0a6010: 6e10 d002 0600                         |0024: invoke-virtual {v6}, Landroid/view/View;.getHeight:()I // method@02d0
+0a6016: 0a04                                   |0027: move-result v4
+0a6018: 8244                                   |0028: int-to-float v4, v4
+0a601a: 1205                                   |0029: const/4 v5, #int 0 // #0
+0a601c: 7054 ac01 5235                         |002a: invoke-direct {v2, v5, v5, v3, v4}, Landroid/graphics/RectF;.<init>:(FFFF)V // method@01ac
+0a6022: 6203 6c00                              |002d: sget-object v3, Landroid/graphics/Path$Direction;.CW:Landroid/graphics/Path$Direction; // field@006c
+0a6026: 6e53 9401 2100                         |002f: invoke-virtual {v1, v2, v0, v0, v3}, Landroid/graphics/Path;.addRoundRect:(Landroid/graphics/RectF;FFLandroid/graphics/Path$Direction;)V // method@0194
+0a602c: 6e10 e202 0600                         |0032: invoke-virtual {v6}, Landroid/view/View;.invalidate:()V // method@02e2
+0a6032: 6e10 d602 0600                         |0035: invoke-virtual {v6}, Landroid/view/View;.getParent:()Landroid/view/ViewParent; // method@02d6
+0a6038: 0c00                                   |0038: move-result-object v0
+0a603a: 3800 0900                              |0039: if-eqz v0, 0042 // +0009
+0a603e: 6e10 d602 0600                         |003b: invoke-virtual {v6}, Landroid/view/View;.getParent:()Landroid/view/ViewParent; // method@02d6
+0a6044: 0c00                                   |003e: move-result-object v0
+0a6046: 7220 3203 6000                         |003f: invoke-interface {v0, v6}, Landroid/view/ViewParent;.requestTransparentRegion:(Landroid/view/View;)V // method@0332
+0a604c: 0e00                                   |0042: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+        0x0042 line=67
+      locals        :
+        0x0000 - 0x0043 reg=6 this Lorg/reference/panel/NativeNavigationWindow;
+
+  Virtual methods   -
+    #0              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'close'
+      type          : '()V'
+      access        : 0x0001 (PUBLIC)
+      code          -
+      registers     : 2
+      ins           : 1
+      outs          : 1
+      insns size    : 22 16-bit code units
+0a5e84:                                        |[0a5e84] org.reference.panel.NativeNavigationWindow.close:()V
+0a5e94: 5510 fb06                              |0000: iget-boolean v0, v1, Lorg/reference/panel/NativeNavigationWindow;.released:Z // field@06fb
+0a5e98: 3800 0300                              |0002: if-eqz v0, 0005 // +0003
+0a5e9c: 0e00                                   |0004: return-void
+0a5e9e: 1210                                   |0005: const/4 v0, #int 1 // #1
+0a5ea0: 5c10 fb06                              |0006: iput-boolean v0, v1, Lorg/reference/panel/NativeNavigationWindow;.released:Z // field@06fb
+0a5ea4: 5410 f806                              |0008: iget-object v0, v1, Lorg/reference/panel/NativeNavigationWindow;.embedded:Landroid/app/ActivityView; // field@06f8
+0a5ea8: 6e10 6600 0000                         |000a: invoke-virtual {v0}, Landroid/app/ActivityView;.release:()V // method@0066
+0a5eae: 6e10 2903 0100                         |000d: invoke-virtual {v1}, Landroid/view/ViewGroup;.removeAllViews:()V // method@0329
+0a5eb4: 0e00                                   |0010: return-void
+0a5eb6: 0d00                                   |0011: move-exception v0
+0a5eb8: 6e10 2903 0100                         |0012: invoke-virtual {v1}, Landroid/view/ViewGroup;.removeAllViews:()V // method@0329
+0a5ebe: 2700                                   |0015: throw v0
+      catches       : 1
+        0x0008 - 0x000d
+          <any> -> 0x0011
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+      locals        :
+        0x0000 - 0x0016 reg=1 this Lorg/reference/panel/NativeNavigationWindow;
+
+    #1              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'dispatchDraw'
+      type          : '(Landroid/graphics/Canvas;)V'
+      access        : 0x0001 (PUBLIC)
+      code          -
+      registers     : 4
+      ins           : 2
+      outs          : 2
+      insns size    : 16 16-bit code units
+0a5ecc:                                        |[0a5ecc] org.reference.panel.NativeNavigationWindow.dispatchDraw:(Landroid/graphics/Canvas;)V
+0a5edc: 6e10 5d01 0300                         |0000: invoke-virtual {v3}, Landroid/graphics/Canvas;.save:()I // method@015d
+0a5ee2: 0a00                                   |0003: move-result v0
+0a5ee4: 5421 fe06                              |0004: iget-object v1, v2, Lorg/reference/panel/NativeNavigationWindow;.windowClip:Landroid/graphics/Path; // field@06fe
+0a5ee8: 6e20 4901 1300                         |0006: invoke-virtual {v3, v1}, Landroid/graphics/Canvas;.clipPath:(Landroid/graphics/Path;)Z // method@0149
+0a5eee: 6f20 c902 3200                         |0009: invoke-super {v2, v3}, Landroid/view/View;.dispatchDraw:(Landroid/graphics/Canvas;)V // method@02c9
+0a5ef4: 6e20 5b01 0300                         |000c: invoke-virtual {v3, v0}, Landroid/graphics/Canvas;.restoreToCount:(I)V // method@015b
+0a5efa: 0e00                                   |000f: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+      locals        :
+        0x0000 - 0x0010 reg=2 this Lorg/reference/panel/NativeNavigationWindow;
+        0x0000 - 0x0010 reg=3 (null) Landroid/graphics/Canvas;
+
+    #2              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'dispatchGenericMotionEvent'
+      type          : '(Landroid/view/MotionEvent;)Z'
+      access        : 0x0001 (PUBLIC)
+      code          -
+      registers     : 2
+      ins           : 2
+      outs          : 0
+      insns size    : 2 16-bit code units
+0a5ca8:                                        |[0a5ca8] org.reference.panel.NativeNavigationWindow.dispatchGenericMotionEvent:(Landroid/view/MotionEvent;)Z
+0a5cb8: 1200                                   |0000: const/4 v0, #int 0 // #0
+0a5cba: 0f00                                   |0001: return v0
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+      locals        :
+        0x0000 - 0x0002 reg=0 this Lorg/reference/panel/NativeNavigationWindow;
+        0x0000 - 0x0002 reg=1 (null) Landroid/view/MotionEvent;
+
+    #3              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'dispatchKeyEvent'
+      type          : '(Landroid/view/KeyEvent;)Z'
+      access        : 0x0001 (PUBLIC)
+      code          -
+      registers     : 2
+      ins           : 2
+      outs          : 0
+      insns size    : 2 16-bit code units
+0a5cbc:                                        |[0a5cbc] org.reference.panel.NativeNavigationWindow.dispatchKeyEvent:(Landroid/view/KeyEvent;)Z
+0a5ccc: 1200                                   |0000: const/4 v0, #int 0 // #0
+0a5cce: 0f00                                   |0001: return v0
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+      locals        :
+        0x0000 - 0x0002 reg=0 this Lorg/reference/panel/NativeNavigationWindow;
+        0x0000 - 0x0002 reg=1 (null) Landroid/view/KeyEvent;
+
+    #4              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'dispatchTouchEvent'
+      type          : '(Landroid/view/MotionEvent;)Z'
+      access        : 0x0001 (PUBLIC)
+      code          -
+      registers     : 2
+      ins           : 2
+      outs          : 0
+      insns size    : 2 16-bit code units
+0a5cd0:                                        |[0a5cd0] org.reference.panel.NativeNavigationWindow.dispatchTouchEvent:(Landroid/view/MotionEvent;)Z
+0a5ce0: 1200                                   |0000: const/4 v0, #int 0 // #0
+0a5ce2: 0f00                                   |0001: return v0
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+      locals        :
+        0x0000 - 0x0002 reg=0 this Lorg/reference/panel/NativeNavigationWindow;
+        0x0000 - 0x0002 reg=1 (null) Landroid/view/MotionEvent;
+
+    #5              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'gatherTransparentRegion'
+      type          : '(Landroid/graphics/Region;)Z'
+      access        : 0x0001 (PUBLIC)
+      code          -
+      registers     : 8
+      ins           : 2
+      outs          : 5
+      insns size    : 98 16-bit code units
+0a5ce4:                                        |[0a5ce4] org.reference.panel.NativeNavigationWindow.gatherTransparentRegion:(Landroid/graphics/Region;)Z
+0a5cf4: 6f20 2303 7600                         |0000: invoke-super {v6, v7}, Landroid/view/ViewGroup;.gatherTransparentRegion:(Landroid/graphics/Region;)Z // method@0323
+0a5cfa: 0a00                                   |0003: move-result v0
+0a5cfc: 3807 5d00                              |0004: if-eqz v7, 0061 // +005d
+0a5d00: 5261 f706                              |0006: iget v1, v6, Lorg/reference/panel/NativeNavigationWindow;.cornerRadius:F // field@06f7
+0a5d04: 1202                                   |0008: const/4 v2, #int 0 // #0
+0a5d06: 2d01 0102                              |0009: cmpl-float v1, v1, v2
+0a5d0a: 3d01 5600                              |000b: if-lez v1, 0061 // +0056
+0a5d0e: 6e10 e102 0600                         |000d: invoke-virtual {v6}, Landroid/view/View;.getWidth:()I // method@02e1
+0a5d14: 0a01                                   |0010: move-result v1
+0a5d16: 3d01 5000                              |0011: if-lez v1, 0061 // +0050
+0a5d1a: 6e10 d002 0600                         |0013: invoke-virtual {v6}, Landroid/view/View;.getHeight:()I // method@02d0
+0a5d20: 0a01                                   |0016: move-result v1
+0a5d22: 3d01 4a00                              |0017: if-lez v1, 0061 // +004a
+0a5d26: 5461 ff06                              |0019: iget-object v1, v6, Lorg/reference/panel/NativeNavigationWindow;.windowLocation:[I // field@06ff
+0a5d2a: 6e20 d202 1600                         |001b: invoke-virtual {v6, v1}, Landroid/view/View;.getLocationInWindow:([I)V // method@02d2
+0a5d30: 5461 ff06                              |001e: iget-object v1, v6, Lorg/reference/panel/NativeNavigationWindow;.windowLocation:[I // field@06ff
+0a5d34: 1202                                   |0020: const/4 v2, #int 0 // #0
+0a5d36: 4402 0102                              |0021: aget v2, v1, v2
+0a5d3a: 1213                                   |0023: const/4 v3, #int 1 // #1
+0a5d3c: 4401 0103                              |0024: aget v1, v1, v3
+0a5d40: 5463 fd06                              |0026: iget-object v3, v6, Lorg/reference/panel/NativeNavigationWindow;.windowBounds:Landroid/graphics/Rect; // field@06fd
+0a5d44: 6e10 e102 0600                         |0028: invoke-virtual {v6}, Landroid/view/View;.getWidth:()I // method@02e1
+0a5d4a: 0a04                                   |002b: move-result v4
+0a5d4c: b024                                   |002c: add-int/2addr v4, v2
+0a5d4e: 6e10 d002 0600                         |002d: invoke-virtual {v6}, Landroid/view/View;.getHeight:()I // method@02d0
+0a5d54: 0a05                                   |0030: move-result v5
+0a5d56: b015                                   |0031: add-int/2addr v5, v1
+0a5d58: 6e55 a901 2341                         |0032: invoke-virtual {v3, v2, v1, v4, v5}, Landroid/graphics/Rect;.set:(IIII)V // method@01a9
+0a5d5e: 5463 f906                              |0035: iget-object v3, v6, Lorg/reference/panel/NativeNavigationWindow;.opaqueCorners:Landroid/graphics/Region; // field@06f9
+0a5d62: 5464 fd06                              |0037: iget-object v4, v6, Lorg/reference/panel/NativeNavigationWindow;.windowBounds:Landroid/graphics/Rect; // field@06fd
+0a5d66: 6e20 b901 4300                         |0039: invoke-virtual {v3, v4}, Landroid/graphics/Region;.set:(Landroid/graphics/Rect;)Z // method@01b9
+0a5d6c: 5463 fa06                              |003c: iget-object v3, v6, Lorg/reference/panel/NativeNavigationWindow;.positionedClip:Landroid/graphics/Path; // field@06fa
+0a5d70: 5464 fe06                              |003e: iget-object v4, v6, Lorg/reference/panel/NativeNavigationWindow;.windowClip:Landroid/graphics/Path; // field@06fe
+0a5d74: 6e20 9e01 4300                         |0040: invoke-virtual {v3, v4}, Landroid/graphics/Path;.set:(Landroid/graphics/Path;)V // method@019e
+0a5d7a: 5463 fa06                              |0043: iget-object v3, v6, Lorg/reference/panel/NativeNavigationWindow;.positionedClip:Landroid/graphics/Path; // field@06fa
+0a5d7e: 8222                                   |0045: int-to-float v2, v2
+0a5d80: 8211                                   |0046: int-to-float v1, v1
+0a5d82: 6e30 9a01 2301                         |0047: invoke-virtual {v3, v2, v1}, Landroid/graphics/Path;.offset:(FF)V // method@019a
+0a5d88: 5461 fc06                              |004a: iget-object v1, v6, Lorg/reference/panel/NativeNavigationWindow;.roundedWindow:Landroid/graphics/Region; // field@06fc
+0a5d8c: 5462 fa06                              |004c: iget-object v2, v6, Lorg/reference/panel/NativeNavigationWindow;.positionedClip:Landroid/graphics/Path; // field@06fa
+0a5d90: 5463 f906                              |004e: iget-object v3, v6, Lorg/reference/panel/NativeNavigationWindow;.opaqueCorners:Landroid/graphics/Region; // field@06f9
+0a5d94: 6e30 ba01 2103                         |0050: invoke-virtual {v1, v2, v3}, Landroid/graphics/Region;.setPath:(Landroid/graphics/Path;Landroid/graphics/Region;)Z // method@01ba
+0a5d9a: 5461 f906                              |0053: iget-object v1, v6, Lorg/reference/panel/NativeNavigationWindow;.opaqueCorners:Landroid/graphics/Region; // field@06f9
+0a5d9e: 5462 fc06                              |0055: iget-object v2, v6, Lorg/reference/panel/NativeNavigationWindow;.roundedWindow:Landroid/graphics/Region; // field@06fc
+0a5da2: 6203 7c00                              |0057: sget-object v3, Landroid/graphics/Region$Op;.DIFFERENCE:Landroid/graphics/Region$Op; // field@007c
+0a5da6: 6e30 b801 2103                         |0059: invoke-virtual {v1, v2, v3}, Landroid/graphics/Region;.op:(Landroid/graphics/Region;Landroid/graphics/Region$Op;)Z // method@01b8
+0a5dac: 5466 f906                              |005c: iget-object v6, v6, Lorg/reference/panel/NativeNavigationWindow;.opaqueCorners:Landroid/graphics/Region; // field@06f9
+0a5db0: 6e30 b801 6703                         |005e: invoke-virtual {v7, v6, v3}, Landroid/graphics/Region;.op:(Landroid/graphics/Region;Landroid/graphics/Region$Op;)Z // method@01b8
+0a5db6: 0f00                                   |0061: return v0
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+        0x0042 line=67
+        0x0043 line=68
+        0x0044 line=69
+        0x0045 line=70
+        0x0046 line=71
+        0x0047 line=72
+        0x0048 line=73
+        0x0049 line=74
+        0x004a line=75
+        0x004b line=76
+        0x004c line=77
+        0x004d line=78
+        0x004e line=79
+        0x004f line=80
+        0x0050 line=81
+        0x0051 line=82
+        0x0052 line=83
+        0x0053 line=84
+        0x0054 line=85
+        0x0055 line=86
+        0x0056 line=87
+        0x0057 line=88
+        0x0058 line=89
+        0x0059 line=90
+        0x005a line=91
+        0x005b line=92
+        0x005c line=93
+        0x005d line=94
+        0x005e line=95
+        0x005f line=96
+        0x0060 line=97
+        0x0061 line=98
+      locals        :
+        0x0000 - 0x0062 reg=6 this Lorg/reference/panel/NativeNavigationWindow;
+        0x0000 - 0x0062 reg=7 (null) Landroid/graphics/Region;
+
+    #6              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'launch'
+      type          : '(Landroid/content/Intent;)V'
+      access        : 0x0001 (PUBLIC)
+      code          -
+      registers     : 3
+      ins           : 2
+      outs          : 2
+      insns size    : 18 16-bit code units
+0a5efc:                                        |[0a5efc] org.reference.panel.NativeNavigationWindow.launch:(Landroid/content/Intent;)V
+0a5f0c: 5510 fb06                              |0000: iget-boolean v0, v1, Lorg/reference/panel/NativeNavigationWindow;.released:Z // field@06fb
+0a5f10: 3900 0800                              |0002: if-nez v0, 000a // +0008
+0a5f14: 5411 f806                              |0004: iget-object v1, v1, Lorg/reference/panel/NativeNavigationWindow;.embedded:Landroid/app/ActivityView; // field@06f8
+0a5f18: 6e20 6800 2100                         |0006: invoke-virtual {v1, v2}, Landroid/app/ActivityView;.startActivity:(Landroid/content/Intent;)V // method@0068
+0a5f1e: 0e00                                   |0009: return-void
+0a5f20: 2201 f501                              |000a: new-instance v1, Ljava/lang/IllegalStateException; // type@01f5
+0a5f24: 1a02 ac06                              |000c: const-string v2, "Preview already released" // string@06ac
+0a5f28: 7020 5b07 2100                         |000e: invoke-direct {v1, v2}, Ljava/lang/IllegalStateException;.<init>:(Ljava/lang/String;)V // method@075b
+0a5f2e: 2701                                   |0011: throw v1
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+      locals        :
+        0x0000 - 0x0012 reg=1 this Lorg/reference/panel/NativeNavigationWindow;
+        0x0000 - 0x0012 reg=2 (null) Landroid/content/Intent;
+
+    #7              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'onSizeChanged'
+      type          : '(IIII)V'
+      access        : 0x0001 (PUBLIC)
+      code          -
+      registers     : 5
+      ins           : 5
+      outs          : 5
+      insns size    : 7 16-bit code units
+0a5f30:                                        |[0a5f30] org.reference.panel.NativeNavigationWindow.onSizeChanged:(IIII)V
+0a5f40: 6f54 ed02 1032                         |0000: invoke-super {v0, v1, v2, v3, v4}, Landroid/view/View;.onSizeChanged:(IIII)V // method@02ed
+0a5f46: 7010 af0c 0000                         |0003: invoke-direct {v0}, Lorg/reference/panel/NativeNavigationWindow;.updateWindowClip:()V // method@0caf
+0a5f4c: 0e00                                   |0006: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+      locals        :
+        0x0000 - 0x0007 reg=0 this Lorg/reference/panel/NativeNavigationWindow;
+        0x0000 - 0x0007 reg=1 (null) I
+        0x0000 - 0x0007 reg=2 (null) I
+        0x0000 - 0x0007 reg=3 (null) I
+        0x0000 - 0x0007 reg=4 (null) I
+
+    #8              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'setCornerRadius'
+      type          : '(F)V'
+      access        : 0x0001 (PUBLIC)
+      code          -
+      registers     : 3
+      ins           : 2
+      outs          : 2
+      insns size    : 11 16-bit code units
+0a5f50:                                        |[0a5f50] org.reference.panel.NativeNavigationWindow.setCornerRadius:(F)V
+0a5f60: 1200                                   |0000: const/4 v0, #int 0 // #0
+0a5f62: 7120 7507 2000                         |0001: invoke-static {v0, v2}, Ljava/lang/Math;.max:(FF)F // method@0775
+0a5f68: 0a02                                   |0004: move-result v2
+0a5f6a: 5912 f706                              |0005: iput v2, v1, Lorg/reference/panel/NativeNavigationWindow;.cornerRadius:F // field@06f7
+0a5f6e: 7010 af0c 0100                         |0007: invoke-direct {v1}, Lorg/reference/panel/NativeNavigationWindow;.updateWindowClip:()V // method@0caf
+0a5f74: 0e00                                   |000a: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+      locals        :
+        0x0000 - 0x000b reg=1 this Lorg/reference/panel/NativeNavigationWindow;
+        0x0000 - 0x000b reg=2 (null) F
+
+    #9              : (in Lorg/reference/panel/NativeNavigationWindow;)
+      name          : 'showWindow'
+      type          : '(Z)V'
+      access        : 0x0001 (PUBLIC)
+      code          -
+      registers     : 3
+      ins           : 2
+      outs          : 2
+      insns size    : 23 16-bit code units
+0a5f78:                                        |[0a5f78] org.reference.panel.NativeNavigationWindow.showWindow:(Z)V
+0a5f88: 5410 f806                              |0000: iget-object v0, v1, Lorg/reference/panel/NativeNavigationWindow;.embedded:Landroid/app/ActivityView; // field@06f8
+0a5f8c: 7110 ae0c 0000                         |0002: invoke-static {v0}, Lorg/reference/panel/NativeNavigationWindow;.surface:(Landroid/view/ViewGroup;)Landroid/view/SurfaceView; // method@0cae
+0a5f92: 0c00                                   |0005: move-result-object v0
+0a5f94: 3800 0500                              |0006: if-eqz v0, 000b // +0005
+0a5f98: 6e20 be02 2000                         |0008: invoke-virtual {v0, v2}, Landroid/view/SurfaceView;.setZOrderMediaOverlay:(Z)V // method@02be
+0a5f9e: 5411 f806                              |000b: iget-object v1, v1, Lorg/reference/panel/NativeNavigationWindow;.embedded:Landroid/app/ActivityView; // field@06f8
+0a5fa2: 3802 0400                              |000d: if-eqz v2, 0011 // +0004
+0a5fa6: 1202                                   |000f: const/4 v2, #int 0 // #0
+0a5fa8: 2803                                   |0010: goto 0013 // +0003
+0a5faa: 1302 0800                              |0011: const/16 v2, #int 8 // #8
+0a5fae: 6e20 1803 2100                         |0013: invoke-virtual {v1, v2}, Landroid/view/View;.setVisibility:(I)V // method@0318
+0a5fb4: 0e00                                   |0016: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+      locals        :
+        0x0000 - 0x0017 reg=1 this Lorg/reference/panel/NativeNavigationWindow;
+        0x0000 - 0x0017 reg=2 (null) Z
+
+  source_file_idx   : 4152 (r8-map-id-df02db20992efcdad8c8628fa158af402193d9214b2257c75897211101eb46a6)

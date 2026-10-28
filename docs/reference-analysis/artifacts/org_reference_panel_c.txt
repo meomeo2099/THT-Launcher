@@ -1,0 +1,205 @@
+Class #404            -
+  Class descriptor  : 'Lorg/reference/panel/c;'
+  Access flags      : 0x0011 (PUBLIC FINAL)
+  Superclass        : 'Landroid/app/ActivityView$StateCallback;'
+  Interfaces        -
+  Static fields     -
+  Instance fields   -
+    #0              : (in Lorg/reference/panel/c;)
+      name          : 'a'
+      type          : 'Lorg/reference/panel/NativeNavigationWindow$Listener;'
+      access        : 0x1011 (PUBLIC FINAL SYNTHETIC)
+    #1              : (in Lorg/reference/panel/c;)
+      name          : 'b'
+      type          : 'Lorg/reference/panel/NativeNavigationWindow;'
+      access        : 0x1011 (PUBLIC FINAL SYNTHETIC)
+  Direct methods    -
+    #0              : (in Lorg/reference/panel/c;)
+      name          : '<init>'
+      type          : '(Lorg/reference/panel/NativeNavigationWindow;Lorg/reference/panel/NativeNavigationWindow$Listener;)V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      code          -
+      registers     : 3
+      ins           : 3
+      outs          : 1
+      insns size    : 8 16-bit code units
+0a5b58:                                        |[0a5b58] org.reference.panel.c.<init>:(Lorg/reference/panel/NativeNavigationWindow;Lorg/reference/panel/NativeNavigationWindow$Listener;)V
+0a5b68: 5b02 2a07                              |0000: iput-object v2, v0, Lorg/reference/panel/c;.a:Lorg/reference/panel/NativeNavigationWindow$Listener; // field@072a
+0a5b6c: 5b01 2b07                              |0002: iput-object v1, v0, Lorg/reference/panel/c;.b:Lorg/reference/panel/NativeNavigationWindow; // field@072b
+0a5b70: 7010 6400 0000                         |0004: invoke-direct {v0}, Landroid/app/ActivityView$StateCallback;.<init>:()V // method@0064
+0a5b76: 0e00                                   |0007: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+      locals        :
+        0x0000 - 0x0008 reg=0 this Lorg/reference/panel/c;
+        0x0000 - 0x0008 reg=1 (null) Lorg/reference/panel/NativeNavigationWindow;
+        0x0000 - 0x0008 reg=2 (null) Lorg/reference/panel/NativeNavigationWindow$Listener;
+
+  Virtual methods   -
+    #0              : (in Lorg/reference/panel/c;)
+      name          : 'onActivityViewDestroyed'
+      type          : '(Landroid/app/ActivityView;)V'
+      access        : 0x0001 (PUBLIC)
+      code          -
+      registers     : 2
+      ins           : 2
+      outs          : 1
+      insns size    : 14 16-bit code units
+0a5b78:                                        |[0a5b78] org.reference.panel.c.onActivityViewDestroyed:(Landroid/app/ActivityView;)V
+0a5b88: 5401 2b07                              |0000: iget-object v1, v0, Lorg/reference/panel/c;.b:Lorg/reference/panel/NativeNavigationWindow; // field@072b
+0a5b8c: 7110 a30c 0100                         |0002: invoke-static {v1}, Lorg/reference/panel/NativeNavigationWindow;.a:(Lorg/reference/panel/NativeNavigationWindow;)Z // method@0ca3
+0a5b92: 0a01                                   |0005: move-result v1
+0a5b94: 3901 0700                              |0006: if-nez v1, 000d // +0007
+0a5b98: 5400 2a07                              |0008: iget-object v0, v0, Lorg/reference/panel/c;.a:Lorg/reference/panel/NativeNavigationWindow$Listener; // field@072a
+0a5b9c: 7210 9f0c 0000                         |000a: invoke-interface {v0}, Lorg/reference/panel/NativeNavigationWindow$Listener;.destroyed:()V // method@0c9f
+0a5ba2: 0e00                                   |000d: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+      locals        :
+        0x0000 - 0x000e reg=0 this Lorg/reference/panel/c;
+        0x0000 - 0x000e reg=1 (null) Landroid/app/ActivityView;
+
+    #1              : (in Lorg/reference/panel/c;)
+      name          : 'onActivityViewReady'
+      type          : '(Landroid/app/ActivityView;)V'
+      access        : 0x0001 (PUBLIC)
+      code          -
+      registers     : 2
+      ins           : 2
+      outs          : 1
+      insns size    : 14 16-bit code units
+0a5ba4:                                        |[0a5ba4] org.reference.panel.c.onActivityViewReady:(Landroid/app/ActivityView;)V
+0a5bb4: 5401 2b07                              |0000: iget-object v1, v0, Lorg/reference/panel/c;.b:Lorg/reference/panel/NativeNavigationWindow; // field@072b
+0a5bb8: 7110 a30c 0100                         |0002: invoke-static {v1}, Lorg/reference/panel/NativeNavigationWindow;.a:(Lorg/reference/panel/NativeNavigationWindow;)Z // method@0ca3
+0a5bbe: 0a01                                   |0005: move-result v1
+0a5bc0: 3901 0700                              |0006: if-nez v1, 000d // +0007
+0a5bc4: 5400 2a07                              |0008: iget-object v0, v0, Lorg/reference/panel/c;.a:Lorg/reference/panel/NativeNavigationWindow$Listener; // field@072a
+0a5bc8: 7210 a00c 0000                         |000a: invoke-interface {v0}, Lorg/reference/panel/NativeNavigationWindow$Listener;.ready:()V // method@0ca0
+0a5bce: 0e00                                   |000d: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+      locals        :
+        0x0000 - 0x000e reg=0 this Lorg/reference/panel/c;
+        0x0000 - 0x000e reg=1 (null) Landroid/app/ActivityView;
+
+    #2              : (in Lorg/reference/panel/c;)
+      name          : 'onTaskMovedToFront'
+      type          : '(Landroid/app/ActivityManager$StackInfo;)V'
+      access        : 0x0001 (PUBLIC)
+      code          -
+      registers     : 10
+      ins           : 2
+      outs          : 6
+      insns size    : 43 16-bit code units
+0a5bd0:                                        |[0a5bd0] org.reference.panel.c.onTaskMovedToFront:(Landroid/app/ActivityManager$StackInfo;)V
+0a5be0: 3809 2a00                              |0000: if-eqz v9, 002a // +002a
+0a5be4: 5490 3f00                              |0002: iget-object v0, v9, Landroid/app/ActivityManager$StackInfo;.taskIds:[I // field@003f
+0a5be8: 3800 2600                              |0004: if-eqz v0, 002a // +0026
+0a5bec: 2101                                   |0006: array-length v1, v0
+0a5bee: 3901 0300                              |0007: if-nez v1, 000a // +0003
+0a5bf2: 2821                                   |0009: goto 002a // +0021
+0a5bf4: 5295 3e00                              |000a: iget v5, v9, Landroid/app/ActivityManager$StackInfo;.displayId:I // field@003e
+0a5bf8: 2101                                   |000c: array-length v1, v0
+0a5bfa: d801 01ff                              |000d: add-int/lit8 v1, v1, #int -1 // #ff
+0a5bfe: 4406 0001                              |000f: aget v6, v0, v1
+0a5c02: 5499 4000                              |0011: iget-object v9, v9, Landroid/app/ActivityManager$StackInfo;.topActivity:Landroid/content/ComponentName; // field@0040
+0a5c06: 3909 0500                              |0013: if-nez v9, 0018 // +0005
+0a5c0a: 1209                                   |0015: const/4 v9, #int 0 // #0
+0a5c0c: 0797                                   |0016: move-object v7, v9
+0a5c0e: 2806                                   |0017: goto 001d // +0006
+0a5c10: 6e10 a900 0900                         |0018: invoke-virtual {v9}, Landroid/content/ComponentName;.getPackageName:()Ljava/lang/String; // method@00a9
+0a5c16: 0c09                                   |001b: move-result-object v9
+0a5c18: 28fa                                   |001c: goto 0016 // -0006
+0a5c1a: 2202 8402                              |001d: new-instance v2, Llc; // type@0284
+0a5c1e: 5484 2a07                              |001f: iget-object v4, v8, Lorg/reference/panel/c;.a:Lorg/reference/panel/NativeNavigationWindow$Listener; // field@072a
+0a5c22: 0783                                   |0021: move-object v3, v8
+0a5c24: 7606 c109 0200                         |0022: invoke-direct/range {v2, v3, v4, v5, v6, v7}, Llc;.<init>:(Lorg/reference/panel/c;Lorg/reference/panel/NativeNavigationWindow$Listener;IILjava/lang/String;)V // method@09c1
+0a5c2a: 5438 2b07                              |0025: iget-object v8, v3, Lorg/reference/panel/c;.b:Lorg/reference/panel/NativeNavigationWindow; // field@072b
+0a5c2e: 6e20 f302 2800                         |0027: invoke-virtual {v8, v2}, Landroid/view/View;.post:(Ljava/lang/Runnable;)Z // method@02f3
+0a5c34: 0e00                                   |002a: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+      locals        :
+        0x0000 - 0x002b reg=8 this Lorg/reference/panel/c;
+        0x0000 - 0x002b reg=9 (null) Landroid/app/ActivityManager$StackInfo;
+
+  source_file_idx   : 4152 (r8-map-id-df02db20992efcdad8c8628fa158af402193d9214b2257c75897211101eb46a6)

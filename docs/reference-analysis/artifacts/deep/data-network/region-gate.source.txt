@@ -1,0 +1,18 @@
+    public static ze a(MainActivity mainActivity) {
+        if (pi.b(mainActivity)) {
+            return null;
+        }
+        String language = b().getLanguage();
+        language.getClass();
+        Locale locale = Locale.ROOT;
+        locale.getClass();
+        String lowerCase = language.toLowerCase(locale);
+        lowerCase.getClass();
+        if (!a.contains(lowerCase)) {
+            return ze.a;
+        }
+        if (mainActivity.getSharedPreferences("panel", 0).getBoolean("region_locked_gps", false)) {
+            return ze.b;
+        }
+        return null;
+    }

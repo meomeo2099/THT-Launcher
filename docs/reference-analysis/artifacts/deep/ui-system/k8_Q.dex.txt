@@ -1,0 +1,92 @@
+    #33              : (in Lk8;)
+      name          : 'Q'
+      type          : '(Lorg/reference/panel/MainActivity;Z)V'
+      access        : 0x0019 (PUBLIC STATIC FINAL)
+      code          -
+      registers     : 4
+      ins           : 2
+      outs          : 3
+      insns size    : 50 16-bit code units
+04f034:                                        |[04f034] k8.Q:(Lorg/reference/panel/MainActivity;Z)V
+04f044: 5520 cd06                              |0000: iget-boolean v0, v2, Lorg/reference/panel/MainActivity;.h:Z // field@06cd
+04f048: 3800 0300                              |0002: if-eqz v0, 0005 // +0003
+04f04c: 0e00                                   |0004: return-void
+04f04e: 2200 4800                              |0005: new-instance v0, Landroid/content/Intent; // type@0048
+04f052: 1a01 e208                              |0007: const-string v1, "android.intent.action.OPEN_DOCUMENT" // string@08e2
+04f056: 7020 d300 1000                         |0009: invoke-direct {v0, v1}, Landroid/content/Intent;.<init>:(Ljava/lang/String;)V // method@00d3
+04f05c: 1a01 b20d                              |000c: const-string v1, "image/*" // string@0db2
+04f060: 6e20 e800 1000                         |000e: invoke-virtual {v0, v1}, Landroid/content/Intent;.setType:(Ljava/lang/String;)Landroid/content/Intent; // method@00e8
+04f066: 1a01 e708                              |0011: const-string v1, "android.intent.category.OPENABLE" // string@08e7
+04f06a: 6e20 d500 1000                         |0013: invoke-virtual {v0, v1}, Landroid/content/Intent;.addCategory:(Ljava/lang/String;)Landroid/content/Intent; // method@00d5
+04f070: 1211                                   |0016: const/4 v1, #int 1 // #1
+04f072: 6e20 d600 1000                         |0017: invoke-virtual {v0, v1}, Landroid/content/Intent;.addFlags:(I)Landroid/content/Intent; // method@00d6
+04f078: 3803 0500                              |001a: if-eqz v3, 001f // +0005
+04f07c: 1303 2b00                              |001c: const/16 v3, #int 43 // #2b
+04f080: 2803                                   |001e: goto 0021 // +0003
+04f082: 1303 2a00                              |001f: const/16 v3, #int 42 // #2a
+04f086: 6e30 5d00 0203                         |0021: invoke-virtual {v2, v0, v3}, Landroid/app/Activity;.startActivityForResult:(Landroid/content/Intent;I)V // method@005d
+04f08c: 0e00                                   |0024: return-void
+04f08e: 1203                                   |0025: const/4 v3, #int 0 // #0
+04f090: 2333 e203                              |0026: new-array v3, v3, [Ljava/lang/Object; // type@03e2
+04f094: 1a00 1c0f                              |0028: const-string v0, "no_file_picker_on_this_head_unit" // string@0f1c
+04f098: 7120 320d 3000                         |002a: invoke-static {v0, v3}, Lsi;.a:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String; // method@0d32
+04f09e: 0c03                                   |002d: move-result-object v3
+04f0a0: 6e20 8e0c 3200                         |002e: invoke-virtual {v2, v3}, Lorg/reference/panel/MainActivity;.v0:(Ljava/lang/String;)V // method@0c8e
+04f0a6: 0e00                                   |0031: return-void
+      catches       : 1
+        0x0005 - 0x0024
+          Landroid/content/ActivityNotFoundException; -> 0x0025
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+      locals        :
+        0x0000 - 0x0032 reg=2 (null) Lorg/reference/panel/MainActivity;
+        0x0000 - 0x0032 reg=3 (null) Z

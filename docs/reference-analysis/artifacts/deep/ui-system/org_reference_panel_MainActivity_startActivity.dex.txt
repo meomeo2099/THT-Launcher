@@ -1,0 +1,36 @@
+    #76              : (in Lorg/reference/panel/MainActivity;)
+      name          : 'startActivity'
+      type          : '(Landroid/content/Intent;Landroid/os/Bundle;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 4
+      ins           : 3
+      outs          : 3
+      insns size    : 14 16-bit code units
+0a4ef0:                                        |[0a4ef0] org.reference.panel.MainActivity.startActivity:(Landroid/content/Intent;Landroid/os/Bundle;)V
+0a4f00: 5410 e606                              |0000: iget-object v0, v1, Lorg/reference/panel/MainActivity;.t0:Lab; // field@06e6
+0a4f04: 3800 0800                              |0002: if-eqz v0, 000a // +0008
+0a4f08: 6e10 680c 0100                         |0004: invoke-virtual {v1}, Lorg/reference/panel/MainActivity;.k:()V // method@0c68
+0a4f0e: 6e10 5d0c 0100                         |0007: invoke-virtual {v1}, Lorg/reference/panel/MainActivity;.e0:()V // method@0c5d
+0a4f14: 6f30 5c00 2103                         |000a: invoke-super {v1, v2, v3}, Landroid/app/Activity;.startActivity:(Landroid/content/Intent;Landroid/os/Bundle;)V // method@005c
+0a4f1a: 0e00                                   |000d: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+      locals        :
+        0x0000 - 0x000e reg=1 this Lorg/reference/panel/MainActivity;
+        0x0000 - 0x000e reg=2 (null) Landroid/content/Intent;
+        0x0000 - 0x000e reg=3 (null) Landroid/os/Bundle;

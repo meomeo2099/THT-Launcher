@@ -1,0 +1,147 @@
+{
+  "evidence_id": "ev_84a29f9ab608163677fcc2d0d670be26ea70ac1ea31b634b020a477f770d6f4e",
+  "subject": {
+    "name": "reference.apk",
+    "digest": {
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+    },
+    "local_path": "reference.apk",
+    "format": "apk",
+    "architecture": null
+  },
+  "provider": {
+    "id": "jadx",
+    "name": "JADX headless",
+    "version": "0.7.1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_android_method",
+  "parameters": {
+    "path": "reference.apk",
+    "class_name": "i7",
+    "method_name": "d"
+  },
+  "raw_result": {
+    "server": {
+      "name": "rea-jadx-bridge",
+      "version": "7"
+    },
+    "bridge_sha256": "e5044a8312dd0731f53af3f095508b3e5cff54df6b971c95d4305e2f39b4fa30",
+    "jar_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "loaded": {
+      "state": "LOADED",
+      "apk_path": "<temporary-analysis-session>/target.apk",
+      "class_count": 485,
+      "resource_count": 264,
+      "threads": 1,
+      "resources": "full"
+    },
+    "calls": [
+      {
+        "operation": "rea_jvm_status",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"java_version\":\"21.0.12.1\",\"available_processors\":2,\"engine_reported_version\":\"0.7.1\",\"metadata_scope\":\"parsed_members\",\"max_heap_bytes\":2147483648}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "load_apk",
+        "input": {
+          "path": "<temporary-analysis-session>/target.apk",
+          "threads": 1,
+          "resources": "full"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"state\":\"LOADED\",\"apk_path\":\"<temporary-analysis-session>/target.apk\",\"class_count\":485,\"raw_class_count\":485,\"resource_count\":264,\"load_duration_ms\":2846,\"decompile_timeout_ms\":90000,\"threads\":1,\"code_cache_size\":64,\"resources\":\"full\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_class_summary",
+        "input": {
+          "class_name": "i7"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"method_count\":10,\"raw_name\":\"i7\",\"fields\":[{\"def_pos\":0,\"name\":\"a\",\"type\":\"me\"}],\"methods\":[{\"name\":\"<clinit>\",\"is_constructor\":false,\"dex_descriptor\":\"()V\",\"signature\":\"<clinit>(): void\",\"def_pos\":0},{\"name\":\"a\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;)Ljava/lang/String;\",\"signature\":\"a(android.content.Context): java.lang.String\",\"def_pos\":0},{\"name\":\"b\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;Ljava/lang/String;)Ljava/io/File;\",\"signature\":\"b(android.content.Context, java.lang.String): java.io.File\",\"def_pos\":0},{\"name\":\"c\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;Landroid/net/Uri;)V\",\"signature\":\"c(android.content.Context, android.net.Uri): void\",\"def_pos\":0},{\"name\":\"d\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;Landroid/net/Uri;)Ld7;\",\"signature\":\"d(android.content.Context, android.net.Uri): d7\",\"def_pos\":0},{\"name\":\"e\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;)Ljava/util/List;\",\"signature\":\"e(android.content.Context): java.util.List\",\"def_pos\":0},{\"name\":\"f\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/io/File;)Ld7;\",\"signature\":\"f(java.io.File): d7\",\"def_pos\":0},{\"name\":\"g\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;Ljava/lang/String;)V\",\"signature\":\"g(android.content.Context, java.lang.String): void\",\"def_pos\":0},{\"name\":\"h\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/String;)Ljava/lang/String;\",\"signature\":\"h(java.lang.String): java.lang.String\",\"def_pos\":0},{\"name\":\"i\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/util/LinkedHashMap;Ljava/util/LinkedHashMap;)Ljava/lang/String;\",\"signature\":\"i(java.util.LinkedHashMap, java.util.LinkedHashMap): java.lang.String\",\"def_pos\":0}],\"inner_classes\":[],\"inner_class_count\":0,\"name\":\"i7\",\"field_count\":1,\"full_name\":\"defpackage.i7\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_method_body",
+        "input": {
+          "class_name": "i7",
+          "method_name": "d",
+          "overload_index": 0,
+          "smali_fallback": true
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"fell_back\":false,\"full_name\":\"i7.d\",\"overload_index\":0,\"method_name\":\"d\",\"overload_count\":1,\"dex_descriptor\":\"(Landroid/content/Context;Landroid/net/Uri;)Ld7;\",\"class_name\":\"defpackage.i7\",\"mode\":\"java\",\"body\":\"    public static d7 d(Context context, Uri uri) {\\n        ZipInputStream zipInputStream;\\n        Throwable th;\\n        Object ffVar;\\n        JSONObject jSONObject;\\n        int i;\\n        uri.getClass();\\n        File file = new File(context.getCacheDir(), \\\"icon-import-\\\" + System.nanoTime());\\n        file.mkdirs();\\n        try {\\n            InputStream inputStreamOpenInputStream = context.getContentResolver().openInputStream(uri);\\n            int i2 = 0;\\n            if (inputStreamOpenInputStream == null) {\\n                throw new IllegalStateException(si.a(\\\"icon_set_file_unavailable\\\", new Object[0]).toString());\\n            }\\n            try {\\n                ZipInputStream zipInputStream2 = new ZipInputStream(inputStreamOpenInputStream);\\n                int i3 = 0;\\n                long j = 0;\\n                while (true) {\\n                    try {\\n                        ZipEntry nextEntry = zipInputStream2.getNextEntry();\\n                        me meVar = a;\\n                        if (nextEntry == null) {\\n                            zipInputStream2.close();\\n                            inputStreamOpenInputStream.close();\\n                            File[] fileArrListFiles = file.listFiles();\\n                            if (fileArrListFiles == null) {\\n                                fileArrListFiles = new File[i2];\\n                            }\\n                            ArrayList arrayList = new ArrayList();\\n                            int length = fileArrListFiles.length;\\n                            for (int i4 = i2; i4 < length; i4++) {\\n                                File file2 = fileArrListFiles[i4];\\n                                String name = file2.getName();\\n                                name.getClass();\\n                                if (meVar.a(name)) {\\n                                    arrayList.add(file2);\\n                                }\\n                            }\\n                            if (arrayList.isEmpty()) {\\n                                throw new IllegalArgumentException(si.a(\\\"icon_set_no_icons\\\", new Object[i2]).toString());\\n                            }\\n                            int size = arrayList.size();\\n                            int i5 = i2;\\n                            while (i5 < size) {\\n                                Object obj = arrayList.get(i5);\\n                                i5++;\\n                                File file3 = (File) obj;\\n                                BitmapFactory.Options options = new BitmapFactory.Options();\\n                                options.inJustDecodeBounds = true;\\n                                BitmapFactory.decodeFile(file3.getAbsolutePath(), options);\\n                                int i6 = options.outWidth;\\n                                if (1 > i6 || i6 >= 1025 || 1 > (i = options.outHeight) || i >= 1025) {\\n                                    List list = si.a;\\n                                    throw new IllegalArgumentException(si.a(\\\"icon_set_bad_image_0\\\", file3.getName()).toString());\\n                                }\\n                            }\\n                            File file4 = new File(file, \\\"manifest.json\\\");\\n                            if (!file4.isFile()) {\\n                                file4 = null;\\n                            }\\n                            if (file4 != null) {\\n                                try {\\n                                    ffVar = new JSONObject(m5.k0(file4));\\n                                } catch (Throwable th2) {\\n                                    ffVar = new ff(th2);\\n                                }\\n                                if (ffVar instanceof ff) {\\n                                    ffVar = null;\\n                                }\\n                                jSONObject = (JSONObject) ffVar;\\n                            } else {\\n                                jSONObject = null;\\n                            }\\n                            String strOptString = jSONObject != null ? jSONObject.optString(\\\"name\\\") : null;\\n                            if (strOptString == null) {\\n                                strOptString = \\\"\\\";\\n                            }\\n                            if (th.A(strOptString)) {\\n                                strOptString = si.a(\\\"icon_set_unnamed\\\", new Object[i2]);\\n                            }\\n                            String strH = h(th.I(60, strOptString));\\n                            if (strH.length() == 0) {\\n                                strH = \\\"set\\\";\\n                            }\\n                            File fileB = b(context, ((Object) strH) + \\\"-\\\" + Long.toString(System.currentTimeMillis() % 1000000, 36));\\n                            new File(context.getFilesDir(), \\\"icon_sets\\\").mkdirs();\\n                            if (!file.renameTo(fileB) && !m5.g0(file, fileB)) {\\n                                throw new IllegalStateException(si.a(\\\"icon_set_file_unavailable\\\", new Object[i2]).toString());\\n                            }\\n                            d7 d7VarF = f(fileB);\\n                            if (d7VarF == null) {\\n                                throw new IllegalStateException(si.a(\\\"icon_set_no_icons\\\", new Object[i2]).toString());\\n                            }\\n                            m5.i0(file);\\n                            return d7VarF;\\n                        }\\n                        if (!nextEntry.isDirectory()) {\\n                            String name2 = nextEntry.getName();\\n                            name2.getClass();\\n                            String lowerCase = th.E(name2, '/').toLowerCase(Locale.ROOT);\\n                            lowerCase.getClass();\\n                            if (!lowerCase.equals(\\\"manifest.json\\\")) {\\n                                try {\\n                                    if (!meVar.a(lowerCase)) {\\n                                        continue;\\n                                    }\\n                                } catch (Throwable th3) {\\n                                    th = th3;\\n                                    zipInputStream = zipInputStream2;\\n                                }\\n                            }\\n                            i3++;\\n                            if (i3 > 300) {\\n                                throw new IllegalArgumentException(si.a(\\\"icon_set_too_large\\\", new Object[i2]).toString());\\n                            }\\n                            FileOutputStream fileOutputStream = new FileOutputStream(new File(file, lowerCase));\\n                            try {\\n                                byte[] bArr = new byte[8192];\\n                                long j2 = 0;\\n                                while (true) {\\n                                    int i7 = zipInputStream2.read(bArr);\\n                                    if (i7 >= 0) {\\n                                        zipInputStream = zipInputStream2;\\n                                        long j3 = i7;\\n                                        j2 += j3;\\n                                        j += j3;\\n                                        if (j2 > 2097152 || j > 41943040) {\\n                                            throw new IllegalArgumentException(si.a(\\\"icon_set_too_large\\\", new Object[0]).toString());\\n                                        }\\n                                        try {\\n                                            fileOutputStream.write(bArr, 0, i7);\\n                                            zipInputStream2 = zipInputStream;\\n                                        } catch (Throwable th4) {\\n                                            th = th4;\\n                                        }\\n                                        th = th4;\\n                                        Throwable th5 = th;\\n                                        try {\\n                                            throw th5;\\n                                        } catch (Throwable th6) {\\n                                            k8.p(fileOutputStream, th5);\\n                                            throw th6;\\n                                        }\\n                                    }\\n                                    zipInputStream = zipInputStream2;\\n                                    try {\\n                                        fileOutputStream.close();\\n                                        zipInputStream2 = zipInputStream;\\n                                        i2 = 0;\\n                                        break;\\n                                    } catch (Throwable th7) {\\n                                        th = th7;\\n                                    }\\n                                }\\n                            } catch (Throwable th8) {\\n                                th = th8;\\n                                zipInputStream = zipInputStream2;\\n                            }\\n                        }\\n                    } catch (Throwable th9) {\\n                        th = th9;\\n                        zipInputStream = zipInputStream2;\\n                    }\\n                    th = th;\\n                    try {\\n                        throw th;\\n                    } catch (Throwable th10) {\\n                        k8.p(zipInputStream, th);\\n                        throw th10;\\n                    }\\n                }\\n            } catch (Throwable th11) {\\n                try {\\n                    throw th11;\\n                } catch (Throwable th12) {\\n                    k8.p(inputStreamOpenInputStream, th11);\\n                    throw th12;\\n                }\\n            }\\n        } catch (Throwable th13) {\\n            m5.i0(file);\\n            throw th13;\\n        }\\n    }\",\"markers\":[]}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "normalized_result": {
+    "engine": {
+      "name": "jadx-headless-mcp",
+      "version": "0.7.1",
+      "artifact_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+      "source_revision": "5844800a486d2248fa949b74c9896285f5b54de2",
+      "worker_count": 1,
+      "heap_limit_mib": 2048
+    },
+    "class_name": "defpackage.i7",
+    "method": {
+      "name": "d",
+      "reported_signature": "d(android.content.Context, android.net.Uri): d7",
+      "overload_index": 0,
+      "is_constructor": false,
+      "dex_descriptor": "(Landroid/content/Context;Landroid/net/Uri;)Ld7;"
+    },
+    "overload_count": 1,
+    "representation": "java",
+    "body_status": "available",
+    "fell_back": false,
+    "markers": [],
+    "source": {
+      "status": "complete",
+      "text": "    public static d7 d(Context context, Uri uri) {\n        ZipInputStream zipInputStream;\n        Throwable th;\n        Object ffVar;\n        JSONObject jSONObject;\n        int i;\n        uri.getClass();\n        File file = new File(context.getCacheDir(), \"icon-import-\" + System.nanoTime());\n        file.mkdirs();\n        try {\n            InputStream inputStreamOpenInputStream = context.getContentResolver().openInputStream(uri);\n            int i2 = 0;\n            if (inputStreamOpenInputStream == null) {\n                throw new IllegalStateException(si.a(\"icon_set_file_unavailable\", new Object[0]).toString());\n            }\n            try {\n                ZipInputStream zipInputStream2 = new ZipInputStream(inputStreamOpenInputStream);\n                int i3 = 0;\n                long j = 0;\n                while (true) {\n                    try {\n                        ZipEntry nextEntry = zipInputStream2.getNextEntry();\n                        me meVar = a;\n                        if (nextEntry == null) {\n                            zipInputStream2.close();\n                            inputStreamOpenInputStream.close();\n                            File[] fileArrListFiles = file.listFiles();\n                            if (fileArrListFiles == null) {\n                                fileArrListFiles = new File[i2];\n                            }\n                            ArrayList arrayList = new ArrayList();\n                            int length = fileArrListFiles.length;\n                            for (int i4 = i2; i4 < length; i4++) {\n                                File file2 = fileArrListFiles[i4];\n                                String name = file2.getName();\n                                name.getClass();\n                                if (meVar.a(name)) {\n                                    arrayList.add(file2);\n                                }\n                            }\n                            if (arrayList.isEmpty()) {\n                                throw new IllegalArgumentException(si.a(\"icon_set_no_icons\", new Object[i2]).toString());\n                            }\n                            int size = arrayList.size();\n                            int i5 = i2;\n                            while (i5 < size) {\n                                Object obj = arrayList.get(i5);\n                                i5++;\n                                File file3 = (File) obj;\n                                BitmapFactory.Options options = new BitmapFactory.Options();\n                                options.inJustDecodeBounds = true;\n                                BitmapFactory.decodeFile(file3.getAbsolutePath(), options);\n                                int i6 = options.outWidth;\n                                if (1 > i6 || i6 >= 1025 || 1 > (i = options.outHeight) || i >= 1025) {\n                                    List list = si.a;\n                                    throw new IllegalArgumentException(si.a(\"icon_set_bad_image_0\", file3.getName()).toString());\n                                }\n                            }\n                            File file4 = new File(file, \"manifest.json\");\n                            if (!file4.isFile()) {\n                                file4 = null;\n                            }\n                            if (file4 != null) {\n                                try {\n                                    ffVar = new JSONObject(m5.k0(file4));\n                                } catch (Throwable th2) {\n                                    ffVar = new ff(th2);\n                                }\n                                if (ffVar instanceof ff) {\n                                    ffVar = null;\n                                }\n                                jSONObject = (JSONObject) ffVar;\n                            } else {\n                                jSONObject = null;\n                            }\n                            String strOptString = jSONObject != null ? jSONObject.optString(\"name\") : null;\n                            if (strOptString == null) {\n                                strOptString = \"\";\n                            }\n                            if (th.A(strOptString)) {\n                                strOptString = si.a(\"icon_set_unnamed\", new Object[i2]);\n                            }\n                            String strH = h(th.I(60, strOptString));\n                            if (strH.length() == 0) {\n                                strH = \"set\";\n                            }\n                            File fileB = b(context, ((Object) strH) + \"-\" + Long.toString(System.currentTimeMillis() % 1000000, 36));\n                            new File(context.getFilesDir(), \"icon_sets\").mkdirs();\n                            if (!file.renameTo(fileB) && !m5.g0(file, fileB)) {\n                                throw new IllegalStateException(si.a(\"icon_set_file_unavailable\", new Object[i2]).toString());\n                            }\n                            d7 d7VarF = f(fileB);\n                            if (d7VarF == null) {\n                                throw new IllegalStateException(si.a(\"icon_set_no_icons\", new Object[i2]).toString());\n                            }\n                            m5.i0(file);\n                            return d7VarF;\n                        }\n                        if (!nextEntry.isDirectory()) {\n                            String name2 = nextEntry.getName();\n                            name2.getClass();\n                            String lowerCase = th.E(name2, '/').toLowerCase(Locale.ROOT);\n                            lowerCase.getClass();\n                            if (!lowerCase.equals(\"manifest.json\")) {\n                                try {\n                                    if (!meVar.a(lowerCase)) {\n                                        continue;\n                                    }\n                                } catch (Throwable th3) {\n                                    th = th3;\n                                    zipInputStream = zipInputStream2;\n                                }\n                            }\n                            i3++;\n                            if (i3 > 300) {\n                                throw new IllegalArgumentException(si.a(\"icon_set_too_large\", new Object[i2]).toString());\n                            }\n                            FileOutputStream fileOutputStream = new FileOutputStream(new File(file, lowerCase));\n                            try {\n                                byte[] bArr = new byte[8192];\n                                long j2 = 0;\n                                while (true) {\n                                    int i7 = zipInputStream2.read(bArr);\n                                    if (i7 >= 0) {\n                                        zipInputStream = zipInputStream2;\n                                        long j3 = i7;\n                                        j2 += j3;\n                                        j += j3;\n                                        if (j2 > 2097152 || j > 41943040) {\n                                            throw new IllegalArgumentException(si.a(\"icon_set_too_large\", new Object[0]).toString());\n                                        }\n                                        try {\n                                            fileOutputStream.write(bArr, 0, i7);\n                                            zipInputStream2 = zipInputStream;\n                                        } catch (Throwable th4) {\n                                            th = th4;\n                                        }\n                                        th = th4;\n                                        Throwable th5 = th;\n                                        try {\n                                            throw th5;\n                                        } catch (Throwable th6) {\n                                            k8.p(fileOutputStream, th5);\n                                            throw th6;\n                                        }\n                                    }\n                                    zipInputStream = zipInputStream2;\n                                    try {\n                                        fileOutputStream.close();\n                                        zipInputStream2 = zipInputStream;\n                                        i2 = 0;\n                                        break;\n                                    } catch (Throwable th7) {\n                                        th = th7;\n                                    }\n                                }\n                            } catch (Throwable th8) {\n                                th = th8;\n                                zipInputStream = zipInputStream2;\n                            }\n                        }\n                    } catch (Throwable th9) {\n                        th = th9;\n                        zipInputStream = zipInputStream2;\n                    }\n                    th = th;\n                    try {\n                        throw th;\n                    } catch (Throwable th10) {\n                        k8.p(zipInputStream, th);\n                        throw th10;\n                    }\n                }\n            } catch (Throwable th11) {\n                try {\n                    throw th11;\n                } catch (Throwable th12) {\n                    k8.p(inputStreamOpenInputStream, th11);\n                    throw th12;\n                }\n            }\n        } catch (Throwable th13) {\n            m5.i0(file);\n            throw th13;\n        }\n    }",
+      "reported_total_bytes": null
+    }
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Static decompiler observations do not establish runtime behavior; the APK is never executed.",
+    "Method signatures use provider display types; DEX prototypes come from frozen JADX metadata. Display names may be aliases, and overload indices are local to this engine and artifact.",
+    "Class inventories use parsed metadata before code generation, including synthetic members that may be omitted from decompiled source. Source positions remain unknown.",
+    "Incoming reference totals count JADX using nodes. Direct invoke entries within a using method report raw DEX code-unit offsets and method indexes, but coverage is limited to those nodes and directly matched invokes; it does not establish every possible dynamic or reflective call site.",
+    "Manifest summaries are parsed once by REA's bridge from the exact root AndroidManifest.xml resource, using namespace-aware XML attributes; decoded XML is retained. APK signatures, split APKs, native libraries and Android runtime capture are not verified by this provider."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

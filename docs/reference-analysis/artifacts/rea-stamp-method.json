@@ -1,0 +1,147 @@
+{
+  "evidence_id": "ev_f6d5e2c56f321f0a4a6024506e6c8a8332ec479f6b2238ab4663bd9cfbc4a2bc",
+  "subject": {
+    "name": "reference.apk",
+    "digest": {
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+    },
+    "local_path": "reference.apk",
+    "format": "apk",
+    "architecture": null
+  },
+  "provider": {
+    "id": "jadx",
+    "name": "JADX headless",
+    "version": "0.7.1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_android_method",
+  "parameters": {
+    "path": "reference.apk",
+    "class_name": "hh",
+    "method_name": "a"
+  },
+  "raw_result": {
+    "server": {
+      "name": "rea-jadx-bridge",
+      "version": "7"
+    },
+    "bridge_sha256": "e5044a8312dd0731f53af3f095508b3e5cff54df6b971c95d4305e2f39b4fa30",
+    "jar_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "loaded": {
+      "state": "LOADED",
+      "apk_path": "<temporary-analysis-session>/target.apk",
+      "class_count": 485,
+      "resource_count": 264,
+      "threads": 1,
+      "resources": "full"
+    },
+    "calls": [
+      {
+        "operation": "rea_jvm_status",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"engine_reported_version\":\"0.7.1\",\"available_processors\":3,\"java_version\":\"17.0.18\",\"max_heap_bytes\":2615148544,\"metadata_scope\":\"parsed_members\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "load_apk",
+        "input": {
+          "path": "<temporary-analysis-session>/target.apk",
+          "threads": 1,
+          "resources": "full"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"state\":\"LOADED\",\"apk_path\":\"<temporary-analysis-session>/target.apk\",\"class_count\":485,\"raw_class_count\":485,\"resource_count\":264,\"load_duration_ms\":1894,\"decompile_timeout_ms\":90000,\"threads\":1,\"code_cache_size\":64,\"resources\":\"full\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_class_summary",
+        "input": {
+          "class_name": "hh"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"raw_name\":\"hh\",\"method_count\":4,\"full_name\":\"defpackage.hh\",\"field_count\":4,\"name\":\"hh\",\"inner_class_count\":0,\"inner_classes\":[],\"methods\":[{\"name\":\"<clinit>\",\"def_pos\":0,\"signature\":\"<clinit>(): void\",\"dex_descriptor\":\"()V\",\"is_constructor\":false},{\"name\":\"a\",\"def_pos\":0,\"signature\":\"a(android.content.Context): java.lang.String\",\"dex_descriptor\":\"(Landroid/content/Context;)Ljava/lang/String;\",\"is_constructor\":false},{\"name\":\"b\",\"def_pos\":0,\"signature\":\"b(byte[], int): long\",\"dex_descriptor\":\"([BI)J\",\"is_constructor\":false},{\"name\":\"c\",\"def_pos\":0,\"signature\":\"c(byte[], int): long\",\"dex_descriptor\":\"([BI)J\",\"is_constructor\":false}],\"fields\":[{\"def_pos\":0,\"type\":\"fi\",\"name\":\"a\"},{\"def_pos\":0,\"type\":\"fi\",\"name\":\"b\"},{\"def_pos\":0,\"type\":\"long\",\"name\":\"c\"},{\"def_pos\":0,\"type\":\"long\",\"name\":\"d\"}]}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_method_body",
+        "input": {
+          "class_name": "hh",
+          "method_name": "a",
+          "overload_index": 0,
+          "smali_fallback": true
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"class_name\":\"defpackage.hh\",\"dex_descriptor\":\"(Landroid/content/Context;)Ljava/lang/String;\",\"overload_count\":1,\"method_name\":\"a\",\"overload_index\":0,\"full_name\":\"hh.a\",\"fell_back\":false,\"markers\":[],\"body\":\"    public static String a(Context context) throws IllegalAccessException, IOException, InvocationTargetException {\\n        byte[] bArrCopyOfRange;\\n        Long lValueOf;\\n        int i;\\n        String str = context.getApplicationInfo().sourceDir;\\n        if (str == null) {\\n            return \\\"no sourceDir\\\";\\n        }\\n        RandomAccessFile randomAccessFile = new RandomAccessFile(str, \\\"r\\\");\\n        try {\\n            long length = randomAccessFile.length();\\n            int iMin = (int) Math.min(length, 65558L);\\n            byte[] bArr = new byte[iMin];\\n            randomAccessFile.seek(length - ((long) iMin));\\n            randomAccessFile.readFully(bArr);\\n            int i2 = iMin - 22;\\n            while (true) {\\n                bArrCopyOfRange = null;\\n                if (i2 < 0) {\\n                    lValueOf = null;\\n                    break;\\n                }\\n                if (bArr[i2] == 80 && bArr[i2 + 1] == 75 && bArr[i2 + 2] == 5 && bArr[i2 + 3] == 6) {\\n                    lValueOf = Long.valueOf(b(bArr, i2 + 16));\\n                    break;\\n                }\\n                i2--;\\n            }\\n            if (lValueOf == null) {\\n                randomAccessFile.close();\\n                return \\\"no EOCD\\\";\\n            }\\n            long jLongValue = lValueOf.longValue();\\n            if (jLongValue < 32) {\\n                randomAccessFile.close();\\n                return \\\"no signing block\\\";\\n            }\\n            byte[] bArr2 = new byte[16];\\n            randomAccessFile.seek(jLongValue - 16);\\n            randomAccessFile.readFully(bArr2);\\n            if (!new String(bArr2, q2.c).equals((String) b.a())) {\\n                randomAccessFile.close();\\n                return \\\"no signing block magic\\\";\\n            }\\n            long j = jLongValue - 24;\\n            byte[] bArr3 = new byte[8];\\n            randomAccessFile.seek(j);\\n            randomAccessFile.readFully(bArr3);\\n            long jC = jLongValue - c(bArr3, 0);\\n            long j2 = 8;\\n            if (jC - 8 < 0) {\\n                randomAccessFile.close();\\n                return \\\"bad block size\\\";\\n            }\\n            int i3 = (int) (j - jC);\\n            if (i3 <= 0) {\\n                randomAccessFile.close();\\n                return \\\"empty block\\\";\\n            }\\n            byte[] bArr4 = new byte[i3];\\n            randomAccessFile.seek(jC);\\n            randomAccessFile.readFully(bArr4);\\n            StringBuilder sb = new StringBuilder();\\n            int i4 = 0;\\n            while (true) {\\n                int i5 = i4 + 12;\\n                if (i5 > i3) {\\n                    break;\\n                }\\n                long jC2 = c(bArr4, i4);\\n                if (jC2 < 4) {\\n                    break;\\n                }\\n                int i6 = i4 + 8;\\n                long j3 = j2;\\n                if (((long) i6) + jC2 > i3) {\\n                    break;\\n                }\\n                long jB = b(bArr4, i6);\\n                sb.append(Long.toHexString(jB));\\n                sb.append(' ');\\n                if (jB == c || jB == d) {\\n                    int i7 = i6 + ((int) jC2);\\n                    k8.x(i7, i3);\\n                    bArrCopyOfRange = Arrays.copyOfRange(bArr4, i5, i7);\\n                    bArrCopyOfRange.getClass();\\n                }\\n                i4 += (int) (j3 + jC2);\\n                j2 = j3;\\n            }\\n            Log.w(\\\"ReferencePanel.Stamp\\\", \\\"signing-block ids: \\\" + ((Object) sb));\\n            if (bArrCopyOfRange == null) {\\n                String str2 = \\\"NO STAMP (ids: \\\" + ((Object) sb) + \\\")\\\";\\n                randomAccessFile.close();\\n                return str2;\\n            }\\n            MessageDigest messageDigest = MessageDigest.getInstance(\\\"SHA-256\\\");\\n            int i8 = 0;\\n            while (true) {\\n                int i9 = i8 + 4;\\n                if (i9 >= bArrCopyOfRange.length) {\\n                    randomAccessFile.close();\\n                    return \\\"STAMP PRESENT, cert MISMATCH\\\";\\n                }\\n                if (bArrCopyOfRange[i8] == 48 && bArrCopyOfRange[i8 + 1] == -126 && (i = i9 + (((bArrCopyOfRange[i8 + 2] & 255) << 8) | (bArrCopyOfRange[i8 + 3] & 255))) <= bArrCopyOfRange.length) {\\n                    k8.x(i, bArrCopyOfRange.length);\\n                    byte[] bArrCopyOfRange2 = Arrays.copyOfRange(bArrCopyOfRange, i8, i);\\n                    bArrCopyOfRange2.getClass();\\n                    byte[] bArrDigest = messageDigest.digest(bArrCopyOfRange2);\\n                    bArrDigest.getClass();\\n                    if (x0.U0(bArrDigest, \\\"\\\", new fg(2)).equals((String) a.a())) {\\n                        randomAccessFile.close();\\n                        return \\\"GENUINE\\\";\\n                    }\\n                }\\n                i8++;\\n            }\\n        } catch (Throwable th) {\\n            try {\\n                throw th;\\n            } catch (Throwable th2) {\\n                k8.p(randomAccessFile, th);\\n                throw th2;\\n            }\\n        }\\n    }\",\"mode\":\"java\"}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "normalized_result": {
+    "engine": {
+      "name": "jadx-headless-mcp",
+      "version": "0.7.1",
+      "artifact_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+      "source_revision": "5844800a486d2248fa949b74c9896285f5b54de2",
+      "worker_count": 1,
+      "heap_limit_mib": 2494
+    },
+    "class_name": "defpackage.hh",
+    "method": {
+      "name": "a",
+      "reported_signature": "a(android.content.Context): java.lang.String",
+      "overload_index": 0,
+      "is_constructor": false,
+      "dex_descriptor": "(Landroid/content/Context;)Ljava/lang/String;"
+    },
+    "overload_count": 1,
+    "representation": "java",
+    "body_status": "available",
+    "fell_back": false,
+    "markers": [],
+    "source": {
+      "status": "complete",
+      "text": "    public static String a(Context context) throws IllegalAccessException, IOException, InvocationTargetException {\n        byte[] bArrCopyOfRange;\n        Long lValueOf;\n        int i;\n        String str = context.getApplicationInfo().sourceDir;\n        if (str == null) {\n            return \"no sourceDir\";\n        }\n        RandomAccessFile randomAccessFile = new RandomAccessFile(str, \"r\");\n        try {\n            long length = randomAccessFile.length();\n            int iMin = (int) Math.min(length, 65558L);\n            byte[] bArr = new byte[iMin];\n            randomAccessFile.seek(length - ((long) iMin));\n            randomAccessFile.readFully(bArr);\n            int i2 = iMin - 22;\n            while (true) {\n                bArrCopyOfRange = null;\n                if (i2 < 0) {\n                    lValueOf = null;\n                    break;\n                }\n                if (bArr[i2] == 80 && bArr[i2 + 1] == 75 && bArr[i2 + 2] == 5 && bArr[i2 + 3] == 6) {\n                    lValueOf = Long.valueOf(b(bArr, i2 + 16));\n                    break;\n                }\n                i2--;\n            }\n            if (lValueOf == null) {\n                randomAccessFile.close();\n                return \"no EOCD\";\n            }\n            long jLongValue = lValueOf.longValue();\n            if (jLongValue < 32) {\n                randomAccessFile.close();\n                return \"no signing block\";\n            }\n            byte[] bArr2 = new byte[16];\n            randomAccessFile.seek(jLongValue - 16);\n            randomAccessFile.readFully(bArr2);\n            if (!new String(bArr2, q2.c).equals((String) b.a())) {\n                randomAccessFile.close();\n                return \"no signing block magic\";\n            }\n            long j = jLongValue - 24;\n            byte[] bArr3 = new byte[8];\n            randomAccessFile.seek(j);\n            randomAccessFile.readFully(bArr3);\n            long jC = jLongValue - c(bArr3, 0);\n            long j2 = 8;\n            if (jC - 8 < 0) {\n                randomAccessFile.close();\n                return \"bad block size\";\n            }\n            int i3 = (int) (j - jC);\n            if (i3 <= 0) {\n                randomAccessFile.close();\n                return \"empty block\";\n            }\n            byte[] bArr4 = new byte[i3];\n            randomAccessFile.seek(jC);\n            randomAccessFile.readFully(bArr4);\n            StringBuilder sb = new StringBuilder();\n            int i4 = 0;\n            while (true) {\n                int i5 = i4 + 12;\n                if (i5 > i3) {\n                    break;\n                }\n                long jC2 = c(bArr4, i4);\n                if (jC2 < 4) {\n                    break;\n                }\n                int i6 = i4 + 8;\n                long j3 = j2;\n                if (((long) i6) + jC2 > i3) {\n                    break;\n                }\n                long jB = b(bArr4, i6);\n                sb.append(Long.toHexString(jB));\n                sb.append(' ');\n                if (jB == c || jB == d) {\n                    int i7 = i6 + ((int) jC2);\n                    k8.x(i7, i3);\n                    bArrCopyOfRange = Arrays.copyOfRange(bArr4, i5, i7);\n                    bArrCopyOfRange.getClass();\n                }\n                i4 += (int) (j3 + jC2);\n                j2 = j3;\n            }\n            Log.w(\"ReferencePanel.Stamp\", \"signing-block ids: \" + ((Object) sb));\n            if (bArrCopyOfRange == null) {\n                String str2 = \"NO STAMP (ids: \" + ((Object) sb) + \")\";\n                randomAccessFile.close();\n                return str2;\n            }\n            MessageDigest messageDigest = MessageDigest.getInstance(\"SHA-256\");\n            int i8 = 0;\n            while (true) {\n                int i9 = i8 + 4;\n                if (i9 >= bArrCopyOfRange.length) {\n                    randomAccessFile.close();\n                    return \"STAMP PRESENT, cert MISMATCH\";\n                }\n                if (bArrCopyOfRange[i8] == 48 && bArrCopyOfRange[i8 + 1] == -126 && (i = i9 + (((bArrCopyOfRange[i8 + 2] & 255) << 8) | (bArrCopyOfRange[i8 + 3] & 255))) <= bArrCopyOfRange.length) {\n                    k8.x(i, bArrCopyOfRange.length);\n                    byte[] bArrCopyOfRange2 = Arrays.copyOfRange(bArrCopyOfRange, i8, i);\n                    bArrCopyOfRange2.getClass();\n                    byte[] bArrDigest = messageDigest.digest(bArrCopyOfRange2);\n                    bArrDigest.getClass();\n                    if (x0.U0(bArrDigest, \"\", new fg(2)).equals((String) a.a())) {\n                        randomAccessFile.close();\n                        return \"GENUINE\";\n                    }\n                }\n                i8++;\n            }\n        } catch (Throwable th) {\n            try {\n                throw th;\n            } catch (Throwable th2) {\n                k8.p(randomAccessFile, th);\n                throw th2;\n            }\n        }\n    }",
+      "reported_total_bytes": null
+    }
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Static decompiler observations do not establish runtime behavior; the APK is never executed.",
+    "Method signatures use provider display types; DEX prototypes come from frozen JADX metadata. Display names may be aliases, and overload indices are local to this engine and artifact.",
+    "Class inventories use parsed metadata before code generation, including synthetic members that may be omitted from decompiled source. Source positions remain unknown.",
+    "Incoming reference totals count JADX using nodes. Direct invoke entries within a using method report raw DEX code-unit offsets and method indexes, but coverage is limited to those nodes and directly matched invokes; it does not establish every possible dynamic or reflective call site.",
+    "Manifest summaries are parsed once by REA's bridge from the exact root AndroidManifest.xml resource, using namespace-aware XML attributes; decoded XML is retained. APK signatures, split APKs, native libraries and Android runtime capture are not verified by this provider."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

@@ -1,0 +1,132 @@
+    /* JADX WARN: Failed to restore switch over string. Please report as a decompilation issue */
+    public static LinkedHashMap a(JSONObject jSONObject) throws JSONException {
+        Iterator<String> itKeys = jSONObject.keys();
+        itKeys.getClass();
+        o5 o5Var = new o5(new s3(new y0(4, itKeys)), true, new w(29));
+        LinkedHashMap linkedHashMap = new LinkedHashMap();
+        n5 n5Var = new n5(o5Var);
+        while (n5Var.hasNext()) {
+            Object next = n5Var.next();
+            String str = (String) next;
+            if (str.length() > 200 || jSONObject.length() > 20000) {
+                throw new IllegalArgumentException(si.a("too_many_settings", new Object[0]).toString());
+            }
+            JSONObject jSONObject2 = jSONObject.getJSONObject(str);
+            String strE0 = pi.e0(str);
+            if (strE0 == null || !strE0.equals(jSONObject2.getString("type"))) {
+                throw new IllegalArgumentException(si.a("incompatible_setting_0", str).toString());
+            }
+            Object objValueOf = jSONObject2.get("value");
+            switch (strE0.hashCode()) {
+                case -891985903:
+                    if (!strE0.equals("string")) {
+                        throw new IllegalStateException(si.a("unknown_setting_type", new Object[0]).toString());
+                    }
+                    if (!(objValueOf instanceof String) || ((String) objValueOf).length() > 16384) {
+                        w.a("Failed requirement.");
+                        return null;
+                    }
+                    linkedHashMap.put(next, objValueOf);
+                    break;
+                    break;
+                case 104431:
+                    if (!strE0.equals("int")) {
+                        throw new IllegalStateException(si.a("unknown_setting_type", new Object[0]).toString());
+                    }
+                    if (objValueOf instanceof Number) {
+                        Number number = (Number) objValueOf;
+                        if (number.doubleValue() == number.intValue()) {
+                            int iIntValue = number.intValue();
+                            if (str.equals("menu_count") && (1 > iIntValue || iIntValue >= 20001)) {
+                                throw new IllegalArgumentException(si.a("invalid_button_count_in_archive", new Object[0]).toString());
+                            }
+                            if (str.startsWith("tile_opacity_") && (iIntValue < 0 || iIntValue >= 101)) {
+                                w.a("Failed requirement.");
+                                return null;
+                            }
+                            objValueOf = Integer.valueOf(iIntValue);
+                            linkedHashMap.put(next, objValueOf);
+                            break;
+                        }
+                    }
+                    w.a("Failed requirement.");
+                    return null;
+                case 113762:
+                    if (!strE0.equals("set")) {
+                        throw new IllegalStateException(si.a("unknown_setting_type", new Object[0]).toString());
+                    }
+                    if (objValueOf instanceof JSONArray) {
+                        JSONArray jSONArray = (JSONArray) objValueOf;
+                        if (jSONArray.length() <= 20000) {
+                            j8 j8VarF0 = pi.f0(0, jSONArray.length());
+                            ArrayList arrayList = new ArrayList(k3.n0(j8VarF0));
+                            Iterator it = j8VarF0.iterator();
+                            while (true) {
+                                i8 i8Var = (i8) it;
+                                if (!i8Var.c) {
+                                    objValueOf = i3.L0(arrayList);
+                                    break;
+                                }
+                                Object obj = jSONArray.get(i8Var.nextInt());
+                                if (obj instanceof String) {
+                                    String str2 = (String) obj;
+                                    if (str2.length() <= 500) {
+                                        arrayList.add(str2);
+                                    }
+                                }
+                                w.a("Failed requirement.");
+                                return null;
+                            }
+                            linkedHashMap.put(next, objValueOf);
+                            break;
+                        }
+                    }
+                    w.a("Failed requirement.");
+                    return null;
+                case 64711720:
+                    if (!strE0.equals("boolean")) {
+                        throw new IllegalStateException(si.a("unknown_setting_type", new Object[0]).toString());
+                    }
+                    if (!(objValueOf instanceof Boolean)) {
+                        w.a("Failed requirement.");
+                        return null;
+                    }
+                    linkedHashMap.put(next, objValueOf);
+                    break;
+                    break;
+                case 97526364:
+                    if (!strE0.equals("float")) {
+                        throw new IllegalStateException(si.a("unknown_setting_type", new Object[0]).toString());
+                    }
+                    if (objValueOf instanceof Number) {
+                        Number number2 = (Number) objValueOf;
+                        float fFloatValue = number2.floatValue();
+                        if (Math.abs(fFloatValue) <= Float.MAX_VALUE) {
+                            String strK = uh.k(str);
+                            if (strK == null) {
+                                strK = str;
+                            }
+                            if (strK.equals("ui_scale")) {
+                                if (0.75f > fFloatValue || fFloatValue > 1.5f) {
+                                }
+                                objValueOf = Float.valueOf(number2.floatValue());
+                            } else if (strK.equals("tank_liters")) {
+                                if (20.0f > fFloatValue || fFloatValue > 150.0f) {
+                                }
+                                objValueOf = Float.valueOf(number2.floatValue());
+                            } else {
+                                if (0.0f > fFloatValue || fFloatValue > 1.0f) {
+                                }
+                                objValueOf = Float.valueOf(number2.floatValue());
+                            }
+                            linkedHashMap.put(next, objValueOf);
+                            break;
+                        }
+                    }
+                    throw new IllegalArgumentException(si.a("invalid_value_0", str).toString());
+                default:
+                    throw new IllegalStateException(si.a("unknown_setting_type", new Object[0]).toString());
+            }
+        }
+        return linkedHashMap;
+    }

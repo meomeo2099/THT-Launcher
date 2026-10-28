@@ -1,0 +1,204 @@
+{
+  "evidence_id": "ev_c82e2c52f0448d3ae979e4615fae10386647b8611818f02d441e674a471cfa29",
+  "subject": {
+    "name": "reference.apk",
+    "digest": {
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+    },
+    "local_path": "reference.apk",
+    "format": "apk",
+    "architecture": null
+  },
+  "provider": {
+    "id": "apk-signature",
+    "name": "REA APK signature reader",
+    "version": null
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_apk_signature",
+  "parameters": {
+    "path": "reference.apk"
+  },
+  "raw_result": null,
+  "normalized_result": {
+    "artifact": {
+      "path": "reference.apk",
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c",
+      "bytes": 10150579
+    },
+    "schemes": {
+      "v1": {
+        "present": true,
+        "has_manifest": true,
+        "signature_files": [
+          "META-INF/PLATFORM.SF"
+        ],
+        "block_files": [
+          "META-INF/PLATFORM.RSA"
+        ],
+        "signers": [
+          {
+            "signature_file": "META-INF/PLATFORM.SF",
+            "block_file": "META-INF/PLATFORM.RSA",
+            "certificate": {
+              "sha256_fingerprint": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+              "subject": "C=US\nST=California\nL=Mountain View\nO=Android\nOU=Android\nCN=Android\nemailAddress=android@android.com",
+              "issuer": "C=US\nST=California\nL=Mountain View\nO=Android\nOU=Android\nCN=Android\nemailAddress=android@android.com",
+              "serial_number": "B3998086D056CFFA",
+              "not_before": "2008-04-15T22:40:50.000Z",
+              "not_after": "2035-09-01T22:40:50.000Z",
+              "public_key_algorithm": "rsa"
+            },
+            "certificates": [
+              {
+                "sha256_fingerprint": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+                "subject": "C=US\nST=California\nL=Mountain View\nO=Android\nOU=Android\nCN=Android\nemailAddress=android@android.com"
+              }
+            ],
+            "signer_infos": [
+              {
+                "identified_by": "issuer-and-serial",
+                "certificate_sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+                "digest_algorithm_oid": "2.16.840.1.101.3.4.2.1",
+                "signature_algorithm_oid": "1.2.840.113549.1.1.1"
+              }
+            ],
+            "decode_error": null
+          }
+        ]
+      },
+      "v2": {
+        "present": true,
+        "signers": [
+          {
+            "uninterpreted_signed_data_bytes": 4,
+            "uninterpreted_signer_bytes": 0,
+            "certificate": {
+              "sha256_fingerprint": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+              "subject": "C=US\nST=California\nL=Mountain View\nO=Android\nOU=Android\nCN=Android\nemailAddress=android@android.com",
+              "issuer": "C=US\nST=California\nL=Mountain View\nO=Android\nOU=Android\nCN=Android\nemailAddress=android@android.com",
+              "serial_number": "B3998086D056CFFA",
+              "not_before": "2008-04-15T22:40:50.000Z",
+              "not_after": "2035-09-01T22:40:50.000Z",
+              "public_key_algorithm": "rsa"
+            },
+            "digests": [
+              {
+                "uninterpreted_bytes": 0,
+                "signature_algorithm_id": 259,
+                "algorithm": "sha256",
+                "declared_digest_hex": "b11e90fe9458be210dd90f688c6729694172eaecc94763928fb7a27d88611d3e",
+                "matches_apk": true
+              }
+            ],
+            "signatures": [
+              {
+                "signature_algorithm_id": 259,
+                "algorithm": "sha256",
+                "signature_bytes": 256,
+                "uninterpreted_bytes": 0
+              }
+            ],
+            "public_key_bytes": 292,
+            "min_sdk": null,
+            "max_sdk": null
+          }
+        ],
+        "uninterpreted_bytes": 0
+      },
+      "v3": {
+        "present": true,
+        "signers": [
+          {
+            "uninterpreted_signed_data_bytes": 0,
+            "uninterpreted_signer_bytes": 0,
+            "certificate": {
+              "sha256_fingerprint": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+              "subject": "C=US\nST=California\nL=Mountain View\nO=Android\nOU=Android\nCN=Android\nemailAddress=android@android.com",
+              "issuer": "C=US\nST=California\nL=Mountain View\nO=Android\nOU=Android\nCN=Android\nemailAddress=android@android.com",
+              "serial_number": "B3998086D056CFFA",
+              "not_before": "2008-04-15T22:40:50.000Z",
+              "not_after": "2035-09-01T22:40:50.000Z",
+              "public_key_algorithm": "rsa"
+            },
+            "digests": [
+              {
+                "uninterpreted_bytes": 0,
+                "signature_algorithm_id": 259,
+                "algorithm": "sha256",
+                "declared_digest_hex": "b11e90fe9458be210dd90f688c6729694172eaecc94763928fb7a27d88611d3e",
+                "matches_apk": true
+              }
+            ],
+            "signatures": [
+              {
+                "signature_algorithm_id": 259,
+                "algorithm": "sha256",
+                "signature_bytes": 256,
+                "uninterpreted_bytes": 0
+              }
+            ],
+            "public_key_bytes": 292,
+            "min_sdk": 24,
+            "max_sdk": 2147483647,
+            "rotation": {
+              "present": false,
+              "lineage": [],
+              "decode_error": null
+            }
+          }
+        ],
+        "uninterpreted_bytes": 0
+      },
+      "v3.1": {
+        "present": false,
+        "signers": [],
+        "uninterpreted_bytes": 0
+      }
+    },
+    "source_stamp": {
+      "present": true,
+      "certificate": {
+        "sha256_fingerprint": "ea793ae30214dad2074abbfcdb7ce8950b757d3e615d6fc1307da21fec515a94",
+        "subject": "CN=ReferencePanel\nO=ReferencePanel\nOU=org.reference.panel",
+        "issuer": "CN=ReferencePanel\nO=ReferencePanel\nOU=org.reference.panel",
+        "serial_number": "2F65785579120310B932043F021D464D78AC1CD3",
+        "not_before": "2026-09-22T11:50:34.000Z",
+        "not_after": "2126-08-29T11:50:34.000Z",
+        "public_key_algorithm": "rsa"
+      },
+      "decode_error": null
+    },
+    "posture": {
+      "v1_only": false,
+      "schemes_agree_on_signer": true,
+      "signer_change_declared_by_rotation": false,
+      "v1_signers_match_block_signers": true,
+      "rotation_present": false,
+      "source_stamp_present": true,
+      "strongest_scheme": "v3",
+      "self_consistent": true
+    },
+    "runtime_execution": "not-performed"
+  },
+  "confidence": "observed",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "4 bytes outside known signing fields were not interpreted; suffixes do not by themselves establish malformed signing.",
+    "Static structural inspection only. No Android code executes, no device or adb is involved, and odex/vdex/oat/cdex are not read.",
+    "No signature is verified: signer, rotation-lineage and source-stamp signatures are NOT cryptographically checked, and certificate chains, revocation and authenticity are NOT evaluated. Certificates and lineages are what the APK declares.",
+    "matches_apk and self_consistent only show that the declared content digest equals the digest of the current bytes. This is not a signature verification: anyone who changes the bytes can recompute the digest and write it into the signed data. SHA-256 identifies the exact bytes, not the producer.",
+    "v1 signers are what each signature block's PKCS#7 SignedData declares: its signatures, the .SF and MANIFEST.MF digests and entry coverage are NOT verified.",
+    "Not read: v4 .apk.idsig, verity digests (matches_apk null), and the v1 X-Android-APK-Signed marker, so v1_only cannot distinguish a v1-only APK from one whose v2/v3 block was removed."
+  ],
+  "relationship_coverage": null,
+  "locations": [
+    {
+      "kind": "artifact-path",
+      "path": "reference.apk"
+    }
+  ],
+  "evidence_links": []
+}

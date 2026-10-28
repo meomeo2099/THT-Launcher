@@ -1,0 +1,114 @@
+    #37              : (in Lpi;)
+      name          : 'f'
+      type          : '(Lc9;Lz0;Ly5;Ljava/lang/String;Ljava/lang/String;I)Landroid/widget/LinearLayout;'
+      access        : 0x0019 (PUBLIC STATIC FINAL)
+      code          -
+      registers     : 11
+      ins           : 6
+      outs          : 5
+      insns size    : 62 16-bit code units
+081f44:                                        |[081f44] pi.f:(Lc9;Lz0;Ly5;Ljava/lang/String;Ljava/lang/String;I)Landroid/widget/LinearLayout;
+081f54: 1210                                   |0000: const/4 v0, #int 1 // #1
+081f56: 360a 0400                              |0001: if-gt v10, v0, 0005 // +0004
+081f5a: 1205                                   |0003: const/4 v5, #int 0 // #0
+081f5c: 1105                                   |0004: return-object v5
+081f5e: 2201 cd01                              |0005: new-instance v1, Lj8; // type@01cd
+081f62: 7040 df05 010a                         |0007: invoke-direct {v1, v0, v10, v0}, Lh8;.<init>:(III)V // method@05df
+081f68: 2202 3302                              |000a: new-instance v2, Ljava/util/ArrayList; // type@0233
+081f6c: 7110 e808 0100                         |000c: invoke-static {v1}, Lk3;.n0:(Ljava/lang/Iterable;)I // method@08e8
+081f72: 0a03                                   |000f: move-result v3
+081f74: 7020 1a08 3200                         |0010: invoke-direct {v2, v3}, Ljava/util/ArrayList;.<init>:(I)V // method@081a
+081f7a: 6e10 e305 0100                         |0013: invoke-virtual {v1}, Lh8;.iterator:()Ljava/util/Iterator; // method@05e3
+081f80: 0c01                                   |0016: move-result-object v1
+081f82: 0713                                   |0017: move-object v3, v1
+081f84: 1f03 b901                              |0018: check-cast v3, Li8; // type@01b9
+081f88: 5534 0803                              |001a: iget-boolean v4, v3, Li8;.c:Z // field@0308
+081f8c: 3804 0e00                              |001c: if-eqz v4, 002a // +000e
+081f90: 6e10 4f06 0300                         |001e: invoke-virtual {v3}, Li8;.nextInt:()I // method@064f
+081f96: 0a03                                   |0021: move-result v3
+081f98: 7110 af07 0300                         |0022: invoke-static {v3}, Ljava/lang/String;.valueOf:(I)Ljava/lang/String; // method@07af
+081f9e: 0c03                                   |0025: move-result-object v3
+081fa0: 6e20 1d08 3200                         |0026: invoke-virtual {v2, v3}, Ljava/util/ArrayList;.add:(Ljava/lang/Object;)Z // method@081d
+081fa6: 28ee                                   |0029: goto 0017 // -0012
+081fa8: 1221                                   |002a: const/4 v1, #int 2 // #2
+081faa: 6e30 420f 1609                         |002b: invoke-virtual {v6, v1, v9}, Lz0;.a:(ILjava/lang/String;)I // method@0f42
+081fb0: 0a03                                   |002e: move-result v3
+081fb2: 7130 4b0b 030a                         |002f: invoke-static {v3, v0, v10}, Lpi;.s:(III)I // method@0b4b
+081fb8: 0a0a                                   |0032: move-result v10
+081fba: b10a                                   |0033: sub-int/2addr v10, v0
+081fbc: 2200 b602                              |0034: new-instance v0, Lo0; // type@02b6
+081fc0: 7051 780a 6079                         |0036: invoke-direct {v0, v6, v9, v7, v1}, Lo0;.<init>:(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;I)V // method@0a78
+081fc6: 6e50 2504 85a2                         |0039: invoke-virtual {v5, v8, v2, v10, v0}, Lc9;.q:(Ljava/lang/String;Ljava/util/List;ILj6;)Landroid/widget/LinearLayout; // method@0425
+081fcc: 0c05                                   |003c: move-result-object v5
+081fce: 1105                                   |003d: return-object v5
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+      locals        :
+        0x0000 - 0x003e reg=5 (null) Lc9;
+        0x0000 - 0x003e reg=6 (null) Lz0;
+        0x0000 - 0x003e reg=7 (null) Ly5;
+        0x0000 - 0x003e reg=8 (null) Ljava/lang/String;
+        0x0000 - 0x003e reg=9 (null) Ljava/lang/String;
+        0x0000 - 0x003e reg=10 (null) I

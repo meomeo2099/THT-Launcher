@@ -1,0 +1,147 @@
+{
+  "evidence_id": "ev_a531a5eb939632e76a5714a2c3ffe05b3eb1700f17d1b601c35800d0b20119e1",
+  "subject": {
+    "name": "reference.apk",
+    "digest": {
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+    },
+    "local_path": "reference.apk",
+    "format": "apk",
+    "architecture": null
+  },
+  "provider": {
+    "id": "jadx",
+    "name": "JADX headless",
+    "version": "0.7.1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_android_method",
+  "parameters": {
+    "path": "reference.apk",
+    "class_name": "org.reference.panel.BootPlaybackService",
+    "method_name": "onStartCommand"
+  },
+  "raw_result": {
+    "server": {
+      "name": "rea-jadx-bridge",
+      "version": "7"
+    },
+    "bridge_sha256": "e5044a8312dd0731f53af3f095508b3e5cff54df6b971c95d4305e2f39b4fa30",
+    "jar_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "loaded": {
+      "state": "LOADED",
+      "apk_path": "<temporary-analysis-session>/target.apk",
+      "class_count": 485,
+      "resource_count": 264,
+      "threads": 1,
+      "resources": "full"
+    },
+    "calls": [
+      {
+        "operation": "rea_jvm_status",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"metadata_scope\":\"parsed_members\",\"max_heap_bytes\":2147483648,\"java_version\":\"21.0.12.1\",\"available_processors\":2,\"engine_reported_version\":\"0.7.1\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "load_apk",
+        "input": {
+          "path": "<temporary-analysis-session>/target.apk",
+          "threads": 1,
+          "resources": "full"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"state\":\"LOADED\",\"apk_path\":\"<temporary-analysis-session>/target.apk\",\"class_count\":485,\"raw_class_count\":485,\"resource_count\":264,\"load_duration_ms\":1073,\"decompile_timeout_ms\":90000,\"threads\":1,\"code_cache_size\":64,\"resources\":\"full\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_class_summary",
+        "input": {
+          "class_name": "org.reference.panel.BootPlaybackService"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"inner_classes\":[],\"inner_class_count\":0,\"name\":\"BootPlaybackService\",\"field_count\":7,\"full_name\":\"org.reference.panel.BootPlaybackService\",\"method_count\":4,\"raw_name\":\"org.reference.panel.BootPlaybackService\",\"fields\":[{\"type\":\"android.os.Handler\",\"def_pos\":0,\"name\":\"a\"},{\"type\":\"boolean\",\"def_pos\":0,\"name\":\"b\"},{\"type\":\"int\",\"def_pos\":0,\"name\":\"c\"},{\"type\":\"java.lang.String\",\"def_pos\":0,\"name\":\"d\"},{\"type\":\"hd\",\"def_pos\":0,\"name\":\"e\"},{\"type\":\"r1\",\"def_pos\":0,\"name\":\"f\"},{\"type\":\"int\",\"def_pos\":0,\"name\":\"g\"}],\"methods\":[{\"dex_descriptor\":\"()V\",\"signature\":\"<init>(): void\",\"def_pos\":0,\"name\":\"<init>\",\"is_constructor\":true},{\"dex_descriptor\":\"(Landroid/content/Intent;)Landroid/os/IBinder;\",\"signature\":\"onBind(android.content.Intent): android.os.IBinder\",\"def_pos\":0,\"name\":\"onBind\",\"is_constructor\":false},{\"dex_descriptor\":\"()V\",\"signature\":\"onDestroy(): void\",\"def_pos\":0,\"name\":\"onDestroy\",\"is_constructor\":false},{\"dex_descriptor\":\"(Landroid/content/Intent;II)I\",\"signature\":\"onStartCommand(android.content.Intent, int, int): int\",\"def_pos\":0,\"name\":\"onStartCommand\",\"is_constructor\":false}]}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_method_body",
+        "input": {
+          "class_name": "org.reference.panel.BootPlaybackService",
+          "method_name": "onStartCommand",
+          "overload_index": 0,
+          "smali_fallback": true
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"mode\":\"java\",\"body\":\"    @Override // android.app.Service\\n    public final int onStartCommand(Intent intent, int i, int i2) {\\n        NotificationManager notificationManager = (NotificationManager) getSystemService(NotificationManager.class);\\n        notificationManager.createNotificationChannel(new NotificationChannel(\\\"boot_music\\\", si.a(\\\"starting_music\\\", new Object[0]), 2));\\n        startForeground(73, new Notification.Builder(this, \\\"boot_music\\\").setSmallIcon(R.drawable.ic_notification).setContentTitle(\\\"ReferencePanel\\\").setContentText(si.a(\\\"starting_the_selected_player\\\", new Object[0])).build());\\n        SharedPreferences sharedPreferences = getSharedPreferences(\\\"panel\\\", 0);\\n        String string = sharedPreferences.getString(\\\"slot_1\\\", \\\"\\\");\\n        if (string == null) {\\n            string = \\\"\\\";\\n        }\\n        ComponentName componentNameUnflattenFromString = ComponentName.unflattenFromString(string);\\n        String packageName = componentNameUnflattenFromString != null ? componentNameUnflattenFromString.getPackageName() : null;\\n        this.d = packageName != null ? packageName : \\\"\\\";\\n        if ((!k8.e(intent != null ? intent.getAction() : null, \\\"org.reference.panel.PLAY_PREFERRED\\\") && !sharedPreferences.getBoolean(\\\"music_autoplay\\\", false)) || th.A(this.d) || !notificationManager.isNotificationListenerAccessGranted(new ComponentName(this, (Class<?>) MusicNotificationListener.class))) {\\n            stopSelf();\\n            return 2;\\n        }\\n        if (!this.b) {\\n            this.b = true;\\n            hd hdVar = new hd(this);\\n            this.e = hdVar;\\n            hdVar.a(this.d, new i2(3, this));\\n            this.a.postDelayed(this.f, 2000L);\\n        }\\n        return 2;\\n    }\",\"markers\":[],\"fell_back\":false,\"full_name\":\"org.reference.panel.BootPlaybackService.onStartCommand\",\"overload_index\":0,\"method_name\":\"onStartCommand\",\"overload_count\":1,\"dex_descriptor\":\"(Landroid/content/Intent;II)I\",\"class_name\":\"org.reference.panel.BootPlaybackService\"}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "normalized_result": {
+    "engine": {
+      "name": "jadx-headless-mcp",
+      "version": "0.7.1",
+      "artifact_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+      "source_revision": "5844800a486d2248fa949b74c9896285f5b54de2",
+      "worker_count": 1,
+      "heap_limit_mib": 2048
+    },
+    "class_name": "org.reference.panel.BootPlaybackService",
+    "method": {
+      "name": "onStartCommand",
+      "reported_signature": "onStartCommand(android.content.Intent, int, int): int",
+      "overload_index": 0,
+      "is_constructor": false,
+      "dex_descriptor": "(Landroid/content/Intent;II)I"
+    },
+    "overload_count": 1,
+    "representation": "java",
+    "body_status": "available",
+    "fell_back": false,
+    "markers": [],
+    "source": {
+      "status": "complete",
+      "text": "    @Override // android.app.Service\n    public final int onStartCommand(Intent intent, int i, int i2) {\n        NotificationManager notificationManager = (NotificationManager) getSystemService(NotificationManager.class);\n        notificationManager.createNotificationChannel(new NotificationChannel(\"boot_music\", si.a(\"starting_music\", new Object[0]), 2));\n        startForeground(73, new Notification.Builder(this, \"boot_music\").setSmallIcon(R.drawable.ic_notification).setContentTitle(\"ReferencePanel\").setContentText(si.a(\"starting_the_selected_player\", new Object[0])).build());\n        SharedPreferences sharedPreferences = getSharedPreferences(\"panel\", 0);\n        String string = sharedPreferences.getString(\"slot_1\", \"\");\n        if (string == null) {\n            string = \"\";\n        }\n        ComponentName componentNameUnflattenFromString = ComponentName.unflattenFromString(string);\n        String packageName = componentNameUnflattenFromString != null ? componentNameUnflattenFromString.getPackageName() : null;\n        this.d = packageName != null ? packageName : \"\";\n        if ((!k8.e(intent != null ? intent.getAction() : null, \"org.reference.panel.PLAY_PREFERRED\") && !sharedPreferences.getBoolean(\"music_autoplay\", false)) || th.A(this.d) || !notificationManager.isNotificationListenerAccessGranted(new ComponentName(this, (Class<?>) MusicNotificationListener.class))) {\n            stopSelf();\n            return 2;\n        }\n        if (!this.b) {\n            this.b = true;\n            hd hdVar = new hd(this);\n            this.e = hdVar;\n            hdVar.a(this.d, new i2(3, this));\n            this.a.postDelayed(this.f, 2000L);\n        }\n        return 2;\n    }",
+      "reported_total_bytes": null
+    }
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Static decompiler observations do not establish runtime behavior; the APK is never executed.",
+    "Method signatures use provider display types; DEX prototypes come from frozen JADX metadata. Display names may be aliases, and overload indices are local to this engine and artifact.",
+    "Class inventories use parsed metadata before code generation, including synthetic members that may be omitted from decompiled source. Source positions remain unknown.",
+    "Incoming reference totals count JADX using nodes. Direct invoke entries within a using method report raw DEX code-unit offsets and method indexes, but coverage is limited to those nodes and directly matched invokes; it does not establish every possible dynamic or reflective call site.",
+    "Manifest summaries are parsed once by REA's bridge from the exact root AndroidManifest.xml resource, using namespace-aware XML attributes; decoded XML is retained. APK signatures, split APKs, native libraries and Android runtime capture are not verified by this provider."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

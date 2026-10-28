@@ -1,0 +1,454 @@
+    #58              : (in Lorg/reference/panel/MainActivity;)
+      name          : 'onCreate'
+      type          : '(Landroid/os/Bundle;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 11
+      ins           : 2
+      outs          : 4
+      insns size    : 293 16-bit code units
+0a0758:                                        |[0a0758] org.reference.panel.MainActivity.onCreate:(Landroid/os/Bundle;)V
+0a0768: 6f20 4c00 a900                         |0000: invoke-super {v9, v10}, Landroid/app/Activity;.onCreate:(Landroid/os/Bundle;)V // method@004c
+0a076e: 6300 2409                              |0003: sget-boolean v0, Lz9;.a:Z // field@0924
+0a0772: 1211                                   |0005: const/4 v1, #int 1 // #1
+0a0774: 3800 0300                              |0006: if-eqz v0, 0009 // +0003
+0a0778: 2806                                   |0008: goto 000e // +0006
+0a077a: 7110 640f 0900                         |0009: invoke-static {v9}, Lz9;.d:(Landroid/content/Context;)V // method@0f64
+0a0780: 6a01 2409                              |000c: sput-boolean v1, Lz9;.a:Z // field@0924
+0a0784: 6200 da00                              |000e: sget-object v0, Lba;.h:Ll0; // field@00da
+0a0788: 6e20 9009 9000                         |0010: invoke-virtual {v0, v9}, Ll0;.q:(Landroid/content/ContextWrapper;)V // method@0990
+0a078e: 6a01 de00                              |0013: sput-boolean v1, Lba;.l:Z // field@00de
+0a0792: 7110 f908 0900                         |0015: invoke-static {v9}, Lk8;.E0:(Landroid/content/Context;)V // method@08f9
+0a0798: 6e10 380c 0900                         |0018: invoke-virtual {v9}, Lorg/reference/panel/MainActivity;.B:()Landroid/content/SharedPreferences; // method@0c38
+0a079e: 0c00                                   |001b: move-result-object v0
+0a07a0: 7210 f600 0000                         |001c: invoke-interface {v0}, Landroid/content/SharedPreferences;.edit:()Landroid/content/SharedPreferences$Editor; // method@00f6
+0a07a6: 0c00                                   |001f: move-result-object v0
+0a07a8: 1a02 d909                              |0020: const-string v2, "car_root" // string@09d9
+0a07ac: 7220 f400 2000                         |0022: invoke-interface {v0, v2}, Landroid/content/SharedPreferences$Editor;.remove:(Ljava/lang/String;)Landroid/content/SharedPreferences$Editor; // method@00f4
+0a07b2: 0c00                                   |0025: move-result-object v0
+0a07b4: 7210 eb00 0000                         |0026: invoke-interface {v0}, Landroid/content/SharedPreferences$Editor;.apply:()V // method@00eb
+0a07ba: 6e10 380c 0900                         |0029: invoke-virtual {v9}, Lorg/reference/panel/MainActivity;.B:()Landroid/content/SharedPreferences; // method@0c38
+0a07c0: 0c00                                   |002c: move-result-object v0
+0a07c2: 1a02 ef0d                              |002d: const-string v2, "independent_dock" // string@0def
+0a07c6: 1203                                   |002f: const/4 v3, #int 0 // #0
+0a07c8: 7230 f800 2003                         |0030: invoke-interface {v0, v2, v3}, Landroid/content/SharedPreferences;.getBoolean:(Ljava/lang/String;Z)Z // method@00f8
+0a07ce: 0a00                                   |0033: move-result v0
+0a07d0: 3900 3900                              |0034: if-nez v0, 006d // +0039
+0a07d4: 6e10 380c 0900                         |0036: invoke-virtual {v9}, Lorg/reference/panel/MainActivity;.B:()Landroid/content/SharedPreferences; // method@0c38
+0a07da: 0c00                                   |0039: move-result-object v0
+0a07dc: 7210 f600 0000                         |003a: invoke-interface {v0}, Landroid/content/SharedPreferences;.edit:()Landroid/content/SharedPreferences$Editor; // method@00f6
+0a07e2: 0c00                                   |003d: move-result-object v0
+0a07e4: 0134                                   |003e: move v4, v3
+0a07e6: 1225                                   |003f: const/4 v5, #int 2 // #2
+0a07e8: 3554 2700                              |0040: if-ge v4, v5, 0067 // +0027
+0a07ec: d805 0404                              |0042: add-int/lit8 v5, v4, #int 4 // #04
+0a07f0: 7110 5e0c 0500                         |0044: invoke-static {v5}, Lorg/reference/panel/MainActivity;.f:(I)Ljava/lang/String; // method@0c5e
+0a07f6: 0c05                                   |0047: move-result-object v5
+0a07f8: 6e10 380c 0900                         |0048: invoke-virtual {v9}, Lorg/reference/panel/MainActivity;.B:()Landroid/content/SharedPreferences; // method@0c38
+0a07fe: 0c06                                   |004b: move-result-object v6
+0a0800: 7220 f500 5600                         |004c: invoke-interface {v6, v5}, Landroid/content/SharedPreferences;.contains:(Ljava/lang/String;)Z // method@00f5
+0a0806: 0a06                                   |004f: move-result v6
+0a0808: 3906 1400                              |0050: if-nez v6, 0064 // +0014
+0a080c: 6e10 380c 0900                         |0052: invoke-virtual {v9}, Lorg/reference/panel/MainActivity;.B:()Landroid/content/SharedPreferences; // method@0c38
+0a0812: 0c06                                   |0055: move-result-object v6
+0a0814: 7110 5e0c 0400                         |0056: invoke-static {v4}, Lorg/reference/panel/MainActivity;.f:(I)Ljava/lang/String; // method@0c5e
+0a081a: 0c07                                   |0059: move-result-object v7
+0a081c: 1208                                   |005a: const/4 v8, #int 0 // #0
+0a081e: 7230 fc00 7608                         |005b: invoke-interface {v6, v7, v8}, Landroid/content/SharedPreferences;.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; // method@00fc
+0a0824: 0c06                                   |005e: move-result-object v6
+0a0826: 3806 0500                              |005f: if-eqz v6, 0064 // +0005
+0a082a: 7230 f200 5006                         |0061: invoke-interface {v0, v5, v6}, Landroid/content/SharedPreferences$Editor;.putString:(Ljava/lang/String;Ljava/lang/String;)Landroid/content/SharedPreferences$Editor; // method@00f2
+0a0830: d804 0401                              |0064: add-int/lit8 v4, v4, #int 1 // #01
+0a0834: 28d9                                   |0066: goto 003f // -0027
+0a0836: 7230 ee00 2001                         |0067: invoke-interface {v0, v2, v1}, Landroid/content/SharedPreferences$Editor;.putBoolean:(Ljava/lang/String;Z)Landroid/content/SharedPreferences$Editor; // method@00ee
+0a083c: 7210 eb00 0000                         |006a: invoke-interface {v0}, Landroid/content/SharedPreferences$Editor;.apply:()V // method@00eb
+0a0842: 2200 9401                              |006d: new-instance v0, Lgc; // type@0194
+0a0846: 2202 1a01                              |006f: new-instance v2, Lb2; // type@011a
+0a084a: 1254                                   |0071: const/4 v4, #int 5 // #5
+0a084c: 7030 b203 9204                         |0072: invoke-direct {v2, v9, v4}, Lb2;.<init>:(Lorg/reference/panel/MainActivity;I)V // method@03b2
+0a0852: 2204 5c03                              |0075: new-instance v4, Lv1; // type@035c
+0a0856: 1305 1500                              |0077: const/16 v5, #int 21 // #15
+0a085a: 7030 ff0d 9405                         |0079: invoke-direct {v4, v9, v5}, Lv1;.<init>:(Lorg/reference/panel/MainActivity;I)V // method@0dff
+0a0860: 7040 9905 9042                         |007c: invoke-direct {v0, v9, v2, v4}, Lgc;.<init>:(Lorg/reference/panel/MainActivity;Lb2;Lv1;)V // method@0599
+0a0866: 2202 5c03                              |007f: new-instance v2, Lv1; // type@035c
+0a086a: 1304 1900                              |0081: const/16 v4, #int 25 // #19
+0a086e: 7030 ff0d 9204                         |0083: invoke-direct {v2, v9, v4}, Lv1;.<init>:(Lorg/reference/panel/MainActivity;I)V // method@0dff
+0a0874: 5b02 6d02                              |0086: iput-object v2, v0, Lgc;.C:Lv1; // field@026d
+0a0878: 2202 7b03                              |0088: new-instance v2, Lwa; // type@037b
+0a087c: 7040 920e 9230                         |008a: invoke-direct {v2, v9, v0, v3}, Lwa;.<init>:(Lorg/reference/panel/MainActivity;Lgc;I)V // method@0e92
+0a0882: 5b02 8a02                              |008d: iput-object v2, v0, Lgc;.x:Lwa; // field@028a
+0a0886: 2202 7b03                              |008f: new-instance v2, Lwa; // type@037b
+0a088a: 7040 920e 9210                         |0091: invoke-direct {v2, v9, v0, v1}, Lwa;.<init>:(Lorg/reference/panel/MainActivity;Lgc;I)V // method@0e92
+0a0890: 6902 aa03                              |0094: sput-object v2, Lk8;.i:Lwa; // field@03aa
+0a0894: 5b90 e906                              |0096: iput-object v0, v9, Lorg/reference/panel/MainActivity;.v:Lgc; // field@06e9
+0a0898: 6000 9406                              |0098: sget v0, Lorg/reference/panel/AutomationService;.c:I // field@0694
+0a089c: 7110 fb08 0900                         |009a: invoke-static {v9}, Lk8;.F0:(Landroid/content/Context;)V // method@08fb
+0a08a2: 6200 3b06                              |009d: sget-object v0, Lr4;.C:Ll0; // field@063b
+0a08a6: 6e20 8f09 9000                         |009f: invoke-virtual {v0, v9}, Ll0;.p:(Landroid/content/Context;)Lr4; // method@098f
+0a08ac: 0c00                                   |00a2: move-result-object v0
+0a08ae: 3800 0b00                              |00a3: if-eqz v0, 00ae // +000b
+0a08b2: 2202 5103                              |00a5: new-instance v2, Lua; // type@0351
+0a08b6: 1304 0b00                              |00a7: const/16 v4, #int 11 // #b
+0a08ba: 7030 c90d 9204                         |00a9: invoke-direct {v2, v9, v4}, Lua;.<init>:(Lorg/reference/panel/MainActivity;I)V // method@0dc9
+0a08c0: 5b02 5406                              |00ac: iput-object v2, v0, Lr4;.x:Lua; // field@0654
+0a08c4: 7110 0d06 0900                         |00ae: invoke-static {v9}, Lhh;.a:(Landroid/content/Context;)Ljava/lang/String; // method@060d
+0a08ca: 0c00                                   |00b1: move-result-object v0
+0a08cc: 2808                                   |00b2: goto 00ba // +0008
+0a08ce: 0d00                                   |00b3: move-exception v0
+0a08d0: 2202 8201                              |00b4: new-instance v2, Lff; // type@0182
+0a08d4: 7020 4a05 0200                         |00b6: invoke-direct {v2, v0}, Lff;.<init>:(Ljava/lang/Throwable;)V // method@054a
+0a08da: 0720                                   |00b9: move-object v0, v2
+0a08dc: 7110 bf05 0000                         |00ba: invoke-static {v0}, Lgf;.a:(Ljava/lang/Object;)Ljava/lang/Throwable; // method@05bf
+0a08e2: 0c02                                   |00bd: move-result-object v2
+0a08e4: 3902 0300                              |00be: if-nez v2, 00c1 // +0003
+0a08e8: 2813                                   |00c0: goto 00d3 // +0013
+0a08ea: 6e10 cd07 0200                         |00c1: invoke-virtual {v2}, Ljava/lang/Throwable;.getMessage:()Ljava/lang/String; // method@07cd
+0a08f0: 0c00                                   |00c4: move-result-object v0
+0a08f2: 2202 0902                              |00c5: new-instance v2, Ljava/lang/StringBuilder; // type@0209
+0a08f6: 1a04 990b                              |00c7: const-string v4, "error: " // string@0b99
+0a08fa: 7020 b507 4200                         |00c9: invoke-direct {v2, v4}, Ljava/lang/StringBuilder;.<init>:(Ljava/lang/String;)V // method@07b5
+0a0900: 6e20 bf07 0200                         |00cc: invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder; // method@07bf
+0a0906: 6e10 c107 0200                         |00cf: invoke-virtual {v2}, Ljava/lang/StringBuilder;.toString:()Ljava/lang/String; // method@07c1
+0a090c: 0c00                                   |00d2: move-result-object v0
+0a090e: 1f00 0802                              |00d3: check-cast v0, Ljava/lang/String; // type@0208
+0a0912: 1a02 8812                              |00d5: const-string v2, "source-stamp verdict = " // string@1288
+0a0916: 6e20 9807 0200                         |00d7: invoke-virtual {v2, v0}, Ljava/lang/String;.concat:(Ljava/lang/String;)Ljava/lang/String; // method@0798
+0a091c: 0c00                                   |00da: move-result-object v0
+0a091e: 1a02 6f01                              |00db: const-string v2, "ReferencePanel.Stamp" // string@016f
+0a0922: 7120 a202 0200                         |00dd: invoke-static {v2, v0}, Landroid/util/Log;.w:(Ljava/lang/String;Ljava/lang/String;)I // method@02a2
+0a0928: 6e10 380c 0900                         |00e0: invoke-virtual {v9}, Lorg/reference/panel/MainActivity;.B:()Landroid/content/SharedPreferences; // method@0c38
+0a092e: 0c00                                   |00e3: move-result-object v0
+0a0930: 1a02 0113                              |00e4: const-string v2, "suppress_climate_popup" // string@1301
+0a0934: 7230 f800 2001                         |00e6: invoke-interface {v0, v2, v1}, Landroid/content/SharedPreferences;.getBoolean:(Ljava/lang/String;Z)Z // method@00f8
+0a093a: 0a00                                   |00e9: move-result v0
+0a093c: 3800 0500                              |00ea: if-eqz v0, 00ef // +0005
+0a0940: 7110 2b09 0900                         |00ec: invoke-static {v9}, Lk8;.i0:(Landroid/content/Context;)V // method@092b
+0a0946: 380a 0a00                              |00ef: if-eqz v10, 00f9 // +000a
+0a094a: 1a00 5a12                              |00f1: const-string v0, "settings_section" // string@125a
+0a094e: 6e20 4f02 0a00                         |00f3: invoke-virtual {v10, v0}, Landroid/os/BaseBundle;.getString:(Ljava/lang/String;)Ljava/lang/String; // method@024f
+0a0954: 0c00                                   |00f6: move-result-object v0
+0a0956: 3900 0400                              |00f7: if-nez v0, 00fb // +0004
+0a095a: 1a00 de0a                              |00f9: const-string v0, "desktop" // string@0ade
+0a095e: 5b90 e706                              |00fb: iput-object v0, v9, Lorg/reference/panel/MainActivity;.u:Ljava/lang/String; // field@06e7
+0a0962: 380a 0900                              |00fd: if-eqz v10, 0106 // +0009
+0a0966: 1a00 5512                              |00ff: const-string v0, "settings" // string@1255
+0a096a: 6e20 4e02 0a00                         |0101: invoke-virtual {v10, v0}, Landroid/os/BaseBundle;.getBoolean:(Ljava/lang/String;)Z // method@024e
+0a0970: 0a01                                   |0104: move-result v1
+0a0972: 280f                                   |0105: goto 0114 // +000f
+0a0974: 6e10 380c 0900                         |0106: invoke-virtual {v9}, Lorg/reference/panel/MainActivity;.B:()Landroid/content/SharedPreferences; // method@0c38
+0a097a: 0c0a                                   |0109: move-result-object v10
+0a097c: 1a00 aa0f                              |010a: const-string v0, "onboarded" // string@0faa
+0a0980: 7230 f800 0a03                         |010c: invoke-interface {v10, v0, v3}, Landroid/content/SharedPreferences;.getBoolean:(Ljava/lang/String;Z)Z // method@00f8
+0a0986: 0a0a                                   |010f: move-result v10
+0a0988: 390a 0300                              |0110: if-nez v10, 0113 // +0003
+0a098c: 2802                                   |0112: goto 0114 // +0002
+0a098e: 0131                                   |0113: move v1, v3
+0a0990: 5c91 c306                              |0114: iput-boolean v1, v9, Lorg/reference/panel/MainActivity;.c:Z // field@06c3
+0a0994: 6e10 4200 0900                         |0116: invoke-virtual {v9}, Landroid/app/Activity;.getIntent:()Landroid/content/Intent; // method@0042
+0a099a: 0c0a                                   |0119: move-result-object v10
+0a099c: 1a00 ea10                              |011a: const-string v0, "org.reference.panel.OPEN_HOME" // string@10ea
+0a09a0: 6e30 d800 0a03                         |011c: invoke-virtual {v10, v0, v3}, Landroid/content/Intent;.getBooleanExtra:(Ljava/lang/String;Z)Z // method@00d8
+0a09a6: 0a0a                                   |011f: move-result v10
+0a09a8: 380a 0400                              |0120: if-eqz v10, 0124 // +0004
+0a09ac: 5c93 c306                              |0122: iput-boolean v3, v9, Lorg/reference/panel/MainActivity;.c:Z // field@06c3
+0a09b0: 0e00                                   |0124: return-void
+      catches       : 1
+        0x00ae - 0x00b2
+          <any> -> 0x00b3
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+        0x0042 line=67
+        0x0043 line=68
+        0x0044 line=69
+        0x0045 line=70
+        0x0046 line=71
+        0x0047 line=72
+        0x0048 line=73
+        0x0049 line=74
+        0x004a line=75
+        0x004b line=76
+        0x004c line=77
+        0x004d line=78
+        0x004e line=79
+        0x004f line=80
+        0x0050 line=81
+        0x0051 line=82
+        0x0052 line=83
+        0x0053 line=84
+        0x0054 line=85
+        0x0055 line=86
+        0x0056 line=87
+        0x0057 line=88
+        0x0058 line=89
+        0x0059 line=90
+        0x005a line=91
+        0x005b line=92
+        0x005c line=93
+        0x005d line=94
+        0x005e line=95
+        0x005f line=96
+        0x0060 line=97
+        0x0061 line=98
+        0x0062 line=99
+        0x0063 line=100
+        0x0064 line=101
+        0x0065 line=102
+        0x0066 line=103
+        0x0067 line=104
+        0x0068 line=105
+        0x0069 line=106
+        0x006a line=107
+        0x006b line=108
+        0x006c line=109
+        0x006d line=110
+        0x006e line=111
+        0x006f line=112
+        0x0070 line=113
+        0x0071 line=114
+        0x0072 line=115
+        0x0073 line=116
+        0x0074 line=117
+        0x0075 line=118
+        0x0076 line=119
+        0x0077 line=120
+        0x0078 line=121
+        0x0079 line=122
+        0x007a line=123
+        0x007b line=124
+        0x007c line=125
+        0x007d line=126
+        0x007e line=127
+        0x007f line=128
+        0x0080 line=129
+        0x0081 line=130
+        0x0082 line=131
+        0x0083 line=132
+        0x0084 line=133
+        0x0085 line=134
+        0x0086 line=135
+        0x0087 line=136
+        0x0088 line=137
+        0x0089 line=138
+        0x008a line=139
+        0x008b line=140
+        0x008c line=141
+        0x008d line=142
+        0x008e line=143
+        0x008f line=144
+        0x0090 line=145
+        0x0091 line=146
+        0x0092 line=147
+        0x0093 line=148
+        0x0094 line=149
+        0x0095 line=150
+        0x0096 line=151
+        0x0097 line=152
+        0x0098 line=153
+        0x0099 line=154
+        0x009a line=155
+        0x009b line=156
+        0x009c line=157
+        0x009d line=158
+        0x009e line=159
+        0x009f line=160
+        0x00a0 line=161
+        0x00a1 line=162
+        0x00a2 line=163
+        0x00a3 line=164
+        0x00a4 line=165
+        0x00a5 line=166
+        0x00a6 line=167
+        0x00a7 line=168
+        0x00a8 line=169
+        0x00a9 line=170
+        0x00aa line=171
+        0x00ab line=172
+        0x00ac line=173
+        0x00ad line=174
+        0x00ae line=175
+        0x00af line=176
+        0x00b0 line=177
+        0x00b1 line=178
+        0x00b2 line=179
+        0x00b3 line=180
+        0x00b4 line=181
+        0x00b5 line=182
+        0x00b6 line=183
+        0x00b7 line=184
+        0x00b8 line=185
+        0x00b9 line=186
+        0x00ba line=187
+        0x00bb line=188
+        0x00bc line=189
+        0x00bd line=190
+        0x00be line=191
+        0x00bf line=192
+        0x00c0 line=193
+        0x00c1 line=194
+        0x00c2 line=195
+        0x00c3 line=196
+        0x00c4 line=197
+        0x00c5 line=198
+        0x00c6 line=199
+        0x00c7 line=200
+        0x00c8 line=201
+        0x00c9 line=202
+        0x00ca line=203
+        0x00cb line=204
+        0x00cc line=205
+        0x00cd line=206
+        0x00ce line=207
+        0x00cf line=208
+        0x00d0 line=209
+        0x00d1 line=210
+        0x00d2 line=211
+        0x00d3 line=212
+        0x00d4 line=213
+        0x00d5 line=214
+        0x00d6 line=215
+        0x00d7 line=216
+        0x00d8 line=217
+        0x00d9 line=218
+        0x00da line=219
+        0x00db line=220
+        0x00dc line=221
+        0x00dd line=222
+        0x00de line=223
+        0x00df line=224
+        0x00e0 line=225
+        0x00e1 line=226
+        0x00e2 line=227
+        0x00e3 line=228
+        0x00e4 line=229
+        0x00e5 line=230
+        0x00e6 line=231
+        0x00e7 line=232
+        0x00e8 line=233
+        0x00e9 line=234
+        0x00ea line=235
+        0x00eb line=236
+        0x00ec line=237
+        0x00ed line=238
+        0x00ee line=239
+        0x00ef line=240
+        0x00f0 line=241
+        0x00f1 line=242
+        0x00f2 line=243
+        0x00f3 line=244
+        0x00f4 line=245
+        0x00f5 line=246
+        0x00f6 line=247
+        0x00f7 line=248
+        0x00f8 line=249
+        0x00f9 line=250
+        0x00fa line=251
+        0x00fb line=252
+        0x00fc line=253
+        0x00fd line=254
+        0x00fe line=255
+        0x00ff line=256
+        0x0100 line=257
+        0x0101 line=258
+        0x0102 line=259
+        0x0103 line=260
+        0x0104 line=261
+        0x0105 line=262
+        0x0106 line=263
+        0x0107 line=264
+        0x0108 line=265
+        0x0109 line=266
+        0x010a line=267
+        0x010b line=268
+        0x010c line=269
+        0x010d line=270
+        0x010e line=271
+        0x010f line=272
+        0x0110 line=273
+        0x0111 line=274
+        0x0112 line=275
+        0x0113 line=276
+        0x0114 line=277
+        0x0115 line=278
+        0x0116 line=279
+        0x0117 line=280
+        0x0118 line=281
+        0x0119 line=282
+        0x011a line=283
+        0x011b line=284
+        0x011c line=285
+        0x011d line=286
+        0x011e line=287
+        0x011f line=288
+        0x0120 line=289
+        0x0121 line=290
+        0x0122 line=291
+        0x0123 line=292
+        0x0124 line=293
+      locals        :
+        0x0000 - 0x0125 reg=9 this Lorg/reference/panel/MainActivity;
+        0x0000 - 0x0125 reg=10 (null) Landroid/os/Bundle;

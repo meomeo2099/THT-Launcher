@@ -1,0 +1,140 @@
+{
+  "code": "cleanup_incomplete",
+  "category": "execution_failure",
+  "message": "Analysis could not complete. Run `rea doctor` and review the reported details; repeating the unchanged request is not expected to succeed.",
+  "retryable": false,
+  "remediation": {
+    "action": "Analysis could not complete. Run `rea doctor` and review the reported details; repeating the unchanged request is not expected to succeed."
+  },
+  "details": {
+    "provider_id": "jadx",
+    "operation": "inspect_android_method",
+    "diagnostics": {
+      "primary_error": {
+        "code": "cleanup_incomplete",
+        "category": "execution_failure",
+        "message": "Analysis could not complete. Run `rea doctor` and review the reported details; repeating the unchanged request is not expected to succeed.",
+        "retryable": false,
+        "remediation": {
+          "action": "Provider cleanup could not be fully confirmed. Review the reported local resources before opening another target."
+        },
+        "details": {
+          "provider_id": "jadx",
+          "operation": "inspect_android_method",
+          "diagnostics": {
+            "primary_error": {
+              "code": "execution_failure",
+              "category": "execution_failure",
+              "message": "Analysis could not complete. Run `rea doctor` and review the reported details; repeating the unchanged request is not expected to succeed.",
+              "retryable": false,
+              "remediation": {
+                "action": "Analysis could not complete. Run `rea doctor` and review the reported details; repeating the unchanged request is not expected to succeed."
+              },
+              "details": {
+                "provider_id": "jadx",
+                "operation": "inspect_android_method",
+                "diagnostics": {
+                  "stage": "cleanup",
+                  "java_module_observation": {
+                    "compiler": true,
+                    "major": 17
+                  }
+                }
+              }
+            },
+            "cleanup_error": {
+              "code": "cleanup_incomplete",
+              "category": "execution_failure",
+              "message": "Provider cleanup could not be fully confirmed. Review the reported local resources before opening another target.",
+              "retryable": false,
+              "remediation": {
+                "action": "Provider cleanup could not be fully confirmed. Review the reported local resources before opening another target."
+              },
+              "details": {
+                "provider_id": "jadx",
+                "operation": "inspect_android_method",
+                "cleanup": "incomplete",
+                "resources": [
+                  "6ff72d81-5781-4cb6-b9f9-0c02e887bd93",
+                  "pid:2868",
+                  "process-group:2868"
+                ],
+                "diagnostics": {
+                  "reason": "process ownership token could not be read for 3 live process(es): environment_errno_EACCES=3; live candidates 2887=environment_errno_EACCES, 2888=environment_errno_EACCES, 2889=environment_errno_EACCES",
+                  "process_cleanup": {
+                    "cleaned": false,
+                    "reason": "process ownership token could not be read for 3 live process(es): environment_errno_EACCES=3; live candidates 2887=environment_errno_EACCES, 2888=environment_errno_EACCES, 2889=environment_errno_EACCES",
+                    "failures": [
+                      {
+                        "pid": 2887,
+                        "reason": "environment-unreadable",
+                        "diagnostic": "EACCES: permission denied, open '/proc/2887/environ'"
+                      },
+                      {
+                        "pid": 2888,
+                        "reason": "environment-unreadable",
+                        "diagnostic": "EACCES: permission denied, open '/proc/2888/environ'"
+                      },
+                      {
+                        "pid": 2889,
+                        "reason": "environment-unreadable",
+                        "diagnostic": "EACCES: permission denied, open '/proc/2889/environ'"
+                      }
+                    ]
+                  }
+                },
+                "execution_failure": "execution_failure"
+              }
+            }
+          },
+          "cleanup": "incomplete",
+          "resources": [
+            "6ff72d81-5781-4cb6-b9f9-0c02e887bd93",
+            "pid:2868",
+            "process-group:2868"
+          ],
+          "cleanup_reason": "Provider cleanup could not be fully confirmed. Review the reported local resources before opening another target.",
+          "execution_failure": "execution_failure"
+        }
+      },
+      "cleanup_error": {
+        "code": "cleanup_incomplete",
+        "category": "execution_failure",
+        "message": "Analysis could not complete. Run `rea doctor` and review the reported details; repeating the unchanged request is not expected to succeed.",
+        "retryable": false,
+        "remediation": {
+          "action": "Analysis could not complete. Run `rea doctor` and review the reported details; repeating the unchanged request is not expected to succeed."
+        },
+        "details": {
+          "provider_id": "jadx",
+          "operation": "close_binary",
+          "cleanup": "incomplete",
+          "resources": [
+            "6ff72d81-5781-4cb6-b9f9-0c02e887bd93",
+            "pid:2868",
+            "process-group:2868"
+          ],
+          "cleanup_reason": "Provider jadx adapter failed during inspect_android_method",
+          "execution_failure": "execution_failure"
+        }
+      }
+    },
+    "cleanup": "incomplete",
+    "resources": [
+      "6ff72d81-5781-4cb6-b9f9-0c02e887bd93",
+      "pid:2868",
+      "process-group:2868"
+    ],
+    "cleanup_reason": "Provider jadx adapter failed during inspect_android_method",
+    "execution_failure": "execution_failure",
+    "captured_output": {
+      "stdout": "java.base@17.0.18\njava.compiler@17.0.18\njava.datatransfer@17.0.18\njava.desktop@17.0.18\njava.instrument@17.0.18\njava.logging@17.0.18\njava.management@17.0.18\njava.management.rmi@17.0.18\njava.naming@17.0.18\njava.net.http@17.0.18\njava.prefs@17.0.18\njava.rmi@17.0.18\njava.scripting@17.0.18\njava.se@17.0.18\njava.security.jgss@17.0.18\njava.security.sasl@17.0.18\njava.smartcardio@17.0.18\njava.sql@17.0.18\njava.sql.rowset@17.0.18\njava.transaction.xa@17.0.18\njava.xml@17.0.18\njava.xml.crypto@17.0.18\njdk.accessibility@17.0.18\njdk.attach@17.0.18\njdk.charsets@17.0.18\njdk.compiler@17.0.18\njdk.crypto.cryptoki@17.0.18\njdk.crypto.ec@17.0.18\njdk.dynalink@17.0.18\njdk.editpad@17.0.18\njdk.hotspot.agent@17.0.18\njdk.httpserver@17.0.18\njdk.incubator.foreign@17.0.18\njdk.incubator.vector@17.0.18\njdk.internal.ed@17.0.18\njdk.internal.jvmstat@17.0.18\njdk.internal.le@17.0.18\njdk.internal.opt@17.0.18\njdk.internal.vm.ci@17.0.18\njdk.internal.vm.compiler@17.0.18\njdk.internal.vm.compiler.management@17.0.18\njdk.jartool@17.0.18\njdk.javadoc@17.0.18\njdk.jcmd@17.0.18\njdk.jconsole@17.0.18\njdk.jdeps@17.0.18\njdk.jdi@17.0.18\njdk.jdwp.agent@17.0.18\njdk.jfr@17.0.18\njdk.jlink@17.0.18\njdk.jpackage@17.0.18\njdk.jshell@17.0.18\njdk.jsobject@17.0.18\njdk.jstatd@17.0.18\njdk.localedata@17.0.18\njdk.management@17.0.18\njdk.management.agent@17.0.18\njdk.management.jfr@17.0.18\njdk.naming.dns@17.0.18\njdk.naming.rmi@17.0.18\njdk.net@17.0.18\njdk.nio.mapmode@17.0.18\njdk.random@17.0.18\njdk.sctp@17.0.18\njdk.security.auth@17.0.18\njdk.security.jgss@17.0.18\njdk.unsupported@17.0.18\njdk.unsupported.desktop@17.0.18\njdk.xml.dom@17.0.18\njdk.zipfs@17.0.18\n",
+      "stderr": "",
+      "stdout_bytes": 1601,
+      "stderr_bytes": 0,
+      "truncated": false,
+      "exit_code": 0,
+      "signal": null
+    }
+  }
+}

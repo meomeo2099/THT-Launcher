@@ -1,0 +1,275 @@
+package defpackage;
+
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.os.SystemClock;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+/* JADX INFO: compiled from: r8-map-id-df02db20992efcdad8c8628fa158af402193d9214b2257c75897211101eb46a6 */
+/* JADX INFO: loaded from: classes.dex */
+public final class x6 implements LocationListener {
+    public final /* synthetic */ int a;
+    public final /* synthetic */ Object b;
+
+    public /* synthetic */ x6(int i, Object obj) {
+        this.a = i;
+        this.b = obj;
+    }
+
+    /* JADX WARN: Code duplicated, block: B:85:0x01d9  */
+    /* JADX WARN: Code duplicated, block: B:87:0x01e2  */
+    /* JADX WARN: Code duplicated, block: B:89:0x01e6  */
+    /* JADX WARN: Code duplicated, block: B:98:0x0203  */
+    @Override // android.location.LocationListener
+    public final void onLocationChanged(Location location) {
+        boolean z;
+        boolean z2;
+        boolean z3;
+        long elapsedRealtimeNanos;
+        int i;
+        int i2;
+        boolean z4;
+        int i3;
+        int i4;
+        double d;
+        double d2;
+        int i5 = this.a;
+        location.getClass();
+        switch (i5) {
+            case 0:
+                ((y6) this.b).c = location;
+                break;
+            case 1:
+                a7 a7Var = (a7) this.b;
+                a7Var.g = SystemClock.elapsedRealtime();
+                a7.a(a7Var);
+                break;
+            case 2:
+                ye yeVar = (ye) this.b;
+                xe xeVar = bf.c;
+                if (xeVar != null && !location.isFromMockProvider()) {
+                    if (!location.hasAccuracy() || location.getAccuracy() <= 300.0f) {
+                        if (location.getLatitude() != 0.0d || location.getLongitude() != 0.0d) {
+                            af afVar = yeVar.e;
+                            if (afVar == null) {
+                                Set set = bf.a;
+                                boolean z5 = yeVar.a.getSharedPreferences("panel", 0).getBoolean("region_locked_gps", false);
+                                afVar = new af();
+                                afVar.a = z5;
+                                yeVar.e = afVar;
+                            }
+                            boolean z6 = afVar.a;
+                            double latitude = location.getLatitude();
+                            double longitude = location.getLongitude();
+                            ArrayList arrayList = xeVar.a;
+                            if (!arrayList.isEmpty()) {
+                                int size = arrayList.size();
+                                int i6 = 0;
+                                while (true) {
+                                    if (i6 < size) {
+                                        Object obj = arrayList.get(i6);
+                                        i6++;
+                                        we weVar = (we) obj;
+                                        z = z6;
+                                        double d3 = weVar.c;
+                                        if (longitude <= weVar.d && d3 <= longitude) {
+                                            double d4 = weVar.e;
+                                            if (latitude <= weVar.f && d4 <= latitude && l0.e(weVar.a, longitude, latitude)) {
+                                                List list = weVar.b;
+                                                if (!list.isEmpty()) {
+                                                    Iterator it = list.iterator();
+                                                    while (true) {
+                                                        if (it.hasNext()) {
+                                                            if (l0.e((double[]) it.next(), longitude, latitude)) {
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                z2 = true;
+                                            }
+                                        }
+                                        z6 = z;
+                                    }
+                                    elapsedRealtimeNanos = location.getElapsedRealtimeNanos() / 1000000;
+                                    if (z3) {
+                                        afVar.b = 0;
+                                        afVar.a = false;
+                                        z4 = false;
+                                    } else {
+                                        i = afVar.b;
+                                        if (i == 0) {
+                                            afVar.c = elapsedRealtimeNanos;
+                                        }
+                                        i2 = i + 1;
+                                        afVar.b = i2;
+                                        if (i2 >= 3 && elapsedRealtimeNanos - afVar.c >= 60000) {
+                                            afVar.a = z2;
+                                        }
+                                        z4 = afVar.a;
+                                    }
+                                    if (z4 == z) {
+                                        Set set2 = bf.a;
+                                        yeVar.a.getSharedPreferences("panel", 0).edit().putBoolean("region_locked_gps", z4).apply();
+                                        yeVar.b.a();
+                                        break;
+                                    }
+                                }
+                            }
+                            z = z6;
+                            double dCos = Math.cos(Math.toRadians(latitude)) * 111.32d;
+                            int size2 = arrayList.size();
+                            double d5 = Double.MAX_VALUE;
+                            int i7 = 0;
+                            while (i7 < size2) {
+                                Object obj2 = arrayList.get(i7);
+                                i7++;
+                                we weVar2 = (we) obj2;
+                                ArrayList arrayListD0 = i3.D0(pi.J(weVar2.a), weVar2.b);
+                                int size3 = arrayListD0.size();
+                                ArrayList arrayList2 = arrayList;
+                                int i8 = 0;
+                                while (i8 < size3) {
+                                    Object obj3 = arrayListD0.get(i8);
+                                    int i9 = i8 + 1;
+                                    double[] dArr = (double[]) obj3;
+                                    double d6 = dCos;
+                                    double dMin = d5;
+                                    int i10 = 0;
+                                    while (true) {
+                                        i3 = size2;
+                                        int i11 = i10 + 3;
+                                        i4 = i7;
+                                        if (i11 < dArr.length) {
+                                            double d7 = (dArr[i10] - longitude) * d6;
+                                            double d8 = (dArr[i10 + 1] - latitude) * 110.57d;
+                                            i10 += 2;
+                                            double d9 = ((dArr[i10] - longitude) * d6) - d7;
+                                            double d10 = ((dArr[i11] - latitude) * 110.57d) - d8;
+                                            double d11 = (d10 * d10) + (d9 * d9);
+                                            if (d11 == r5) {
+                                                d = d10;
+                                            } else {
+                                                d = d10;
+                                                d2 = (-((d8 * d10) + (d7 * d9))) / d11;
+                                                if (d2 >= r5) {
+                                                    if (d2 > 1.0d) {
+                                                        d2 = 1.0d;
+                                                    }
+                                                }
+                                                dMin = Math.min(dMin, Math.hypot((d9 * d2) + d7, (d2 * d) + d8));
+                                                size2 = i3;
+                                                i7 = i4;
+                                                latitude = latitude;
+                                            }
+                                            d2 = 0.0d;
+                                            dMin = Math.min(dMin, Math.hypot((d9 * d2) + d7, (d2 * d) + d8));
+                                            size2 = i3;
+                                            i7 = i4;
+                                            latitude = latitude;
+                                        }
+                                    }
+                                    d5 = dMin;
+                                    size2 = i3;
+                                    i8 = i9;
+                                    dCos = d6;
+                                    i7 = i4;
+                                }
+                                arrayList = arrayList2;
+                            }
+                            z2 = true;
+                            z3 = d5 < 5.0d ? z2 : false;
+                            elapsedRealtimeNanos = location.getElapsedRealtimeNanos() / 1000000;
+                            if (z3) {
+                                afVar.b = 0;
+                                afVar.a = false;
+                                z4 = false;
+                            } else {
+                                i = afVar.b;
+                                if (i == 0) {
+                                    afVar.c = elapsedRealtimeNanos;
+                                }
+                                i2 = i + 1;
+                                afVar.b = i2;
+                                if (i2 >= 3) {
+                                    afVar.a = z2;
+                                }
+                                z4 = afVar.a;
+                            }
+                            if (z4 == z) {
+                                Set set3 = bf.a;
+                                yeVar.a.getSharedPreferences("panel", 0).edit().putBoolean("region_locked_gps", z4).apply();
+                                yeVar.b.a();
+                                break;
+                            }
+                        }
+                    }
+                }
+                break;
+            default:
+                vj vjVar = (vj) this.b;
+                x6 x6Var = vjVar.g;
+                if (x6Var != null) {
+                    vjVar.g = null;
+                    try {
+                        LocationManager locationManager = (LocationManager) vjVar.a.getSystemService(LocationManager.class);
+                        if (locationManager != null) {
+                            locationManager.removeUpdates(x6Var);
+                        }
+                        break;
+                    } catch (Throwable unused) {
+                    }
+                }
+                vjVar.a(location);
+                break;
+        }
+    }
+
+    @Override // android.location.LocationListener
+    public final void onProviderDisabled(String str) {
+        int i = this.a;
+        str.getClass();
+        switch (i) {
+            case 0:
+                ((y6) this.b).c = null;
+                break;
+            case 1:
+                a7 a7Var = (a7) this.b;
+                a7Var.g = 0L;
+                a7.a(a7Var);
+                break;
+        }
+    }
+
+    @Override // android.location.LocationListener
+    public final void onProviderEnabled(String str) {
+        int i = this.a;
+        str.getClass();
+        switch (i) {
+            case 1:
+                a7.a((a7) this.b);
+                break;
+        }
+    }
+
+    @Override // android.location.LocationListener
+    public final void onStatusChanged(String str, int i, Bundle bundle) {
+        int i2 = this.a;
+    }
+
+    private final void a(String str, int i, Bundle bundle) {
+    }
+
+    private final void b(String str, int i, Bundle bundle) {
+    }
+
+    private final void c(String str, int i, Bundle bundle) {
+    }
+
+    private final void d(String str, int i, Bundle bundle) {
+    }
+}

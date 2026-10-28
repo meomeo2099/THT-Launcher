@@ -1,0 +1,1130 @@
+Class #513            -
+  Class descriptor  : 'Lx6;'
+  Access flags      : 0x0011 (PUBLIC FINAL)
+  Superclass        : 'Ljava/lang/Object;'
+  Interfaces        -
+    #0              : 'Landroid/location/LocationListener;'
+  Static fields     -
+  Instance fields   -
+    #0              : (in Lx6;)
+      name          : 'a'
+      type          : 'I'
+      access        : 0x1011 (PUBLIC FINAL SYNTHETIC)
+    #1              : (in Lx6;)
+      name          : 'b'
+      type          : 'Ljava/lang/Object;'
+      access        : 0x1011 (PUBLIC FINAL SYNTHETIC)
+  Direct methods    -
+    #0              : (in Lx6;)
+      name          : '<init>'
+      type          : '(ILjava/lang/Object;)V'
+      access        : 0x11001 (PUBLIC SYNTHETIC CONSTRUCTOR)
+      code          -
+      registers     : 3
+      ins           : 3
+      outs          : 1
+      insns size    : 8 16-bit code units
+03f674:                                        |[03f674] x6.<init>:(ILjava/lang/Object;)V
+03f684: 5901 b108                              |0000: iput v1, v0, Lx6;.a:I // field@08b1
+03f688: 5b02 b208                              |0002: iput-object v2, v0, Lx6;.b:Ljava/lang/Object; // field@08b2
+03f68c: 7010 8707 0000                         |0004: invoke-direct {v0}, Ljava/lang/Object;.<init>:()V // method@0787
+03f692: 0e00                                   |0007: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+      locals        :
+        0x0000 - 0x0008 reg=0 this Lx6;
+        0x0000 - 0x0008 reg=1 (null) I
+        0x0000 - 0x0008 reg=2 (null) Ljava/lang/Object;
+
+    #1              : (in Lx6;)
+      name          : 'a'
+      type          : '(Ljava/lang/String;ILandroid/os/Bundle;)V'
+      access        : 0x0012 (PRIVATE FINAL)
+      code          -
+      registers     : 4
+      ins           : 4
+      outs          : 0
+      insns size    : 1 16-bit code units
+03fbd0:                                        |[03fbd0] x6.a:(Ljava/lang/String;ILandroid/os/Bundle;)V
+03fbe0: 0e00                                   |0000: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+      locals        :
+        0x0000 - 0x0001 reg=0 this Lx6;
+        0x0000 - 0x0001 reg=1 (null) Ljava/lang/String;
+        0x0000 - 0x0001 reg=2 (null) I
+        0x0000 - 0x0001 reg=3 (null) Landroid/os/Bundle;
+
+    #2              : (in Lx6;)
+      name          : 'b'
+      type          : '(Ljava/lang/String;ILandroid/os/Bundle;)V'
+      access        : 0x0012 (PRIVATE FINAL)
+      code          -
+      registers     : 4
+      ins           : 4
+      outs          : 0
+      insns size    : 1 16-bit code units
+03fbe4:                                        |[03fbe4] x6.b:(Ljava/lang/String;ILandroid/os/Bundle;)V
+03fbf4: 0e00                                   |0000: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+      locals        :
+        0x0000 - 0x0001 reg=0 this Lx6;
+        0x0000 - 0x0001 reg=1 (null) Ljava/lang/String;
+        0x0000 - 0x0001 reg=2 (null) I
+        0x0000 - 0x0001 reg=3 (null) Landroid/os/Bundle;
+
+    #3              : (in Lx6;)
+      name          : 'c'
+      type          : '(Ljava/lang/String;ILandroid/os/Bundle;)V'
+      access        : 0x0012 (PRIVATE FINAL)
+      code          -
+      registers     : 4
+      ins           : 4
+      outs          : 0
+      insns size    : 1 16-bit code units
+03fbf8:                                        |[03fbf8] x6.c:(Ljava/lang/String;ILandroid/os/Bundle;)V
+03fc08: 0e00                                   |0000: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+      locals        :
+        0x0000 - 0x0001 reg=0 this Lx6;
+        0x0000 - 0x0001 reg=1 (null) Ljava/lang/String;
+        0x0000 - 0x0001 reg=2 (null) I
+        0x0000 - 0x0001 reg=3 (null) Landroid/os/Bundle;
+
+    #4              : (in Lx6;)
+      name          : 'd'
+      type          : '(Ljava/lang/String;ILandroid/os/Bundle;)V'
+      access        : 0x0012 (PRIVATE FINAL)
+      code          -
+      registers     : 4
+      ins           : 4
+      outs          : 0
+      insns size    : 1 16-bit code units
+03fc0c:                                        |[03fc0c] x6.d:(Ljava/lang/String;ILandroid/os/Bundle;)V
+03fc1c: 0e00                                   |0000: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+      locals        :
+        0x0000 - 0x0001 reg=0 this Lx6;
+        0x0000 - 0x0001 reg=1 (null) Ljava/lang/String;
+        0x0000 - 0x0001 reg=2 (null) I
+        0x0000 - 0x0001 reg=3 (null) Landroid/os/Bundle;
+
+  Virtual methods   -
+    #0              : (in Lx6;)
+      name          : 'onLocationChanged'
+      type          : '(Landroid/location/Location;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 44
+      ins           : 2
+      outs          : 5
+      insns size    : 572 16-bit code units
+03f694:                                        |[03f694] x6.onLocationChanged:(Landroid/location/Location;)V
+03f6a4: 0800 2a00                              |0000: move-object/from16 v0, v42
+03f6a8: 0801 2b00                              |0002: move-object/from16 v1, v43
+03f6ac: 5202 b108                              |0004: iget v2, v0, Lx6;.a:I // field@08b1
+03f6b0: 6e10 8a07 0100                         |0006: invoke-virtual {v1}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+03f6b6: 2b02 2902 0000                         |0009: packed-switch v2, 00000232 // +00000229
+03f6bc: 5400 b208                              |000c: iget-object v0, v0, Lx6;.b:Ljava/lang/Object; // field@08b2
+03f6c0: 1f00 6f03                              |000e: check-cast v0, Lvj; // type@036f
+03f6c4: 5402 5d08                              |0010: iget-object v2, v0, Lvj;.g:Lx6; // field@085d
+03f6c8: 3902 0300                              |0012: if-nez v2, 0015 // +0003
+03f6cc: 2813                                   |0014: goto 0027 // +0013
+03f6ce: 1203                                   |0015: const/4 v3, #int 0 // #0
+03f6d0: 5b03 5d08                              |0016: iput-object v3, v0, Lvj;.g:Lx6; // field@085d
+03f6d4: 5403 5708                              |0018: iget-object v3, v0, Lvj;.a:Landroid/content/Context; // field@0857
+03f6d8: 1c04 9400                              |001a: const-class v4, Landroid/location/LocationManager; // type@0094
+03f6dc: 6e20 c500 4300                         |001c: invoke-virtual {v3, v4}, Landroid/content/Context;.getSystemService:(Ljava/lang/Class;)Ljava/lang/Object; // method@00c5
+03f6e2: 0c03                                   |001f: move-result-object v3
+03f6e4: 1f03 9400                              |0020: check-cast v3, Landroid/location/LocationManager; // type@0094
+03f6e8: 3803 0500                              |0022: if-eqz v3, 0027 // +0005
+03f6ec: 6e20 e801 2300                         |0024: invoke-virtual {v3, v2}, Landroid/location/LocationManager;.removeUpdates:(Landroid/location/LocationListener;)V // method@01e8
+03f6f2: 6e20 500e 1000                         |0027: invoke-virtual {v0, v1}, Lvj;.a:(Landroid/location/Location;)V // method@0e50
+03f6f8: 0e00                                   |002a: return-void
+03f6fa: 5400 b208                              |002b: iget-object v0, v0, Lx6;.b:Ljava/lang/Object; // field@08b2
+03f6fe: 1f00 a903                              |002d: check-cast v0, Lye; // type@03a9
+03f702: 6202 f700                              |002f: sget-object v2, Lbf;.c:Lxe; // field@00f7
+03f706: 3902 0400                              |0031: if-nez v2, 0035 // +0004
+03f70a: 2900 e901                              |0033: goto/16 021c // +01e9
+03f70e: 6e10 e301 0100                         |0035: invoke-virtual {v1}, Landroid/location/Location;.isFromMockProvider:()Z // method@01e3
+03f714: 0a03                                   |0038: move-result v3
+03f716: 3803 0400                              |0039: if-eqz v3, 003d // +0004
+03f71a: 2900 e101                              |003b: goto/16 021c // +01e1
+03f71e: 6e10 e101 0100                         |003d: invoke-virtual {v1}, Landroid/location/Location;.hasAccuracy:()Z // method@01e1
+03f724: 0a03                                   |0040: move-result v3
+03f726: 3803 0e00                              |0041: if-eqz v3, 004f // +000e
+03f72a: 6e10 db01 0100                         |0043: invoke-virtual {v1}, Landroid/location/Location;.getAccuracy:()F // method@01db
+03f730: 0a03                                   |0046: move-result v3
+03f732: 1504 9643                              |0047: const/high16 v4, #int 1133903872 // #4396
+03f736: 2d03 0304                              |0049: cmpl-float v3, v3, v4
+03f73a: 3d03 0400                              |004b: if-lez v3, 004f // +0004
+03f73e: 2900 cf01                              |004d: goto/16 021c // +01cf
+03f742: 6e10 dd01 0100                         |004f: invoke-virtual {v1}, Landroid/location/Location;.getLatitude:()D // method@01dd
+03f748: 0b03                                   |0052: move-result-wide v3
+03f74a: 1605 0000                              |0053: const-wide/16 v5, #int 0 // #0
+03f74e: 3003 0305                              |0055: cmpg-double v3, v3, v5
+03f752: 3903 0c00                              |0057: if-nez v3, 0063 // +000c
+03f756: 6e10 de01 0100                         |0059: invoke-virtual {v1}, Landroid/location/Location;.getLongitude:()D // method@01de
+03f75c: 0b03                                   |005c: move-result-wide v3
+03f75e: 3003 0305                              |005d: cmpg-double v3, v3, v5
+03f762: 3903 0400                              |005f: if-nez v3, 0063 // +0004
+03f766: 2900 bb01                              |0061: goto/16 021c // +01bb
+03f76a: 5403 f908                              |0063: iget-object v3, v0, Lye;.e:Laf; // field@08f9
+03f76e: 1a04 d00f                              |0065: const-string v4, "panel" // string@0fd0
+03f772: 1a07 9410                              |0067: const-string v7, "region_locked_gps" // string@1094
+03f776: 1208                                   |0069: const/4 v8, #int 0 // #0
+03f778: 3903 1700                              |006a: if-nez v3, 0081 // +0017
+03f77c: 2203 1600                              |006c: new-instance v3, Laf; // type@0016
+03f780: 6209 f500                              |006e: sget-object v9, Lbf;.a:Ljava/util/Set; // field@00f5
+03f784: 5409 f508                              |0070: iget-object v9, v0, Lye;.a:Landroid/content/Context; // field@08f5
+03f788: 6e30 c400 4908                         |0072: invoke-virtual {v9, v4, v8}, Landroid/content/Context;.getSharedPreferences:(Ljava/lang/String;I)Landroid/content/SharedPreferences; // method@00c4
+03f78e: 0c09                                   |0075: move-result-object v9
+03f790: 7230 f800 7908                         |0076: invoke-interface {v9, v7, v8}, Landroid/content/SharedPreferences;.getBoolean:(Ljava/lang/String;Z)Z // method@00f8
+03f796: 0a09                                   |0079: move-result v9
+03f798: 7010 8707 0300                         |007a: invoke-direct {v3}, Ljava/lang/Object;.<init>:()V // method@0787
+03f79e: 5c39 2900                              |007d: iput-boolean v9, v3, Laf;.a:Z // field@0029
+03f7a2: 5b03 f908                              |007f: iput-object v3, v0, Lye;.e:Laf; // field@08f9
+03f7a6: 5539 2900                              |0081: iget-boolean v9, v3, Laf;.a:Z // field@0029
+03f7aa: 6e10 dd01 0100                         |0083: invoke-virtual {v1}, Landroid/location/Location;.getLatitude:()D // method@01dd
+03f7b0: 0b0a                                   |0086: move-result-wide v10
+03f7b2: 6e10 de01 0100                         |0087: invoke-virtual {v1}, Landroid/location/Location;.getLongitude:()D // method@01de
+03f7b8: 0b0c                                   |008a: move-result-wide v12
+03f7ba: 5422 c008                              |008b: iget-object v2, v2, Lxe;.a:Ljava/util/ArrayList; // field@08c0
+03f7be: 6e10 2308 0200                         |008d: invoke-virtual {v2}, Ljava/util/ArrayList;.isEmpty:()Z // method@0823
+03f7c4: 0a0e                                   |0090: move-result v14
+03f7c6: 380e 0700                              |0091: if-eqz v14, 0098 // +0007
+03f7ca: 0510 0500                              |0093: move-wide/from16 v16, v5
+03f7ce: 0212 0900                              |0095: move/from16 v18, v9
+03f7d2: 2860                                   |0097: goto 00f7 // +0060
+03f7d4: 6e10 2a08 0200                         |0098: invoke-virtual {v2}, Ljava/util/ArrayList;.size:()I // method@082a
+03f7da: 0a0e                                   |009b: move-result v14
+03f7dc: 0510 0500                              |009c: move-wide/from16 v16, v5
+03f7e0: 0185                                   |009e: move v5, v8
+03f7e2: 35e5 f6ff                              |009f: if-ge v5, v14, 0095 // -000a
+03f7e6: 6e20 2108 5200                         |00a1: invoke-virtual {v2, v5}, Ljava/util/ArrayList;.get:(I)Ljava/lang/Object; // method@0821
+03f7ec: 0c06                                   |00a4: move-result-object v6
+03f7ee: d805 0501                              |00a5: add-int/lit8 v5, v5, #int 1 // #01
+03f7f2: 1f06 7f03                              |00a7: check-cast v6, Lwe; // type@037f
+03f7f6: 0212 0900                              |00a9: move/from16 v18, v9
+03f7fa: 5368 8b08                              |00ab: iget-wide v8, v6, Lwe;.c:D // field@088b
+03f7fe: 0513 0800                              |00ad: move-wide/from16 v19, v8
+03f802: 5368 8c08                              |00af: iget-wide v8, v6, Lwe;.d:D // field@088c
+03f806: 3008 0c08                              |00b1: cmpg-double v8, v12, v8
+03f80a: 3c08 4000                              |00b3: if-gtz v8, 00f3 // +0040
+03f80e: 3008 130c                              |00b5: cmpg-double v8, v19, v12
+03f812: 3c08 3c00                              |00b7: if-gtz v8, 00f3 // +003c
+03f816: 5368 8d08                              |00b9: iget-wide v8, v6, Lwe;.e:D // field@088d
+03f81a: 0513 0800                              |00bb: move-wide/from16 v19, v8
+03f81e: 5368 8e08                              |00bd: iget-wide v8, v6, Lwe;.f:D // field@088e
+03f822: 3008 0a08                              |00bf: cmpg-double v8, v10, v8
+03f826: 3c08 3200                              |00c1: if-gtz v8, 00f3 // +0032
+03f82a: 3008 130a                              |00c3: cmpg-double v8, v19, v10
+03f82e: 3c08 2e00                              |00c5: if-gtz v8, 00f3 // +002e
+03f832: 5468 8908                              |00c7: iget-object v8, v6, Lwe;.a:[D // field@0889
+03f836: 715b 8409 c8ad                         |00c9: invoke-static {v8, v12, v13, v10, v11}, Ll0;.e:([DDD)Z // method@0984
+03f83c: 0a08                                   |00cc: move-result v8
+03f83e: 3808 2600                              |00cd: if-eqz v8, 00f3 // +0026
+03f842: 5466 8a08                              |00cf: iget-object v6, v6, Lwe;.b:Ljava/util/List; // field@088a
+03f846: 7210 4508 0600                         |00d1: invoke-interface {v6}, Ljava/util/Collection;.isEmpty:()Z // method@0845
+03f84c: 0a08                                   |00d4: move-result v8
+03f84e: 3808 0300                              |00d5: if-eqz v8, 00d8 // +0003
+03f852: 2818                                   |00d7: goto 00ef // +0018
+03f854: 7210 6607 0600                         |00d8: invoke-interface {v6}, Ljava/lang/Iterable;.iterator:()Ljava/util/Iterator; // method@0766
+03f85a: 0c06                                   |00db: move-result-object v6
+03f85c: 7210 5b08 0600                         |00dc: invoke-interface {v6}, Ljava/util/Iterator;.hasNext:()Z // method@085b
+03f862: 0a08                                   |00df: move-result v8
+03f864: 3808 0f00                              |00e0: if-eqz v8, 00ef // +000f
+03f868: 7210 5c08 0600                         |00e2: invoke-interface {v6}, Ljava/util/Iterator;.next:()Ljava/lang/Object; // method@085c
+03f86e: 0c08                                   |00e5: move-result-object v8
+03f870: 1f08 c903                              |00e6: check-cast v8, [D // type@03c9
+03f874: 715b 8409 c8ad                         |00e8: invoke-static {v8, v12, v13, v10, v11}, Ll0;.e:([DDD)Z // method@0984
+03f87a: 0a08                                   |00eb: move-result v8
+03f87c: 3808 f0ff                              |00ec: if-eqz v8, 00dc // -0010
+03f880: 2805                                   |00ee: goto 00f3 // +0005
+03f882: 1315 0100                              |00ef: const/16 v21, #int 1 // #1
+03f886: 2900 da00                              |00f1: goto/16 01cb // +00da
+03f88a: 0209 1200                              |00f3: move/from16 v9, v18
+03f88e: 1208                                   |00f5: const/4 v8, #int 0 // #0
+03f890: 28a9                                   |00f6: goto 009f // -0057
+03f892: 7120 8207 ba00                         |00f7: invoke-static {v10, v11}, Ljava/lang/Math;.toRadians:(D)D // method@0782
+03f898: 0b05                                   |00fa: move-result-wide v5
+03f89a: 7120 7007 6500                         |00fb: invoke-static {v5, v6}, Ljava/lang/Math;.cos:(D)D // method@0770
+03f8a0: 0b05                                   |00fe: move-result-wide v5
+03f8a2: 1808 14ae 47e1 7ad4 5b40               |00ff: const-wide v8, #double 111.32 // #405bd47ae147ae14
+03f8ac: cd85                                   |0104: mul-double/2addr v5, v8
+03f8ae: 6e10 2a08 0200                         |0105: invoke-virtual {v2}, Ljava/util/ArrayList;.size:()I // method@082a
+03f8b4: 0a08                                   |0108: move-result v8
+03f8b6: 1813 ffff ffff ffff ef7f               |0109: const-wide v19, #double 1.79769e+308 // #7fefffffffffffff
+03f8c0: 1209                                   |010e: const/4 v9, #int 0 // #0
+03f8c2: 3589 b400                              |010f: if-ge v9, v8, 01c3 // +00b4
+03f8c6: 6e20 2108 9200                         |0111: invoke-virtual {v2, v9}, Ljava/util/ArrayList;.get:(I)Ljava/lang/Object; // method@0821
+03f8cc: 0c0e                                   |0114: move-result-object v14
+03f8ce: d809 0901                              |0115: add-int/lit8 v9, v9, #int 1 // #01
+03f8d2: 1f0e 7f03                              |0117: check-cast v14, Lwe; // type@037f
+03f8d6: 1315 0100                              |0119: const/16 v21, #int 1 // #1
+03f8da: 54ef 8908                              |011b: iget-object v15, v14, Lwe;.a:[D // field@0889
+03f8de: 7110 220b 0f00                         |011d: invoke-static {v15}, Lpi;.J:(Ljava/lang/Object;)Ljava/util/List; // method@0b22
+03f8e4: 0c0f                                   |0120: move-result-object v15
+03f8e6: 54ee 8a08                              |0121: iget-object v14, v14, Lwe;.b:Ljava/util/List; // field@088a
+03f8ea: 7120 2206 ef00                         |0123: invoke-static {v15, v14}, Li3;.D0:(Ljava/util/List;Ljava/lang/Iterable;)Ljava/util/ArrayList; // method@0622
+03f8f0: 0c0e                                   |0126: move-result-object v14
+03f8f2: 6e10 2a08 0e00                         |0127: invoke-virtual {v14}, Ljava/util/ArrayList;.size:()I // method@082a
+03f8f8: 0a0f                                   |012a: move-result v15
+03f8fa: 0816 0200                              |012b: move-object/from16 v22, v2
+03f8fe: 1202                                   |012d: const/4 v2, #int 0 // #0
+03f900: 35f2 8f00                              |012e: if-ge v2, v15, 01bd // +008f
+03f904: 6e20 2108 2e00                         |0130: invoke-virtual {v14, v2}, Ljava/util/ArrayList;.get:(I)Ljava/lang/Object; // method@0821
+03f90a: 0c17                                   |0133: move-result-object v23
+03f90c: d802 0201                              |0134: add-int/lit8 v2, v2, #int 1 // #01
+03f910: 0218 0200                              |0136: move/from16 v24, v2
+03f914: 0802 1700                              |0138: move-object/from16 v2, v23
+03f918: 1f02 c903                              |013a: check-cast v2, [D // type@03c9
+03f91c: 0519 0500                              |013c: move-wide/from16 v25, v5
+03f920: 0505 1300                              |013e: move-wide/from16 v5, v19
+03f924: 1313 0000                              |0140: const/16 v19, #int 0 // #0
+03f928: 0217 0800                              |0142: move/from16 v23, v8
+03f92c: d808 1303                              |0144: add-int/lit8 v8, v19, #int 3 // #03
+03f930: 021b 0900                              |0146: move/from16 v27, v9
+03f934: 2129                                   |0148: array-length v9, v2
+03f936: 3598 6800                              |0149: if-ge v8, v9, 01b1 // +0068
+03f93a: 451c 0213                              |014b: aget-wide v28, v2, v19
+03f93e: ac1c 1c0c                              |014d: sub-double v28, v28, v12
+03f942: ad1c 1c19                              |014f: mul-double v28, v28, v25
+03f946: d809 1301                              |0151: add-int/lit8 v9, v19, #int 1 // #01
+03f94a: 451e 0209                              |0153: aget-wide v30, v2, v9
+03f94e: ac1e 1e0a                              |0155: sub-double v30, v30, v10
+03f952: 1820 14ae 47e1 7aa4 5b40               |0157: const-wide v32, #double 110.57 // #405ba47ae147ae14
+03f95c: ad1e 1e20                              |015c: mul-double v30, v30, v32
+03f960: d813 1302                              |015e: add-int/lit8 v19, v19, #int 2 // #02
+03f964: 4522 0213                              |0160: aget-wide v34, v2, v19
+03f968: ac22 220c                              |0162: sub-double v34, v34, v12
+03f96c: ad22 2219                              |0164: mul-double v34, v34, v25
+03f970: 4508 0208                              |0166: aget-wide v8, v2, v8
+03f974: cca8                                   |0168: sub-double/2addr v8, v10
+03f976: ad08 0820                              |0169: mul-double v8, v8, v32
+03f97a: ac22 221c                              |016b: sub-double v34, v34, v28
+03f97e: ac08 081e                              |016d: sub-double v8, v8, v30
+03f982: ad20 2222                              |016f: mul-double v32, v34, v34
+03f986: ad24 0808                              |0171: mul-double v36, v8, v8
+03f98a: ab24 2420                              |0173: add-double v36, v36, v32
+03f98e: 3014 2410                              |0175: cmpg-double v20, v36, v16
+03f992: 3914 0700                              |0177: if-nez v20, 017e // +0007
+03f996: 0528 0800                              |0179: move-wide/from16 v40, v8
+03f99a: 0508 1000                              |017b: move-wide/from16 v8, v16
+03f99e: 2819                                   |017d: goto 0196 // +0019
+03f9a0: ad20 1c22                              |017e: mul-double v32, v28, v34
+03f9a4: ad26 1e08                              |0180: mul-double v38, v30, v8
+03f9a8: 0528 0800                              |0182: move-wide/from16 v40, v8
+03f9ac: ab08 2620                              |0184: add-double v8, v38, v32
+03f9b0: 8088                                   |0186: neg-double v8, v8
+03f9b2: ae08 0824                              |0187: div-double v8, v8, v36
+03f9b6: 3014 0810                              |0189: cmpg-double v20, v8, v16
+03f9ba: 3b14 0300                              |018b: if-gez v20, 018e // +0003
+03f9be: 28ee                                   |018d: goto 017b // -0012
+03f9c0: 1920 f03f                              |018e: const-wide/high16 v32, #long 4607182418800017408 // #3ff0
+03f9c4: 2f14 0820                              |0190: cmpl-double v20, v8, v32
+03f9c8: 3d14 0400                              |0192: if-lez v20, 0196 // +0004
+03f9cc: 0508 2000                              |0194: move-wide/from16 v8, v32
+03f9d0: ad22 2208                              |0196: mul-double v34, v34, v8
+03f9d4: 0520 0800                              |0198: move-wide/from16 v32, v8
+03f9d8: ab08 221c                              |019a: add-double v8, v34, v28
+03f9dc: ad1c 2028                              |019c: mul-double v28, v32, v40
+03f9e0: 0520 0a00                              |019e: move-wide/from16 v32, v10
+03f9e4: ab0a 1c1e                              |01a0: add-double v10, v28, v30
+03f9e8: 7140 7307 98ba                         |01a2: invoke-static {v8, v9, v10, v11}, Ljava/lang/Math;.hypot:(DD)D // method@0773
+03f9ee: 0b08                                   |01a5: move-result-wide v8
+03f9f0: 7140 7807 6598                         |01a6: invoke-static {v5, v6, v8, v9}, Ljava/lang/Math;.min:(DD)D // method@0778
+03f9f6: 0b05                                   |01a9: move-result-wide v5
+03f9f8: 0208 1700                              |01aa: move/from16 v8, v23
+03f9fc: 0209 1b00                              |01ac: move/from16 v9, v27
+03fa00: 050a 2000                              |01ae: move-wide/from16 v10, v32
+03fa04: 2892                                   |01b0: goto 0142 // -006e
+03fa06: 0513 0500                              |01b1: move-wide/from16 v19, v5
+03fa0a: 0208 1700                              |01b3: move/from16 v8, v23
+03fa0e: 0202 1800                              |01b5: move/from16 v2, v24
+03fa12: 0505 1900                              |01b7: move-wide/from16 v5, v25
+03fa16: 0209 1b00                              |01b9: move/from16 v9, v27
+03fa1a: 2900 73ff                              |01bb: goto/16 012e // -008d
+03fa1e: 021b 0900                              |01bd: move/from16 v27, v9
+03fa22: 0802 1600                              |01bf: move-object/from16 v2, v22
+03fa26: 2900 4eff                              |01c1: goto/16 010f // -00b2
+03fa2a: 1315 0100                              |01c3: const/16 v21, #int 1 // #1
+03fa2e: 1905 1440                              |01c5: const-wide/high16 v5, #long 4617315517961601024 // #4014
+03fa32: 3002 1305                              |01c7: cmpg-double v2, v19, v5
+03fa36: 3b02 0500                              |01c9: if-gez v2, 01ce // +0005
+03fa3a: 0202 1500                              |01cb: move/from16 v2, v21
+03fa3e: 2802                                   |01cd: goto 01cf // +0002
+03fa40: 1202                                   |01ce: const/4 v2, #int 0 // #0
+03fa42: 6e10 dc01 0100                         |01cf: invoke-virtual {v1}, Landroid/location/Location;.getElapsedRealtimeNanos:()J // method@01dc
+03fa48: 0b05                                   |01d2: move-result-wide v5
+03fa4a: 1708 4042 0f00                         |01d3: const-wide/32 v8, #float 1.4013e-39 // #000f4240
+03fa50: be85                                   |01d6: div-long/2addr v5, v8
+03fa52: 3802 0b00                              |01d7: if-eqz v2, 01e2 // +000b
+03fa56: 1201                                   |01d9: const/4 v1, #int 0 // #0
+03fa58: 5931 2a00                              |01da: iput v1, v3, Laf;.b:I // field@002a
+03fa5c: 5c31 2900                              |01dc: iput-boolean v1, v3, Laf;.a:Z // field@0029
+03fa60: 1201                                   |01de: const/4 v1, #int 0 // #0
+03fa62: 0202 1200                              |01df: move/from16 v2, v18
+03fa66: 281f                                   |01e1: goto 0200 // +001f
+03fa68: 5231 2a00                              |01e2: iget v1, v3, Laf;.b:I // field@002a
+03fa6c: 3901 0400                              |01e4: if-nez v1, 01e8 // +0004
+03fa70: 5a35 2b00                              |01e6: iput-wide v5, v3, Laf;.c:J // field@002b
+03fa74: d801 0101                              |01e8: add-int/lit8 v1, v1, #int 1 // #01
+03fa78: 5931 2a00                              |01ea: iput v1, v3, Laf;.b:I // field@002a
+03fa7c: 1232                                   |01ec: const/4 v2, #int 3 // #3
+03fa7e: 3421 1000                              |01ed: if-lt v1, v2, 01fd // +0010
+03fa82: 5331 2b00                              |01ef: iget-wide v1, v3, Laf;.c:J // field@002b
+03fa86: bc15                                   |01f1: sub-long/2addr v5, v1
+03fa88: 1701 60ea 0000                         |01f2: const-wide/32 v1, #float 8.40779e-41 // #0000ea60
+03fa8e: 3101 0501                              |01f5: cmp-long v1, v5, v1
+03fa92: 3a01 0600                              |01f7: if-ltz v1, 01fd // +0006
+03fa96: 0201 1500                              |01f9: move/from16 v1, v21
+03fa9a: 5c31 2900                              |01fb: iput-boolean v1, v3, Laf;.a:Z // field@0029
+03fa9e: 5531 2900                              |01fd: iget-boolean v1, v3, Laf;.a:Z // field@0029
+03faa2: 28e0                                   |01ff: goto 01df // -0020
+03faa4: 3321 0300                              |0200: if-ne v1, v2, 0203 // +0003
+03faa8: 281a                                   |0202: goto 021c // +001a
+03faaa: 6202 f500                              |0203: sget-object v2, Lbf;.a:Ljava/util/Set; // field@00f5
+03faae: 5402 f508                              |0205: iget-object v2, v0, Lye;.a:Landroid/content/Context; // field@08f5
+03fab2: 1203                                   |0207: const/4 v3, #int 0 // #0
+03fab4: 6e30 c400 4203                         |0208: invoke-virtual {v2, v4, v3}, Landroid/content/Context;.getSharedPreferences:(Ljava/lang/String;I)Landroid/content/SharedPreferences; // method@00c4
+03faba: 0c02                                   |020b: move-result-object v2
+03fabc: 7210 f600 0200                         |020c: invoke-interface {v2}, Landroid/content/SharedPreferences;.edit:()Landroid/content/SharedPreferences$Editor; // method@00f6
+03fac2: 0c02                                   |020f: move-result-object v2
+03fac4: 7230 ee00 7201                         |0210: invoke-interface {v2, v7, v1}, Landroid/content/SharedPreferences$Editor;.putBoolean:(Ljava/lang/String;Z)Landroid/content/SharedPreferences$Editor; // method@00ee
+03faca: 0c01                                   |0213: move-result-object v1
+03facc: 7210 eb00 0100                         |0214: invoke-interface {v1}, Landroid/content/SharedPreferences$Editor;.apply:()V // method@00eb
+03fad2: 5400 f608                              |0217: iget-object v0, v0, Lye;.b:Lua; // field@08f6
+03fad6: 6e10 ca0d 0000                         |0219: invoke-virtual {v0}, Lua;.a:()Ljava/lang/Object; // method@0dca
+03fadc: 0e00                                   |021c: return-void
+03fade: 5400 b208                              |021d: iget-object v0, v0, Lx6;.b:Ljava/lang/Object; // field@08b2
+03fae2: 1f00 0d00                              |021f: check-cast v0, La7; // type@000d
+03fae6: 7100 7802 0000                         |0221: invoke-static {}, Landroid/os/SystemClock;.elapsedRealtime:()J // method@0278
+03faec: 0b01                                   |0224: move-result-wide v1
+03faee: 5a01 1400                              |0225: iput-wide v1, v0, La7;.g:J // field@0014
+03faf2: 7110 0f00 0000                         |0227: invoke-static {v0}, La7;.a:(La7;)V // method@000f
+03faf8: 0e00                                   |022a: return-void
+03fafa: 5400 b208                              |022b: iget-object v0, v0, Lx6;.b:Ljava/lang/Object; // field@08b2
+03fafe: 1f00 a003                              |022d: check-cast v0, Ly6; // type@03a0
+03fb02: 5b01 d708                              |022f: iput-object v1, v0, Ly6;.c:Landroid/location/Location; // field@08d7
+03fb06: 0e00                                   |0231: return-void
+03fb08: 0001 0300 0000 0000 2202 0000 1402 ... |0232: packed-switch-data (10 units)
+      catches       : 1
+        0x0018 - 0x0027
+          <any> -> 0x0027
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+        0x0042 line=67
+        0x0043 line=68
+        0x0044 line=69
+        0x0045 line=70
+        0x0046 line=71
+        0x0047 line=72
+        0x0048 line=73
+        0x0049 line=74
+        0x004a line=75
+        0x004b line=76
+        0x004c line=77
+        0x004d line=78
+        0x004e line=79
+        0x004f line=80
+        0x0050 line=81
+        0x0051 line=82
+        0x0052 line=83
+        0x0053 line=84
+        0x0054 line=85
+        0x0055 line=86
+        0x0056 line=87
+        0x0057 line=88
+        0x0058 line=89
+        0x0059 line=90
+        0x005a line=91
+        0x005b line=92
+        0x005c line=93
+        0x005d line=94
+        0x005e line=95
+        0x005f line=96
+        0x0060 line=97
+        0x0061 line=98
+        0x0062 line=99
+        0x0063 line=100
+        0x0064 line=101
+        0x0065 line=102
+        0x0066 line=103
+        0x0067 line=104
+        0x0068 line=105
+        0x0069 line=106
+        0x006a line=107
+        0x006b line=108
+        0x006c line=109
+        0x006d line=110
+        0x006e line=111
+        0x006f line=112
+        0x0070 line=113
+        0x0071 line=114
+        0x0072 line=115
+        0x0073 line=116
+        0x0074 line=117
+        0x0075 line=118
+        0x0076 line=119
+        0x0077 line=120
+        0x0078 line=121
+        0x0079 line=122
+        0x007a line=123
+        0x007b line=124
+        0x007c line=125
+        0x007d line=126
+        0x007e line=127
+        0x007f line=128
+        0x0080 line=129
+        0x0081 line=130
+        0x0082 line=131
+        0x0083 line=132
+        0x0084 line=133
+        0x0085 line=134
+        0x0086 line=135
+        0x0087 line=136
+        0x0088 line=137
+        0x0089 line=138
+        0x008a line=139
+        0x008b line=140
+        0x008c line=141
+        0x008d line=142
+        0x008e line=143
+        0x008f line=144
+        0x0090 line=145
+        0x0091 line=146
+        0x0092 line=147
+        0x0093 line=148
+        0x0094 line=149
+        0x0095 line=150
+        0x0096 line=151
+        0x0097 line=152
+        0x0098 line=153
+        0x0099 line=154
+        0x009a line=155
+        0x009b line=156
+        0x009c line=157
+        0x009d line=158
+        0x009e line=159
+        0x009f line=160
+        0x00a0 line=161
+        0x00a1 line=162
+        0x00a2 line=163
+        0x00a3 line=164
+        0x00a4 line=165
+        0x00a5 line=166
+        0x00a6 line=167
+        0x00a7 line=168
+        0x00a8 line=169
+        0x00a9 line=170
+        0x00aa line=171
+        0x00ab line=172
+        0x00ac line=173
+        0x00ad line=174
+        0x00ae line=175
+        0x00af line=176
+        0x00b0 line=177
+        0x00b1 line=178
+        0x00b2 line=179
+        0x00b3 line=180
+        0x00b4 line=181
+        0x00b5 line=182
+        0x00b6 line=183
+        0x00b7 line=184
+        0x00b8 line=185
+        0x00b9 line=186
+        0x00ba line=187
+        0x00bb line=188
+        0x00bc line=189
+        0x00bd line=190
+        0x00be line=191
+        0x00bf line=192
+        0x00c0 line=193
+        0x00c1 line=194
+        0x00c2 line=195
+        0x00c3 line=196
+        0x00c4 line=197
+        0x00c5 line=198
+        0x00c6 line=199
+        0x00c7 line=200
+        0x00c8 line=201
+        0x00c9 line=202
+        0x00ca line=203
+        0x00cb line=204
+        0x00cc line=205
+        0x00cd line=206
+        0x00ce line=207
+        0x00cf line=208
+        0x00d0 line=209
+        0x00d1 line=210
+        0x00d2 line=211
+        0x00d3 line=212
+        0x00d4 line=213
+        0x00d5 line=214
+        0x00d6 line=215
+        0x00d7 line=216
+        0x00d8 line=217
+        0x00d9 line=218
+        0x00da line=219
+        0x00db line=220
+        0x00dc line=221
+        0x00dd line=222
+        0x00de line=223
+        0x00df line=224
+        0x00e0 line=225
+        0x00e1 line=226
+        0x00e2 line=227
+        0x00e3 line=228
+        0x00e4 line=229
+        0x00e5 line=230
+        0x00e6 line=231
+        0x00e7 line=232
+        0x00e8 line=233
+        0x00e9 line=234
+        0x00ea line=235
+        0x00eb line=236
+        0x00ec line=237
+        0x00ed line=238
+        0x00ee line=239
+        0x00ef line=240
+        0x00f0 line=241
+        0x00f1 line=242
+        0x00f2 line=243
+        0x00f3 line=244
+        0x00f4 line=245
+        0x00f5 line=246
+        0x00f6 line=247
+        0x00f7 line=248
+        0x00f8 line=249
+        0x00f9 line=250
+        0x00fa line=251
+        0x00fb line=252
+        0x00fc line=253
+        0x00fd line=254
+        0x00fe line=255
+        0x00ff line=256
+        0x0100 line=257
+        0x0101 line=258
+        0x0102 line=259
+        0x0103 line=260
+        0x0104 line=261
+        0x0105 line=262
+        0x0106 line=263
+        0x0107 line=264
+        0x0108 line=265
+        0x0109 line=266
+        0x010a line=267
+        0x010b line=268
+        0x010c line=269
+        0x010d line=270
+        0x010e line=271
+        0x010f line=272
+        0x0110 line=273
+        0x0111 line=274
+        0x0112 line=275
+        0x0113 line=276
+        0x0114 line=277
+        0x0115 line=278
+        0x0116 line=279
+        0x0117 line=280
+        0x0118 line=281
+        0x0119 line=282
+        0x011a line=283
+        0x011b line=284
+        0x011c line=285
+        0x011d line=286
+        0x011e line=287
+        0x011f line=288
+        0x0120 line=289
+        0x0121 line=290
+        0x0122 line=291
+        0x0123 line=292
+        0x0124 line=293
+        0x0125 line=294
+        0x0126 line=295
+        0x0127 line=296
+        0x0128 line=297
+        0x0129 line=298
+        0x012a line=299
+        0x012b line=300
+        0x012c line=301
+        0x012d line=302
+        0x012e line=303
+        0x012f line=304
+        0x0130 line=305
+        0x0131 line=306
+        0x0132 line=307
+        0x0133 line=308
+        0x0134 line=309
+        0x0135 line=310
+        0x0136 line=311
+        0x0137 line=312
+        0x0138 line=313
+        0x0139 line=314
+        0x013a line=315
+        0x013b line=316
+        0x013c line=317
+        0x013d line=318
+        0x013e line=319
+        0x013f line=320
+        0x0140 line=321
+        0x0141 line=322
+        0x0142 line=323
+        0x0143 line=324
+        0x0144 line=325
+        0x0145 line=326
+        0x0146 line=327
+        0x0147 line=328
+        0x0148 line=329
+        0x0149 line=330
+        0x014a line=331
+        0x014b line=332
+        0x014c line=333
+        0x014d line=334
+        0x014e line=335
+        0x014f line=336
+        0x0150 line=337
+        0x0151 line=338
+        0x0152 line=339
+        0x0153 line=340
+        0x0154 line=341
+        0x0155 line=342
+        0x0156 line=343
+        0x0157 line=344
+        0x0158 line=345
+        0x0159 line=346
+        0x015a line=347
+        0x015b line=348
+        0x015c line=349
+        0x015d line=350
+        0x015e line=351
+        0x015f line=352
+        0x0160 line=353
+        0x0161 line=354
+        0x0162 line=355
+        0x0163 line=356
+        0x0164 line=357
+        0x0165 line=358
+        0x0166 line=359
+        0x0167 line=360
+        0x0168 line=361
+        0x0169 line=362
+        0x016a line=363
+        0x016b line=364
+        0x016c line=365
+        0x016d line=366
+        0x016e line=367
+        0x016f line=368
+        0x0170 line=369
+        0x0171 line=370
+        0x0172 line=371
+        0x0173 line=372
+        0x0174 line=373
+        0x0175 line=374
+        0x0176 line=375
+        0x0177 line=376
+        0x0178 line=377
+        0x0179 line=378
+        0x017a line=379
+        0x017b line=380
+        0x017c line=381
+        0x017d line=382
+        0x017e line=383
+        0x017f line=384
+        0x0180 line=385
+        0x0181 line=386
+        0x0182 line=387
+        0x0183 line=388
+        0x0184 line=389
+        0x0185 line=390
+        0x0186 line=391
+        0x0187 line=392
+        0x0188 line=393
+        0x0189 line=394
+        0x018a line=395
+        0x018b line=396
+        0x018c line=397
+        0x018d line=398
+        0x018e line=399
+        0x018f line=400
+        0x0190 line=401
+        0x0191 line=402
+        0x0192 line=403
+        0x0193 line=404
+        0x0194 line=405
+        0x0195 line=406
+        0x0196 line=407
+        0x0197 line=408
+        0x0198 line=409
+        0x0199 line=410
+        0x019a line=411
+        0x019b line=412
+        0x019c line=413
+        0x019d line=414
+        0x019e line=415
+        0x019f line=416
+        0x01a0 line=417
+        0x01a1 line=418
+        0x01a2 line=419
+        0x01a3 line=420
+        0x01a4 line=421
+        0x01a5 line=422
+        0x01a6 line=423
+        0x01a7 line=424
+        0x01a8 line=425
+        0x01a9 line=426
+        0x01aa line=427
+        0x01ab line=428
+        0x01ac line=429
+        0x01ad line=430
+        0x01ae line=431
+        0x01af line=432
+        0x01b0 line=433
+        0x01b1 line=434
+        0x01b2 line=435
+        0x01b3 line=436
+        0x01b4 line=437
+        0x01b5 line=438
+        0x01b6 line=439
+        0x01b7 line=440
+        0x01b8 line=441
+        0x01b9 line=442
+        0x01ba line=443
+        0x01bb line=444
+        0x01bc line=445
+        0x01bd line=446
+        0x01be line=447
+        0x01bf line=448
+        0x01c0 line=449
+        0x01c1 line=450
+        0x01c2 line=451
+        0x01c3 line=452
+        0x01c4 line=453
+        0x01c5 line=454
+        0x01c6 line=455
+        0x01c7 line=456
+        0x01c8 line=457
+        0x01c9 line=458
+        0x01ca line=459
+        0x01cb line=460
+        0x01cc line=461
+        0x01cd line=462
+        0x01ce line=463
+        0x01cf line=464
+        0x01d0 line=465
+        0x01d1 line=466
+        0x01d2 line=467
+        0x01d3 line=468
+        0x01d4 line=469
+        0x01d5 line=470
+        0x01d6 line=471
+        0x01d7 line=472
+        0x01d8 line=473
+        0x01d9 line=474
+        0x01da line=475
+        0x01db line=476
+        0x01dc line=477
+        0x01dd line=478
+        0x01de line=479
+        0x01df line=480
+        0x01e0 line=481
+        0x01e1 line=482
+        0x01e2 line=483
+        0x01e3 line=484
+        0x01e4 line=485
+        0x01e5 line=486
+        0x01e6 line=487
+        0x01e7 line=488
+        0x01e8 line=489
+        0x01e9 line=490
+        0x01ea line=491
+        0x01eb line=492
+        0x01ec line=493
+        0x01ed line=494
+        0x01ee line=495
+        0x01ef line=496
+        0x01f0 line=497
+        0x01f1 line=498
+        0x01f2 line=499
+        0x01f3 line=500
+        0x01f4 line=501
+        0x01f5 line=502
+        0x01f6 line=503
+        0x01f7 line=504
+        0x01f8 line=505
+        0x01f9 line=506
+        0x01fa line=507
+        0x01fb line=508
+        0x01fc line=509
+        0x01fd line=510
+        0x01fe line=511
+        0x01ff line=512
+        0x0200 line=513
+        0x0201 line=514
+        0x0202 line=515
+        0x0203 line=516
+        0x0204 line=517
+        0x0205 line=518
+        0x0206 line=519
+        0x0207 line=520
+        0x0208 line=521
+        0x0209 line=522
+        0x020a line=523
+        0x020b line=524
+        0x020c line=525
+        0x020d line=526
+        0x020e line=527
+        0x020f line=528
+        0x0210 line=529
+        0x0211 line=530
+        0x0212 line=531
+        0x0213 line=532
+        0x0214 line=533
+        0x0215 line=534
+        0x0216 line=535
+        0x0217 line=536
+        0x0218 line=537
+        0x0219 line=538
+        0x021a line=539
+        0x021b line=540
+        0x021c line=541
+        0x021d line=542
+        0x021e line=543
+        0x021f line=544
+        0x0220 line=545
+        0x0221 line=546
+        0x0222 line=547
+        0x0223 line=548
+        0x0224 line=549
+        0x0225 line=550
+        0x0226 line=551
+        0x0227 line=552
+        0x0228 line=553
+        0x0229 line=554
+        0x022a line=555
+        0x022b line=556
+        0x022c line=557
+        0x022d line=558
+        0x022e line=559
+        0x022f line=560
+        0x0230 line=561
+        0x0231 line=562
+        0x0232 line=563
+      locals        :
+        0x0000 - 0x023c reg=42 this Lx6;
+        0x0000 - 0x023c reg=43 (null) Landroid/location/Location;
+
+    #1              : (in Lx6;)
+      name          : 'onProviderDisabled'
+      type          : '(Ljava/lang/String;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 4
+      ins           : 2
+      outs          : 1
+      insns size    : 40 16-bit code units
+03fb28:                                        |[03fb28] x6.onProviderDisabled:(Ljava/lang/String;)V
+03fb38: 5220 b108                              |0000: iget v0, v2, Lx6;.a:I // field@08b1
+03fb3c: 6e10 8a07 0300                         |0002: invoke-virtual {v3}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+03fb42: 2b00 1900 0000                         |0005: packed-switch v0, 0000001e // +00000019
+03fb48: 0e00                                   |0008: return-void
+03fb4a: 5422 b208                              |0009: iget-object v2, v2, Lx6;.b:Ljava/lang/Object; // field@08b2
+03fb4e: 1f02 0d00                              |000b: check-cast v2, La7; // type@000d
+03fb52: 1600 0000                              |000d: const-wide/16 v0, #int 0 // #0
+03fb56: 5a20 1400                              |000f: iput-wide v0, v2, La7;.g:J // field@0014
+03fb5a: 7110 0f00 0200                         |0011: invoke-static {v2}, La7;.a:(La7;)V // method@000f
+03fb60: 0e00                                   |0014: return-void
+03fb62: 5422 b208                              |0015: iget-object v2, v2, Lx6;.b:Ljava/lang/Object; // field@08b2
+03fb66: 1f02 a003                              |0017: check-cast v2, Ly6; // type@03a0
+03fb6a: 1203                                   |0019: const/4 v3, #int 0 // #0
+03fb6c: 5b23 d708                              |001a: iput-object v3, v2, Ly6;.c:Landroid/location/Location; // field@08d7
+03fb70: 0e00                                   |001c: return-void
+03fb72: 0000                                   |001d: nop // spacer
+03fb74: 0001 0300 0000 0000 1000 0000 0400 ... |001e: packed-switch-data (10 units)
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+      locals        :
+        0x0000 - 0x0028 reg=2 this Lx6;
+        0x0000 - 0x0028 reg=3 (null) Ljava/lang/String;
+
+    #2              : (in Lx6;)
+      name          : 'onProviderEnabled'
+      type          : '(Ljava/lang/String;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 3
+      ins           : 2
+      outs          : 1
+      insns size    : 28 16-bit code units
+03fb88:                                        |[03fb88] x6.onProviderEnabled:(Ljava/lang/String;)V
+03fb98: 5210 b108                              |0000: iget v0, v1, Lx6;.a:I // field@08b1
+03fb9c: 6e10 8a07 0200                         |0002: invoke-virtual {v2}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+03fba2: 2b00 0d00 0000                         |0005: packed-switch v0, 00000012 // +0000000d
+03fba8: 0e00                                   |0008: return-void
+03fbaa: 5411 b208                              |0009: iget-object v1, v1, Lx6;.b:Ljava/lang/Object; // field@08b2
+03fbae: 1f01 0d00                              |000b: check-cast v1, La7; // type@000d
+03fbb2: 7110 0f00 0100                         |000d: invoke-static {v1}, La7;.a:(La7;)V // method@000f
+03fbb8: 0e00                                   |0010: return-void
+03fbba: 0000                                   |0011: nop // spacer
+03fbbc: 0001 0300 0000 0000 0b00 0000 0400 ... |0012: packed-switch-data (10 units)
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+      locals        :
+        0x0000 - 0x001c reg=1 this Lx6;
+        0x0000 - 0x001c reg=2 (null) Ljava/lang/String;
+
+    #3              : (in Lx6;)
+      name          : 'onStatusChanged'
+      type          : '(Ljava/lang/String;ILandroid/os/Bundle;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 4
+      ins           : 4
+      outs          : 0
+      insns size    : 3 16-bit code units
+03fc20:                                        |[03fc20] x6.onStatusChanged:(Ljava/lang/String;ILandroid/os/Bundle;)V
+03fc30: 5200 b108                              |0000: iget v0, v0, Lx6;.a:I // field@08b1
+03fc34: 0e00                                   |0002: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+      locals        :
+        0x0000 - 0x0003 reg=0 this Lx6;
+        0x0000 - 0x0003 reg=1 (null) Ljava/lang/String;
+        0x0000 - 0x0003 reg=2 (null) I
+        0x0000 - 0x0003 reg=3 (null) Landroid/os/Bundle;
+
+  source_file_idx   : 4152 (r8-map-id-df02db20992efcdad8c8628fa158af402193d9214b2257c75897211101eb46a6)

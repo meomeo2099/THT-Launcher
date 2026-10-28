@@ -1,0 +1,52 @@
+[
+  {
+    "file": "deep/automation/o1-run.json",
+    "code": "cleanup_incomplete",
+    "operation": "inspect_android_method"
+  },
+  {
+    "file": "deep/automation/s1-b.json",
+    "code": "cleanup_incomplete",
+    "operation": "inspect_android_method"
+  },
+  {
+    "file": "deep/data-network/stats-schema.json",
+    "code": "execution_failure",
+    "operation": "inspect_android_method"
+  },
+  {
+    "file": "deep/ui-system/doctor.json",
+    "code": "cleanup_incomplete",
+    "operation": "inspect_jadx_configuration"
+  },
+  {
+    "file": "deep/ui-system/main-class.json",
+    "code": "cleanup_incomplete",
+    "operation": "inspect_android_class"
+  },
+  {
+    "file": "deep/vehicle/r4-E.json",
+    "code": "cleanup_incomplete",
+    "operation": "inspect_android_method"
+  },
+  {
+    "file": "rea-hh.json",
+    "code": "cleanup_incomplete",
+    "operation": "inspect_android_class"
+  },
+  {
+    "file": "surface-audit/main-onNewIntent.json",
+    "code": "cleanup_incomplete",
+    "operation": "inspect_android_method"
+  },
+  {
+    "file": "update-audit/y-recovered.json",
+    "code": "cleanup_incomplete",
+    "operation": "inspect_android_method"
+  },
+  {
+    "file": "update-audit/y.json",
+    "code": "cleanup_incomplete",
+    "operation": "inspect_android_method"
+  }
+]

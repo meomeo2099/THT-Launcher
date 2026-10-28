@@ -1,0 +1,84 @@
+Android
+r28c
+13676358
+__cxa_finalize
+__cxa_atexit
+__register_atfork
+Java_org_reference_panel_Guard_resolve
+Java_org_reference_panel_Guard_probe
+__stack_chk_fail
+__stack_chk_guard
+memcpy
+libc.so
+LIBC
+liblog.so
+libm.so
+libdl.so
+libdhguard.so
+()Ljava/lang/String;
+toByteArray
+[Landroid/content/pm/Signature;
+getPackageInfo
+signatures
+()Landroid/content/pm/PackageManager;
+getPackageManager
+(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;
+getPackageName
+()[B
+Q/'d;
+vRQ>
+8STs
+LwH'
+QxDP
+H@pGF
+FxD)F
+@zD{DXF
+@zD{DXF
+FXF)FBF
+FXF)F2F
+`zD{DXF
+XFAF+F
+IlXF
+G; 5
+oXF)F
+xazD{DXF
+|1XF
+IFBF
+FIFXF
+0F!F
+0F)F
+ 2I*XyD
+% HC
+!`Ca
+&F)F2F
+kShVjO
+!D)D
+FqFxD5F
+ F+F
+Android (13624864, +pgo, +bolt, +lto, +mlgo, based on r530567e) clang version 19.0.1 (https://android.googlesource.com/toolchain/llvm-project 97a699bf4812a18fb657c2779f5296a4ab2694d2)
+Linker: LLD 19.0.1
+Android (13624864, based on r530567e) clang version 19.0.1 (https://android.googlesource.com/toolchain/llvm-project 97a699bf4812a18fb657c2779f5296a4ab2694d2)
+aeabi
+C2.09
+.fini_array
+.ARM.exidx
+.text
+.got
+.comment
+.note.android.ident
+.got.plt
+.rel.plt
+.ARM.attributes
+.dynstr
+.gnu.version_r
+.data.rel.ro
+.rel.dyn
+.gnu.version
+.dynsym
+.gnu.hash
+.relro_padding
+.note.gnu.build-id
+.dynamic
+.ARM.extab
+.shstrtab
+.rodata

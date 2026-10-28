@@ -1,0 +1,29 @@
+    public static byte[] f(int i, String str) throws IOException {
+        HttpURLConnection httpURLConnectionU = u(str);
+        try {
+            if (httpURLConnectionU.getResponseCode() != 200) {
+                throw new IllegalStateException(("HTTP " + httpURLConnectionU.getResponseCode()).toString());
+            }
+            InputStream inputStream = httpURLConnectionU.getInputStream();
+            try {
+                inputStream.getClass();
+                byte[] bArrM = pi.M(inputStream);
+                inputStream.close();
+                if (bArrM.length > i) {
+                    throw new IllegalArgumentException("Failed requirement.");
+                }
+                httpURLConnectionU.disconnect();
+                return bArrM;
+            } catch (Throwable th) {
+                try {
+                    throw th;
+                } catch (Throwable th2) {
+                    k8.p(inputStream, th);
+                    throw th2;
+                }
+            }
+        } catch (Throwable th3) {
+            httpURLConnectionU.disconnect();
+            throw th3;
+        }
+    }

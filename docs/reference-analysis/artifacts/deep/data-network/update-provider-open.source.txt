@@ -1,0 +1,19 @@
+    @Override // android.content.ContentProvider
+    public final ParcelFileDescriptor openFile(Uri uri, String str) throws FileNotFoundException {
+        uri.getClass();
+        str.getClass();
+        if (!str.equals("r")) {
+            throw new SecurityException("read only");
+        }
+        Context context = getContext();
+        if (context == null) {
+            throw new IllegalStateException();
+        }
+        File file = new File(context.getCacheDir(), "update.apk");
+        if (!file.isFile()) {
+            throw new FileNotFoundException(uri.toString());
+        }
+        ParcelFileDescriptor parcelFileDescriptorOpen = ParcelFileDescriptor.open(file, 268435456);
+        parcelFileDescriptorOpen.getClass();
+        return parcelFileDescriptorOpen;
+    }

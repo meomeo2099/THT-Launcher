@@ -106,7 +106,7 @@ object ShortcutStore {
         Shortcut("collapse", "Ẩn/hiện tất cả", Shortcut.TYPE_COLLAPSE),
     )
 
-    /** Thanh dọc bên trái (kiểu thanh bên của AutoEasy). */
+    /** Thanh dọc bên trái (kiểu thanh bên của launcher tham chiếu). */
     const val SIDERAIL_FILE = "siderail.json"
 
     val SIDERAIL_DEFAULTS = listOf(

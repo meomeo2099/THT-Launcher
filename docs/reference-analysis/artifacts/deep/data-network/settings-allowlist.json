@@ -1,0 +1,147 @@
+{
+  "evidence_id": "ev_8caaacfe34a10b9ef10b359e493c81a87732a7dff25b294d0fd0f5e7a30d10ac",
+  "subject": {
+    "name": "reference.apk",
+    "digest": {
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+    },
+    "local_path": "reference.apk",
+    "format": "apk",
+    "architecture": null
+  },
+  "provider": {
+    "id": "jadx",
+    "name": "JADX headless",
+    "version": "0.7.1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_android_method",
+  "parameters": {
+    "path": "reference.apk",
+    "class_name": "pi",
+    "method_name": "e0"
+  },
+  "raw_result": {
+    "server": {
+      "name": "rea-jadx-bridge",
+      "version": "7"
+    },
+    "bridge_sha256": "e5044a8312dd0731f53af3f095508b3e5cff54df6b971c95d4305e2f39b4fa30",
+    "jar_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "loaded": {
+      "state": "LOADED",
+      "apk_path": "<temporary-analysis-session>/target.apk",
+      "class_count": 485,
+      "resource_count": 264,
+      "threads": 1,
+      "resources": "full"
+    },
+    "calls": [
+      {
+        "operation": "rea_jvm_status",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"java_version\":\"21.0.12.1\",\"max_heap_bytes\":2147483648,\"metadata_scope\":\"parsed_members\",\"engine_reported_version\":\"0.7.1\",\"available_processors\":2}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "load_apk",
+        "input": {
+          "path": "<temporary-analysis-session>/target.apk",
+          "threads": 1,
+          "resources": "full"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"state\":\"LOADED\",\"apk_path\":\"<temporary-analysis-session>/target.apk\",\"class_count\":485,\"raw_class_count\":485,\"resource_count\":264,\"load_duration_ms\":1138,\"decompile_timeout_ms\":90000,\"threads\":1,\"code_cache_size\":64,\"resources\":\"full\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_class_summary",
+        "input": {
+          "class_name": "pi"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"raw_name\":\"pi\",\"method_count\":59,\"full_name\":\"defpackage.pi\",\"field_count\":4,\"name\":\"pi\",\"inner_class_count\":0,\"inner_classes\":[],\"methods\":[{\"def_pos\":0,\"signature\":\"<clinit>(): void\",\"dex_descriptor\":\"()V\",\"is_constructor\":false,\"name\":\"<clinit>\"},{\"def_pos\":0,\"signature\":\"A(): java.util.List\",\"dex_descriptor\":\"()Ljava/util/List;\",\"is_constructor\":false,\"name\":\"A\"},{\"def_pos\":0,\"signature\":\"B(): java.util.LinkedHashMap\",\"dex_descriptor\":\"()Ljava/util/LinkedHashMap;\",\"is_constructor\":false,\"name\":\"B\"},{\"def_pos\":0,\"signature\":\"C(): java.util.LinkedHashMap\",\"dex_descriptor\":\"()Ljava/util/LinkedHashMap;\",\"is_constructor\":false,\"name\":\"C\"},{\"def_pos\":0,\"signature\":\"D(int, int, int): int\",\"dex_descriptor\":\"(III)I\",\"is_constructor\":false,\"name\":\"D\"},{\"def_pos\":0,\"signature\":\"E(org.reference.panel.MainActivity, int): java.lang.String\",\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;I)Ljava/lang/String;\",\"is_constructor\":false,\"name\":\"E\"},{\"def_pos\":0,\"signature\":\"F(java.lang.String, org.reference.panel.MainActivity): void\",\"dex_descriptor\":\"(Ljava/lang/String;Lorg/reference/panel/MainActivity;)V\",\"is_constructor\":false,\"name\":\"F\"},{\"def_pos\":0,\"signature\":\"G(me, org.reference.panel.MainActivity, java.lang.String, boolean): void\",\"dex_descriptor\":\"(Lme;Lorg/reference/panel/MainActivity;Ljava/lang/String;Z)V\",\"is_constructor\":false,\"name\":\"G\"},{\"def_pos\":0,\"signature\":\"H(android.widget.GridLayout, org.reference.panel.MainActivity, android.widget.ImageView): void\",\"dex_descriptor\":\"(Landroid/widget/GridLayout;Lorg/reference/panel/MainActivity;Landroid/widget/ImageView;)V\",\"is_constructor\":false,\"name\":\"H\"},{\"def_pos\":0,\"signature\":\"I(org.reference.panel.MainActivity, android.graphics.Bitmap, java.lang.String, y5, u0): android.widget.ImageView\",\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Landroid/graphics/Bitmap;Ljava/lang/String;Ly5;Lu0;)Landroid/widget/ImageView;\",\"is_constructor\":false,\"name\":\"I\"},{\"def_pos\":0,\"signature\":\"J(java.lang.Object): java.util.List\",\"dex_descriptor\":\"(Ljava/lang/Object;)Ljava/util/List;\",\"is_constructor\":false,\"name\":\"J\"},{\"def_pos\":0,\"signature\":\"K(org.reference.panel.MainActivity, java.lang.String, int, int, int, int, java.lang.String, j6, j6): void\",\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Ljava/lang/String;IIIILjava/lang/String;Lj6;Lj6;)V\",\"is_constructor\":false,\"name\":\"K\"},{\"def_pos\":0,\"signature\":\"L(java.util.LinkedHashMap): java.util.LinkedHashMap\",\"dex_descriptor\":\"(Ljava/util/LinkedHashMap;)Ljava/util/LinkedHashMap;\",\"is_constructor\":false,\"name\":\"L\"},{\"def_pos\":0,\"signature\":\"M(java.io.InputStream): byte[]\",\"dex_descriptor\":\"(Ljava/io/InputStream;)[B\",\"is_constructor\":false,\"name\":\"M\"},{\"def_pos\":0,\"signature\":\"N(java.lang.Object[], int, int): void\",\"dex_descriptor\":\"([Ljava/lang/Object;II)V\",\"is_constructor\":false,\"name\":\"N\"},{\"def_pos\":0,\"signature\":\"O(android.media.session.MediaController, java.lang.String, xb): zb\",\"dex_descriptor\":\"(Landroid/media/session/MediaController;Ljava/lang/String;Lxb;)Lzb;\",\"is_constructor\":false,\"name\":\"O\"},{\"def_pos\":0,\"signature\":\"P(java.lang.Object): java.util.Set\",\"dex_descriptor\":\"(Ljava/lang/Object;)Ljava/util/Set;\",\"is_constructor\":false,\"name\":\"P\"},{\"def_pos\":0,\"signature\":\"Q(org.reference.panel.MainActivity, c9, mg): android.widget.LinearLayout\",\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Lc9;Lmg;)Landroid/widget/LinearLayout;\",\"is_constructor\":false,\"name\":\"Q\"},{\"def_pos\":0,\"signature\":\"R(org.reference.panel.MainActivity): void\",\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)V\",\"is_constructor\":false,\"name\":\"R\"},{\"def_pos\":0,\"signature\":\"S(org.reference.panel.MainActivity, java.lang.String, boolean, android.view.View[]): android.widget.LinearLayout\",\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Ljava/lang/String;Z[Landroid/view/View;)Landroid/widget/LinearLayout;\",\"is_constructor\":false,\"name\":\"S\"},{\"def_pos\":0,\"signature\":\"T(je, me, kh, android.widget.FrameLayout, org.reference.panel.MainActivity): void\",\"dex_descriptor\":\"(Lje;Lme;Lkh;Landroid/widget/FrameLayout;Lorg/reference/panel/MainActivity;)V\",\"is_constructor\":false,\"name\":\"T\"},{\"def_pos\":0,\"signature\":\"U(org.reference.panel.MainActivity, java.lang.String, java.lang.String, boolean): android.widget.LinearLayout\",\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Ljava/lang/String;Ljava/lang/String;Z)Landroid/widget/LinearLayout;\",\"is_constructor\":false,\"name\":\"U\"},{\"def_pos\":0,\"signature\":\"V(org.reference.panel.MainActivity, android.view.View[]): android.widget.LinearLayout\",\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;[Landroid/view/View;)Landroid/widget/LinearLayout;\",\"is_constructor\":false,\"name\":\"V\"},{\"def_pos\":0,\"signature\":\"W(j8, int): h8\",\"dex_descriptor\":\"(Lj8;I)Lh8;\",\"is_constructor\":false,\"name\":\"W\"},{\"def_pos\":0,\"signature\":\"X(bj, int, float): java.lang.String\",\"dex_descriptor\":\"(Lbj;IF)Ljava/lang/String;\",\"is_constructor\":false,\"name\":\"X\"},{\"def_pos\":0,\"signature\":\"Y(int, float, boolean): android.text.TextPaint\",\"dex_descriptor\":\"(IFZ)Landroid/text/TextPaint;\",\"is_constructor\":false,\"name\":\"Y\"},{\"def_pos\":0,\"signature\":\"Z(char, java.util.Locale): java.lang.String\",\"dex_descriptor\":\"(CLjava/util/Locale;)Ljava/lang/String;\",\"is_constructor\":false,\"name\":\"Z\"},{\"def_pos\":0,\"signature\":\"a(java.lang.Object[], int, int, h): java.lang.String\",\"dex_descriptor\":\"([Ljava/lang/Object;IILh;)Ljava/lang/String;\",\"is_constructor\":false,\"name\":\"a\"},{\"def_pos\":0,\"signature\":\"a0(java.util.Collection): java.lang.Object[]\",\"dex_descriptor\":\"(Ljava/util/Collection;)[Ljava/lang/Object;\",\"is_constructor\":false,\"name\":\"a0\"},{\"def_pos\":0,\"signature\":\"b(android.content.Context): boolean\",\"dex_descriptor\":\"(Landroid/content/Context;)Z\",\"is_constructor\":false,\"name\":\"b\"},{\"def_pos\":0,\"signature\":\"b0(java.util.Collection, java.lang.Object[]): java.lang.Object[]\",\"dex_descriptor\":\"(Ljava/util/Collection;[Ljava/lang/Object;)[Ljava/lang/Object;\",\"is_constructor\":false,\"name\":\"b0\"},{\"def_pos\":0,\"signature\":\"c(b8, kh, int, boolean): void\",\"dex_descriptor\":\"(Lb8;Lkh;IZ)V\",\"is_constructor\":false,\"name\":\"c\"},{\"def_pos\":0,\"signature\":\"c0(java.io.File): c5\",\"dex_descriptor\":\"(Ljava/io/File;)Lc5;\",\"is_constructor\":false,\"name\":\"c0\"},{\"def_pos\":0,\"signature\":\"d(java.lang.Object): java.util.Collection\",\"dex_descriptor\":\"(Ljava/lang/Object;)Ljava/util/Collection;\",\"is_constructor\":false,\"name\":\"d\"},{\"def_pos\":0,\"signature\":\"d0(android.content.Context, boolean, java.lang.Boolean): java.lang.Boolean\",\"dex_descriptor\":\"(Landroid/content/Context;ZLjava/lang/Boolean;)Ljava/lang/Boolean;\",\"is_constructor\":false,\"name\":\"d0\"},{\"def_pos\":0,\"signature\":\"e(org.reference.panel.MainActivity, c9, y5): android.widget.LinearLayout\",\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Lc9;Ly5;)Landroid/widget/LinearLayout;\",\"is_constructor\":false,\"name\":\"e\"},{\"def_pos\":0,\"signature\":\"e0(java.lang.String): java.lang.String\",\"dex_descriptor\":\"(Ljava/lang/String;)Ljava/lang/String;\",\"is_constructor\":false,\"name\":\"e0\"},{\"def_pos\":0,\"signature\":\"f(c9, z0, y5, java.lang.String, java.lang.String, int): android.widget.LinearLayout\",\"dex_descriptor\":\"(Lc9;Lz0;Ly5;Ljava/lang/String;Ljava/lang/String;I)Landroid/widget/LinearLayout;\",\"is_constructor\":false,\"name\":\"f\"},{\"def_pos\":0,\"signature\":\"f0(int, int): j8\",\"dex_descriptor\":\"(II)Lj8;\",\"is_constructor\":false,\"name\":\"f0\"},{\"def_pos\":0,\"signature\":\"g(org.reference.panel.MainActivity): void\",\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)V\",\"is_constructor\":false,\"name\":\"g\"},{\"def_pos\":0,\"signature\":\"h(android.widget.FrameLayout, org.reference.panel.MainActivity, c9): void\",\"dex_descriptor\":\"(Landroid/widget/FrameLayout;Lorg/reference/panel/MainActivity;Lc9;)V\",\"is_constructor\":false,\"name\":\"h\"},{\"def_pos\":0,\"signature\":\"i(java.lang.String, org.reference.panel.MainActivity): java.lang.String\",\"dex_descriptor\":\"(Ljava/lang/String;Lorg/reference/panel/MainActivity;)Ljava/lang/String;\",\"is_constructor\":false,\"name\":\"i\"},{\"def_pos\":0,\"signature\":\"j(java.lang.String): n4\",\"dex_descriptor\":\"(Ljava/lang/String;)Ln4;\",\"is_constructor\":false,\"name\":\"j\"},{\"def_pos\":0,\"signature\":\"k(int, java.lang.String): byte[]\",\"dex_descriptor\":\"(ILjava/lang/String;)[B\",\"is_constructor\":false,\"name\":\"k\"},{\"def_pos\":0,\"signature\":\"l(org.reference.panel.MainActivity, boolean): void\",\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Z)V\",\"is_constructor\":false,\"name\":\"l\"},{\"def_pos\":0,\"signature\":\"m(int): void\",\"dex_descriptor\":\"(I)V\",\"is_constructor\":false,\"name\":\"m\"},{\"def_pos\":0,\"signature\":\"n(int, int): void\",\"dex_descriptor\":\"(II)V\",\"is_constructor\":false,\"name\":\"n\"},{\"def_pos\":0,\"signature\":\"o(org.reference.panel.MainActivity, boolean): void\",\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Z)V\",\"is_constructor\":false,\"name\":\"o\"},{\"def_pos\":0,\"signature\":\"p(org.reference.panel.MainActivity, boolean, java.lang.String, java.util.List, java.lang.String, int): void\",\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;ZLjava/lang/String;Ljava/util/List;Ljava/lang/String;I)V\",\"is_constructor\":false,\"name\":\"p\"},{\"def_pos\":0,\"signature\":\"q(int): int\",\"dex_descriptor\":\"(I)I\",\"is_constructor\":false,\"name\":\"q\"},{\"def_pos\":0,\"signature\":\"r(float, float, float): float\",\"dex_descriptor\":\"(FFF)F\",\"is_constructor\":false,\"name\":\"r\"},{\"def_pos\":0,\"signature\":\"s(int, int, int): int\",\"dex_descriptor\":\"(III)I\",\"is_constructor\":false,\"name\":\"s\"},{\"def_pos\":0,\"signature\":\"t(org.reference.panel.MainActivity, float): java.lang.String\",\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;F)Ljava/lang/String;\",\"is_constructor\":false,\"name\":\"t\"},{\"def_pos\":0,\"signature\":\"u(java.io.InputStream, java.io.OutputStream): long\",\"dex_descriptor\":\"(Ljava/io/InputStream;Ljava/io/OutputStream;)J\",\"is_constructor\":false,\"name\":\"u\"},{\"def_pos\":0,\"signature\":\"v(uc, uc, uc): id\",\"dex_descriptor\":\"(Luc;Luc;Luc;)Lid;\",\"is_constructor\":false,\"name\":\"v\"},{\"def_pos\":0,\"signature\":\"w(android.content.Context): java.lang.String\",\"dex_descriptor\":\"(Landroid/content/Context;)Ljava/lang/String;\",\"is_constructor\":false,\"name\":\"w\"},{\"def_pos\":0,\"signature\":\"x(char, char, boolean): boolean\",\"dex_descriptor\":\"(CCZ)Z\",\"is_constructor\":false,\"name\":\"x\"},{\"def_pos\":0,\"signature\":\"y(java.lang.String, android.text.TextPaint, float): java.lang.String\",\"dex_descriptor\":\"(Ljava/lang/String;Landroid/text/TextPaint;F)Ljava/lang/String;\",\"is_constructor\":false,\"name\":\"y\"},{\"def_pos\":0,\"signature\":\"z(java.lang.String, java.lang.String): java.lang.String\",\"dex_descriptor\":\"(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;\",\"is_constructor\":false,\"name\":\"z\"}],\"fields\":[{\"type\":\"java.lang.Object[]\",\"name\":\"a\",\"def_pos\":0},{\"type\":\"ca\",\"name\":\"b\",\"def_pos\":0},{\"type\":\"boolean\",\"name\":\"c\",\"def_pos\":0},{\"type\":\"boolean\",\"name\":\"d\",\"def_pos\":0}]}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_method_body",
+        "input": {
+          "class_name": "pi",
+          "method_name": "e0",
+          "overload_index": 0,
+          "smali_fallback": true
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"method_name\":\"e0\",\"overload_index\":0,\"full_name\":\"pi.e0\",\"fell_back\":false,\"markers\":[],\"body\":\"    public static String e0(String str) {\\n        str.getClass();\\n        if (x0.Y0(new String[]{\\\"radio_favorites\\\", \\\"radio_stations\\\"}).contains(str) || str.equals(\\\"launcher_theme\\\")) {\\n            return \\\"string\\\";\\n        }\\n        if (uh.k(str) != null) {\\n            String strK = uh.k(str);\\n            strK.getClass();\\n            return strK.equals(\\\"ready\\\") ? \\\"boolean\\\" : e0(strK);\\n        }\\n        if (x0.Y0(new String[]{\\\"auto_last_stop\\\", \\\"auto_last_driving\\\", \\\"stats_fuel_base\\\", \\\"stats_odo_scale\\\", \\\"stats_open_trip\\\", \\\"autoplay_boot_count\\\"}).contains(str)) {\\n            return null;\\n        }\\n        if (str.equals(\\\"auto_apps_list\\\")) {\\n            return \\\"string\\\";\\n        }\\n        if (str.equals(\\\"auto_enabled\\\")) {\\n            return \\\"boolean\\\";\\n        }\\n        if (str.startsWith(\\\"auto_\\\") && str.endsWith(\\\"_on\\\")) {\\n            return \\\"boolean\\\";\\n        }\\n        if (str.startsWith(\\\"auto_\\\")) {\\n            return \\\"int\\\";\\n        }\\n        if (x0.Y0(new String[]{\\\"stats_enabled\\\", \\\"saver_on\\\", \\\"saver_parked\\\", \\\"saver_track\\\", \\\"saver_date\\\", \\\"saver_weather\\\", \\\"radio_autoplay\\\", \\\"dock_overlay\\\", \\\"dock_overlay_mode\\\", \\\"suppress_climate_popup\\\", \\\"navigation_embedded\\\", \\\"call_pause_music\\\", \\\"music_cover_swipe\\\", \\\"update_auto\\\"}).contains(str)) {\\n            return \\\"boolean\\\";\\n        }\\n        if (x0.Y0(new String[]{\\\"saver_minutes\\\", \\\"saver_dim\\\", \\\"fuel_display\\\", \\\"dock_transparency\\\", \\\"saver_clock\\\", \\\"saver_clock_size\\\", \\\"surface_style\\\"}).contains(str) || e3.a.contains(str)) {\\n            return \\\"int\\\";\\n        }\\n        if (P(\\\"icon_set\\\").contains(str) || str.startsWith(\\\"saver_pos_\\\") || str.startsWith(\\\"climate_group_\\\")) {\\n            return \\\"string\\\";\\n        }\\n        if (str.equals(\\\"tank_liters\\\")) {\\n            return \\\"float\\\";\\n        }\\n        if (str.startsWith(\\\"split_\\\") && str.endsWith(\\\"_ratio\\\")) {\\n            return \\\"int\\\";\\n        }\\n        if (str.equals(\\\"split_list\\\") || str.startsWith(\\\"split_\\\")) {\\n            return \\\"string\\\";\\n        }\\n        if (x0.Y0(new String[]{\\\"desktop_splits\\\", \\\"wall_splits\\\"}).contains(str)) {\\n            return \\\"set\\\";\\n        }\\n        if (e3.b.contains(str) || x0.Y0(new String[]{\\\"ios_home_v1\\\", \\\"ios_home_v2\\\", \\\"ios_music2_hidden\\\", \\\"ios_collapsed\\\", \\\"fullscreen\\\", \\\"navigation_assist\\\"}).contains(str)) {\\n            return \\\"boolean\\\";\\n        }\\n        if (x0.Y0(new String[]{\\\"wall_widgets\\\", \\\"wall_apps\\\", \\\"wall_vehicle_cards\\\", \\\"desktop_actions\\\", \\\"wall_actions\\\", \\\"desktop_images\\\", \\\"wall_images\\\"}).contains(str)) {\\n            return \\\"set\\\";\\n        }\\n        if (x0.Y0(new String[]{\\\"theme_mode\\\", \\\"dock_size\\\", \\\"dock_alignment\\\", \\\"navigation_assist_mode\\\", \\\"app_language\\\"}).contains(str)) {\\n            return \\\"string\\\";\\n        }\\n        if (x0.Y0(new String[]{\\\"last_brightness\\\", \\\"navigation_assist_x\\\", \\\"navigation_assist_y\\\"}).contains(str)) {\\n            return \\\"float\\\";\\n        }\\n        if (x0.Y0(new String[]{\\\"night\\\", \\\"onboarded\\\", \\\"show_vehicle\\\", \\\"independent_dock\\\", \\\"autostart\\\", \\\"music_autoplay\\\", \\\"menu_labels\\\", \\\"desktop_grid\\\", \\\"desktop_snap\\\", \\\"tile_backgrounds\\\", \\\"separate_radios\\\", \\\"icon_pack\\\"}).contains(str) || str.startsWith(\\\"tile_background_\\\")) {\\n            return \\\"boolean\\\";\\n        }\\n        if (x0.Y0(new String[]{\\\"background\\\", \\\"color\\\", \\\"menu_count\\\"}).contains(str)) {\\n            return \\\"int\\\";\\n        }\\n        List<String> listI0 = j3.i0(\\\"color_\\\", \\\"image_scale_\\\", \\\"tile_opacity_\\\", \\\"tpms_\\\", \\\"widget_transparency_\\\", \\\"dock_button_transparency_\\\");\\n        if (!listI0.isEmpty()) {\\n            for (String str2 : listI0) {\\n                str2.getClass();\\n                if (str.startsWith(str2)) {\\n                    return \\\"int\\\";\\n                }\\n            }\\n        }\\n        if (str.equals(\\\"ui_scale\\\")) {\\n            return \\\"float\\\";\\n        }\\n        if (x0.Y0(new String[]{\\\"desktop_apps\\\", \\\"desktop_hidden\\\", \\\"desktop_vehicle_cards\\\", \\\"favorite_apps\\\"}).contains(str)) {\\n            return \\\"set\\\";\\n        }\\n        if (x0.Y0(new String[]{\\\"vehicle\\\", \\\"custom_title\\\", \\\"dock_0\\\", \\\"dock_1\\\", \\\"tile_0\\\", \\\"tile_1\\\"}).contains(str)) {\\n            return \\\"string\\\";\\n        }\\n        List<String> listI1 = j3.i0(\\\"slot_\\\", \\\"menu_action_\\\", \\\"desktop_\\\");\\n        if (listI1.isEmpty()) {\\n            return null;\\n        }\\n        for (String str3 : listI1) {\\n            str3.getClass();\\n            if (str.startsWith(str3)) {\\n                return \\\"string\\\";\\n            }\\n        }\\n        return null;\\n    }\",\"mode\":\"java\",\"class_name\":\"defpackage.pi\",\"dex_descriptor\":\"(Ljava/lang/String;)Ljava/lang/String;\",\"overload_count\":1}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "normalized_result": {
+    "engine": {
+      "name": "jadx-headless-mcp",
+      "version": "0.7.1",
+      "artifact_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+      "source_revision": "5844800a486d2248fa949b74c9896285f5b54de2",
+      "worker_count": 1,
+      "heap_limit_mib": 2048
+    },
+    "class_name": "defpackage.pi",
+    "method": {
+      "name": "e0",
+      "reported_signature": "e0(java.lang.String): java.lang.String",
+      "overload_index": 0,
+      "is_constructor": false,
+      "dex_descriptor": "(Ljava/lang/String;)Ljava/lang/String;"
+    },
+    "overload_count": 1,
+    "representation": "java",
+    "body_status": "available",
+    "fell_back": false,
+    "markers": [],
+    "source": {
+      "status": "complete",
+      "text": "    public static String e0(String str) {\n        str.getClass();\n        if (x0.Y0(new String[]{\"radio_favorites\", \"radio_stations\"}).contains(str) || str.equals(\"launcher_theme\")) {\n            return \"string\";\n        }\n        if (uh.k(str) != null) {\n            String strK = uh.k(str);\n            strK.getClass();\n            return strK.equals(\"ready\") ? \"boolean\" : e0(strK);\n        }\n        if (x0.Y0(new String[]{\"auto_last_stop\", \"auto_last_driving\", \"stats_fuel_base\", \"stats_odo_scale\", \"stats_open_trip\", \"autoplay_boot_count\"}).contains(str)) {\n            return null;\n        }\n        if (str.equals(\"auto_apps_list\")) {\n            return \"string\";\n        }\n        if (str.equals(\"auto_enabled\")) {\n            return \"boolean\";\n        }\n        if (str.startsWith(\"auto_\") && str.endsWith(\"_on\")) {\n            return \"boolean\";\n        }\n        if (str.startsWith(\"auto_\")) {\n            return \"int\";\n        }\n        if (x0.Y0(new String[]{\"stats_enabled\", \"saver_on\", \"saver_parked\", \"saver_track\", \"saver_date\", \"saver_weather\", \"radio_autoplay\", \"dock_overlay\", \"dock_overlay_mode\", \"suppress_climate_popup\", \"navigation_embedded\", \"call_pause_music\", \"music_cover_swipe\", \"update_auto\"}).contains(str)) {\n            return \"boolean\";\n        }\n        if (x0.Y0(new String[]{\"saver_minutes\", \"saver_dim\", \"fuel_display\", \"dock_transparency\", \"saver_clock\", \"saver_clock_size\", \"surface_style\"}).contains(str) || e3.a.contains(str)) {\n            return \"int\";\n        }\n        if (P(\"icon_set\").contains(str) || str.startsWith(\"saver_pos_\") || str.startsWith(\"climate_group_\")) {\n            return \"string\";\n        }\n        if (str.equals(\"tank_liters\")) {\n            return \"float\";\n        }\n        if (str.startsWith(\"split_\") && str.endsWith(\"_ratio\")) {\n            return \"int\";\n        }\n        if (str.equals(\"split_list\") || str.startsWith(\"split_\")) {\n            return \"string\";\n        }\n        if (x0.Y0(new String[]{\"desktop_splits\", \"wall_splits\"}).contains(str)) {\n            return \"set\";\n        }\n        if (e3.b.contains(str) || x0.Y0(new String[]{\"ios_home_v1\", \"ios_home_v2\", \"ios_music2_hidden\", \"ios_collapsed\", \"fullscreen\", \"navigation_assist\"}).contains(str)) {\n            return \"boolean\";\n        }\n        if (x0.Y0(new String[]{\"wall_widgets\", \"wall_apps\", \"wall_vehicle_cards\", \"desktop_actions\", \"wall_actions\", \"desktop_images\", \"wall_images\"}).contains(str)) {\n            return \"set\";\n        }\n        if (x0.Y0(new String[]{\"theme_mode\", \"dock_size\", \"dock_alignment\", \"navigation_assist_mode\", \"app_language\"}).contains(str)) {\n            return \"string\";\n        }\n        if (x0.Y0(new String[]{\"last_brightness\", \"navigation_assist_x\", \"navigation_assist_y\"}).contains(str)) {\n            return \"float\";\n        }\n        if (x0.Y0(new String[]{\"night\", \"onboarded\", \"show_vehicle\", \"independent_dock\", \"autostart\", \"music_autoplay\", \"menu_labels\", \"desktop_grid\", \"desktop_snap\", \"tile_backgrounds\", \"separate_radios\", \"icon_pack\"}).contains(str) || str.startsWith(\"tile_background_\")) {\n            return \"boolean\";\n        }\n        if (x0.Y0(new String[]{\"background\", \"color\", \"menu_count\"}).contains(str)) {\n            return \"int\";\n        }\n        List<String> listI0 = j3.i0(\"color_\", \"image_scale_\", \"tile_opacity_\", \"tpms_\", \"widget_transparency_\", \"dock_button_transparency_\");\n        if (!listI0.isEmpty()) {\n            for (String str2 : listI0) {\n                str2.getClass();\n                if (str.startsWith(str2)) {\n                    return \"int\";\n                }\n            }\n        }\n        if (str.equals(\"ui_scale\")) {\n            return \"float\";\n        }\n        if (x0.Y0(new String[]{\"desktop_apps\", \"desktop_hidden\", \"desktop_vehicle_cards\", \"favorite_apps\"}).contains(str)) {\n            return \"set\";\n        }\n        if (x0.Y0(new String[]{\"vehicle\", \"custom_title\", \"dock_0\", \"dock_1\", \"tile_0\", \"tile_1\"}).contains(str)) {\n            return \"string\";\n        }\n        List<String> listI1 = j3.i0(\"slot_\", \"menu_action_\", \"desktop_\");\n        if (listI1.isEmpty()) {\n            return null;\n        }\n        for (String str3 : listI1) {\n            str3.getClass();\n            if (str.startsWith(str3)) {\n                return \"string\";\n            }\n        }\n        return null;\n    }",
+      "reported_total_bytes": null
+    }
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Static decompiler observations do not establish runtime behavior; the APK is never executed.",
+    "Method signatures use provider display types; DEX prototypes come from frozen JADX metadata. Display names may be aliases, and overload indices are local to this engine and artifact.",
+    "Class inventories use parsed metadata before code generation, including synthetic members that may be omitted from decompiled source. Source positions remain unknown.",
+    "Incoming reference totals count JADX using nodes. Direct invoke entries within a using method report raw DEX code-unit offsets and method indexes, but coverage is limited to those nodes and directly matched invokes; it does not establish every possible dynamic or reflective call site.",
+    "Manifest summaries are parsed once by REA's bridge from the exact root AndroidManifest.xml resource, using namespace-aware XML attributes; decoded XML is retained. APK signatures, split APKs, native libraries and Android runtime capture are not verified by this provider."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

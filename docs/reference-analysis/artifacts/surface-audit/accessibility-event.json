@@ -1,0 +1,147 @@
+{
+  "evidence_id": "ev_f748c387043431ed728fa19b1f24e42aab9a570cd3ab4abef8c7f6bd48409e60",
+  "subject": {
+    "name": "reference.apk",
+    "digest": {
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+    },
+    "local_path": "reference.apk",
+    "format": "apk",
+    "architecture": null
+  },
+  "provider": {
+    "id": "jadx",
+    "name": "JADX headless",
+    "version": "0.7.1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_android_method",
+  "parameters": {
+    "path": "reference.apk",
+    "class_name": "org.reference.panel.NavigationAssistService",
+    "method_name": "onAccessibilityEvent"
+  },
+  "raw_result": {
+    "server": {
+      "name": "rea-jadx-bridge",
+      "version": "7"
+    },
+    "bridge_sha256": "e5044a8312dd0731f53af3f095508b3e5cff54df6b971c95d4305e2f39b4fa30",
+    "jar_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "loaded": {
+      "state": "LOADED",
+      "apk_path": "<temporary-analysis-session>/target.apk",
+      "class_count": 485,
+      "resource_count": 264,
+      "threads": 1,
+      "resources": "full"
+    },
+    "calls": [
+      {
+        "operation": "rea_jvm_status",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"metadata_scope\":\"parsed_members\",\"max_heap_bytes\":2615148544,\"java_version\":\"17.0.18\",\"available_processors\":3,\"engine_reported_version\":\"0.7.1\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "load_apk",
+        "input": {
+          "path": "<temporary-analysis-session>/target.apk",
+          "threads": 1,
+          "resources": "full"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"state\":\"LOADED\",\"apk_path\":\"<temporary-analysis-session>/target.apk\",\"class_count\":485,\"raw_class_count\":485,\"resource_count\":264,\"load_duration_ms\":6125,\"decompile_timeout_ms\":90000,\"threads\":1,\"code_cache_size\":64,\"resources\":\"full\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_class_summary",
+        "input": {
+          "class_name": "org.reference.panel.NavigationAssistService"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"inner_classes\":[],\"inner_class_count\":0,\"name\":\"NavigationAssistService\",\"field_count\":4,\"full_name\":\"org.reference.panel.NavigationAssistService\",\"method_count\":13,\"raw_name\":\"org.reference.panel.NavigationAssistService\",\"fields\":[{\"type\":\"fi\",\"def_pos\":0,\"name\":\"a\"},{\"type\":\"fi\",\"def_pos\":0,\"name\":\"b\"},{\"type\":\"android.view.ViewGroup\",\"def_pos\":0,\"name\":\"c\"},{\"type\":\"int\",\"def_pos\":0,\"name\":\"d\"}],\"methods\":[{\"dex_descriptor\":\"()V\",\"signature\":\"<init>(): void\",\"def_pos\":0,\"name\":\"<init>\",\"is_constructor\":true},{\"dex_descriptor\":\"(I)I\",\"signature\":\"a(int): int\",\"def_pos\":0,\"name\":\"a\",\"is_constructor\":false},{\"dex_descriptor\":\"()Landroid/content/SharedPreferences;\",\"signature\":\"b(): android.content.SharedPreferences\",\"def_pos\":0,\"name\":\"b\",\"is_constructor\":false},{\"dex_descriptor\":\"()V\",\"signature\":\"c(): void\",\"def_pos\":0,\"name\":\"c\",\"is_constructor\":false},{\"dex_descriptor\":\"()V\",\"signature\":\"d(): void\",\"def_pos\":0,\"name\":\"d\",\"is_constructor\":false},{\"dex_descriptor\":\"()V\",\"signature\":\"e(): void\",\"def_pos\":0,\"name\":\"e\",\"is_constructor\":false},{\"dex_descriptor\":\"(Lorg/reference/panel/NavigationAssistService;Landroid/widget/LinearLayout;ZLjava/lang/String;Ljava/lang/String;ILy5;)Landroid/widget/FrameLayout;\",\"signature\":\"f(org.reference.panel.NavigationAssistService, android.widget.LinearLayout, boolean, java.lang.String, java.lang.String, int, y5): android.widget.FrameLayout\",\"def_pos\":0,\"name\":\"f\",\"is_constructor\":false},{\"dex_descriptor\":\"(Landroid/view/accessibility/AccessibilityEvent;)V\",\"signature\":\"onAccessibilityEvent(android.view.accessibility.AccessibilityEvent): void\",\"def_pos\":0,\"name\":\"onAccessibilityEvent\",\"is_constructor\":false},{\"dex_descriptor\":\"(Landroid/content/res/Configuration;)V\",\"signature\":\"onConfigurationChanged(android.content.res.Configuration): void\",\"def_pos\":0,\"name\":\"onConfigurationChanged\",\"is_constructor\":false},{\"dex_descriptor\":\"()V\",\"signature\":\"onDestroy(): void\",\"def_pos\":0,\"name\":\"onDestroy\",\"is_constructor\":false},{\"dex_descriptor\":\"()V\",\"signature\":\"onInterrupt(): void\",\"def_pos\":0,\"name\":\"onInterrupt\",\"is_constructor\":false},{\"dex_descriptor\":\"()V\",\"signature\":\"onServiceConnected(): void\",\"def_pos\":0,\"name\":\"onServiceConnected\",\"is_constructor\":false},{\"dex_descriptor\":\"(Landroid/content/SharedPreferences;Ljava/lang/String;)V\",\"signature\":\"onSharedPreferenceChanged(android.content.SharedPreferences, java.lang.String): void\",\"def_pos\":0,\"name\":\"onSharedPreferenceChanged\",\"is_constructor\":false}]}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_method_body",
+        "input": {
+          "class_name": "org.reference.panel.NavigationAssistService",
+          "method_name": "onAccessibilityEvent",
+          "overload_index": 0,
+          "smali_fallback": true
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"mode\":\"java\",\"body\":\"    @Override // android.accessibilityservice.AccessibilityService\\n    public final void onAccessibilityEvent(AccessibilityEvent accessibilityEvent) {\\n    }\",\"markers\":[],\"fell_back\":false,\"full_name\":\"org.reference.panel.NavigationAssistService.onAccessibilityEvent\",\"overload_index\":0,\"method_name\":\"onAccessibilityEvent\",\"overload_count\":1,\"dex_descriptor\":\"(Landroid/view/accessibility/AccessibilityEvent;)V\",\"class_name\":\"org.reference.panel.NavigationAssistService\"}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "normalized_result": {
+    "engine": {
+      "name": "jadx-headless-mcp",
+      "version": "0.7.1",
+      "artifact_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+      "source_revision": "5844800a486d2248fa949b74c9896285f5b54de2",
+      "worker_count": 1,
+      "heap_limit_mib": 2494
+    },
+    "class_name": "org.reference.panel.NavigationAssistService",
+    "method": {
+      "name": "onAccessibilityEvent",
+      "reported_signature": "onAccessibilityEvent(android.view.accessibility.AccessibilityEvent): void",
+      "overload_index": 0,
+      "is_constructor": false,
+      "dex_descriptor": "(Landroid/view/accessibility/AccessibilityEvent;)V"
+    },
+    "overload_count": 1,
+    "representation": "java",
+    "body_status": "available",
+    "fell_back": false,
+    "markers": [],
+    "source": {
+      "status": "complete",
+      "text": "    @Override // android.accessibilityservice.AccessibilityService\n    public final void onAccessibilityEvent(AccessibilityEvent accessibilityEvent) {\n    }",
+      "reported_total_bytes": null
+    }
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Static decompiler observations do not establish runtime behavior; the APK is never executed.",
+    "Method signatures use provider display types; DEX prototypes come from frozen JADX metadata. Display names may be aliases, and overload indices are local to this engine and artifact.",
+    "Class inventories use parsed metadata before code generation, including synthetic members that may be omitted from decompiled source. Source positions remain unknown.",
+    "Incoming reference totals count JADX using nodes. Direct invoke entries within a using method report raw DEX code-unit offsets and method indexes, but coverage is limited to those nodes and directly matched invokes; it does not establish every possible dynamic or reflective call site.",
+    "Manifest summaries are parsed once by REA's bridge from the exact root AndroidManifest.xml resource, using namespace-aware XML attributes; decoded XML is retained. APK signatures, split APKs, native libraries and Android runtime capture are not verified by this provider."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

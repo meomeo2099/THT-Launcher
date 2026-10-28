@@ -1,0 +1,1316 @@
+Class #485            -
+  Class descriptor  : 'Lvj;'
+  Access flags      : 0x0011 (PUBLIC FINAL)
+  Superclass        : 'Ljava/lang/Object;'
+  Interfaces        -
+  Static fields     -
+    #0              : (in Lvj;)
+      name          : 'k'
+      type          : '[Ljava/lang/String;'
+      access        : 0x0019 (PUBLIC STATIC FINAL)
+  Instance fields   -
+    #0              : (in Lvj;)
+      name          : 'a'
+      type          : 'Landroid/content/Context;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #1              : (in Lvj;)
+      name          : 'b'
+      type          : 'Lv1;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #2              : (in Lvj;)
+      name          : 'c'
+      type          : 'Landroid/content/SharedPreferences;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #3              : (in Lvj;)
+      name          : 'd'
+      type          : 'Landroid/os/Handler;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #4              : (in Lvj;)
+      name          : 'e'
+      type          : 'Ljava/util/concurrent/ExecutorService;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #5              : (in Lvj;)
+      name          : 'f'
+      type          : 'Z'
+      access        : 0x0001 (PUBLIC)
+    #6              : (in Lvj;)
+      name          : 'g'
+      type          : 'Lx6;'
+      access        : 0x0001 (PUBLIC)
+    #7              : (in Lvj;)
+      name          : 'h'
+      type          : 'Z'
+      access        : 0x0041 (PUBLIC VOLATILE)
+    #8              : (in Lvj;)
+      name          : 'i'
+      type          : 'Lwj;'
+      access        : 0x0001 (PUBLIC)
+    #9              : (in Lvj;)
+      name          : 'j'
+      type          : 'Lr1;'
+      access        : 0x0011 (PUBLIC FINAL)
+  Direct methods    -
+    #0              : (in Lvj;)
+      name          : '<clinit>'
+      type          : '()V'
+      access        : 0x10008 (STATIC CONSTRUCTOR)
+      code          -
+      registers     : 2
+      ins           : 0
+      outs          : 2
+      insns size    : 11 16-bit code units
+097f74:                                        |[097f74] vj.<clinit>:()V
+097f84: 1a00 0209                              |0000: const-string v0, "android.permission.ACCESS_COARSE_LOCATION" // string@0902
+097f88: 1a01 0309                              |0002: const-string v1, "android.permission.ACCESS_FINE_LOCATION" // string@0903
+097f8c: 2420 e403 1000                         |0004: filled-new-array {v0, v1}, [Ljava/lang/String; // type@03e4
+097f92: 0c00                                   |0007: move-result-object v0
+097f94: 6900 6108                              |0008: sput-object v0, Lvj;.k:[Ljava/lang/String; // field@0861
+097f98: 0e00                                   |000a: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+      locals        :
+
+    #1              : (in Lvj;)
+      name          : '<init>'
+      type          : '(Landroid/content/Context;Lv1;)V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      code          -
+      registers     : 12
+      ins           : 3
+      outs          : 6
+      insns size    : 114 16-bit code units
+097f9c:                                        |[097f9c] vj.<init>:(Landroid/content/Context;Lv1;)V
+097fac: 7010 8707 0900                         |0000: invoke-direct {v9}, Ljava/lang/Object;.<init>:()V // method@0787
+097fb2: 5b9a 5708                              |0003: iput-object v10, v9, Lvj;.a:Landroid/content/Context; // field@0857
+097fb6: 5b9b 5808                              |0005: iput-object v11, v9, Lvj;.b:Lv1; // field@0858
+097fba: 1a0b d00f                              |0007: const-string v11, "panel" // string@0fd0
+097fbe: 1200                                   |0009: const/4 v0, #int 0 // #0
+097fc0: 6e30 c400 ba00                         |000a: invoke-virtual {v10, v11, v0}, Landroid/content/Context;.getSharedPreferences:(Ljava/lang/String;I)Landroid/content/SharedPreferences; // method@00c4
+097fc6: 0c0a                                   |000d: move-result-object v10
+097fc8: 5b9a 5908                              |000e: iput-object v10, v9, Lvj;.c:Landroid/content/SharedPreferences; // field@0859
+097fcc: 220b b500                              |0010: new-instance v11, Landroid/os/Handler; // type@00b5
+097fd0: 7100 6802 0000                         |0012: invoke-static {}, Landroid/os/Looper;.getMainLooper:()Landroid/os/Looper; // method@0268
+097fd6: 0c00                                   |0015: move-result-object v0
+097fd8: 7020 5902 0b00                         |0016: invoke-direct {v11, v0}, Landroid/os/Handler;.<init>:(Landroid/os/Looper;)V // method@0259
+097fde: 5b9b 5a08                              |0019: iput-object v11, v9, Lvj;.d:Landroid/os/Handler; // field@085a
+097fe2: 7100 a808 0000                         |001b: invoke-static {}, Ljava/util/concurrent/Executors;.newSingleThreadExecutor:()Ljava/util/concurrent/ExecutorService; // method@08a8
+097fe8: 0c0b                                   |001e: move-result-object v11
+097fea: 5b9b 5b08                              |001f: iput-object v11, v9, Lvj;.e:Ljava/util/concurrent/ExecutorService; // field@085b
+097fee: 1a0b 4f14                              |0021: const-string v11, "weather_time" // string@144f
+097ff2: 1600 0000                              |0023: const-wide/16 v0, #int 0 // #0
+097ff6: 7240 fb00 ba10                         |0025: invoke-interface {v10, v11, v0, v1}, Landroid/content/SharedPreferences;.getLong:(Ljava/lang/String;J)J // method@00fb
+097ffc: 0b05                                   |0028: move-result-wide v5
+097ffe: 310b 0500                              |0029: cmp-long v11, v5, v0
+098002: 380b 2f00                              |002b: if-eqz v11, 005a // +002f
+098006: 7100 c307 0000                         |002d: invoke-static {}, Ljava/lang/System;.currentTimeMillis:()J // method@07c3
+09800c: 0b00                                   |0030: move-result-wide v0
+09800e: bc50                                   |0031: sub-long/2addr v0, v5
+098010: 1702 80cb a400                         |0032: const-wide/32 v2, #float 1.5134e-38 // #00a4cb80
+098016: 310b 0002                              |0035: cmp-long v11, v0, v2
+09801a: 3d0b 0300                              |0037: if-lez v11, 003a // +0003
+09801e: 2821                                   |0039: goto 005a // +0021
+098020: 2202 8403                              |003a: new-instance v2, Lwj; // type@0384
+098024: 1a0b 4e14                              |003c: const-string v11, "weather_temp" // string@144e
+098028: 1200                                   |003e: const/4 v0, #int 0 // #0
+09802a: 7230 f900 ba00                         |003f: invoke-interface {v10, v11, v0}, Landroid/content/SharedPreferences;.getFloat:(Ljava/lang/String;F)F // method@00f9
+098030: 0a0b                                   |0042: move-result v11
+098032: 7110 5807 0b00                         |0043: invoke-static {v11}, Ljava/lang/Float;.valueOf:(F)Ljava/lang/Float; // method@0758
+098038: 0c03                                   |0046: move-result-object v3
+09803a: 1a0b 4d14                              |0047: const-string v11, "weather_symbol" // string@144d
+09803e: 1a00 0000                              |0049: const-string v0, "" // string@0000
+098042: 7230 fc00 ba00                         |004b: invoke-interface {v10, v11, v0}, Landroid/content/SharedPreferences;.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; // method@00fc
+098048: 0c0a                                   |004e: move-result-object v10
+09804a: 390a 0400                              |004f: if-nez v10, 0053 // +0004
+09804e: 0704                                   |0051: move-object v4, v0
+098050: 2802                                   |0052: goto 0054 // +0002
+098052: 07a4                                   |0053: move-object v4, v10
+098054: 1307 0800                              |0054: const/16 v7, #int 8 // #8
+098058: 7606 a20e 0200                         |0056: invoke-direct/range {v2, v3, v4, v5, v6, v7}, Lwj;.<init>:(Ljava/lang/Float;Ljava/lang/String;JI)V // method@0ea2
+09805e: 280d                                   |0059: goto 0066 // +000d
+098060: 2203 8403                              |005a: new-instance v3, Lwj; // type@0384
+098064: 1606 0000                              |005c: const-wide/16 v6, #int 0 // #0
+098068: 1308 0f00                              |005e: const/16 v8, #int 15 // #f
+09806c: 1204                                   |0060: const/4 v4, #int 0 // #0
+09806e: 1205                                   |0061: const/4 v5, #int 0 // #0
+098070: 7606 a20e 0300                         |0062: invoke-direct/range {v3, v4, v5, v6, v7, v8}, Lwj;.<init>:(Ljava/lang/Float;Ljava/lang/String;JI)V // method@0ea2
+098076: 0732                                   |0065: move-object v2, v3
+098078: 5b92 5f08                              |0066: iput-object v2, v9, Lvj;.i:Lwj; // field@085f
+09807c: 220a f802                              |0068: new-instance v10, Lr1; // type@02f8
+098080: 130b 0f00                              |006a: const/16 v11, #int 15 // #f
+098084: 7030 c10b ba09                         |006c: invoke-direct {v10, v11, v9}, Lr1;.<init>:(ILjava/lang/Object;)V // method@0bc1
+09808a: 5b9a 6008                              |006f: iput-object v10, v9, Lvj;.j:Lr1; // field@0860
+09808e: 0e00                                   |0071: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+        0x0042 line=67
+        0x0043 line=68
+        0x0044 line=69
+        0x0045 line=70
+        0x0046 line=71
+        0x0047 line=72
+        0x0048 line=73
+        0x0049 line=74
+        0x004a line=75
+        0x004b line=76
+        0x004c line=77
+        0x004d line=78
+        0x004e line=79
+        0x004f line=80
+        0x0050 line=81
+        0x0051 line=82
+        0x0052 line=83
+        0x0053 line=84
+        0x0054 line=85
+        0x0055 line=86
+        0x0056 line=87
+        0x0057 line=88
+        0x0058 line=89
+        0x0059 line=90
+        0x005a line=91
+        0x005b line=92
+        0x005c line=93
+        0x005d line=94
+        0x005e line=95
+        0x005f line=96
+        0x0060 line=97
+        0x0061 line=98
+        0x0062 line=99
+        0x0063 line=100
+        0x0064 line=101
+        0x0065 line=102
+        0x0066 line=103
+        0x0067 line=104
+        0x0068 line=105
+        0x0069 line=106
+        0x006a line=107
+        0x006b line=108
+        0x006c line=109
+        0x006d line=110
+        0x006e line=111
+        0x006f line=112
+        0x0070 line=113
+        0x0071 line=114
+      locals        :
+        0x0000 - 0x0072 reg=9 this Lvj;
+        0x0000 - 0x0072 reg=10 (null) Landroid/content/Context;
+        0x0000 - 0x0072 reg=11 (null) Lv1;
+
+    #2              : (in Lvj;)
+      name          : 'c'
+      type          : '(Ljava/lang/String;)Lyc;'
+      access        : 0x0009 (PUBLIC STATIC)
+      code          -
+      registers     : 6
+      ins           : 1
+      outs          : 3
+      insns size    : 123 16-bit code units
+097e2c:                                        |[097e2c] vj.c:(Ljava/lang/String;)Lyc;
+097e3c: 2200 cc02                              |0000: new-instance v0, Lorg/json/JSONObject; // type@02cc
+097e40: 7020 c60a 5000                         |0002: invoke-direct {v0, v5}, Lorg/json/JSONObject;.<init>:(Ljava/lang/String;)V // method@0ac6
+097e46: 1a05 1a10                              |0005: const-string v5, "properties" // string@101a
+097e4a: 6e20 cc0a 5000                         |0007: invoke-virtual {v0, v5}, Lorg/json/JSONObject;.getJSONObject:(Ljava/lang/String;)Lorg/json/JSONObject; // method@0acc
+097e50: 0c05                                   |000a: move-result-object v5
+097e52: 1a00 6413                              |000b: const-string v0, "timeseries" // string@1364
+097e56: 6e20 cb0a 0500                         |000d: invoke-virtual {v5, v0}, Lorg/json/JSONObject;.getJSONArray:(Ljava/lang/String;)Lorg/json/JSONArray; // method@0acb
+097e5c: 0c05                                   |0010: move-result-object v5
+097e5e: 1200                                   |0011: const/4 v0, #int 0 // #0
+097e60: 6e20 c00a 0500                         |0012: invoke-virtual {v5, v0}, Lorg/json/JSONArray;.getJSONObject:(I)Lorg/json/JSONObject; // method@0ac0
+097e66: 0c05                                   |0015: move-result-object v5
+097e68: 1a00 b90a                              |0016: const-string v0, "data" // string@0ab9
+097e6c: 6e20 cc0a 0500                         |0018: invoke-virtual {v5, v0}, Lorg/json/JSONObject;.getJSONObject:(Ljava/lang/String;)Lorg/json/JSONObject; // method@0acc
+097e72: 0c05                                   |001b: move-result-object v5
+097e74: 1a00 f90d                              |001c: const-string v0, "instant" // string@0df9
+097e78: 6e20 cc0a 0500                         |001e: invoke-virtual {v5, v0}, Lorg/json/JSONObject;.getJSONObject:(Ljava/lang/String;)Lorg/json/JSONObject; // method@0acc
+097e7e: 0c00                                   |0021: move-result-object v0
+097e80: 1a01 fc0a                              |0022: const-string v1, "details" // string@0afc
+097e84: 6e20 cc0a 1000                         |0024: invoke-virtual {v0, v1}, Lorg/json/JSONObject;.getJSONObject:(Ljava/lang/String;)Lorg/json/JSONObject; // method@0acc
+097e8a: 0c00                                   |0027: move-result-object v0
+097e8c: 1a01 af08                              |0028: const-string v1, "air_temperature" // string@08af
+097e90: 6e20 c90a 1000                         |002a: invoke-virtual {v0, v1}, Lorg/json/JSONObject;.getDouble:(Ljava/lang/String;)D // method@0ac9
+097e96: 0b00                                   |002d: move-result-wide v0
+097e98: 8c00                                   |002e: double-to-float v0, v0
+097e9a: 1a01 0a0f                              |002f: const-string v1, "next_6_hours" // string@0f0a
+097e9e: 1a02 080f                              |0031: const-string v2, "next_12_hours" // string@0f08
+097ea2: 1a03 090f                              |0033: const-string v3, "next_1_hours" // string@0f09
+097ea6: 2430 e403 1302                         |0035: filled-new-array {v3, v1, v2}, [Ljava/lang/String; // type@03e4
+097eac: 0c01                                   |0038: move-result-object v1
+097eae: 7110 a806 0100                         |0039: invoke-static {v1}, Lj3;.i0:([Ljava/lang/Object;)Ljava/util/List; // method@06a8
+097eb4: 0c01                                   |003c: move-result-object v1
+097eb6: 7210 6607 0100                         |003d: invoke-interface {v1}, Ljava/lang/Iterable;.iterator:()Ljava/util/Iterator; // method@0766
+097ebc: 0c01                                   |0040: move-result-object v1
+097ebe: 7210 5b08 0100                         |0041: invoke-interface {v1}, Ljava/util/Iterator;.hasNext:()Z // method@085b
+097ec4: 0a02                                   |0044: move-result v2
+097ec6: 1203                                   |0045: const/4 v3, #int 0 // #0
+097ec8: 3802 2700                              |0046: if-eqz v2, 006d // +0027
+097ecc: 7210 5c08 0100                         |0048: invoke-interface {v1}, Ljava/util/Iterator;.next:()Ljava/lang/Object; // method@085c
+097ed2: 0c02                                   |004b: move-result-object v2
+097ed4: 1f02 0802                              |004c: check-cast v2, Ljava/lang/String; // type@0208
+097ed8: 6e20 d30a 2500                         |004e: invoke-virtual {v5, v2}, Lorg/json/JSONObject;.optJSONObject:(Ljava/lang/String;)Lorg/json/JSONObject; // method@0ad3
+097ede: 0c02                                   |0051: move-result-object v2
+097ee0: 3802 1900                              |0052: if-eqz v2, 006b // +0019
+097ee4: 1a04 f112                              |0054: const-string v4, "summary" // string@12f1
+097ee8: 6e20 d30a 4200                         |0056: invoke-virtual {v2, v4}, Lorg/json/JSONObject;.optJSONObject:(Ljava/lang/String;)Lorg/json/JSONObject; // method@0ad3
+097eee: 0c02                                   |0059: move-result-object v2
+097ef0: 3802 1100                              |005a: if-eqz v2, 006b // +0011
+097ef4: 1a04 0813                              |005c: const-string v4, "symbol_code" // string@1308
+097ef8: 6e20 d50a 4200                         |005e: invoke-virtual {v2, v4}, Lorg/json/JSONObject;.optString:(Ljava/lang/String;)Ljava/lang/String; // method@0ad5
+097efe: 0c02                                   |0061: move-result-object v2
+097f00: 3802 0900                              |0062: if-eqz v2, 006b // +0009
+097f04: 7110 700d 0200                         |0064: invoke-static {v2}, Lth;.A:(Ljava/lang/CharSequence;)Z // method@0d70
+097f0a: 0a04                                   |0067: move-result v4
+097f0c: 3904 0300                              |0068: if-nez v4, 006b // +0003
+097f10: 0723                                   |006a: move-object v3, v2
+097f12: 3803 d6ff                              |006b: if-eqz v3, 0041 // -002a
+097f16: 3903 0400                              |006d: if-nez v3, 0071 // +0004
+097f1a: 1a03 0000                              |006f: const-string v3, "" // string@0000
+097f1e: 7110 5807 0000                         |0071: invoke-static {v0}, Ljava/lang/Float;.valueOf:(F)Ljava/lang/Float; // method@0758
+097f24: 0c05                                   |0074: move-result-object v5
+097f26: 2200 a703                              |0075: new-instance v0, Lyc; // type@03a7
+097f2a: 7030 2c0f 5003                         |0077: invoke-direct {v0, v5, v3}, Lyc;.<init>:(Ljava/lang/Object;Ljava/lang/Object;)V // method@0f2c
+097f30: 1100                                   |007a: return-object v0
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+        0x0042 line=67
+        0x0043 line=68
+        0x0044 line=69
+        0x0045 line=70
+        0x0046 line=71
+        0x0047 line=72
+        0x0048 line=73
+        0x0049 line=74
+        0x004a line=75
+        0x004b line=76
+        0x004c line=77
+        0x004d line=78
+        0x004e line=79
+        0x004f line=80
+        0x0050 line=81
+        0x0051 line=82
+        0x0052 line=83
+        0x0053 line=84
+        0x0054 line=85
+        0x0055 line=86
+        0x0056 line=87
+        0x0057 line=88
+        0x0058 line=89
+        0x0059 line=90
+        0x005a line=91
+        0x005b line=92
+        0x005c line=93
+        0x005d line=94
+        0x005e line=95
+        0x005f line=96
+        0x0060 line=97
+        0x0061 line=98
+        0x0062 line=99
+        0x0063 line=100
+        0x0064 line=101
+        0x0065 line=102
+        0x0066 line=103
+        0x0067 line=104
+        0x0068 line=105
+        0x0069 line=106
+        0x006a line=107
+        0x006b line=108
+        0x006c line=109
+        0x006d line=110
+        0x006e line=111
+        0x006f line=112
+        0x0070 line=113
+        0x0071 line=114
+        0x0072 line=115
+        0x0073 line=116
+        0x0074 line=117
+        0x0075 line=118
+        0x0076 line=119
+        0x0077 line=120
+        0x0078 line=121
+        0x0079 line=122
+        0x007a line=123
+      locals        :
+        0x0000 - 0x007b reg=5 (null) Ljava/lang/String;
+
+  Virtual methods   -
+    #0              : (in Lvj;)
+      name          : 'a'
+      type          : '(Landroid/location/Location;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 12
+      ins           : 2
+      outs          : 6
+      insns size    : 66 16-bit code units
+098090:                                        |[098090] vj.a:(Landroid/location/Location;)V
+0980a0: 55a0 5e08                              |0000: iget-boolean v0, v10, Lvj;.h:Z // field@085e
+0980a4: 3800 0300                              |0002: if-eqz v0, 0005 // +0003
+0980a8: 0e00                                   |0004: return-void
+0980aa: 1210                                   |0005: const/4 v0, #int 1 // #1
+0980ac: 5ca0 5e08                              |0006: iput-boolean v0, v10, Lvj;.h:Z // field@085e
+0980b0: 6201 6503                              |0008: sget-object v1, Ljava/util/Locale;.US:Ljava/util/Locale; // field@0365
+0980b4: 6e10 dd01 0b00                         |000a: invoke-virtual {v11}, Landroid/location/Location;.getLatitude:()D // method@01dd
+0980ba: 0b02                                   |000d: move-result-wide v2
+0980bc: 7120 4e07 3200                         |000e: invoke-static {v2, v3}, Ljava/lang/Double;.valueOf:(D)Ljava/lang/Double; // method@074e
+0980c2: 0c02                                   |0011: move-result-object v2
+0980c4: 2410 e203 0200                         |0012: filled-new-array {v2}, [Ljava/lang/Object; // type@03e2
+0980ca: 0c02                                   |0015: move-result-object v2
+0980cc: 7120 3008 0200                         |0016: invoke-static {v2, v0}, Ljava/util/Arrays;.copyOf:([Ljava/lang/Object;I)[Ljava/lang/Object; // method@0830
+0980d2: 0c02                                   |0019: move-result-object v2
+0980d4: 1a03 5400                              |001a: const-string v3, "%.4f" // string@0054
+0980d8: 7130 9d07 3102                         |001c: invoke-static {v1, v3, v2}, Ljava/lang/String;.format:(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String; // method@079d
+0980de: 0c06                                   |001f: move-result-object v6
+0980e0: 6e10 de01 0b00                         |0020: invoke-virtual {v11}, Landroid/location/Location;.getLongitude:()D // method@01de
+0980e6: 0b04                                   |0023: move-result-wide v4
+0980e8: 7120 4e07 5400                         |0024: invoke-static {v4, v5}, Ljava/lang/Double;.valueOf:(D)Ljava/lang/Double; // method@074e
+0980ee: 0c02                                   |0027: move-result-object v2
+0980f0: 2410 e203 0200                         |0028: filled-new-array {v2}, [Ljava/lang/Object; // type@03e2
+0980f6: 0c02                                   |002b: move-result-object v2
+0980f8: 7120 3008 0200                         |002c: invoke-static {v2, v0}, Ljava/util/Arrays;.copyOf:([Ljava/lang/Object;I)[Ljava/lang/Object; // method@0830
+0980fe: 0c00                                   |002f: move-result-object v0
+098100: 7130 9d07 3100                         |0030: invoke-static {v1, v3, v0}, Ljava/lang/String;.format:(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String; // method@079d
+098106: 0c07                                   |0033: move-result-object v7
+098108: 54a0 5b08                              |0034: iget-object v0, v10, Lvj;.e:Ljava/util/concurrent/ExecutorService; // field@085b
+09810c: 2204 8102                              |0036: new-instance v4, Ll; // type@0281
+098110: 1269                                   |0038: const/4 v9, #int 6 // #6
+098112: 07a5                                   |0039: move-object v5, v10
+098114: 07b8                                   |003a: move-object v8, v11
+098116: 7606 b609 0400                         |003b: invoke-direct/range {v4, v5, v6, v7, v8, v9}, Ll;.<init>:(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;I)V // method@09b6
+09811c: 7220 a408 4000                         |003e: invoke-interface {v0, v4}, Ljava/util/concurrent/Executor;.execute:(Ljava/lang/Runnable;)V // method@08a4
+098122: 0e00                                   |0041: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+      locals        :
+        0x0000 - 0x0042 reg=10 this Lvj;
+        0x0000 - 0x0042 reg=11 (null) Landroid/location/Location;
+
+    #1              : (in Lvj;)
+      name          : 'b'
+      type          : '()Z'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 2
+      ins           : 1
+      outs          : 2
+      insns size    : 23 16-bit code units
+097f34:                                        |[097f34] vj.b:()Z
+097f44: 1a00 0209                              |0000: const-string v0, "android.permission.ACCESS_COARSE_LOCATION" // string@0902
+097f48: 5411 5708                              |0002: iget-object v1, v1, Lvj;.a:Landroid/content/Context; // field@0857
+097f4c: 6e20 b500 0100                         |0004: invoke-virtual {v1, v0}, Landroid/content/Context;.checkSelfPermission:(Ljava/lang/String;)I // method@00b5
+097f52: 0a00                                   |0007: move-result v0
+097f54: 3800 0d00                              |0008: if-eqz v0, 0015 // +000d
+097f58: 1a00 0309                              |000a: const-string v0, "android.permission.ACCESS_FINE_LOCATION" // string@0903
+097f5c: 6e20 b500 0100                         |000c: invoke-virtual {v1, v0}, Landroid/content/Context;.checkSelfPermission:(Ljava/lang/String;)I // method@00b5
+097f62: 0a01                                   |000f: move-result v1
+097f64: 3901 0300                              |0010: if-nez v1, 0013 // +0003
+097f68: 2803                                   |0012: goto 0015 // +0003
+097f6a: 1201                                   |0013: const/4 v1, #int 0 // #0
+097f6c: 0f01                                   |0014: return v1
+097f6e: 1211                                   |0015: const/4 v1, #int 1 // #1
+097f70: 0f01                                   |0016: return v1
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+      locals        :
+        0x0000 - 0x0017 reg=1 this Lvj;
+
+    #2              : (in Lvj;)
+      name          : 'd'
+      type          : '(Lwj;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 3
+      ins           : 2
+      outs          : 2
+      insns size    : 12 16-bit code units
+098124:                                        |[098124] vj.d:(Lwj;)V
+098134: 5b12 5f08                              |0000: iput-object v2, v1, Lvj;.i:Lwj; // field@085f
+098138: 5510 5c08                              |0002: iget-boolean v0, v1, Lvj;.f:Z // field@085c
+09813c: 3800 0700                              |0004: if-eqz v0, 000b // +0007
+098140: 5411 5808                              |0006: iget-object v1, v1, Lvj;.b:Lv1; // field@0858
+098144: 6e20 010e 2100                         |0008: invoke-virtual {v1, v2}, Lv1;.b:(Ljava/lang/Object;)Ljava/lang/Object; // method@0e01
+09814a: 0e00                                   |000b: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+      locals        :
+        0x0000 - 0x000c reg=1 this Lvj;
+        0x0000 - 0x000c reg=2 (null) Lwj;
+
+    #3              : (in Lvj;)
+      name          : 'e'
+      type          : '(Z)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 18
+      ins           : 2
+      outs          : 9
+      insns size    : 327 16-bit code units
+09814c:                                        |[09814c] vj.e:(Z)V
+09815c: 0801 1000                              |0000: move-object/from16 v1, v16
+098160: 6e10 510e 0100                         |0002: invoke-virtual {v1}, Lvj;.b:()Z // method@0e51
+098166: 0a00                                   |0005: move-result v0
+098168: 1202                                   |0006: const/4 v2, #int 0 // #0
+09816a: 3900 1400                              |0007: if-nez v0, 001b // +0014
+09816e: 5410 5f08                              |0009: iget-object v0, v1, Lvj;.i:Lwj; // field@085f
+098172: 1a03 1c13                              |000b: const-string v3, "tap_to_allow_location" // string@131c
+098176: 2322 e203                              |000d: new-array v2, v2, [Ljava/lang/Object; // type@03e2
+09817a: 7120 320d 2300                         |000f: invoke-static {v3, v2}, Lsi;.a:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String; // method@0d32
+098180: 0c02                                   |0012: move-result-object v2
+098182: 7120 a40e 2000                         |0013: invoke-static {v0, v2}, Lwj;.a:(Lwj;Ljava/lang/String;)Lwj; // method@0ea4
+098188: 0c00                                   |0016: move-result-object v0
+09818a: 6e20 530e 0100                         |0017: invoke-virtual {v1, v0}, Lvj;.d:(Lwj;)V // method@0e53
+098190: 0e00                                   |001a: return-void
+098192: 5413 5708                              |001b: iget-object v3, v1, Lvj;.a:Landroid/content/Context; // field@0857
+098196: 1c04 9400                              |001d: const-class v4, Landroid/location/LocationManager; // type@0094
+09819a: 6e20 c500 4300                         |001f: invoke-virtual {v3, v4}, Landroid/content/Context;.getSystemService:(Ljava/lang/Class;)Ljava/lang/Object; // method@00c5
+0981a0: 0c00                                   |0022: move-result-object v0
+0981a2: 0705                                   |0023: move-object v5, v0
+0981a4: 1f05 9400                              |0024: check-cast v5, Landroid/location/LocationManager; // type@0094
+0981a8: 1a06 fb0e                              |0026: const-string v6, "network" // string@0efb
+0981ac: 1a07 4e0d                              |0028: const-string v7, "gps" // string@0d4e
+0981b0: 1208                                   |002a: const/4 v8, #int 0 // #0
+0981b2: 3905 0500                              |002b: if-nez v5, 0030 // +0005
+0981b6: 0785                                   |002d: move-object v5, v8
+0981b8: 2900 7200                              |002e: goto/16 00a0 // +0072
+0981bc: 1a00 e40f                              |0030: const-string v0, "passive" // string@0fe4
+0981c0: 2430 e403 6700                         |0032: filled-new-array {v7, v6, v0}, [Ljava/lang/String; // type@03e4
+0981c6: 0c00                                   |0035: move-result-object v0
+0981c8: 7110 a806 0000                         |0036: invoke-static {v0}, Lj3;.i0:([Ljava/lang/Object;)Ljava/util/List; // method@06a8
+0981ce: 0c00                                   |0039: move-result-object v0
+0981d0: 2209 3302                              |003a: new-instance v9, Ljava/util/ArrayList; // type@0233
+0981d4: 7010 1908 0900                         |003c: invoke-direct {v9}, Ljava/util/ArrayList;.<init>:()V // method@0819
+0981da: 7210 6607 0000                         |003f: invoke-interface {v0}, Ljava/lang/Iterable;.iterator:()Ljava/util/Iterator; // method@0766
+0981e0: 0c0a                                   |0042: move-result-object v10
+0981e2: 7210 5b08 0a00                         |0043: invoke-interface {v10}, Ljava/util/Iterator;.hasNext:()Z // method@085b
+0981e8: 0a00                                   |0046: move-result v0
+0981ea: 3800 2200                              |0047: if-eqz v0, 0069 // +0022
+0981ee: 7210 5c08 0a00                         |0049: invoke-interface {v10}, Ljava/util/Iterator;.next:()Ljava/lang/Object; // method@085c
+0981f4: 0c00                                   |004c: move-result-object v0
+0981f6: 1f00 0802                              |004d: check-cast v0, Ljava/lang/String; // type@0208
+0981fa: 6e20 e601 0500                         |004f: invoke-virtual {v5, v0}, Landroid/location/LocationManager;.getLastKnownLocation:(Ljava/lang/String;)Landroid/location/Location; // method@01e6
+098200: 0c00                                   |0052: move-result-object v0
+098202: 2808                                   |0053: goto 005b // +0008
+098204: 0d00                                   |0054: move-exception v0
+098206: 220b 8201                              |0055: new-instance v11, Lff; // type@0182
+09820a: 7020 4a05 0b00                         |0057: invoke-direct {v11, v0}, Lff;.<init>:(Ljava/lang/Throwable;)V // method@054a
+098210: 07b0                                   |005a: move-object v0, v11
+098212: 0000                                   |005b: nop // spacer
+098214: 200b 8201                              |005c: instance-of v11, v0, Lff; // type@0182
+098218: 380b 0300                              |005e: if-eqz v11, 0061 // +0003
+09821c: 0780                                   |0060: move-object v0, v8
+09821e: 1f00 9200                              |0061: check-cast v0, Landroid/location/Location; // type@0092
+098222: 3800 e0ff                              |0063: if-eqz v0, 0043 // -0020
+098226: 6e20 1d08 0900                         |0065: invoke-virtual {v9, v0}, Ljava/util/ArrayList;.add:(Ljava/lang/Object;)Z // method@081d
+09822c: 28db                                   |0068: goto 0043 // -0025
+09822e: 6e10 2408 0900                         |0069: invoke-virtual {v9}, Ljava/util/ArrayList;.iterator:()Ljava/util/Iterator; // method@0824
+098234: 0c00                                   |006c: move-result-object v0
+098236: 7210 5b08 0000                         |006d: invoke-interface {v0}, Ljava/util/Iterator;.hasNext:()Z // method@085b
+09823c: 0a05                                   |0070: move-result v5
+09823e: 3905 0400                              |0071: if-nez v5, 0075 // +0004
+098242: 0785                                   |0073: move-object v5, v8
+098244: 282a                                   |0074: goto 009e // +002a
+098246: 7210 5c08 0000                         |0075: invoke-interface {v0}, Ljava/util/Iterator;.next:()Ljava/lang/Object; // method@085c
+09824c: 0c05                                   |0078: move-result-object v5
+09824e: 7210 5b08 0000                         |0079: invoke-interface {v0}, Ljava/util/Iterator;.hasNext:()Z // method@085b
+098254: 0a09                                   |007c: move-result v9
+098256: 3909 0300                              |007d: if-nez v9, 0080 // +0003
+09825a: 281f                                   |007f: goto 009e // +001f
+09825c: 0759                                   |0080: move-object v9, v5
+09825e: 1f09 9200                              |0081: check-cast v9, Landroid/location/Location; // type@0092
+098262: 6e10 e001 0900                         |0083: invoke-virtual {v9}, Landroid/location/Location;.getTime:()J // method@01e0
+098268: 0b09                                   |0086: move-result-wide v9
+09826a: 7210 5c08 0000                         |0087: invoke-interface {v0}, Ljava/util/Iterator;.next:()Ljava/lang/Object; // method@085c
+098270: 0c0b                                   |008a: move-result-object v11
+098272: 07bc                                   |008b: move-object v12, v11
+098274: 1f0c 9200                              |008c: check-cast v12, Landroid/location/Location; // type@0092
+098278: 6e10 e001 0c00                         |008e: invoke-virtual {v12}, Landroid/location/Location;.getTime:()J // method@01e0
+09827e: 0b0c                                   |0091: move-result-wide v12
+098280: 310e 090c                              |0092: cmp-long v14, v9, v12
+098284: 3b0e 0400                              |0094: if-gez v14, 0098 // +0004
+098288: 07b5                                   |0096: move-object v5, v11
+09828a: 04c9                                   |0097: move-wide v9, v12
+09828c: 7210 5b08 0000                         |0098: invoke-interface {v0}, Ljava/util/Iterator;.hasNext:()Z // method@085b
+098292: 0a0b                                   |009b: move-result v11
+098294: 390b ebff                              |009c: if-nez v11, 0087 // -0015
+098298: 1f05 9200                              |009e: check-cast v5, Landroid/location/Location; // type@0092
+09829c: 3905 5500                              |00a0: if-nez v5, 00f5 // +0055
+0982a0: 5410 5f08                              |00a2: iget-object v0, v1, Lvj;.i:Lwj; // field@085f
+0982a4: 5405 9908                              |00a4: iget-object v5, v0, Lwj;.a:Ljava/lang/Float; // field@0899
+0982a8: 3905 0a00                              |00a6: if-nez v5, 00b0 // +000a
+0982ac: 1a05 d70b                              |00a8: const-string v5, "finding_location" // string@0bd7
+0982b0: 2322 e203                              |00aa: new-array v2, v2, [Ljava/lang/Object; // type@03e2
+0982b4: 7120 320d 2500                         |00ac: invoke-static {v5, v2}, Lsi;.a:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String; // method@0d32
+0982ba: 0c08                                   |00af: move-result-object v8
+0982bc: 7120 a40e 8000                         |00b0: invoke-static {v0, v8}, Lwj;.a:(Lwj;Ljava/lang/String;)Lwj; // method@0ea4
+0982c2: 0c00                                   |00b3: move-result-object v0
+0982c4: 6e20 530e 0100                         |00b4: invoke-virtual {v1, v0}, Lvj;.d:(Lwj;)V // method@0e53
+0982ca: 5410 5d08                              |00b7: iget-object v0, v1, Lvj;.g:Lx6; // field@085d
+0982ce: 3800 0400                              |00b9: if-eqz v0, 00bd // +0004
+0982d2: 2900 8b00                              |00bb: goto/16 0146 // +008b
+0982d6: 6e20 c500 4300                         |00bd: invoke-virtual {v3, v4}, Landroid/content/Context;.getSystemService:(Ljava/lang/Class;)Ljava/lang/Object; // method@00c5
+0982dc: 0c00                                   |00c0: move-result-object v0
+0982de: 1f00 9400                              |00c1: check-cast v0, Landroid/location/LocationManager; // type@0094
+0982e2: 3900 0400                              |00c3: if-nez v0, 00c7 // +0004
+0982e6: 2900 8100                              |00c5: goto/16 0146 // +0081
+0982ea: 2202 8b03                              |00c7: new-instance v2, Lx6; // type@038b
+0982ee: 1233                                   |00c9: const/4 v3, #int 3 // #3
+0982f0: 7030 d60e 3201                         |00ca: invoke-direct {v2, v3, v1}, Lx6;.<init>:(ILjava/lang/Object;)V // method@0ed6
+0982f6: 5b12 5d08                              |00cd: iput-object v2, v1, Lvj;.g:Lx6; // field@085d
+0982fa: 2420 e403 7600                         |00cf: filled-new-array {v6, v7}, [Ljava/lang/String; // type@03e4
+098300: 0c01                                   |00d2: move-result-object v1
+098302: 7110 a806 0100                         |00d3: invoke-static {v1}, Lj3;.i0:([Ljava/lang/Object;)Ljava/util/List; // method@06a8
+098308: 0c01                                   |00d6: move-result-object v1
+09830a: 7210 6607 0100                         |00d7: invoke-interface {v1}, Ljava/lang/Iterable;.iterator:()Ljava/util/Iterator; // method@0766
+098310: 0c01                                   |00da: move-result-object v1
+098312: 7210 5b08 0100                         |00db: invoke-interface {v1}, Ljava/util/Iterator;.hasNext:()Z // method@085b
+098318: 0a03                                   |00de: move-result v3
+09831a: 3803 6700                              |00df: if-eqz v3, 0146 // +0067
+09831e: 7210 5c08 0100                         |00e1: invoke-interface {v1}, Ljava/util/Iterator;.next:()Ljava/lang/Object; // method@085c
+098324: 0c03                                   |00e4: move-result-object v3
+098326: 1f03 0802                              |00e5: check-cast v3, Ljava/lang/String; // type@0208
+09832a: 6e20 e701 3000                         |00e7: invoke-virtual {v0, v3}, Landroid/location/LocationManager;.isProviderEnabled:(Ljava/lang/String;)Z // method@01e7
+098330: 0a04                                   |00ea: move-result v4
+098332: 3804 f0ff                              |00eb: if-eqz v4, 00db // -0010
+098336: 7100 6802 0000                         |00ed: invoke-static {}, Landroid/os/Looper;.getMainLooper:()Landroid/os/Looper; // method@0268
+09833c: 0c04                                   |00f0: move-result-object v4
+09833e: 6e40 ea01 3042                         |00f1: invoke-virtual {v0, v3, v2, v4}, Landroid/location/LocationManager;.requestSingleUpdate:(Ljava/lang/String;Landroid/location/LocationListener;Landroid/os/Looper;)V // method@01ea
+098344: 28e7                                   |00f4: goto 00db // -0019
+098346: 1a00 4b14                              |00f5: const-string v0, "weather_lat" // string@144b
+09834a: 5413 5908                              |00f7: iget-object v3, v1, Lvj;.c:Landroid/content/SharedPreferences; // field@0859
+09834e: 1504 c07f                              |00f9: const/high16 v4, #int 2143289344 // #7fc0
+098352: 7230 f900 0304                         |00fb: invoke-interface {v3, v0, v4}, Landroid/content/SharedPreferences;.getFloat:(Ljava/lang/String;F)F // method@00f9
+098358: 0a00                                   |00fe: move-result v0
+09835a: 1a06 4c14                              |00ff: const-string v6, "weather_lon" // string@144c
+09835e: 7230 f900 6304                         |0101: invoke-interface {v3, v6, v4}, Landroid/content/SharedPreferences;.getFloat:(Ljava/lang/String;F)F // method@00f9
+098364: 0a03                                   |0104: move-result v3
+098366: 7110 5607 0000                         |0105: invoke-static {v0}, Ljava/lang/Float;.isNaN:(F)Z // method@0756
+09836c: 0a04                                   |0108: move-result v4
+09836e: 1216                                   |0109: const/4 v6, #int 1 // #1
+098370: 3904 1d00                              |010a: if-nez v4, 0127 // +001d
+098374: 890b                                   |010c: float-to-double v11, v0
+098376: 893d                                   |010d: float-to-double v13, v3
+098378: 236f ca03                              |010e: new-array v15, v6, [F // type@03ca
+09837c: 6e10 dd01 0500                         |0110: invoke-virtual {v5}, Landroid/location/Location;.getLatitude:()D // method@01dd
+098382: 0b07                                   |0113: move-result-wide v7
+098384: 6e10 de01 0500                         |0114: invoke-virtual {v5}, Landroid/location/Location;.getLongitude:()D // method@01de
+09838a: 0b09                                   |0117: move-result-wide v9
+09838c: 7709 da01 0700                         |0118: invoke-static/range {v7, v8, v9, v10, v11, v12, v13, v14, v15}, Landroid/location/Location;.distanceBetween:(DDDD[F)V // method@01da
+098392: 4400 0f02                              |011b: aget v0, v15, v2
+098396: 1403 0040 1c46                         |011d: const v3, #float 10000 // #461c4000
+09839c: 2d00 0003                              |0120: cmpl-float v0, v0, v3
+0983a0: 3d00 0300                              |0122: if-lez v0, 0125 // +0003
+0983a4: 2803                                   |0124: goto 0127 // +0003
+0983a6: 0120                                   |0125: move v0, v2
+0983a8: 2802                                   |0126: goto 0128 // +0002
+0983aa: 0160                                   |0127: move v0, v6
+0983ac: 7100 c307 0000                         |0128: invoke-static {}, Ljava/lang/System;.currentTimeMillis:()J // method@07c3
+0983b2: 0b03                                   |012b: move-result-wide v3
+0983b4: 5417 5f08                              |012c: iget-object v7, v1, Lvj;.i:Lwj; // field@085f
+0983b8: 5378 9b08                              |012e: iget-wide v8, v7, Lwj;.c:J // field@089b
+0983bc: bc83                                   |0130: sub-long/2addr v3, v8
+0983be: 1708 4077 1b00                         |0131: const-wide/32 v8, #float 2.52234e-39 // #001b7740
+0983c4: 3103 0308                              |0134: cmp-long v3, v3, v8
+0983c8: 3d03 0300                              |0136: if-lez v3, 0139 // +0003
+0983cc: 0162                                   |0138: move v2, v6
+0983ce: 3911 0a00                              |0139: if-nez v17, 0143 // +000a
+0983d2: 3900 0800                              |013b: if-nez v0, 0143 // +0008
+0983d6: 3902 0600                              |013d: if-nez v2, 0143 // +0006
+0983da: 5470 9908                              |013f: iget-object v0, v7, Lwj;.a:Ljava/lang/Float; // field@0899
+0983de: 3900 0500                              |0141: if-nez v0, 0146 // +0005
+0983e2: 6e20 500e 5100                         |0143: invoke-virtual {v1, v5}, Lvj;.a:(Landroid/location/Location;)V // method@0e50
+0983e8: 0e00                                   |0146: return-void
+      catches       : 2
+        0x004f - 0x0053
+          <any> -> 0x0054
+        0x00e7 - 0x00f4
+          <any> -> 0x00db
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+        0x0042 line=67
+        0x0043 line=68
+        0x0044 line=69
+        0x0045 line=70
+        0x0046 line=71
+        0x0047 line=72
+        0x0048 line=73
+        0x0049 line=74
+        0x004a line=75
+        0x004b line=76
+        0x004c line=77
+        0x004d line=78
+        0x004e line=79
+        0x004f line=80
+        0x0050 line=81
+        0x0051 line=82
+        0x0052 line=83
+        0x0053 line=84
+        0x0054 line=85
+        0x0055 line=86
+        0x0056 line=87
+        0x0057 line=88
+        0x0058 line=89
+        0x0059 line=90
+        0x005a line=91
+        0x005b line=92
+        0x005c line=93
+        0x005d line=94
+        0x005e line=95
+        0x005f line=96
+        0x0060 line=97
+        0x0061 line=98
+        0x0062 line=99
+        0x0063 line=100
+        0x0064 line=101
+        0x0065 line=102
+        0x0066 line=103
+        0x0067 line=104
+        0x0068 line=105
+        0x0069 line=106
+        0x006a line=107
+        0x006b line=108
+        0x006c line=109
+        0x006d line=110
+        0x006e line=111
+        0x006f line=112
+        0x0070 line=113
+        0x0071 line=114
+        0x0072 line=115
+        0x0073 line=116
+        0x0074 line=117
+        0x0075 line=118
+        0x0076 line=119
+        0x0077 line=120
+        0x0078 line=121
+        0x0079 line=122
+        0x007a line=123
+        0x007b line=124
+        0x007c line=125
+        0x007d line=126
+        0x007e line=127
+        0x007f line=128
+        0x0080 line=129
+        0x0081 line=130
+        0x0082 line=131
+        0x0083 line=132
+        0x0084 line=133
+        0x0085 line=134
+        0x0086 line=135
+        0x0087 line=136
+        0x0088 line=137
+        0x0089 line=138
+        0x008a line=139
+        0x008b line=140
+        0x008c line=141
+        0x008d line=142
+        0x008e line=143
+        0x008f line=144
+        0x0090 line=145
+        0x0091 line=146
+        0x0092 line=147
+        0x0093 line=148
+        0x0094 line=149
+        0x0095 line=150
+        0x0096 line=151
+        0x0097 line=152
+        0x0098 line=153
+        0x0099 line=154
+        0x009a line=155
+        0x009b line=156
+        0x009c line=157
+        0x009d line=158
+        0x009e line=159
+        0x009f line=160
+        0x00a0 line=161
+        0x00a1 line=162
+        0x00a2 line=163
+        0x00a3 line=164
+        0x00a4 line=165
+        0x00a5 line=166
+        0x00a6 line=167
+        0x00a7 line=168
+        0x00a8 line=169
+        0x00a9 line=170
+        0x00aa line=171
+        0x00ab line=172
+        0x00ac line=173
+        0x00ad line=174
+        0x00ae line=175
+        0x00af line=176
+        0x00b0 line=177
+        0x00b1 line=178
+        0x00b2 line=179
+        0x00b3 line=180
+        0x00b4 line=181
+        0x00b5 line=182
+        0x00b6 line=183
+        0x00b7 line=184
+        0x00b8 line=185
+        0x00b9 line=186
+        0x00ba line=187
+        0x00bb line=188
+        0x00bc line=189
+        0x00bd line=190
+        0x00be line=191
+        0x00bf line=192
+        0x00c0 line=193
+        0x00c1 line=194
+        0x00c2 line=195
+        0x00c3 line=196
+        0x00c4 line=197
+        0x00c5 line=198
+        0x00c6 line=199
+        0x00c7 line=200
+        0x00c8 line=201
+        0x00c9 line=202
+        0x00ca line=203
+        0x00cb line=204
+        0x00cc line=205
+        0x00cd line=206
+        0x00ce line=207
+        0x00cf line=208
+        0x00d0 line=209
+        0x00d1 line=210
+        0x00d2 line=211
+        0x00d3 line=212
+        0x00d4 line=213
+        0x00d5 line=214
+        0x00d6 line=215
+        0x00d7 line=216
+        0x00d8 line=217
+        0x00d9 line=218
+        0x00da line=219
+        0x00db line=220
+        0x00dc line=221
+        0x00dd line=222
+        0x00de line=223
+        0x00df line=224
+        0x00e0 line=225
+        0x00e1 line=226
+        0x00e2 line=227
+        0x00e3 line=228
+        0x00e4 line=229
+        0x00e5 line=230
+        0x00e6 line=231
+        0x00e7 line=232
+        0x00e8 line=233
+        0x00e9 line=234
+        0x00ea line=235
+        0x00eb line=236
+        0x00ec line=237
+        0x00ed line=238
+        0x00ee line=239
+        0x00ef line=240
+        0x00f0 line=241
+        0x00f1 line=242
+        0x00f2 line=243
+        0x00f3 line=244
+        0x00f4 line=245
+        0x00f5 line=246
+        0x00f6 line=247
+        0x00f7 line=248
+        0x00f8 line=249
+        0x00f9 line=250
+        0x00fa line=251
+        0x00fb line=252
+        0x00fc line=253
+        0x00fd line=254
+        0x00fe line=255
+        0x00ff line=256
+        0x0100 line=257
+        0x0101 line=258
+        0x0102 line=259
+        0x0103 line=260
+        0x0104 line=261
+        0x0105 line=262
+        0x0106 line=263
+        0x0107 line=264
+        0x0108 line=265
+        0x0109 line=266
+        0x010a line=267
+        0x010b line=268
+        0x010c line=269
+        0x010d line=270
+        0x010e line=271
+        0x010f line=272
+        0x0110 line=273
+        0x0111 line=274
+        0x0112 line=275
+        0x0113 line=276
+        0x0114 line=277
+        0x0115 line=278
+        0x0116 line=279
+        0x0117 line=280
+        0x0118 line=281
+        0x0119 line=282
+        0x011a line=283
+        0x011b line=284
+        0x011c line=285
+        0x011d line=286
+        0x011e line=287
+        0x011f line=288
+        0x0120 line=289
+        0x0121 line=290
+        0x0122 line=291
+        0x0123 line=292
+        0x0124 line=293
+        0x0125 line=294
+        0x0126 line=295
+        0x0127 line=296
+        0x0128 line=297
+        0x0129 line=298
+        0x012a line=299
+        0x012b line=300
+        0x012c line=301
+        0x012d line=302
+        0x012e line=303
+        0x012f line=304
+        0x0130 line=305
+        0x0131 line=306
+        0x0132 line=307
+        0x0133 line=308
+        0x0134 line=309
+        0x0135 line=310
+        0x0136 line=311
+        0x0137 line=312
+        0x0138 line=313
+        0x0139 line=314
+        0x013a line=315
+        0x013b line=316
+        0x013c line=317
+        0x013d line=318
+        0x013e line=319
+        0x013f line=320
+        0x0140 line=321
+        0x0141 line=322
+        0x0142 line=323
+        0x0143 line=324
+        0x0144 line=325
+        0x0145 line=326
+        0x0146 line=327
+      locals        :
+        0x0000 - 0x0147 reg=16 this Lvj;
+        0x0000 - 0x0147 reg=17 (null) Z
+
+    #4              : (in Lvj;)
+      name          : 'f'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 3
+      ins           : 1
+      outs          : 2
+      insns size    : 23 16-bit code units
+098404:                                        |[098404] vj.f:()V
+098414: 5520 5c08                              |0000: iget-boolean v0, v2, Lvj;.f:Z // field@085c
+098418: 3800 0300                              |0002: if-eqz v0, 0005 // +0003
+09841c: 0e00                                   |0004: return-void
+09841e: 1210                                   |0005: const/4 v0, #int 1 // #1
+098420: 5c20 5c08                              |0006: iput-boolean v0, v2, Lvj;.f:Z // field@085c
+098424: 5420 5808                              |0008: iget-object v0, v2, Lvj;.b:Lv1; // field@0858
+098428: 5421 5f08                              |000a: iget-object v1, v2, Lvj;.i:Lwj; // field@085f
+09842c: 6e20 010e 1000                         |000c: invoke-virtual {v0, v1}, Lv1;.b:(Ljava/lang/Object;)Ljava/lang/Object; // method@0e01
+098432: 5420 5a08                              |000f: iget-object v0, v2, Lvj;.d:Landroid/os/Handler; // field@085a
+098436: 5422 6008                              |0011: iget-object v2, v2, Lvj;.j:Lr1; // field@0860
+09843a: 6e20 5b02 2000                         |0013: invoke-virtual {v0, v2}, Landroid/os/Handler;.post:(Ljava/lang/Runnable;)Z // method@025b
+098440: 0e00                                   |0016: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+      locals        :
+        0x0000 - 0x0017 reg=2 this Lvj;
+
+    #5              : (in Lvj;)
+      name          : 'g'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 3
+      ins           : 1
+      outs          : 2
+      insns size    : 32 16-bit code units
+098444:                                        |[098444] vj.g:()V
+098454: 1200                                   |0000: const/4 v0, #int 0 // #0
+098456: 5c20 5c08                              |0001: iput-boolean v0, v2, Lvj;.f:Z // field@085c
+09845a: 5420 5a08                              |0003: iget-object v0, v2, Lvj;.d:Landroid/os/Handler; // field@085a
+09845e: 1201                                   |0005: const/4 v1, #int 0 // #0
+098460: 6e20 5e02 1000                         |0006: invoke-virtual {v0, v1}, Landroid/os/Handler;.removeCallbacksAndMessages:(Ljava/lang/Object;)V // method@025e
+098466: 5420 5d08                              |0009: iget-object v0, v2, Lvj;.g:Lx6; // field@085d
+09846a: 3900 0300                              |000b: if-nez v0, 000e // +0003
+09846e: 2812                                   |000d: goto 001f // +0012
+098470: 5b21 5d08                              |000e: iput-object v1, v2, Lvj;.g:Lx6; // field@085d
+098474: 5422 5708                              |0010: iget-object v2, v2, Lvj;.a:Landroid/content/Context; // field@0857
+098478: 1c01 9400                              |0012: const-class v1, Landroid/location/LocationManager; // type@0094
+09847c: 6e20 c500 1200                         |0014: invoke-virtual {v2, v1}, Landroid/content/Context;.getSystemService:(Ljava/lang/Class;)Ljava/lang/Object; // method@00c5
+098482: 0c02                                   |0017: move-result-object v2
+098484: 1f02 9400                              |0018: check-cast v2, Landroid/location/LocationManager; // type@0094
+098488: 3802 0500                              |001a: if-eqz v2, 001f // +0005
+09848c: 6e20 e801 0200                         |001c: invoke-virtual {v2, v0}, Landroid/location/LocationManager;.removeUpdates:(Landroid/location/LocationListener;)V // method@01e8
+098492: 0e00                                   |001f: return-void
+      catches       : 1
+        0x0010 - 0x001f
+          <any> -> 0x001f
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+      locals        :
+        0x0000 - 0x0020 reg=2 this Lvj;
+
+  source_file_idx   : 4152 (r8-map-id-df02db20992efcdad8c8628fa158af402193d9214b2257c75897211101eb46a6)

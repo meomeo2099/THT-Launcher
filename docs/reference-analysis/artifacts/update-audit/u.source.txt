@@ -1,0 +1,10 @@
+    public static HttpURLConnection u(String str) throws IOException {
+        URLConnection uRLConnectionOpenConnection = new URL(str).openConnection();
+        uRLConnectionOpenConnection.getClass();
+        HttpURLConnection httpURLConnection = (HttpURLConnection) uRLConnectionOpenConnection;
+        httpURLConnection.setConnectTimeout(15000);
+        httpURLConnection.setReadTimeout(30000);
+        httpURLConnection.setInstanceFollowRedirects(true);
+        httpURLConnection.setRequestProperty("User-Agent", "ReferencePanel/1.0.2");
+        return httpURLConnection;
+    }

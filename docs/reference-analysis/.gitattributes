@@ -1,0 +1,5 @@
+artifacts/** linguist-vendored=true
+artifacts/**/*.java linguist-generated=true
+artifacts/**/*.json linguist-generated=true
+artifacts/**/*.txt linguist-generated=true
+artifacts/**/*.asm linguist-generated=true

@@ -1,0 +1,147 @@
+{
+  "evidence_id": "ev_dad6294e2d4c57bef1f75417662c2928fe240f9eee433e8802babda9f91e6fb1",
+  "subject": {
+    "name": "reference.apk",
+    "digest": {
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+    },
+    "local_path": "reference.apk",
+    "format": "apk",
+    "architecture": null
+  },
+  "provider": {
+    "id": "jadx",
+    "name": "JADX headless",
+    "version": "0.7.1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_android_method",
+  "parameters": {
+    "path": "reference.apk",
+    "class_name": "bf",
+    "method_name": "a"
+  },
+  "raw_result": {
+    "server": {
+      "name": "rea-jadx-bridge",
+      "version": "7"
+    },
+    "bridge_sha256": "e5044a8312dd0731f53af3f095508b3e5cff54df6b971c95d4305e2f39b4fa30",
+    "jar_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "loaded": {
+      "state": "LOADED",
+      "apk_path": "<temporary-analysis-session>/target.apk",
+      "class_count": 485,
+      "resource_count": 264,
+      "threads": 1,
+      "resources": "full"
+    },
+    "calls": [
+      {
+        "operation": "rea_jvm_status",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"metadata_scope\":\"parsed_members\",\"engine_reported_version\":\"0.7.1\",\"available_processors\":2,\"java_version\":\"21.0.12.1\",\"max_heap_bytes\":2147483648}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "load_apk",
+        "input": {
+          "path": "<temporary-analysis-session>/target.apk",
+          "threads": 1,
+          "resources": "full"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"state\":\"LOADED\",\"apk_path\":\"<temporary-analysis-session>/target.apk\",\"class_count\":485,\"raw_class_count\":485,\"resource_count\":264,\"load_duration_ms\":2753,\"decompile_timeout_ms\":90000,\"threads\":1,\"code_cache_size\":64,\"resources\":\"full\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_class_summary",
+        "input": {
+          "class_name": "bf"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"name\":\"bf\",\"inner_class_count\":0,\"inner_classes\":[],\"methods\":[{\"signature\":\"<clinit>(): void\",\"dex_descriptor\":\"()V\",\"is_constructor\":false,\"name\":\"<clinit>\",\"def_pos\":0},{\"signature\":\"a(org.reference.panel.MainActivity): ze\",\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)Lze;\",\"is_constructor\":false,\"name\":\"a\",\"def_pos\":0},{\"signature\":\"b(): java.util.Locale\",\"dex_descriptor\":\"()Ljava/util/Locale;\",\"is_constructor\":false,\"name\":\"b\",\"def_pos\":0}],\"fields\":[{\"name\":\"a\",\"def_pos\":0,\"type\":\"java.util.Set\"},{\"name\":\"b\",\"def_pos\":0,\"type\":\"java.util.Set\"},{\"name\":\"c\",\"def_pos\":0,\"type\":\"xe\"},{\"name\":\"d\",\"def_pos\":0,\"type\":\"boolean\"}],\"raw_name\":\"bf\",\"method_count\":3,\"full_name\":\"defpackage.bf\",\"field_count\":4}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_method_body",
+        "input": {
+          "class_name": "bf",
+          "method_name": "a",
+          "overload_index": 0,
+          "smali_fallback": true
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"markers\":[],\"body\":\"    public static ze a(MainActivity mainActivity) {\\n        if (pi.b(mainActivity)) {\\n            return null;\\n        }\\n        String language = b().getLanguage();\\n        language.getClass();\\n        Locale locale = Locale.ROOT;\\n        locale.getClass();\\n        String lowerCase = language.toLowerCase(locale);\\n        lowerCase.getClass();\\n        if (!a.contains(lowerCase)) {\\n            return ze.a;\\n        }\\n        if (mainActivity.getSharedPreferences(\\\"panel\\\", 0).getBoolean(\\\"region_locked_gps\\\", false)) {\\n            return ze.b;\\n        }\\n        return null;\\n    }\",\"mode\":\"java\",\"class_name\":\"defpackage.bf\",\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)Lze;\",\"overload_count\":1,\"method_name\":\"a\",\"overload_index\":0,\"full_name\":\"bf.a\",\"fell_back\":false}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "normalized_result": {
+    "engine": {
+      "name": "jadx-headless-mcp",
+      "version": "0.7.1",
+      "artifact_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+      "source_revision": "5844800a486d2248fa949b74c9896285f5b54de2",
+      "worker_count": 1,
+      "heap_limit_mib": 2048
+    },
+    "class_name": "defpackage.bf",
+    "method": {
+      "name": "a",
+      "reported_signature": "a(org.reference.panel.MainActivity): ze",
+      "overload_index": 0,
+      "is_constructor": false,
+      "dex_descriptor": "(Lorg/reference/panel/MainActivity;)Lze;"
+    },
+    "overload_count": 1,
+    "representation": "java",
+    "body_status": "available",
+    "fell_back": false,
+    "markers": [],
+    "source": {
+      "status": "complete",
+      "text": "    public static ze a(MainActivity mainActivity) {\n        if (pi.b(mainActivity)) {\n            return null;\n        }\n        String language = b().getLanguage();\n        language.getClass();\n        Locale locale = Locale.ROOT;\n        locale.getClass();\n        String lowerCase = language.toLowerCase(locale);\n        lowerCase.getClass();\n        if (!a.contains(lowerCase)) {\n            return ze.a;\n        }\n        if (mainActivity.getSharedPreferences(\"panel\", 0).getBoolean(\"region_locked_gps\", false)) {\n            return ze.b;\n        }\n        return null;\n    }",
+      "reported_total_bytes": null
+    }
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Static decompiler observations do not establish runtime behavior; the APK is never executed.",
+    "Method signatures use provider display types; DEX prototypes come from frozen JADX metadata. Display names may be aliases, and overload indices are local to this engine and artifact.",
+    "Class inventories use parsed metadata before code generation, including synthetic members that may be omitted from decompiled source. Source positions remain unknown.",
+    "Incoming reference totals count JADX using nodes. Direct invoke entries within a using method report raw DEX code-unit offsets and method indexes, but coverage is limited to those nodes and directly matched invokes; it does not establish every possible dynamic or reflective call site.",
+    "Manifest summaries are parsed once by REA's bridge from the exact root AndroidManifest.xml resource, using namespace-aware XML attributes; decoded XML is retained. APK signatures, split APKs, native libraries and Android runtime capture are not verified by this provider."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

@@ -1,0 +1,1586 @@
+[
+  {
+    "path": "META-INF/com/android/build/gradle/app-metadata.properties",
+    "bytes": 56,
+    "compressed_bytes": 50,
+    "sha256": "0eb0bb1bf6ec59b8743880104483032027c47e1abe569a65e3f73eefbf6da606"
+  },
+  {
+    "path": "META-INF/version-control-info.textproto",
+    "bytes": 120,
+    "compressed_bytes": 118,
+    "sha256": "7033a6c636eb35894c55a59eae2cdace87a267de8472bb72510a4301bef6e5b0"
+  },
+  {
+    "path": "classes.dex",
+    "bytes": 878656,
+    "compressed_bytes": 878656,
+    "sha256": "d1ff7d5e2d4ac0b068450f284f9e47aaff1f02147f786d97e0d40d0bf6fda6a9"
+  },
+  {
+    "path": "lib/arm64-v8a/libdhguard.so",
+    "bytes": 7224,
+    "compressed_bytes": 7224,
+    "sha256": "23126f1022e48b5147c6e4505a587b0d12300155361859f524c4fffe7b7827aa"
+  },
+  {
+    "path": "lib/armeabi-v7a/libdhguard.so",
+    "bytes": 5340,
+    "compressed_bytes": 5340,
+    "sha256": "e899f53971f62c0a75866c75e7918898f99003243132ebc8e5367d2672238c41"
+  },
+  {
+    "path": "assets/backgrounds/waterfront-day.png",
+    "bytes": 2160613,
+    "compressed_bytes": 2160613,
+    "sha256": "94fd8b543ec50cfc229191e280f7182e72137a0c8627ee5cc0a2356575235eaf"
+  },
+  {
+    "path": "assets/backgrounds/waterfront.png",
+    "bytes": 1945131,
+    "compressed_bytes": 1945131,
+    "sha256": "9e0d9d3c1972cb8357f2ef174bd21640c5a6c7d0bb66155a49e1d754b77df9b0"
+  },
+  {
+    "path": "assets/fonts/Elastre.ttf",
+    "bytes": 69140,
+    "compressed_bytes": 36577,
+    "sha256": "7c2fa22b6d39c0b0173eb20429bdf10d8543bc95fb6652d9daa9e0eae947d9b0"
+  },
+  {
+    "path": "assets/fonts/Manrope.ttf",
+    "bytes": 164700,
+    "compressed_bytes": 68042,
+    "sha256": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6"
+  },
+  {
+    "path": "assets/fonts/OFL-Elastre.txt",
+    "bytes": 4476,
+    "compressed_bytes": 1987,
+    "sha256": "6b2e73720f451efeed86af4b80a76ebbb772db6615a05cbc05248d38fbf9b5b0"
+  },
+  {
+    "path": "assets/fonts/OFL-Manrope.txt",
+    "bytes": 4387,
+    "compressed_bytes": 1943,
+    "sha256": "58172e0c0fac2cda8a37b348164bb55e44b0e69051e557e92b1d3f6910141f7b"
+  },
+  {
+    "path": "assets/geo/allowed.txt",
+    "bytes": 254031,
+    "compressed_bytes": 90271,
+    "sha256": "ade29c3d6b2f1a56298c5ab961cc0c428c3679605964bcf1ba82725df6adacc4"
+  },
+  {
+    "path": "assets/i18n/kk.json",
+    "bytes": 83398,
+    "compressed_bytes": 22243,
+    "sha256": "c1efea47473d5c1e0a7fc41a7c21ccd5a5b0dd95da875be207f8dfebf627e98a"
+  },
+  {
+    "path": "assets/launcher_icons/ac.png",
+    "bytes": 20811,
+    "compressed_bytes": 20811,
+    "sha256": "32ca152456b6ec8eb52c6130ecf77af5ffb707213a1ec1b1dc86e48c723bc293"
+  },
+  {
+    "path": "assets/launcher_icons/adaptive.png",
+    "bytes": 18555,
+    "compressed_bytes": 18555,
+    "sha256": "61479cee77abf2a90f20e5848b3a27c8efcb42540ed28a05a736692d4d7a462b"
+  },
+  {
+    "path": "assets/launcher_icons/air-both.png",
+    "bytes": 17185,
+    "compressed_bytes": 17185,
+    "sha256": "8b99182c7c04ec70ccc31df3d3acde78de45845a36b96e8dbe13d8535f75ffb4"
+  },
+  {
+    "path": "assets/launcher_icons/air-lower.png",
+    "bytes": 16095,
+    "compressed_bytes": 16095,
+    "sha256": "c62e91fbd7838048b86722580659d354f3a097e5252b7eb6723dc0e7c2127319"
+  },
+  {
+    "path": "assets/launcher_icons/air-upper.png",
+    "bytes": 15736,
+    "compressed_bytes": 15736,
+    "sha256": "faf8761408321dde5e1f9836fac1515119e595c7ffd659522a88c2d4e2c41120"
+  },
+  {
+    "path": "assets/launcher_icons/ambient.png",
+    "bytes": 11406,
+    "compressed_bytes": 11406,
+    "sha256": "925751a824e701232b2a2ee75f0eb9c0a0028da641a518573855601eaf3f5e71"
+  },
+  {
+    "path": "assets/launcher_icons/apps.png",
+    "bytes": 20204,
+    "compressed_bytes": 20204,
+    "sha256": "5655686985d4aee54bcfa83507bc64659b8bfdc94dbd1630a57eb5bdb9f3d0eb"
+  },
+  {
+    "path": "assets/launcher_icons/auto.png",
+    "bytes": 15647,
+    "compressed_bytes": 15647,
+    "sha256": "48a7415606ad2bb2ee160059a14a1d3e0434ff41677dd9506d2a294f4b8967d3"
+  },
+  {
+    "path": "assets/launcher_icons/battery.png",
+    "bytes": 14362,
+    "compressed_bytes": 14362,
+    "sha256": "df1af54c4175b9c173fde173e806f48c636f693ece5d9579b913a36e53483a7b"
+  },
+  {
+    "path": "assets/launcher_icons/bluetooth-off.png",
+    "bytes": 19233,
+    "compressed_bytes": 19233,
+    "sha256": "fec6e72b3b87ef3442b0615ea9829defcd340d7e4bb7d2bee78563213b2224b0"
+  },
+  {
+    "path": "assets/launcher_icons/bluetooth.png",
+    "bytes": 18451,
+    "compressed_bytes": 18451,
+    "sha256": "50f305a9b3d0601e9dd76ce34d499d7f320a51fc6cf07375e7f923d0dd67520e"
+  },
+  {
+    "path": "assets/launcher_icons/brightness.png",
+    "bytes": 17198,
+    "compressed_bytes": 17198,
+    "sha256": "c1c5168dac28ff962f978489c4d376c6d9a6e3b0d898f8f2477d9e6b646f32ec"
+  },
+  {
+    "path": "assets/launcher_icons/chevron-down.png",
+    "bytes": 9264,
+    "compressed_bytes": 9264,
+    "sha256": "b1a9eeec2f0761778d0beb747dd465cc1e3c61f8f3c182af13699df19adfc025"
+  },
+  {
+    "path": "assets/launcher_icons/chevron-right.png",
+    "bytes": 9184,
+    "compressed_bytes": 9184,
+    "sha256": "276d6dca237e5ac97485d51f628ad4697bf2ee43a4c4b803a5a761dd76be4bcc"
+  },
+  {
+    "path": "assets/launcher_icons/chevron-up.png",
+    "bytes": 9284,
+    "compressed_bytes": 9284,
+    "sha256": "d0e2a4c66ab309b155c96cb2909e54a240bac3f0c1e5fc85b50626c22145c1cc"
+  },
+  {
+    "path": "assets/launcher_icons/clock.png",
+    "bytes": 20330,
+    "compressed_bytes": 20330,
+    "sha256": "a7b485a45b1950062c1e611540c3ce2c31d1259a09b1c557db6cc55984f540ba"
+  },
+  {
+    "path": "assets/launcher_icons/close.png",
+    "bytes": 10762,
+    "compressed_bytes": 10762,
+    "sha256": "c442f7151e01ab6176e9f3ce0664e50d833bdd8bf568add4b4ac67934854ff2f"
+  },
+  {
+    "path": "assets/launcher_icons/collapse.png",
+    "bytes": 13251,
+    "compressed_bytes": 13251,
+    "sha256": "c77ee366603a524e67f7f2d17fda75cdf62f4540fd938486214eeaaa05b0dcdf"
+  },
+  {
+    "path": "assets/launcher_icons/comfort.png",
+    "bytes": 18872,
+    "compressed_bytes": 18872,
+    "sha256": "bd7d36b0452c231c40ad5ad9eb874c5a903f6849ad2a34a3d05b3d87c148e6e5"
+  },
+  {
+    "path": "assets/launcher_icons/eco.png",
+    "bytes": 19843,
+    "compressed_bytes": 19843,
+    "sha256": "13654f93024b829705da626403923e9e92529e5dd1663b078e4d23aa61dc8d2c"
+  },
+  {
+    "path": "assets/launcher_icons/expand.png",
+    "bytes": 13243,
+    "compressed_bytes": 13243,
+    "sha256": "8d279c1442612310caeb8029993b5bc3b816a22864a9797c54fea23924861dc8"
+  },
+  {
+    "path": "assets/launcher_icons/fan.png",
+    "bytes": 21066,
+    "compressed_bytes": 21066,
+    "sha256": "685acf6ae3aaa7fb9ef5ae56efe58b3ab9e3e793906f800ddfc45f1e4a8fec68"
+  },
+  {
+    "path": "assets/launcher_icons/favorite-off.png",
+    "bytes": 12773,
+    "compressed_bytes": 12773,
+    "sha256": "4bcd52dde3f04f5141568c0c9f384d6db12352f56cfda91b9a8d7838b16dcf37"
+  },
+  {
+    "path": "assets/launcher_icons/favorite-on.png",
+    "bytes": 10498,
+    "compressed_bytes": 10498,
+    "sha256": "485bfec888a6864dcece867d38b79ff7ab5e5a004e67ce90cdb1b766e5aec884"
+  },
+  {
+    "path": "assets/launcher_icons/front-defrost.png",
+    "bytes": 18680,
+    "compressed_bytes": 18680,
+    "sha256": "1d2bc038649d40ca293c5a5e17a082d8c5b4279b7254053e563b3549e8481e17"
+  },
+  {
+    "path": "assets/launcher_icons/fuel.png",
+    "bytes": 18480,
+    "compressed_bytes": 18480,
+    "sha256": "74cd0d06c71388b6fad8953d5256757d5810a284704973140daba204eb90af13"
+  },
+  {
+    "path": "assets/launcher_icons/globe.png",
+    "bytes": 23305,
+    "compressed_bytes": 23305,
+    "sha256": "12216a7e660a3f9a572fcb77e1ef5ab5535d982ec5817d8d9f0df4b07c515928"
+  },
+  {
+    "path": "assets/launcher_icons/home.png",
+    "bytes": 16757,
+    "compressed_bytes": 16757,
+    "sha256": "37b3508aa02ad4841222416ee9b1cb4ddde4e65b857d84fd2e2b5d6c9a10628f"
+  },
+  {
+    "path": "assets/launcher_icons/minus.png",
+    "bytes": 6554,
+    "compressed_bytes": 6554,
+    "sha256": "6208aecf99bfeb895fbe3295da60bd6cfecbc0557c24b3d7dc956abcac05ccc2"
+  },
+  {
+    "path": "assets/launcher_icons/music.png",
+    "bytes": 19857,
+    "compressed_bytes": 19857,
+    "sha256": "e0e7aa7996fd8e84580f915cd93108f6653dcf07dbc3ac3163699ca7f0077c6c"
+  },
+  {
+    "path": "assets/launcher_icons/muted.png",
+    "bytes": 16494,
+    "compressed_bytes": 16494,
+    "sha256": "87d68a0cd9ad52c82238ed737e5719a10fc3fd122a7d3e0144b42e92bb8fec63"
+  },
+  {
+    "path": "assets/launcher_icons/navigation-active.png",
+    "bytes": 15253,
+    "compressed_bytes": 15253,
+    "sha256": "41a4c446cfb4a8f68da675262584a9b2623f104c6b3bee88d5ad30dae15405d5"
+  },
+  {
+    "path": "assets/launcher_icons/navigation.png",
+    "bytes": 18611,
+    "compressed_bytes": 18611,
+    "sha256": "386cdd2c1639946903b3d69bb60950841eb8dded0b99cc8cc94c5f3392672775"
+  },
+  {
+    "path": "assets/launcher_icons/next.png",
+    "bytes": 18247,
+    "compressed_bytes": 18247,
+    "sha256": "5ad6e56317dcac62b569ed23c16bf86f35f3b96541d8905173aed5fb3a854a26"
+  },
+  {
+    "path": "assets/launcher_icons/offroad.png",
+    "bytes": 12540,
+    "compressed_bytes": 12540,
+    "sha256": "b179207a9867e1c404198345e584eff9449c32f8f1772259598da92675319b70"
+  },
+  {
+    "path": "assets/launcher_icons/pause.png",
+    "bytes": 8995,
+    "compressed_bytes": 8995,
+    "sha256": "0d5725623a7c9f2dce86aff995c23b662946e7344a9f8826076421989f815e9f"
+  },
+  {
+    "path": "assets/launcher_icons/phone.png",
+    "bytes": 18292,
+    "compressed_bytes": 18292,
+    "sha256": "2aedfabdad38207a6290107c621641a26bfb3068c85a8da7fab00714280c6eeb"
+  },
+  {
+    "path": "assets/launcher_icons/play.png",
+    "bytes": 16963,
+    "compressed_bytes": 16963,
+    "sha256": "dba17cf18a80b7d81afd6f00cfc88c2aaafcb0933f2a2a4099168724b9b5edb5"
+  },
+  {
+    "path": "assets/launcher_icons/plus.png",
+    "bytes": 7586,
+    "compressed_bytes": 7586,
+    "sha256": "6ddc9d6efcb8bb832cb7d3c610896cd2adcab9bdf7445058b8bf0370f6779e48"
+  },
+  {
+    "path": "assets/launcher_icons/power-mode.png",
+    "bytes": 16044,
+    "compressed_bytes": 16044,
+    "sha256": "df3565a7e0ecef635ee036d580b196c5c3e3a0160e10f6f44479a4b2d3672b2a"
+  },
+  {
+    "path": "assets/launcher_icons/power.png",
+    "bytes": 17476,
+    "compressed_bytes": 17476,
+    "sha256": "fdeda74c825b858091b6bb1fc81e06dab623170b48ed16cabd2a1be3adc54f47"
+  },
+  {
+    "path": "assets/launcher_icons/previous.png",
+    "bytes": 18986,
+    "compressed_bytes": 18986,
+    "sha256": "248475c3e714169e400263ebb55f2353a479ad8a9a61bb55a9ee8f0c38888b53"
+  },
+  {
+    "path": "assets/launcher_icons/range.png",
+    "bytes": 17865,
+    "compressed_bytes": 17865,
+    "sha256": "27b7d3a1f34767a5d7e964cd76a9adae275975c9c71496cfc2c0eb9d62ab58e2"
+  },
+  {
+    "path": "assets/launcher_icons/rear-defrost.png",
+    "bytes": 16336,
+    "compressed_bytes": 16336,
+    "sha256": "3dc56a87fc2ccb259aee4fa625832129dc0ec65dbc954e805a5d516f3d92d65b"
+  },
+  {
+    "path": "assets/launcher_icons/recirc.png",
+    "bytes": 15193,
+    "compressed_bytes": 15193,
+    "sha256": "501b13c8eabe5bdf01a93952d26e821c0ef1162c404cc5690b94995813be2ae0"
+  },
+  {
+    "path": "assets/launcher_icons/seat-heat-left.png",
+    "bytes": 19296,
+    "compressed_bytes": 19296,
+    "sha256": "6e4694e9feefe574f8274aa3b4ef496b72d7193de8163baf66f51686b8f15095"
+  },
+  {
+    "path": "assets/launcher_icons/seat-heat-right.png",
+    "bytes": 19656,
+    "compressed_bytes": 19656,
+    "sha256": "97467ecaaaed781aa87ca743977fb17ce5ece1557b84360265f0232de8fd01b1"
+  },
+  {
+    "path": "assets/launcher_icons/seat-vent-left.png",
+    "bytes": 21699,
+    "compressed_bytes": 21699,
+    "sha256": "d443be6e9eb17d1dd33805735b8de6fbafeea95d95ec99c5261a8d542a956853"
+  },
+  {
+    "path": "assets/launcher_icons/seat-vent-right.png",
+    "bytes": 22853,
+    "compressed_bytes": 22853,
+    "sha256": "c144aff5cfee1c157bbce519bf585b6b310bee065044fbf74218089a92cb3244"
+  },
+  {
+    "path": "assets/launcher_icons/settings.png",
+    "bytes": 22709,
+    "compressed_bytes": 22709,
+    "sha256": "ad5a6c756b6ef96362965a1c0d1dca81e2284a6dd38b7d7fbc4b060916771a3a"
+  },
+  {
+    "path": "assets/launcher_icons/snow-mode.png",
+    "bytes": 21044,
+    "compressed_bytes": 21044,
+    "sha256": "22d0a5e61c17f6631f645a2b49ce7c3c5d06f42be44d0628728b94ba781e68bd"
+  },
+  {
+    "path": "assets/launcher_icons/speaker.png",
+    "bytes": 18335,
+    "compressed_bytes": 18335,
+    "sha256": "0930800b7ef2ba4226c80f86de3daca3baa98555c8209b98adb7c87f0f746227"
+  },
+  {
+    "path": "assets/launcher_icons/sport-plus.png",
+    "bytes": 17404,
+    "compressed_bytes": 17404,
+    "sha256": "38d20e1c679fd600af6e875993587fcd25e9d4d5bc3654a34e1c2f54fc891e52"
+  },
+  {
+    "path": "assets/launcher_icons/sport.png",
+    "bytes": 17869,
+    "compressed_bytes": 17869,
+    "sha256": "e19d06d06d7c78b2daa4d3fbb5c7dc5213f1ee574533889c413952914c9504fd"
+  },
+  {
+    "path": "assets/launcher_icons/start-stop.png",
+    "bytes": 21227,
+    "compressed_bytes": 21227,
+    "sha256": "d5c60713e471d29c19ddc90ec27e48424d1f86ad068c360e7c8b85621b18ee1a"
+  },
+  {
+    "path": "assets/launcher_icons/sunroof-open.png",
+    "bytes": 16195,
+    "compressed_bytes": 16195,
+    "sha256": "5867ec32cdfca248169ebaff2954390b917ee07ca79844ee085911558cfb8215"
+  },
+  {
+    "path": "assets/launcher_icons/weather-cloudy.png",
+    "bytes": 14406,
+    "compressed_bytes": 14406,
+    "sha256": "6ff9c28073c336aa28fd2a35a52efe47e8ad26c500ac888d400fb864b9a670f0"
+  },
+  {
+    "path": "assets/launcher_icons/weather-partly-cloudy.png",
+    "bytes": 16769,
+    "compressed_bytes": 16769,
+    "sha256": "4d475f97f4119c7bf5b6c44ad1813e33891b3ce4bbe22f4f129d3ba4d440e833"
+  },
+  {
+    "path": "assets/launcher_icons/weather-rain.png",
+    "bytes": 17924,
+    "compressed_bytes": 17924,
+    "sha256": "02054c56b783f3a7fdac923737c548454699307dad27322d851cf18d1d9dbf59"
+  },
+  {
+    "path": "assets/launcher_icons/weather-snow.png",
+    "bytes": 18636,
+    "compressed_bytes": 18636,
+    "sha256": "a324e18235b904c7fd7c9eb923432f84b053f4aa9626bbb679a012e3e0108fb6"
+  },
+  {
+    "path": "assets/launcher_icons/wheel-heat.png",
+    "bytes": 19851,
+    "compressed_bytes": 19851,
+    "sha256": "5f42cd08fc0cf682acc51d33e7791041a568ad14b4987339460b6078289bc063"
+  },
+  {
+    "path": "assets/launcher_icons/wifi-off.png",
+    "bytes": 21027,
+    "compressed_bytes": 21027,
+    "sha256": "3841ea8f69b0b3e46864761936adae1b4654bd5e0f32104453a2f8b3acafe061"
+  },
+  {
+    "path": "assets/launcher_icons/wifi.png",
+    "bytes": 18145,
+    "compressed_bytes": 18145,
+    "sha256": "59d52b8a8ffd50778b312126b79e1cd26693926f7642bae170a67410936c14dd"
+  },
+  {
+    "path": "assets/launcher_icons/window-vent.png",
+    "bytes": 17937,
+    "compressed_bytes": 17937,
+    "sha256": "987d3950cb78ed2a203f2ded57c57fd94a78887e359d6742deab7a6ac37402aa"
+  },
+  {
+    "path": "assets/radio/SOURCES.txt",
+    "bytes": 1554,
+    "compressed_bytes": 808,
+    "sha256": "e87c0448223abd818693128060cf14a164b66e1fa20164c46c8999cf768d8df7"
+  },
+  {
+    "path": "assets/radio/guide.json",
+    "bytes": 446043,
+    "compressed_bytes": 89598,
+    "sha256": "1e1534be3088cdb4b46252630ff47fc91218d3ca6da88b51b0abb9668261abb8"
+  },
+  {
+    "path": "assets/radio/logos.json",
+    "bytes": 24794,
+    "compressed_bytes": 5052,
+    "sha256": "039bc6caf98f12b7817b80e2a5d3e32efc8a9985d418ef6555f2d54e85eabf85"
+  },
+  {
+    "path": "assets/radio/logos/00ec96667a3c.webp",
+    "bytes": 2052,
+    "compressed_bytes": 2052,
+    "sha256": "6330b937376e0ffbc58bb4195d931c8a466f56262c0acc7013f1f31857076d86"
+  },
+  {
+    "path": "assets/radio/logos/0230e5ed1b19.webp",
+    "bytes": 3496,
+    "compressed_bytes": 3496,
+    "sha256": "f87cfd5e35a94f4c0cff55e1213764a8554fbee4b35c6f84fc7747d27d67f7e3"
+  },
+  {
+    "path": "assets/radio/logos/028f87dcca82.webp",
+    "bytes": 2174,
+    "compressed_bytes": 2174,
+    "sha256": "8756530d1a8cb51aa4b9051ef70ca32be93ab36233af017dc039d80b0ad66bdf"
+  },
+  {
+    "path": "assets/radio/logos/031769c14460.webp",
+    "bytes": 2294,
+    "compressed_bytes": 2294,
+    "sha256": "578ad381daca73c21b721948afea10e8ae553c1bdd5e1bf4462f5be3808be8dd"
+  },
+  {
+    "path": "assets/radio/logos/08cc898a514e.webp",
+    "bytes": 1272,
+    "compressed_bytes": 1272,
+    "sha256": "26fb1de292f0736cf5ea23abdc168d7ab84fe2a902a7b1e2e95c3a8eb709ab8a"
+  },
+  {
+    "path": "assets/radio/logos/0b8f7a6664a3.webp",
+    "bytes": 3844,
+    "compressed_bytes": 3844,
+    "sha256": "830088294c227f323c537193b74a2b3946172501954ec19441bbde5c9229d5ac"
+  },
+  {
+    "path": "assets/radio/logos/0e0dd9656791.webp",
+    "bytes": 4544,
+    "compressed_bytes": 4544,
+    "sha256": "fd82364980b965ddb5edd64fa0afee6eaaa1b73135edcda27be5ed8c0dbf08ed"
+  },
+  {
+    "path": "assets/radio/logos/0e707124ecea.webp",
+    "bytes": 3072,
+    "compressed_bytes": 3072,
+    "sha256": "b498afc594d57baeeb22adb7ab61840d92dcdaae1472cb0764727a0e62d6feb5"
+  },
+  {
+    "path": "assets/radio/logos/0f10a5c9f615.webp",
+    "bytes": 5470,
+    "compressed_bytes": 5470,
+    "sha256": "478dc0994b6561f8c7faa266fa079173a79fb89e073fce0c964d0f373dd3f205"
+  },
+  {
+    "path": "assets/radio/logos/100be7772118.webp",
+    "bytes": 2478,
+    "compressed_bytes": 2478,
+    "sha256": "fe097b6d43b6e22cc9f8a763bf73f14ebef4b19b65669045f3df4dae8f71ab14"
+  },
+  {
+    "path": "assets/radio/logos/12bde28415ed.webp",
+    "bytes": 4084,
+    "compressed_bytes": 4084,
+    "sha256": "14517c37d07ec01cf58d615f592a77ce885f83a9211bb8ee11cf4b5dc96cd361"
+  },
+  {
+    "path": "assets/radio/logos/12eccca84e8f.webp",
+    "bytes": 2300,
+    "compressed_bytes": 2300,
+    "sha256": "481258c7baf2c27557f067446e9020f502cf769fade13fadf1abeb50e91b5e15"
+  },
+  {
+    "path": "assets/radio/logos/133a72a4ab22.webp",
+    "bytes": 4120,
+    "compressed_bytes": 4120,
+    "sha256": "6bdc25277fa2d69ce5e12c721e8ef80cab41e48485624de6536526e7eb7aac4d"
+  },
+  {
+    "path": "assets/radio/logos/13f519cb7399.webp",
+    "bytes": 3612,
+    "compressed_bytes": 3612,
+    "sha256": "4dd57c5831545ffdf45d0cff149f6290e3d008cce127659e32d2a01159a80769"
+  },
+  {
+    "path": "assets/radio/logos/197a2e649d80.webp",
+    "bytes": 2452,
+    "compressed_bytes": 2452,
+    "sha256": "f52ee408ceba78cd16dc696d5bc8b9fbae85d91f37fe63337e245109b3399637"
+  },
+  {
+    "path": "assets/radio/logos/1b50f53a91a3.webp",
+    "bytes": 1624,
+    "compressed_bytes": 1624,
+    "sha256": "26cac76aedab81a4784e84ae6795ffd027d6c8a2e2dbe168847ff706d659f215"
+  },
+  {
+    "path": "assets/radio/logos/1dcc9edbcfd2.webp",
+    "bytes": 2568,
+    "compressed_bytes": 2568,
+    "sha256": "9c4ca0c2d44eefa8f80efbd7886121a5c50f0cfa8af0ce4b009ece39a0282b41"
+  },
+  {
+    "path": "assets/radio/logos/203aad5ba4c6.webp",
+    "bytes": 1728,
+    "compressed_bytes": 1728,
+    "sha256": "6b4496928040278d156300fb5218ee154c675b5030a5202f85c1e7ae8258d70f"
+  },
+  {
+    "path": "assets/radio/logos/25e4f3f4ce2b.webp",
+    "bytes": 3848,
+    "compressed_bytes": 3848,
+    "sha256": "40bdaf1e08eb6f592f77ddca72245e0b1ac4327d99df7aa5963eff9521506251"
+  },
+  {
+    "path": "assets/radio/logos/269bf8cf1470.webp",
+    "bytes": 3176,
+    "compressed_bytes": 3176,
+    "sha256": "0781989e3d90e372b02b4c8c22393fdb155625c55d1f8551b445cf73e14ab5a7"
+  },
+  {
+    "path": "assets/radio/logos/288a21c44e68.webp",
+    "bytes": 6042,
+    "compressed_bytes": 6042,
+    "sha256": "6937d9733c16348a12ae23f8b8741062cc29c59a475b086f93784d8f84859436"
+  },
+  {
+    "path": "assets/radio/logos/296fdb8aab39.webp",
+    "bytes": 2774,
+    "compressed_bytes": 2774,
+    "sha256": "ec388a131cbdff14f03cf2f6d2feeaa39422e028a3ff55c8416c65d4b467e2a3"
+  },
+  {
+    "path": "assets/radio/logos/30c004e3382f.webp",
+    "bytes": 5396,
+    "compressed_bytes": 5396,
+    "sha256": "49716b10a9e06f815f19e1887845c9750cb21862e92dedbcf86c79217a275160"
+  },
+  {
+    "path": "assets/radio/logos/3171840241ce.webp",
+    "bytes": 1124,
+    "compressed_bytes": 1124,
+    "sha256": "2c0379379fe9da2139e41b554de615c19c2ed3b9c4d06d1fabba2a678dc90d6e"
+  },
+  {
+    "path": "assets/radio/logos/359b9aecbdc3.webp",
+    "bytes": 3278,
+    "compressed_bytes": 3278,
+    "sha256": "5c415c6e4b932fd30bfc3eef500acdd9df74f92247912df9492f3ef96289bc09"
+  },
+  {
+    "path": "assets/radio/logos/35b11568aa3a.webp",
+    "bytes": 6748,
+    "compressed_bytes": 6748,
+    "sha256": "ae455825caa1cc2cfc065d1dd4e5d909d8b78d4c27482981a80d126dede137c9"
+  },
+  {
+    "path": "assets/radio/logos/364b0bc42ed2.webp",
+    "bytes": 2406,
+    "compressed_bytes": 2406,
+    "sha256": "f606a7a946187b2960e8db160270c42359dfc223fa1915e69737a5c4f969783e"
+  },
+  {
+    "path": "assets/radio/logos/3891601fd05c.webp",
+    "bytes": 1440,
+    "compressed_bytes": 1440,
+    "sha256": "d3fdceaeb519fbb18751b407a4604438e2a48fb50248d7f5348569877e868107"
+  },
+  {
+    "path": "assets/radio/logos/38ae1aff3d6c.webp",
+    "bytes": 2746,
+    "compressed_bytes": 2746,
+    "sha256": "fc2d55ded35c260ff4f2deca62ce9b4898b3cd8a6f846ea8c966d78cd3ee8232"
+  },
+  {
+    "path": "assets/radio/logos/38ba384539a9.webp",
+    "bytes": 3118,
+    "compressed_bytes": 3118,
+    "sha256": "b8ddbda22907e920ae855f883a9bf2aea0f085368c15dc5174b2f4022eb3beb7"
+  },
+  {
+    "path": "assets/radio/logos/394752bd21e9.webp",
+    "bytes": 4398,
+    "compressed_bytes": 4398,
+    "sha256": "cc2a67a9d91b95d08461c63cb59a035c398220bfa465725319755fff8a54fb87"
+  },
+  {
+    "path": "assets/radio/logos/397108de2ef3.webp",
+    "bytes": 3198,
+    "compressed_bytes": 3198,
+    "sha256": "8caf7386c6454dae2b04374801d4623d7f6c7682a57e56887536d9315e55dbca"
+  },
+  {
+    "path": "assets/radio/logos/3c00cc6c1dfb.webp",
+    "bytes": 2040,
+    "compressed_bytes": 2040,
+    "sha256": "22f8c07af8e3e045b062b3e9bb21272da27e576e031da47f87926898bcbd0e45"
+  },
+  {
+    "path": "assets/radio/logos/3d95c74f19c4.webp",
+    "bytes": 5914,
+    "compressed_bytes": 5914,
+    "sha256": "d5c78486fa51849c4b21c2a724e716ae923385b6df3738e805473dc92cbd4ba7"
+  },
+  {
+    "path": "assets/radio/logos/3f4e6e7055e6.webp",
+    "bytes": 2512,
+    "compressed_bytes": 2512,
+    "sha256": "067387fcc6135fd8e0ee821bdf96372fe8d99c061a5e00b845ccf7b4953ded15"
+  },
+  {
+    "path": "assets/radio/logos/3f9a6850a9e5.webp",
+    "bytes": 4404,
+    "compressed_bytes": 4404,
+    "sha256": "855ff27e21dd081145790ed77a187e1afb5d5af957fc66d259e852bce5ddff1b"
+  },
+  {
+    "path": "assets/radio/logos/40068957308c.webp",
+    "bytes": 1604,
+    "compressed_bytes": 1604,
+    "sha256": "08aeb1f1917b2c3bcb13cf9ee645e0ea59c2126ee60a12ba5051c90be939b930"
+  },
+  {
+    "path": "assets/radio/logos/4133850db3bd.webp",
+    "bytes": 4054,
+    "compressed_bytes": 4054,
+    "sha256": "23e57b8a3ed179a670367371944a7b92e88d9c1e364df1134e3c5218845207bc"
+  },
+  {
+    "path": "assets/radio/logos/419438e161c1.webp",
+    "bytes": 2104,
+    "compressed_bytes": 2104,
+    "sha256": "8aed5230c0fc5ef001e42533598fed213e34e3a32ae1c78f23f7e0d5b9b08ea1"
+  },
+  {
+    "path": "assets/radio/logos/450e25a55902.webp",
+    "bytes": 8008,
+    "compressed_bytes": 8008,
+    "sha256": "3224a7a16fe7b5b1a0f803822ba30e05b81f8b1a64391e779b0aa663a9cb8c5d"
+  },
+  {
+    "path": "assets/radio/logos/4958c3f1c679.webp",
+    "bytes": 3556,
+    "compressed_bytes": 3556,
+    "sha256": "d39eaa2e15f54f8e2acef3af5235b0fa4847622f8cb8a5c9bf6cd9c2a2ed4365"
+  },
+  {
+    "path": "assets/radio/logos/49790ad3c54a.webp",
+    "bytes": 3568,
+    "compressed_bytes": 3568,
+    "sha256": "63150b35f478b7d2f72c3e726b0fa0c86abd3a824f647dad30cacef94e6a5bf1"
+  },
+  {
+    "path": "assets/radio/logos/4e4c246d043f.webp",
+    "bytes": 2590,
+    "compressed_bytes": 2590,
+    "sha256": "e6a5a022392b65142775490f3fd3e440cb8e91e00efb017e3fec0c364e7ba0cd"
+  },
+  {
+    "path": "assets/radio/logos/50882f93d279.webp",
+    "bytes": 1930,
+    "compressed_bytes": 1930,
+    "sha256": "11b5719bcd5fcef103068402008386859cee2270727e56691087d8a211e14b60"
+  },
+  {
+    "path": "assets/radio/logos/527c0d27160c.webp",
+    "bytes": 2842,
+    "compressed_bytes": 2842,
+    "sha256": "bb92ee638d08d79bf3bcbca59b67df8f6522ef4368b1d7c74aef1a8265bfc199"
+  },
+  {
+    "path": "assets/radio/logos/5686606ff729.webp",
+    "bytes": 2112,
+    "compressed_bytes": 2112,
+    "sha256": "04a95f9e9287d2fcfa9daac421af52786a8ba7be7b54553496429337a99d374a"
+  },
+  {
+    "path": "assets/radio/logos/56cd1294f63f.webp",
+    "bytes": 2848,
+    "compressed_bytes": 2848,
+    "sha256": "f25b49e09683b618f938e24a5c94f55ab91a3d6fef674680b251a55548f441a2"
+  },
+  {
+    "path": "assets/radio/logos/5a0a3ea01685.webp",
+    "bytes": 6336,
+    "compressed_bytes": 6336,
+    "sha256": "5acebe3361d27cd64fe3d09a32af61ecb27d33a2721baccdd22e0c3e2cbae8e8"
+  },
+  {
+    "path": "assets/radio/logos/5b57d75a8b6e.webp",
+    "bytes": 6674,
+    "compressed_bytes": 6674,
+    "sha256": "8977756deb8b504d5b39bb02db969602b2428dbabcae3e7c0dee8c267dea1fc7"
+  },
+  {
+    "path": "assets/radio/logos/5f3346ab9b98.webp",
+    "bytes": 2228,
+    "compressed_bytes": 2228,
+    "sha256": "225dfdc784923eccbe6e01cafa4dfeebaccab7b598476860521330362d4d7519"
+  },
+  {
+    "path": "assets/radio/logos/6361ae26a024.webp",
+    "bytes": 4182,
+    "compressed_bytes": 4182,
+    "sha256": "f21d68a41873c174cf791810e925162a61b66c0a05e0468212d7c0b61187346b"
+  },
+  {
+    "path": "assets/radio/logos/65666281edae.webp",
+    "bytes": 3404,
+    "compressed_bytes": 3404,
+    "sha256": "a48a0191148bac1c2c17772cdbd6bda28f78d8d61c731c6ae3036b6037e5a842"
+  },
+  {
+    "path": "assets/radio/logos/67fe85ce58fe.webp",
+    "bytes": 5020,
+    "compressed_bytes": 5020,
+    "sha256": "4c90a0e82bc20fbabea075234022c5ea10252f0081d9edaa2bf32d884cab1e5a"
+  },
+  {
+    "path": "assets/radio/logos/6974d9fc4bec.webp",
+    "bytes": 6544,
+    "compressed_bytes": 6544,
+    "sha256": "85e17c3ad832377ea85571b3155b915d1b06b99c814a6b853a3cc082402f3403"
+  },
+  {
+    "path": "assets/radio/logos/6cde3caab120.webp",
+    "bytes": 4000,
+    "compressed_bytes": 4000,
+    "sha256": "c2f222ae644298df53aacc84a05cc7b622e392a07a85a7369e359eb2dc49d763"
+  },
+  {
+    "path": "assets/radio/logos/6f8302b0e36f.webp",
+    "bytes": 2456,
+    "compressed_bytes": 2456,
+    "sha256": "a828216164f31cc457e716227c4a39702ef93a4108e9918f95a8378614f8058b"
+  },
+  {
+    "path": "assets/radio/logos/6fd6aa2fa7ff.webp",
+    "bytes": 3900,
+    "compressed_bytes": 3900,
+    "sha256": "023c3dc42ee3e539de87fbdb912fad58e09c9b790f349e5c2b87e9bce355f8e7"
+  },
+  {
+    "path": "assets/radio/logos/6fe430799c61.webp",
+    "bytes": 2932,
+    "compressed_bytes": 2932,
+    "sha256": "8384fd5c93011d25453cb684d32a7e2691c4d1bdff989225de133bdca97a405f"
+  },
+  {
+    "path": "assets/radio/logos/715ee53c9304.webp",
+    "bytes": 3574,
+    "compressed_bytes": 3574,
+    "sha256": "9695fafeab4ed392b6d185d37de53c5bf3802b3ae76267dfa98bb4e1ed0a709b"
+  },
+  {
+    "path": "assets/radio/logos/780eaabba0c0.webp",
+    "bytes": 1720,
+    "compressed_bytes": 1720,
+    "sha256": "1d7a864e645cd303d927f287149d4865db0a141bab8c5ced6d9dd97700efe8f2"
+  },
+  {
+    "path": "assets/radio/logos/7984fa0b55e8.webp",
+    "bytes": 3714,
+    "compressed_bytes": 3714,
+    "sha256": "fd3cc5a3441df3078143a6997d46ddb51563412d3389d0e23407cb957766cf25"
+  },
+  {
+    "path": "assets/radio/logos/7b613e61b4c4.webp",
+    "bytes": 4438,
+    "compressed_bytes": 4438,
+    "sha256": "edd8115ea031ca3344caa73b0869cfbc83f37e51724d1f1845a4f51cb6d48543"
+  },
+  {
+    "path": "assets/radio/logos/7b917bd85ad6.webp",
+    "bytes": 2132,
+    "compressed_bytes": 2132,
+    "sha256": "461323d649f7d5ac69e9618ed5720cd5e04f90a6bb2f84a6e811e535daaca30b"
+  },
+  {
+    "path": "assets/radio/logos/7e767ed78577.webp",
+    "bytes": 1482,
+    "compressed_bytes": 1482,
+    "sha256": "d249d23e18934cf7cad44f5eb59a55c6a124b8ed6f5ae7a9376784fc1358c52d"
+  },
+  {
+    "path": "assets/radio/logos/7f5b2db0a358.webp",
+    "bytes": 1760,
+    "compressed_bytes": 1760,
+    "sha256": "154381f862a116227f01c71d8f49bd0d1161122e651276a22d7e332ee073d1c5"
+  },
+  {
+    "path": "assets/radio/logos/7fa14f386ae6.webp",
+    "bytes": 3362,
+    "compressed_bytes": 3362,
+    "sha256": "5e24d13e41954f2ab5cfa99820b52a26cff6a5661143b73ebc7f28e20493be29"
+  },
+  {
+    "path": "assets/radio/logos/829cdadc73ab.webp",
+    "bytes": 4236,
+    "compressed_bytes": 4236,
+    "sha256": "f493cd8adc47995235106b261536ada0811bb7c3d2c69e4f7282d76c3818e657"
+  },
+  {
+    "path": "assets/radio/logos/866e595f9934.webp",
+    "bytes": 4020,
+    "compressed_bytes": 4020,
+    "sha256": "4a6b487fe59e4db8502fb696ca6eb6de2021da71827e62040a07eee6182048be"
+  },
+  {
+    "path": "assets/radio/logos/87612aa64067.webp",
+    "bytes": 2796,
+    "compressed_bytes": 2796,
+    "sha256": "5c97b173385da2587cc5f6ceca043e222fae1ebc0a2666ca225c16e1bc41c80f"
+  },
+  {
+    "path": "assets/radio/logos/90fc54289a8b.webp",
+    "bytes": 2188,
+    "compressed_bytes": 2188,
+    "sha256": "877944e5ff00e915af5c1695425524f072b07d89f2f0ae1f0c467e14fd056af0"
+  },
+  {
+    "path": "assets/radio/logos/916c93df4bd9.webp",
+    "bytes": 2854,
+    "compressed_bytes": 2854,
+    "sha256": "10730504392981628c9de9df42cc9f81a444e085f72629f291c6ee622f13f47b"
+  },
+  {
+    "path": "assets/radio/logos/919667d47614.webp",
+    "bytes": 3962,
+    "compressed_bytes": 3962,
+    "sha256": "d53d72ea9f57e6f6e395fcd93f1404fb89e65523b32c70d50d41f7b25445f2e0"
+  },
+  {
+    "path": "assets/radio/logos/922d9da5fccc.webp",
+    "bytes": 4272,
+    "compressed_bytes": 4272,
+    "sha256": "0e1b3b2d4df1cb8a76833b5c83400a0a93bcbd27f4ff1977de67e34e995d8d48"
+  },
+  {
+    "path": "assets/radio/logos/9240e7fdd3fa.webp",
+    "bytes": 6084,
+    "compressed_bytes": 6084,
+    "sha256": "bd9ffeb2021780e9e859bbec0a846a2b0023c1642132aca14fa199c9b2e1bca2"
+  },
+  {
+    "path": "assets/radio/logos/94be997c8477.webp",
+    "bytes": 5566,
+    "compressed_bytes": 5566,
+    "sha256": "c3640fd17133045f919913f4e9accb6bd3410c15095502a35d2cc01a52976309"
+  },
+  {
+    "path": "assets/radio/logos/99217384664d.webp",
+    "bytes": 3698,
+    "compressed_bytes": 3698,
+    "sha256": "e695e1e734672bf1f2d476c2702b38c01aad69e6777dcf2687132482005ce324"
+  },
+  {
+    "path": "assets/radio/logos/9a3ad946603a.webp",
+    "bytes": 1706,
+    "compressed_bytes": 1706,
+    "sha256": "0ffbae1843fb66bf2d193e41b60135a78777d0f09b4d5f999eaccefda794da11"
+  },
+  {
+    "path": "assets/radio/logos/9b35d1a7c695.webp",
+    "bytes": 2830,
+    "compressed_bytes": 2830,
+    "sha256": "68576330483a8a524d407181d25cab3e85c53fe1b80daeed2d3aaa54dc20b688"
+  },
+  {
+    "path": "assets/radio/logos/a29097436def.webp",
+    "bytes": 2528,
+    "compressed_bytes": 2528,
+    "sha256": "b298abea07632fb962fea111422094f2340f5a1a4f893c33b87402261dfae438"
+  },
+  {
+    "path": "assets/radio/logos/a420bc3709b3.webp",
+    "bytes": 2068,
+    "compressed_bytes": 2068,
+    "sha256": "371520a024a03710cab0301885002d0496dbb1d77ae61e98f5e9b2c341cbe133"
+  },
+  {
+    "path": "assets/radio/logos/a475a0cadb47.webp",
+    "bytes": 4334,
+    "compressed_bytes": 4334,
+    "sha256": "b8c57b06ab500b6153fb049d058cdba0b7ab1f7ecd6567616b9adb007811cb5e"
+  },
+  {
+    "path": "assets/radio/logos/a4b7e1c54781.webp",
+    "bytes": 3264,
+    "compressed_bytes": 3264,
+    "sha256": "5460ca5d1dd4c69b827f38cc5493993502d8ae21e788132d26a092f7a11fdd12"
+  },
+  {
+    "path": "assets/radio/logos/a5aaffeac82c.webp",
+    "bytes": 1820,
+    "compressed_bytes": 1820,
+    "sha256": "d9865c6e89d80a85cbee29f7eb97c122ecf228ad5befdd6338bcb5dbd7047e7d"
+  },
+  {
+    "path": "assets/radio/logos/a77e14a6bb63.webp",
+    "bytes": 2228,
+    "compressed_bytes": 2228,
+    "sha256": "cbc7b08a8446b293829e6cfd7b5e29315e79388cd1d2090c4b64879e2cfbd7b2"
+  },
+  {
+    "path": "assets/radio/logos/a7b42c6321fc.webp",
+    "bytes": 2418,
+    "compressed_bytes": 2418,
+    "sha256": "061eb404bc3d3c8d404747570bb253b6b40b0b6c600eb26045eaf656df8841ac"
+  },
+  {
+    "path": "assets/radio/logos/ab1baa58cfd0.webp",
+    "bytes": 4478,
+    "compressed_bytes": 4478,
+    "sha256": "c33edf6d291a504def299284e412aea53dd7816be050a126d8d0c98b2b232440"
+  },
+  {
+    "path": "assets/radio/logos/b0797eda2cd2.webp",
+    "bytes": 4532,
+    "compressed_bytes": 4532,
+    "sha256": "795c1a806c9847076ce9ccba469a9a1b966a6287ac27665fe0d19001a302dcfd"
+  },
+  {
+    "path": "assets/radio/logos/b1f400e2f3bc.webp",
+    "bytes": 3322,
+    "compressed_bytes": 3322,
+    "sha256": "600221c5715d3cedd6df5e8ab9f85f46cba1098c56c8636d531d1abdab0ff2ea"
+  },
+  {
+    "path": "assets/radio/logos/b2ddef1aaae5.webp",
+    "bytes": 4700,
+    "compressed_bytes": 4700,
+    "sha256": "76e0b6a270f32ba03faa4f32ce281f133a991b02a6f3d4c7264bf1d1d358151b"
+  },
+  {
+    "path": "assets/radio/logos/b4106f9df4d8.webp",
+    "bytes": 3666,
+    "compressed_bytes": 3666,
+    "sha256": "149358531e38a4f4624bb99ac6faebcbe9c84c2129b40ce83e85aeca283e8069"
+  },
+  {
+    "path": "assets/radio/logos/b480255673ab.webp",
+    "bytes": 5910,
+    "compressed_bytes": 5910,
+    "sha256": "b37553a8333b5da7153db211e9ee35a581dc690355c499249924dc78d0a2bb4d"
+  },
+  {
+    "path": "assets/radio/logos/b5d78021a93f.webp",
+    "bytes": 3156,
+    "compressed_bytes": 3156,
+    "sha256": "c314d41bc3a765ab6ffe8f8729cb93fca52df03a36a7e1f8c5db24c696afba05"
+  },
+  {
+    "path": "assets/radio/logos/b5efda9731f4.webp",
+    "bytes": 3992,
+    "compressed_bytes": 3992,
+    "sha256": "0d9cc3a52e1b1f2ddeea7326bf5e94a14d4e093845f35f6375f1d1c1d6a8cbb2"
+  },
+  {
+    "path": "assets/radio/logos/b95b4b2b5ca5.webp",
+    "bytes": 1760,
+    "compressed_bytes": 1760,
+    "sha256": "154381f862a116227f01c71d8f49bd0d1161122e651276a22d7e332ee073d1c5"
+  },
+  {
+    "path": "assets/radio/logos/b9a5024057cc.webp",
+    "bytes": 2686,
+    "compressed_bytes": 2686,
+    "sha256": "5893fc84aa81249a7c8243709fd1d15c9af711680e9a4d7440d1638a3d714f36"
+  },
+  {
+    "path": "assets/radio/logos/b9b92d954cfc.webp",
+    "bytes": 1818,
+    "compressed_bytes": 1818,
+    "sha256": "ccf7c9c971e35a6ee3bd098e164d8663d03736ce4aee54aa2b8433daa2f7b9c0"
+  },
+  {
+    "path": "assets/radio/logos/bb6cbc38d85a.webp",
+    "bytes": 4980,
+    "compressed_bytes": 4980,
+    "sha256": "2701ef1b809aaad47c9361679f3b76b759d23352deed4a5775023d42355cd5f1"
+  },
+  {
+    "path": "assets/radio/logos/bd7e8c8c2919.webp",
+    "bytes": 6282,
+    "compressed_bytes": 6282,
+    "sha256": "c807cc893603a924c7f51cfeb2a863d4cb9c772e5884b041583fee866163fd2e"
+  },
+  {
+    "path": "assets/radio/logos/bf18af185594.webp",
+    "bytes": 2850,
+    "compressed_bytes": 2850,
+    "sha256": "46404789e58224d46f6d084cba35de700a0a641fbeeb6e038881466d373ff22e"
+  },
+  {
+    "path": "assets/radio/logos/c07c777b6c95.webp",
+    "bytes": 5332,
+    "compressed_bytes": 5332,
+    "sha256": "c6d2623df41b754fef0f8228a3e8d8cc9cbedf281d3ced901faa4bf5bdc6c39c"
+  },
+  {
+    "path": "assets/radio/logos/c2174ac0a0a3.webp",
+    "bytes": 2654,
+    "compressed_bytes": 2654,
+    "sha256": "79a0ccd13cbd8a3279330472a1d192962c019ebd36ca86fb6f9af015670b6a6e"
+  },
+  {
+    "path": "assets/radio/logos/cd79dfcdf6d1.webp",
+    "bytes": 3018,
+    "compressed_bytes": 3018,
+    "sha256": "ee2f1f7bf98f2ebcb5fd1152907f14e0527beb2e5924b8dbc1c0c5584b553dde"
+  },
+  {
+    "path": "assets/radio/logos/ce279b124d58.webp",
+    "bytes": 1488,
+    "compressed_bytes": 1488,
+    "sha256": "e7567290137e8db5ee6c03af6c1859914af84a0c3751fe56482dd12a1bd472fb"
+  },
+  {
+    "path": "assets/radio/logos/cf0eb964f2a3.webp",
+    "bytes": 6356,
+    "compressed_bytes": 6356,
+    "sha256": "2a6276f0290b6eb95b51adbfbf3df9d08c8725b98a819de81b5a0d8bb9a2ab9e"
+  },
+  {
+    "path": "assets/radio/logos/d11d768f0428.webp",
+    "bytes": 3614,
+    "compressed_bytes": 3614,
+    "sha256": "24dfcae8c56cfe58eef7fe3d30126aa71668f11f585ed9e8e758cf09d0f59988"
+  },
+  {
+    "path": "assets/radio/logos/d2cf7dc3fb30.webp",
+    "bytes": 4598,
+    "compressed_bytes": 4598,
+    "sha256": "cb743f332112f8dd64ef8bbe1278ec66bef3d51cd5ee7d08c5743db82c0c51b0"
+  },
+  {
+    "path": "assets/radio/logos/d611d2e50334.webp",
+    "bytes": 5582,
+    "compressed_bytes": 5582,
+    "sha256": "4fb7ad23719b9ed642918cf13e2a0c9f26cb013936858db33d920ee1f03ef49e"
+  },
+  {
+    "path": "assets/radio/logos/d89f98c8b2d7.webp",
+    "bytes": 3378,
+    "compressed_bytes": 3378,
+    "sha256": "0dc4097584a11e67c40546b032336d20ed01a3a56ec9c6968c7e6b977a175822"
+  },
+  {
+    "path": "assets/radio/logos/dc34635b9d4c.webp",
+    "bytes": 1424,
+    "compressed_bytes": 1424,
+    "sha256": "64c6db482ff85750233ea4e87149e29e1e6e81941e72f3fa9381451ccac78594"
+  },
+  {
+    "path": "assets/radio/logos/dd73028bf479.webp",
+    "bytes": 2888,
+    "compressed_bytes": 2888,
+    "sha256": "adfaa4d94124e2e9c8e1e2f6189d40a9e9cea9705a5c2ccb089c8d7bf2231753"
+  },
+  {
+    "path": "assets/radio/logos/df3a9cbcd9be.webp",
+    "bytes": 4972,
+    "compressed_bytes": 4972,
+    "sha256": "be8e285b38279a921313a8849ec5b9c6c5ba0bea6df903d06347facd1c9ce2d0"
+  },
+  {
+    "path": "assets/radio/logos/dfd98433c680.webp",
+    "bytes": 3650,
+    "compressed_bytes": 3650,
+    "sha256": "c4caf84581d6b011ded763955d58b7114abaa744ede157443b1b617ed60ceed6"
+  },
+  {
+    "path": "assets/radio/logos/e039a10f1f17.webp",
+    "bytes": 2492,
+    "compressed_bytes": 2492,
+    "sha256": "0683fe51dcb2bf704b5926e9a84aba61d86c3b34d62b921682eaad0c4cb7cd15"
+  },
+  {
+    "path": "assets/radio/logos/e4009ee43d76.webp",
+    "bytes": 3330,
+    "compressed_bytes": 3330,
+    "sha256": "151810a70b0ef271669a2a1bf265d93ff695acac1ef2aea59d6e965f3b893051"
+  },
+  {
+    "path": "assets/radio/logos/e6fc96df9ba7.webp",
+    "bytes": 4690,
+    "compressed_bytes": 4690,
+    "sha256": "2fb0757421f9ad9b5ea316a33dacf2204d6ea8b45151db1049793254d28d43df"
+  },
+  {
+    "path": "assets/radio/logos/eafdcf438b2f.webp",
+    "bytes": 7060,
+    "compressed_bytes": 7060,
+    "sha256": "ff4a0e36ab9a60ac340e6e1ebd949f6e3075f3adce4596af5ea37789c7b80cac"
+  },
+  {
+    "path": "assets/radio/logos/ed206ef667c3.webp",
+    "bytes": 2910,
+    "compressed_bytes": 2910,
+    "sha256": "cc79d59dcf6f85d09eaddd15633a0c2e5c05436acc9bb2f0920d507e98450397"
+  },
+  {
+    "path": "assets/radio/logos/f16e6908342b.webp",
+    "bytes": 952,
+    "compressed_bytes": 952,
+    "sha256": "6ffd24d01ad3b972c0ae4a1a0a45f0c5e733f3d2b09703e3f114e2edfcc8d3c4"
+  },
+  {
+    "path": "assets/radio/logos/f8b92159e0b3.webp",
+    "bytes": 1998,
+    "compressed_bytes": 1998,
+    "sha256": "4a19863527999cb89febd8d021cf0065d1d09fe36356b650f7702e17d539021a"
+  },
+  {
+    "path": "assets/radio/logos/f9a99f525e6b.webp",
+    "bytes": 4716,
+    "compressed_bytes": 4716,
+    "sha256": "172ba6d9652aed2fdd756cacfd2f8d46daae1c48f83e7d3c0979f4c8890bb32c"
+  },
+  {
+    "path": "assets/radio/logos/m-2bc00f970b.webp",
+    "bytes": 2870,
+    "compressed_bytes": 2870,
+    "sha256": "11d04bc767c7194868ea4e3a5ffc76b71ecdbd5523cc22832693755faa165495"
+  },
+  {
+    "path": "assets/radio/logos/m-377f6e8d9d.webp",
+    "bytes": 4788,
+    "compressed_bytes": 4788,
+    "sha256": "f8599538c1d34556c5fe8448da7d026b0b8d0014a4177169180e7922db9eb955"
+  },
+  {
+    "path": "assets/radio/logos/m-3a5596a0e9.webp",
+    "bytes": 2854,
+    "compressed_bytes": 2854,
+    "sha256": "438dcedb1ea489c8e09559a42eebbdada606eb281d61f0348237557d8bffe24f"
+  },
+  {
+    "path": "assets/radio/logos/m-523b15ffc4.webp",
+    "bytes": 3864,
+    "compressed_bytes": 3864,
+    "sha256": "966d60efb792832b84671f4225e985d489a8725b4ec39a75b384232483d0d311"
+  },
+  {
+    "path": "assets/radio/logos/m-96f3b2748d.webp",
+    "bytes": 5102,
+    "compressed_bytes": 5102,
+    "sha256": "7b924a1c37cbc7a27ba521416c73bc34b23ee8cb0d21fa29f3284a381793c0d2"
+  },
+  {
+    "path": "assets/vehicles/belgee_s50.webp",
+    "bytes": 18074,
+    "compressed_bytes": 18074,
+    "sha256": "bd7ddafc312e35532d2e55619b6bec2141e11f8efc95f7d9344b35087777397f"
+  },
+  {
+    "path": "assets/vehicles/belgee_s50_0.webp",
+    "bytes": 102194,
+    "compressed_bytes": 102194,
+    "sha256": "5f561401ad3fdec53eac7405f0b1b2f59c113834d94aadb8523aa32fe908f263"
+  },
+  {
+    "path": "assets/vehicles/belgee_s50_1.webp",
+    "bytes": 103580,
+    "compressed_bytes": 103580,
+    "sha256": "174fa9881cb7f6bffed506b5f5d7dc09f7ff6f6f9271ad3235c78a987e0f128b"
+  },
+  {
+    "path": "assets/vehicles/belgee_s50_2.webp",
+    "bytes": 113854,
+    "compressed_bytes": 113854,
+    "sha256": "facd0b2fc77d59861b53c26de129765f5d1aba0e3fd9bcbdfc5602fdcbd2a647"
+  },
+  {
+    "path": "assets/vehicles/belgee_x50.webp",
+    "bytes": 57208,
+    "compressed_bytes": 57208,
+    "sha256": "06fbc2cfe3d3e949efa8ae305872906d5dd5ab3fe66e51e79d8b86b17a8d0381"
+  },
+  {
+    "path": "assets/vehicles/belgee_x50_0.webp",
+    "bytes": 68082,
+    "compressed_bytes": 68082,
+    "sha256": "0898abc35803e1854c6bc45138dacf40d2e9756be6fb815f558554c12f387eb8"
+  },
+  {
+    "path": "assets/vehicles/belgee_x50_1.webp",
+    "bytes": 67488,
+    "compressed_bytes": 67488,
+    "sha256": "a30b787ce8f5d4ef3d82e434b093a9dc0298931e243223ab48bbb976ad74b515"
+  },
+  {
+    "path": "assets/vehicles/belgee_x50_2.webp",
+    "bytes": 70200,
+    "compressed_bytes": 70200,
+    "sha256": "d65599f7e7d981db3242665e1c78b95c65962b81c6958e6a5cfdceb69f661872"
+  },
+  {
+    "path": "assets/vehicles/belgee_x70.webp",
+    "bytes": 66796,
+    "compressed_bytes": 66796,
+    "sha256": "304f475364913f6bfe03d5eb6bb362c12c326d977a93cb6c1b841aa52920d29d"
+  },
+  {
+    "path": "assets/vehicles/belgee_x70_0.webp",
+    "bytes": 110512,
+    "compressed_bytes": 110512,
+    "sha256": "4231572d6e2d3c56ba0b03217142a25ca4f9405824f471edafd1f91208aee0ae"
+  },
+  {
+    "path": "assets/vehicles/belgee_x70_1.webp",
+    "bytes": 105126,
+    "compressed_bytes": 105126,
+    "sha256": "0594ba6c2436745af6241ab6069f9fe330f49258a9c3d0be4ad6df83ccda608e"
+  },
+  {
+    "path": "assets/vehicles/belgee_x70_2.webp",
+    "bytes": 104064,
+    "compressed_bytes": 104064,
+    "sha256": "6cccb7de8c1e50c8d3156711377bf66f9c83090f198f83ccec7bf114ac2ce450"
+  },
+  {
+    "path": "assets/vehicles/coolray_new.webp",
+    "bytes": 73794,
+    "compressed_bytes": 73794,
+    "sha256": "fecedbbce974e2ba486e12c67d93e3c978fd30a960b8bb5093347c84cec3128e"
+  },
+  {
+    "path": "assets/vehicles/geely_coolray.webp",
+    "bytes": 41662,
+    "compressed_bytes": 41662,
+    "sha256": "9905defaa3f1768c5aaf343e5d8d0f5f708f460e983ee92da1447de40358086c"
+  },
+  {
+    "path": "assets/vehicles/geely_coolray_0.webp",
+    "bytes": 58376,
+    "compressed_bytes": 58376,
+    "sha256": "e7d50f8b67b3a42cacdf70bca7872d7ab80f56a314b02d1f7f335810ddf32e41"
+  },
+  {
+    "path": "assets/vehicles/geely_coolray_1.webp",
+    "bytes": 64456,
+    "compressed_bytes": 64456,
+    "sha256": "3c19a57c5bc6ead6e873fed970cf192d022430298d970488a3834b534fec79d4"
+  },
+  {
+    "path": "assets/vehicles/geely_coolray_2.webp",
+    "bytes": 46962,
+    "compressed_bytes": 46962,
+    "sha256": "d58077f765d8aa0353e084a97ce46f0601316066132fca58b5cb6f8cf8335d3f"
+  },
+  {
+    "path": "assets/vehicles/geely_coolray_new_0.webp",
+    "bytes": 97174,
+    "compressed_bytes": 97174,
+    "sha256": "55089d975f87886688c3fbfb205ffcb3c5144939c2c3c0b3a2d8113f54df3ee4"
+  },
+  {
+    "path": "assets/vehicles/geely_coolray_new_1.webp",
+    "bytes": 100828,
+    "compressed_bytes": 100828,
+    "sha256": "01395df37ddb5352d54871b46a7bc2ba244f485af6b0cca71a5997013bd7d153"
+  },
+  {
+    "path": "assets/vehicles/geely_coolray_new_2.webp",
+    "bytes": 95746,
+    "compressed_bytes": 95746,
+    "sha256": "3ecafdd6bf94df94bd26b6b21b18e09e104e6fe5b2fcaa402cb04f035b6cafb1"
+  },
+  {
+    "path": "assets/vehicles/geely_emgrand.webp",
+    "bytes": 66934,
+    "compressed_bytes": 66934,
+    "sha256": "6663682cd399c1b804b5863400dd1d4beb7935262d88441202cae65b193dbedc"
+  },
+  {
+    "path": "assets/vehicles/geely_emgrand_0.webp",
+    "bytes": 42202,
+    "compressed_bytes": 42202,
+    "sha256": "81cf7df34b0f5c4689f3b847aed8b5c32ac310ddfff66fd0ff0999fda54cc204"
+  },
+  {
+    "path": "assets/vehicles/geely_emgrand_1.webp",
+    "bytes": 40726,
+    "compressed_bytes": 40726,
+    "sha256": "052a43cf50c300579b2e527ad57a9617a3e832b0986d49dd955f2c71ff05aa27"
+  },
+  {
+    "path": "assets/vehicles/geely_emgrand_2.webp",
+    "bytes": 41576,
+    "compressed_bytes": 41576,
+    "sha256": "59116563608466a515df72ef11e93b572ba751f0cd911d3dd9cd60e220028d45"
+  },
+  {
+    "path": "assets/vehicles/geely_monjaro_0.webp",
+    "bytes": 75042,
+    "compressed_bytes": 75042,
+    "sha256": "76c9e350167de5c8d1cc0797bd3867db7feece94cf2960a62cd001157a42b2d3"
+  },
+  {
+    "path": "assets/vehicles/geely_monjaro_1.webp",
+    "bytes": 75732,
+    "compressed_bytes": 75732,
+    "sha256": "42b507ea66bbae5c02dc01cf0f66ad0a4c5a1098dc94825e736838c136990254"
+  },
+  {
+    "path": "assets/vehicles/geely_monjaro_2.webp",
+    "bytes": 75876,
+    "compressed_bytes": 75876,
+    "sha256": "768f26349e5fbe7211472bdf0c5b8ba431fc34be6bed4044dc4e2ea1c998d3b1"
+  },
+  {
+    "path": "assets/vehicles/geely_tugella_0.webp",
+    "bytes": 52366,
+    "compressed_bytes": 52366,
+    "sha256": "be19fe8b96b861aa76f6785fe0fb71ecc18c3617fa3af527c77d3f8f92ed8d86"
+  },
+  {
+    "path": "assets/vehicles/geely_tugella_1.webp",
+    "bytes": 49932,
+    "compressed_bytes": 49932,
+    "sha256": "5b763d99d403d1c66dc8bd5ad356b650e9792f192142f51cd947b4b7746676be"
+  },
+  {
+    "path": "assets/vehicles/geely_tugella_2.webp",
+    "bytes": 50404,
+    "compressed_bytes": 50404,
+    "sha256": "1d074955bbe2d23b2fe9f29e70a73c2263f77d35843e088eb4c675927600ae8a"
+  },
+  {
+    "path": "assets/vehicles/knewstar_0.webp",
+    "bytes": 160464,
+    "compressed_bytes": 160464,
+    "sha256": "f748e443cfbc777ff07c1560367751abdb4358bbb5809b4f3d9f16ba73b0801e"
+  },
+  {
+    "path": "assets/vehicles/knewstar_1.png",
+    "bytes": 158650,
+    "compressed_bytes": 158650,
+    "sha256": "660a768c6f2522df946661c4372e820437a9bbac5828986dbc00b401baa4dfb7"
+  },
+  {
+    "path": "assets/vehicles/knewstar_2.png",
+    "bytes": 161029,
+    "compressed_bytes": 161029,
+    "sha256": "83da47bd38f2a7b1a40df385de044d70b11d8dcf2551141b4e4a6bafb6804cc7"
+  },
+  {
+    "path": "assets/vehicles/livan_s6.webp",
+    "bytes": 36956,
+    "compressed_bytes": 36956,
+    "sha256": "5937a7cc439f8328d4993f5759fdf962a0e96db2d223912ce1d9f803d3888028"
+  },
+  {
+    "path": "assets/vehicles/livan_s6_0.webp",
+    "bytes": 88512,
+    "compressed_bytes": 88512,
+    "sha256": "d79fc3a7f6906daa1ac0e418e7211c3600218921e4cecb23bdb5163d9cdf1a2e"
+  },
+  {
+    "path": "assets/vehicles/livan_s6_1.webp",
+    "bytes": 89370,
+    "compressed_bytes": 89370,
+    "sha256": "0e85dba95c5ba0aa8aa3a380c63c2b8ffe63c18edec4f132fbd12c4cf7ce15c2"
+  },
+  {
+    "path": "assets/vehicles/livan_s6_2.webp",
+    "bytes": 84576,
+    "compressed_bytes": 84576,
+    "sha256": "a1f2c8dd2120b5a1d57fc615dde93f7187a3d5198a69a1d79a69cedb3e573908"
+  },
+  {
+    "path": "assets/vehicles/livan_x6.webp",
+    "bytes": 56746,
+    "compressed_bytes": 56746,
+    "sha256": "479305f4ea7282f37da5842431d54ca16c3d62fe9149992d37fb5d8ce7ef759b"
+  },
+  {
+    "path": "assets/vehicles/livan_x6_0.webp",
+    "bytes": 79524,
+    "compressed_bytes": 79524,
+    "sha256": "7245840b91d457e021c414829c8852308b29681e8b37e5413e502bca4313586f"
+  },
+  {
+    "path": "assets/vehicles/livan_x6_1.webp",
+    "bytes": 81872,
+    "compressed_bytes": 81872,
+    "sha256": "26c346f046e909144a1a9f93025d30bfba857ca6fe4ebdfd611ea870a8234268"
+  },
+  {
+    "path": "assets/vehicles/livan_x6_2.webp",
+    "bytes": 84588,
+    "compressed_bytes": 84588,
+    "sha256": "7e8137157601a6c7280dd3882b8c5957b01d1f0b70f9d3b3ca1492af30d9d0d4"
+  },
+  {
+    "path": "kotlin/annotation/annotation.kotlin_builtins",
+    "bytes": 1006,
+    "compressed_bytes": 533,
+    "sha256": "5f75d4352e432664b2a235c472b991cf88365c73f5fcb5e1f9cc2cbe4b410abe"
+  },
+  {
+    "path": "kotlin/collections/collections.kotlin_builtins",
+    "bytes": 8308,
+    "compressed_bytes": 1834,
+    "sha256": "0e654e03a38e119de0f4d11633711bd57e1e8b1a876eda74a90100a2a6e7daa4"
+  },
+  {
+    "path": "kotlin/concurrent/atomics/atomics.kotlin_builtins",
+    "bytes": 2674,
+    "compressed_bytes": 1082,
+    "sha256": "955035527393d165a22da4cb9d992f42b4a30b6f070918f3e2b1f2678f83cc9d"
+  },
+  {
+    "path": "kotlin/coroutines/coroutines.kotlin_builtins",
+    "bytes": 137,
+    "compressed_bytes": 116,
+    "sha256": "98ab3a3c18fcb237528dd63fa489815c583e1d6c13debd2a27ac6d74ccf8717b"
+  },
+  {
+    "path": "kotlin/internal/internal.kotlin_builtins",
+    "bytes": 590,
+    "compressed_bytes": 357,
+    "sha256": "64712f94840e6b3f8123f522f32d08c46f083d87c312a74901f7c00224de775e"
+  },
+  {
+    "path": "kotlin/kotlin.kotlin_builtins",
+    "bytes": 29399,
+    "compressed_bytes": 5342,
+    "sha256": "c4240215bc20e71b01cc62b43edebd02749b3249d7daa8e7f1dc1514f064c274"
+  },
+  {
+    "path": "kotlin/ranges/ranges.kotlin_builtins",
+    "bytes": 4184,
+    "compressed_bytes": 1354,
+    "sha256": "f9d35b836ccb5380803aab5e6c76d708b1536fc6c82f27185e8cff5913824e1c"
+  },
+  {
+    "path": "kotlin/reflect/reflect.kotlin_builtins",
+    "bytes": 4827,
+    "compressed_bytes": 1435,
+    "sha256": "23ecbc7cbb354f31ba37a1be1793d3bb53c00c92cdcf3867759d09d938a1d7c3"
+  },
+  {
+    "path": "AndroidManifest.xml",
+    "bytes": 12760,
+    "compressed_bytes": 2870,
+    "sha256": "8009f46bcb8c97aa46c80fa28bf139aae6d761c8166875f1afea6b94af1b35a9"
+  },
+  {
+    "path": "res/6h.xml",
+    "bytes": 988,
+    "compressed_bytes": 389,
+    "sha256": "28a4a4e92642033588607628ddd0c0a0bd66929f457385e49ee91eeafd41f2ec"
+  },
+  {
+    "path": "res/Ce.xml",
+    "bytes": 2344,
+    "compressed_bytes": 915,
+    "sha256": "fee924cd8d9f78c2c9af788afe274e5624ff0945895c2fd6e19208660f193354"
+  },
+  {
+    "path": "res/pQ.xml",
+    "bytes": 500,
+    "compressed_bytes": 281,
+    "sha256": "00f0b66be40956c9d5bcb31bd4b2e9b7dea92a1284c0a7decca1fc39779eb5a6"
+  },
+  {
+    "path": "res/vO.xml",
+    "bytes": 652,
+    "compressed_bytes": 362,
+    "sha256": "d1ea03d7244141aa0a0d83f21e49cc45d514e3d8417a253869fd134cbd7a076f"
+  },
+  {
+    "path": "resources.arsc",
+    "bytes": 2432,
+    "compressed_bytes": 2432,
+    "sha256": "2028c65a50cebea792ced6502b3aad1cb9523957738455c1bd9608729a2ac4cb"
+  },
+  {
+    "path": "stamp-cert-sha256",
+    "bytes": 32,
+    "compressed_bytes": 35,
+    "sha256": "da6bd4e1d78223e1353bdd9fba685d8975d0b78270df4a9bc157c7f4ce4998fd"
+  },
+  {
+    "path": "META-INF/PLATFORM.SF",
+    "bytes": 27888,
+    "compressed_bytes": 11556,
+    "sha256": "6c36d3022d9cf7a15f8cdb3ad56bcede5e74cd97ada45c8c41e98efa9be33de0"
+  },
+  {
+    "path": "META-INF/PLATFORM.RSA",
+    "bytes": 1722,
+    "compressed_bytes": 1163,
+    "sha256": "d8685b0b426d542f68c5b810e0ea5b5c4765b585b6056016c35227c5fdd7ad31"
+  },
+  {
+    "path": "META-INF/MANIFEST.MF",
+    "bytes": 27761,
+    "compressed_bytes": 11424,
+    "sha256": "087462d7abcf67883265bbe94cf7c1c400dc08cf802ae0571d76c10b2814df3d"
+  }
+]

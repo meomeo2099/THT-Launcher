@@ -1,0 +1,6 @@
+Supporting JADX API export, not REA Evidence.
+APK SHA256=24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c
+JADX=dev
+top-level-classes=485
+errors=8
+warnings=71

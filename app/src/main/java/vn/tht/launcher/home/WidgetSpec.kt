@@ -87,7 +87,7 @@ object HomeLayout {
     const val GRID = 20
     const val MIN_SIZE = 40
 
-    /** Bố cục mặc định dạng lưới (giống bố cục phổ biến của người dùng AutoEasy), khe 16dp. */
+    /** Bố cục mặc định dạng lưới (giống bố cục phổ biến của người dùng launcher tham chiếu), khe 16dp. */
     fun defaults(): List<WidgetSpec> = listOf(
         WidgetSpec("top_bar", WidgetType.TOP_BAR, 700, 8, 520, 48),
         WidgetSpec("brightness", WidgetType.BRIGHTNESS, 16, 72, 96, 528),

@@ -1,0 +1,147 @@
+{
+  "evidence_id": "ev_b4c1932d6ae96009fde6bab9189e5090b54612484d5db11147e094a4cf77d472",
+  "subject": {
+    "name": "reference.apk",
+    "digest": {
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+    },
+    "local_path": "reference.apk",
+    "format": "apk",
+    "architecture": null
+  },
+  "provider": {
+    "id": "jadx",
+    "name": "JADX headless",
+    "version": "0.7.1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_android_method",
+  "parameters": {
+    "path": "reference.apk",
+    "class_name": "b1",
+    "method_name": "a"
+  },
+  "raw_result": {
+    "server": {
+      "name": "rea-jadx-bridge",
+      "version": "7"
+    },
+    "bridge_sha256": "e5044a8312dd0731f53af3f095508b3e5cff54df6b971c95d4305e2f39b4fa30",
+    "jar_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "loaded": {
+      "state": "LOADED",
+      "apk_path": "<temporary-analysis-session>/target.apk",
+      "class_count": 485,
+      "resource_count": 264,
+      "threads": 1,
+      "resources": "full"
+    },
+    "calls": [
+      {
+        "operation": "rea_jvm_status",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"engine_reported_version\":\"0.7.1\",\"available_processors\":2,\"java_version\":\"21.0.12.1\",\"max_heap_bytes\":2147483648,\"metadata_scope\":\"parsed_members\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "load_apk",
+        "input": {
+          "path": "<temporary-analysis-session>/target.apk",
+          "threads": 1,
+          "resources": "full"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"state\":\"LOADED\",\"apk_path\":\"<temporary-analysis-session>/target.apk\",\"class_count\":485,\"raw_class_count\":485,\"resource_count\":264,\"load_duration_ms\":1906,\"decompile_timeout_ms\":90000,\"threads\":1,\"code_cache_size\":64,\"resources\":\"full\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_class_summary",
+        "input": {
+          "class_name": "b1"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"methods\":[{\"is_constructor\":true,\"name\":\"<init>\",\"def_pos\":0,\"signature\":\"<init>(s1, int): void\",\"dex_descriptor\":\"(Ls1;I)V\"},{\"is_constructor\":false,\"name\":\"a\",\"def_pos\":0,\"signature\":\"a(): java.lang.Object\",\"dex_descriptor\":\"()Ljava/lang/Object;\"}],\"fields\":[{\"def_pos\":0,\"type\":\"int\",\"name\":\"a\"},{\"def_pos\":0,\"type\":\"s1\",\"name\":\"b\"}],\"raw_name\":\"b1\",\"method_count\":2,\"full_name\":\"defpackage.b1\",\"field_count\":2,\"name\":\"b1\",\"inner_class_count\":0,\"inner_classes\":[]}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_method_body",
+        "input": {
+          "class_name": "b1",
+          "method_name": "a",
+          "overload_index": 0,
+          "smali_fallback": true
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"mode\":\"java\",\"class_name\":\"defpackage.b1\",\"dex_descriptor\":\"()Ljava/lang/Object;\",\"overload_count\":1,\"method_name\":\"a\",\"overload_index\":0,\"full_name\":\"b1.a\",\"fell_back\":false,\"markers\":[],\"body\":\"    @Override // defpackage.y5\\n    public final Object a() {\\n        int i = this.a;\\n        s1 s1Var = this.b;\\n        switch (i) {\\n            case 0:\\n                return r4.C.p(s1Var.a);\\n            default:\\n                int i2 = 0;\\n                if (((z0) s1Var.f).b(\\\"apps\\\", false)) {\\n                    Context context = s1Var.a;\\n                    Handler handler = s1Var.b;\\n                    ArrayList arrayListS = k8.S(context);\\n                    final boolean zB = ((z0) s1Var.f).b(\\\"apps_home\\\", true);\\n                    handler.getClass();\\n                    if (!arrayListS.isEmpty()) {\\n                        final Context applicationContext = context.getApplicationContext();\\n                        Guard guard = Guard.INSTANCE;\\n                        applicationContext.getClass();\\n                        if (guard.offset(applicationContext) == 0) {\\n                            k8.f++;\\n                            final int i3 = k8.f;\\n                            k8.g = true;\\n                            ArrayList arrayList = new ArrayList(k3.n0(arrayListS));\\n                            int size = arrayListS.size();\\n                            long jS = 0;\\n                            int i4 = 0;\\n                            while (i4 < size) {\\n                                Object obj = arrayListS.get(i4);\\n                                i4++;\\n                                jS += ((long) pi.s(((e2) obj).b, 0, 120)) * 1000;\\n                                arrayList.add(Long.valueOf(jS));\\n                            }\\n                            int size2 = arrayListS.size();\\n                            int i5 = 0;\\n                            while (i5 < size2) {\\n                                Object obj2 = arrayListS.get(i5);\\n                                i5++;\\n                                int i6 = i2 + 1;\\n                                if (i2 < 0) {\\n                                    j3.m0();\\n                                    throw null;\\n                                }\\n                                handler.postDelayed(new u(i3, applicationContext, (e2) obj2), ((Number) arrayList.get(i2)).longValue());\\n                                i2 = i6;\\n                            }\\n                            handler.postDelayed(new Runnable() { // from class: v\\n                                @Override // java.lang.Runnable\\n                                public final void run() {\\n                                    Object ffVar;\\n                                    int i7 = i3;\\n                                    boolean z = zB;\\n                                    Context context2 = applicationContext;\\n                                    if (i7 != k8.f) {\\n                                        return;\\n                                    }\\n                                    k8.g = false;\\n                                    if (z) {\\n                                        try {\\n                                            context2.startActivity(new Intent(context2, (Class<?>) MainActivity.class).addFlags(805437440));\\n                                            ffVar = ti.a;\\n                                        } catch (Throwable th) {\\n                                            ffVar = new ff(th);\\n                                        }\\n                                        Throwable thA = gf.a(ffVar);\\n                                        if (thA != null) {\\n                                            Log.w(\\\"ReferencePanel.Autostart\\\", \\\"return home\\\", thA);\\n                                        }\\n                                    }\\n                                }\\n                            }, ((Number) i3.z0(arrayList)).longValue() + (zB ? 3000L : 500L));\\n                        }\\n                    }\\n                }\\n                return ti.a;\\n        }\\n    }\"}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "normalized_result": {
+    "engine": {
+      "name": "jadx-headless-mcp",
+      "version": "0.7.1",
+      "artifact_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+      "source_revision": "5844800a486d2248fa949b74c9896285f5b54de2",
+      "worker_count": 1,
+      "heap_limit_mib": 2048
+    },
+    "class_name": "defpackage.b1",
+    "method": {
+      "name": "a",
+      "reported_signature": "a(): java.lang.Object",
+      "overload_index": 0,
+      "is_constructor": false,
+      "dex_descriptor": "()Ljava/lang/Object;"
+    },
+    "overload_count": 1,
+    "representation": "java",
+    "body_status": "available",
+    "fell_back": false,
+    "markers": [],
+    "source": {
+      "status": "complete",
+      "text": "    @Override // defpackage.y5\n    public final Object a() {\n        int i = this.a;\n        s1 s1Var = this.b;\n        switch (i) {\n            case 0:\n                return r4.C.p(s1Var.a);\n            default:\n                int i2 = 0;\n                if (((z0) s1Var.f).b(\"apps\", false)) {\n                    Context context = s1Var.a;\n                    Handler handler = s1Var.b;\n                    ArrayList arrayListS = k8.S(context);\n                    final boolean zB = ((z0) s1Var.f).b(\"apps_home\", true);\n                    handler.getClass();\n                    if (!arrayListS.isEmpty()) {\n                        final Context applicationContext = context.getApplicationContext();\n                        Guard guard = Guard.INSTANCE;\n                        applicationContext.getClass();\n                        if (guard.offset(applicationContext) == 0) {\n                            k8.f++;\n                            final int i3 = k8.f;\n                            k8.g = true;\n                            ArrayList arrayList = new ArrayList(k3.n0(arrayListS));\n                            int size = arrayListS.size();\n                            long jS = 0;\n                            int i4 = 0;\n                            while (i4 < size) {\n                                Object obj = arrayListS.get(i4);\n                                i4++;\n                                jS += ((long) pi.s(((e2) obj).b, 0, 120)) * 1000;\n                                arrayList.add(Long.valueOf(jS));\n                            }\n                            int size2 = arrayListS.size();\n                            int i5 = 0;\n                            while (i5 < size2) {\n                                Object obj2 = arrayListS.get(i5);\n                                i5++;\n                                int i6 = i2 + 1;\n                                if (i2 < 0) {\n                                    j3.m0();\n                                    throw null;\n                                }\n                                handler.postDelayed(new u(i3, applicationContext, (e2) obj2), ((Number) arrayList.get(i2)).longValue());\n                                i2 = i6;\n                            }\n                            handler.postDelayed(new Runnable() { // from class: v\n                                @Override // java.lang.Runnable\n                                public final void run() {\n                                    Object ffVar;\n                                    int i7 = i3;\n                                    boolean z = zB;\n                                    Context context2 = applicationContext;\n                                    if (i7 != k8.f) {\n                                        return;\n                                    }\n                                    k8.g = false;\n                                    if (z) {\n                                        try {\n                                            context2.startActivity(new Intent(context2, (Class<?>) MainActivity.class).addFlags(805437440));\n                                            ffVar = ti.a;\n                                        } catch (Throwable th) {\n                                            ffVar = new ff(th);\n                                        }\n                                        Throwable thA = gf.a(ffVar);\n                                        if (thA != null) {\n                                            Log.w(\"ReferencePanel.Autostart\", \"return home\", thA);\n                                        }\n                                    }\n                                }\n                            }, ((Number) i3.z0(arrayList)).longValue() + (zB ? 3000L : 500L));\n                        }\n                    }\n                }\n                return ti.a;\n        }\n    }",
+      "reported_total_bytes": null
+    }
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Static decompiler observations do not establish runtime behavior; the APK is never executed.",
+    "Method signatures use provider display types; DEX prototypes come from frozen JADX metadata. Display names may be aliases, and overload indices are local to this engine and artifact.",
+    "Class inventories use parsed metadata before code generation, including synthetic members that may be omitted from decompiled source. Source positions remain unknown.",
+    "Incoming reference totals count JADX using nodes. Direct invoke entries within a using method report raw DEX code-unit offsets and method indexes, but coverage is limited to those nodes and directly matched invokes; it does not establish every possible dynamic or reflective call site.",
+    "Manifest summaries are parsed once by REA's bridge from the exact root AndroidManifest.xml resource, using namespace-aware XML attributes; decoded XML is retained. APK signatures, split APKs, native libraries and Android runtime capture are not verified by this provider."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

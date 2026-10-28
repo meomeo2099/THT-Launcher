@@ -1,0 +1,5 @@
+    #1              : (in Lb2;)
+      name          : 'b'
+      type          : 'Lorg/reference/panel/MainActivity;'
+      access        : 0x1011 (PUBLIC FINAL SYNTHETIC)
+  Direct methods    -

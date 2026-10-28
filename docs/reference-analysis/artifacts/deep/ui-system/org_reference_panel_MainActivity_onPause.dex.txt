@@ -1,0 +1,97 @@
+    #61              : (in Lorg/reference/panel/MainActivity;)
+      name          : 'onPause'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 5
+      ins           : 1
+      outs          : 2
+      insns size    : 55 16-bit code units
+0a0b48:                                        |[0a0b48] org.reference.panel.MainActivity.onPause:()V
+0a0b58: 6e10 4400 0400                         |0000: invoke-virtual {v4}, Landroid/app/Activity;.getWindow:()Landroid/view/Window; // method@0044
+0a0b5e: 0c00                                   |0003: move-result-object v0
+0a0b60: 6e10 3f03 0000                         |0004: invoke-virtual {v0}, Landroid/view/Window;.getDecorView:()Landroid/view/View; // method@033f
+0a0b66: 0c00                                   |0007: move-result-object v0
+0a0b68: 5441 d406                              |0008: iget-object v1, v4, Lorg/reference/panel/MainActivity;.k0:Lsa; // field@06d4
+0a0b6c: 6e20 f602 1000                         |000a: invoke-virtual {v0, v1}, Landroid/view/View;.removeCallbacks:(Ljava/lang/Runnable;)Z // method@02f6
+0a0b72: 6300 e205                              |000d: sget-boolean v0, Lq;.a:Z // field@05e2
+0a0b76: 1200                                   |000f: const/4 v0, #int 0 // #0
+0a0b78: 6a00 e205                              |0010: sput-boolean v0, Lq;.a:Z // field@05e2
+0a0b7c: 5441 ef06                              |0012: iget-object v1, v4, Lorg/reference/panel/MainActivity;.y:Lsc; // field@06ef
+0a0b80: 5512 6407                              |0014: iget-boolean v2, v1, Lsc;.b:Z // field@0764
+0a0b84: 3802 0900                              |0016: if-eqz v2, 001f // +0009
+0a0b88: 5512 6507                              |0018: iget-boolean v2, v1, Lsc;.c:Z // field@0765
+0a0b8c: 3802 0500                              |001a: if-eqz v2, 001f // +0005
+0a0b90: 1212                                   |001c: const/4 v2, #int 1 // #1
+0a0b92: 5c12 6607                              |001d: iput-boolean v2, v1, Lsc;.d:Z // field@0766
+0a0b96: 5441 eb06                              |001f: iget-object v1, v4, Lorg/reference/panel/MainActivity;.w:Ljava/util/ArrayList; // field@06eb
+0a0b9a: 6e10 2a08 0100                         |0021: invoke-virtual {v1}, Ljava/util/ArrayList;.size:()I // method@082a
+0a0ba0: 0a02                                   |0024: move-result v2
+0a0ba2: 3520 0e00                              |0025: if-ge v0, v2, 0033 // +000e
+0a0ba6: 6e20 2108 0100                         |0027: invoke-virtual {v1, v0}, Ljava/util/ArrayList;.get:(I)Ljava/lang/Object; // method@0821
+0a0bac: 0c03                                   |002a: move-result-object v3
+0a0bae: d800 0001                              |002b: add-int/lit8 v0, v0, #int 1 // #01
+0a0bb2: 1f03 1a03                              |002d: check-cast v3, Lorg/reference/panel/b; // type@031a
+0a0bb6: 6e10 d40c 0300                         |002f: invoke-virtual {v3}, Lorg/reference/panel/b;.f:()V // method@0cd4
+0a0bbc: 28f3                                   |0032: goto 0025 // -000d
+0a0bbe: 6f10 4f00 0400                         |0033: invoke-super {v4}, Landroid/app/Activity;.onPause:()V // method@004f
+0a0bc4: 0e00                                   |0036: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+      locals        :
+        0x0000 - 0x0037 reg=4 this Lorg/reference/panel/MainActivity;

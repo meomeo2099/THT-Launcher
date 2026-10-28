@@ -1,0 +1,187 @@
+Class #529            -
+  Class descriptor  : 'Ly6;'
+  Access flags      : 0x0011 (PUBLIC FINAL)
+  Superclass        : 'Ljava/lang/Object;'
+  Interfaces        -
+  Static fields     -
+  Instance fields   -
+    #0              : (in Ly6;)
+      name          : 'a'
+      type          : 'Landroid/content/Context;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #1              : (in Ly6;)
+      name          : 'b'
+      type          : 'Landroid/location/LocationManager;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #2              : (in Ly6;)
+      name          : 'c'
+      type          : 'Landroid/location/Location;'
+      access        : 0x0041 (PUBLIC VOLATILE)
+    #3              : (in Ly6;)
+      name          : 'd'
+      type          : 'Z'
+      access        : 0x0001 (PUBLIC)
+    #4              : (in Ly6;)
+      name          : 'e'
+      type          : 'Lx6;'
+      access        : 0x0011 (PUBLIC FINAL)
+  Direct methods    -
+    #0              : (in Ly6;)
+      name          : '<init>'
+      type          : '(Landroid/content/Context;)V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      code          -
+      registers     : 3
+      ins           : 2
+      outs          : 3
+      insns size    : 24 16-bit code units
+03fc38:                                        |[03fc38] y6.<init>:(Landroid/content/Context;)V
+03fc48: 7010 8707 0100                         |0000: invoke-direct {v1}, Ljava/lang/Object;.<init>:()V // method@0787
+03fc4e: 5b12 d508                              |0003: iput-object v2, v1, Ly6;.a:Landroid/content/Context; // field@08d5
+03fc52: 1c00 9400                              |0005: const-class v0, Landroid/location/LocationManager; // type@0094
+03fc56: 6e20 c500 0200                         |0007: invoke-virtual {v2, v0}, Landroid/content/Context;.getSystemService:(Ljava/lang/Class;)Ljava/lang/Object; // method@00c5
+03fc5c: 0c02                                   |000a: move-result-object v2
+03fc5e: 1f02 9400                              |000b: check-cast v2, Landroid/location/LocationManager; // type@0094
+03fc62: 5b12 d608                              |000d: iput-object v2, v1, Ly6;.b:Landroid/location/LocationManager; // field@08d6
+03fc66: 2202 8b03                              |000f: new-instance v2, Lx6; // type@038b
+03fc6a: 1200                                   |0011: const/4 v0, #int 0 // #0
+03fc6c: 7030 d60e 0201                         |0012: invoke-direct {v2, v0, v1}, Lx6;.<init>:(ILjava/lang/Object;)V // method@0ed6
+03fc72: 5b12 d908                              |0015: iput-object v2, v1, Ly6;.e:Lx6; // field@08d9
+03fc76: 0e00                                   |0017: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+      locals        :
+        0x0000 - 0x0018 reg=1 this Ly6;
+        0x0000 - 0x0018 reg=2 (null) Landroid/content/Context;
+
+  Virtual methods   -
+    #0              : (in Ly6;)
+      name          : 'a'
+      type          : '(ZLandroid/os/Looper;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 10
+      ins           : 3
+      outs          : 7
+      insns size    : 53 16-bit code units
+03fc78:                                        |[03fc78] y6.a:(ZLandroid/os/Looper;)V
+03fc88: 5570 d808                              |0000: iget-boolean v0, v7, Ly6;.d:Z // field@08d8
+03fc8c: 3308 0300                              |0002: if-ne v8, v0, 0005 // +0003
+03fc90: 2830                                   |0004: goto 0034 // +0030
+03fc92: 5470 d608                              |0005: iget-object v0, v7, Ly6;.b:Landroid/location/LocationManager; // field@08d6
+03fc96: 3908 1000                              |0007: if-nez v8, 0017 // +0010
+03fc9a: 3800 0700                              |0009: if-eqz v0, 0010 // +0007
+03fc9e: 5478 d908                              |000b: iget-object v8, v7, Ly6;.e:Lx6; // field@08d9
+03fca2: 6e20 e801 8000                         |000d: invoke-virtual {v0, v8}, Landroid/location/LocationManager;.removeUpdates:(Landroid/location/LocationListener;)V // method@01e8
+03fca8: 1208                                   |0010: const/4 v8, #int 0 // #0
+03fcaa: 5c78 d808                              |0011: iput-boolean v8, v7, Ly6;.d:Z // field@08d8
+03fcae: 1208                                   |0013: const/4 v8, #int 0 // #0
+03fcb0: 5b78 d708                              |0014: iput-object v8, v7, Ly6;.c:Landroid/location/Location; // field@08d7
+03fcb4: 0e00                                   |0016: return-void
+03fcb6: 3800 1d00                              |0017: if-eqz v0, 0034 // +001d
+03fcba: 5478 d508                              |0019: iget-object v8, v7, Ly6;.a:Landroid/content/Context; // field@08d5
+03fcbe: 1a00 0309                              |001b: const-string v0, "android.permission.ACCESS_FINE_LOCATION" // string@0903
+03fcc2: 6e20 b500 0800                         |001d: invoke-virtual {v8, v0}, Landroid/content/Context;.checkSelfPermission:(Ljava/lang/String;)I // method@00b5
+03fcc8: 0a08                                   |0020: move-result v8
+03fcca: 3808 0300                              |0021: if-eqz v8, 0024 // +0003
+03fcce: 2811                                   |0023: goto 0034 // +0011
+03fcd0: 5470 d608                              |0024: iget-object v0, v7, Ly6;.b:Landroid/location/LocationManager; // field@08d6
+03fcd4: 1a01 4e0d                              |0026: const-string v1, "gps" // string@0d4e
+03fcd8: 5475 d908                              |0028: iget-object v5, v7, Ly6;.e:Lx6; // field@08d9
+03fcdc: 1602 e803                              |002a: const-wide/16 v2, #int 1000 // #3e8
+03fce0: 1204                                   |002c: const/4 v4, #int 0 // #0
+03fce2: 0796                                   |002d: move-object v6, v9
+03fce4: 7407 e901 0000                         |002e: invoke-virtual/range {v0, v1, v2, v3, v4, v5, v6}, Landroid/location/LocationManager;.requestLocationUpdates:(Ljava/lang/String;JFLandroid/location/LocationListener;Landroid/os/Looper;)V // method@01e9
+03fcea: 1218                                   |0031: const/4 v8, #int 1 // #1
+03fcec: 5c78 d808                              |0032: iput-boolean v8, v7, Ly6;.d:Z // field@08d8
+03fcf0: 0e00                                   |0034: return-void
+      catches       : 2
+        0x000b - 0x0010
+          <any> -> 0x0010
+        0x0024 - 0x0034
+          Ljava/lang/SecurityException; -> 0x0034
+          Ljava/lang/IllegalArgumentException; -> 0x0034
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+      locals        :
+        0x0000 - 0x0035 reg=7 this Ly6;
+        0x0000 - 0x0035 reg=8 (null) Z
+        0x0000 - 0x0035 reg=9 (null) Landroid/os/Looper;
+
+  source_file_idx   : 4152 (r8-map-id-df02db20992efcdad8c8628fa158af402193d9214b2257c75897211101eb46a6)

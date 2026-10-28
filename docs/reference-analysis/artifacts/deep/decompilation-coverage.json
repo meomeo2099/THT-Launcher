@@ -1,0 +1,647 @@
+[
+  {
+    "file": "a.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "a7.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "ab.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "ai.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "aj.java",
+    "warning_markers": 14,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "b2.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "b3.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "ba.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "bc.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "c4.java",
+    "warning_markers": 27,
+    "unavailable_or_error_markers": [
+      {
+        "line": 440,
+        "text": "Method dump skipped, instruction units count: 1193"
+      },
+      {
+        "line": 443,
+        "text": "throw new UnsupportedOperationException(\"Method not decompiled: defpackage.c4.onTouchEvent(android.view.MotionEvent):boolean\");"
+      }
+    ]
+  },
+  {
+    "file": "cj.java",
+    "warning_markers": 35,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "d9.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "e.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "e7.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "eh.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "ej.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "f5.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "fe.java",
+    "warning_markers": 3,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "gc.java",
+    "warning_markers": 37,
+    "unavailable_or_error_markers": [
+      {
+        "line": 1099,
+        "text": "/*  JADX ERROR: Types fix failed"
+      },
+      {
+        "line": 1118,
+        "text": "Method dump skipped, instruction units count: 769"
+      },
+      {
+        "line": 1121,
+        "text": "throw new UnsupportedOperationException(\"Method not decompiled: defpackage.gc.d():void\");"
+      }
+    ]
+  },
+  {
+    "file": "gd.java",
+    "warning_markers": 21,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "h2.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "h5.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "hd.java",
+    "warning_markers": 7,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "i0.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "i4.java",
+    "warning_markers": 16,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "id.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "ie.java",
+    "warning_markers": 0,
+    "unavailable_or_error_markers": [
+      {
+        "line": 295,
+        "text": "/*  JADX ERROR: Method code generation error"
+      },
+      {
+        "line": 329,
+        "text": "Method dump skipped, instruction units count: 1780"
+      },
+      {
+        "line": 332,
+        "text": "throw new UnsupportedOperationException(\"Method not decompiled: defpackage.ie.onDraw(android.graphics.Canvas):void\");"
+      }
+    ]
+  },
+  {
+    "file": "j9.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "jh.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "k8.java",
+    "warning_markers": 69,
+    "unavailable_or_error_markers": [
+      {
+        "line": 10306,
+        "text": "/*  JADX ERROR: Method code generation error"
+      },
+      {
+        "line": 10360,
+        "text": "Method dump skipped, instruction units count: 7546"
+      },
+      {
+        "line": 10363,
+        "text": "throw new UnsupportedOperationException(\"Method not decompiled: defpackage.k8.u0(org.reference.panel.MainActivity):android.widget.FrameLayout\");"
+      }
+    ]
+  },
+  {
+    "file": "k9.java",
+    "warning_markers": 5,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "l.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "l0.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": [
+      {
+        "line": 208,
+        "text": "/*  JADX ERROR: JadxOverflowException in pass: LoopRegionVisitor"
+      },
+      {
+        "line": 216,
+        "text": "Method dump skipped, instruction units count: 468"
+      },
+      {
+        "line": 219,
+        "text": "throw new UnsupportedOperationException(\"Method not decompiled: defpackage.l0.g(android.content.Context, k0, q0):java.io.File\");"
+      }
+    ]
+  },
+  {
+    "file": "l5.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "l7.java",
+    "warning_markers": 17,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "m5.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "m9.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "md.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "mi.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "n1.java",
+    "warning_markers": 5,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "n7.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "nb.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "ni.java",
+    "warning_markers": 33,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "nj.java",
+    "warning_markers": 9,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "o0.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "ob.java",
+    "warning_markers": 8,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "p0.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "p1.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "p3.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "p4.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "p8.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "p9.java",
+    "warning_markers": 6,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "pd.java",
+    "warning_markers": 7,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "pi.java",
+    "warning_markers": 51,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "q0.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "q7.java",
+    "warning_markers": 9,
+    "unavailable_or_error_markers": [
+      {
+        "line": 369,
+        "text": "Method dump skipped, instruction units count: 646"
+      },
+      {
+        "line": 372,
+        "text": "throw new UnsupportedOperationException(\"Method not decompiled: defpackage.q7.onTouchEvent(android.view.MotionEvent):boolean\");"
+      }
+    ]
+  },
+  {
+    "file": "q8.java",
+    "warning_markers": 3,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "qa.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "qb.java",
+    "warning_markers": 3,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "qf.java",
+    "warning_markers": 159,
+    "unavailable_or_error_markers": [
+      {
+        "line": 3138,
+        "text": "/*  JADX ERROR: Types fix failed"
+      },
+      {
+        "line": 3158,
+        "text": "Method dump skipped, instruction units count: 1282"
+      },
+      {
+        "line": 3161,
+        "text": "throw new UnsupportedOperationException(\"Method not decompiled: defpackage.qf.onDraw(android.graphics.Canvas):void\");"
+      }
+    ]
+  },
+  {
+    "file": "qg.java",
+    "warning_markers": 4,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "r1.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "r4.java",
+    "warning_markers": 62,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "r7.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "r8.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "r9.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "rc.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "rj.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "org/reference/panel/MainActivity.java",
+    "warning_markers": 121,
+    "unavailable_or_error_markers": [
+      {
+        "line": 1185,
+        "text": "Method dump skipped, instruction units count: 820"
+      },
+      {
+        "line": 1188,
+        "text": "throw new UnsupportedOperationException(\"Method not decompiled: org.reference.panel.MainActivity.O(java.lang.String):yc\");"
+      },
+      {
+        "line": 1210,
+        "text": "Method dump skipped, instruction units count: 1578"
+      },
+      {
+        "line": 1213,
+        "text": "throw new UnsupportedOperationException(\"Method not decompiled: org.reference.panel.MainActivity.P(java.lang.String):android.view.View\");"
+      },
+      {
+        "line": 2759,
+        "text": "Method dump skipped, instruction units count: 2414"
+      },
+      {
+        "line": 2762,
+        "text": "throw new UnsupportedOperationException(\"Method not decompiled: org.reference.panel.MainActivity.g0(int, java.lang.String):void\");"
+      }
+    ]
+  },
+  {
+    "file": "org/reference/panel/MusicNotificationListener.java",
+    "warning_markers": 7,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "org/reference/panel/NavigationAssistService.java",
+    "warning_markers": 8,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "org/reference/panel/b.java",
+    "warning_markers": 5,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "s1.java",
+    "warning_markers": 27,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "s7.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "sa.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "sh.java",
+    "warning_markers": 4,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "t.java",
+    "warning_markers": 9,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "t2.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "t7.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "tg.java",
+    "warning_markers": 3,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "u2.java",
+    "warning_markers": 6,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "u3.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "u8.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "uh.java",
+    "warning_markers": 11,
+    "unavailable_or_error_markers": [
+      {
+        "line": 77,
+        "text": "Method dump skipped, instruction units count: 236"
+      },
+      {
+        "line": 80,
+        "text": "throw new UnsupportedOperationException(\"Method not decompiled: defpackage.uh.d(java.lang.String):java.util.List\");"
+      }
+    ]
+  },
+  {
+    "file": "uj.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "v1.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "v2.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "vj.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "w2.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "wc.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "x6.java",
+    "warning_markers": 4,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "xb.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "xd.java",
+    "warning_markers": 31,
+    "unavailable_or_error_markers": [
+      {
+        "line": 52,
+        "text": "Method dump skipped, instruction units count: 210"
+      },
+      {
+        "line": 55,
+        "text": "throw new UnsupportedOperationException(\"Method not decompiled: defpackage.xd.a(java.lang.String, org.reference.panel.MainActivity):void\");"
+      }
+    ]
+  },
+  {
+    "file": "xi.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "y1.java",
+    "warning_markers": 3,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "y2.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "y8.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "za.java",
+    "warning_markers": 16,
+    "unavailable_or_error_markers": [
+      {
+        "line": 39,
+        "text": "Method dump skipped, instruction units count: 1860"
+      },
+      {
+        "line": 42,
+        "text": "throw new UnsupportedOperationException(\"Method not decompiled: defpackage.za.a():java.lang.Object\");"
+      }
+    ]
+  },
+  {
+    "file": "zc.java",
+    "warning_markers": 5,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "zd.java",
+    "warning_markers": 1,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "ze.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  },
+  {
+    "file": "zj.java",
+    "warning_markers": 2,
+    "unavailable_or_error_markers": []
+  }
+]

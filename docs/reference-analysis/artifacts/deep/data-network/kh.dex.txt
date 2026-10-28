@@ -1,0 +1,1694 @@
+Class #244            -
+  Class descriptor  : 'Lkh;'
+  Access flags      : 0x0011 (PUBLIC FINAL)
+  Superclass        : 'Landroid/database/sqlite/SQLiteOpenHelper;'
+  Interfaces        -
+  Static fields     -
+    #0              : (in Lkh;)
+      name          : 'a'
+      type          : 'Ljava/text/SimpleDateFormat;'
+      access        : 0x0019 (PUBLIC STATIC FINAL)
+  Instance fields   -
+  Direct methods    -
+    #0              : (in Lkh;)
+      name          : '<clinit>'
+      type          : '()V'
+      access        : 0x10008 (STATIC CONSTRUCTOR)
+      code          -
+      registers     : 3
+      ins           : 0
+      outs          : 3
+      insns size    : 12 16-bit code units
+07bf58:                                        |[07bf58] kh.<clinit>:()V
+07bf68: 2200 2b02                              |0000: new-instance v0, Ljava/text/SimpleDateFormat; // type@022b
+07bf6c: 1a01 ad14                              |0002: const-string v1, "yyyy-MM-dd" // string@14ad
+07bf70: 6202 6503                              |0004: sget-object v2, Ljava/util/Locale;.US:Ljava/util/Locale; // field@0365
+07bf74: 7030 fe07 1002                         |0006: invoke-direct {v0, v1, v2}, Ljava/text/SimpleDateFormat;.<init>:(Ljava/lang/String;Ljava/util/Locale;)V // method@07fe
+07bf7a: 6900 c803                              |0009: sput-object v0, Lkh;.a:Ljava/text/SimpleDateFormat; // field@03c8
+07bf7e: 0e00                                   |000b: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+      locals        :
+
+    #1              : (in Lkh;)
+      name          : '<init>'
+      type          : '(Landroid/content/Context;)V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      code          -
+      registers     : 5
+      ins           : 2
+      outs          : 5
+      insns size    : 12 16-bit code units
+07bf80:                                        |[07bf80] kh.<init>:(Landroid/content/Context;)V
+07bf90: 6e10 b700 0400                         |0000: invoke-virtual {v4}, Landroid/content/Context;.getApplicationContext:()Landroid/content/Context; // method@00b7
+07bf96: 0c04                                   |0003: move-result-object v4
+07bf98: 1200                                   |0004: const/4 v0, #int 0 // #0
+07bf9a: 1221                                   |0005: const/4 v1, #int 2 // #2
+07bf9c: 1a02 d412                              |0006: const-string v2, "stats.db" // string@12d4
+07bfa0: 7051 3401 4302                         |0008: invoke-direct {v3, v4, v2, v0, v1}, Landroid/database/sqlite/SQLiteOpenHelper;.<init>:(Landroid/content/Context;Ljava/lang/String;Landroid/database/sqlite/SQLiteDatabase$CursorFactory;I)V // method@0134
+07bfa6: 0e00                                   |000b: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+      locals        :
+        0x0000 - 0x000c reg=3 this Lkh;
+        0x0000 - 0x000c reg=4 (null) Landroid/content/Context;
+
+    #2              : (in Lkh;)
+      name          : 'f'
+      type          : '(Lkh;JJ)Ljava/util/ArrayList;'
+      access        : 0x0009 (PUBLIC STATIC)
+      code          -
+      registers     : 21
+      ins           : 5
+      outs          : 13
+      insns size    : 110 16-bit code units
+07bb60:                                        |[07bb60] kh.f:(Lkh;JJ)Ljava/util/ArrayList;
+07bb70: 7401 8a07 1000                         |0000: invoke-virtual/range {v16}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+07bb76: 2200 3302                              |0003: new-instance v0, Ljava/util/ArrayList; // type@0233
+07bb7a: 7010 1908 0000                         |0005: invoke-direct {v0}, Ljava/util/ArrayList;.<init>:()V // method@0819
+07bb80: 7401 3501 1000                         |0008: invoke-virtual/range {v16}, Landroid/database/sqlite/SQLiteOpenHelper;.getReadableDatabase:()Landroid/database/sqlite/SQLiteDatabase; // method@0135
+07bb86: 0c01                                   |000b: move-result-object v1
+07bb88: 7702 b007 1100                         |000c: invoke-static/range {v17, v18}, Ljava/lang/String;.valueOf:(J)Ljava/lang/String; // method@07b0
+07bb8e: 0c02                                   |000f: move-result-object v2
+07bb90: 7702 b007 1300                         |0010: invoke-static/range {v19, v20}, Ljava/lang/String;.valueOf:(J)Ljava/lang/String; // method@07b0
+07bb96: 0c03                                   |0013: move-result-object v3
+07bb98: 1304 2800                              |0014: const/16 v4, #int 40 // #28
+07bb9c: 7110 af07 0400                         |0016: invoke-static {v4}, Ljava/lang/String;.valueOf:(I)Ljava/lang/String; // method@07af
+07bba2: 0c04                                   |0019: move-result-object v4
+07bba4: 2430 e403 3204                         |001a: filled-new-array {v2, v3, v4}, [Ljava/lang/String; // type@03e4
+07bbaa: 0c02                                   |001d: move-result-object v2
+07bbac: 1a03 d406                              |001e: const-string v3, "SELECT id, startedAt, endedAt, distanceKm, driveSec, idleSec,\n       maxSpeed, avgConsumption, fuelUsedL\nFROM trips WHERE endedAt >= ? AND endedAt < ?\nORDER BY endedAt DESC LIMIT ?" // string@06d4
+07bbb0: 6e30 3201 3102                         |0020: invoke-virtual {v1, v3, v2}, Landroid/database/sqlite/SQLiteDatabase;.rawQuery:(Ljava/lang/String;[Ljava/lang/String;)Landroid/database/Cursor; // method@0132
+07bbb6: 0c01                                   |0023: move-result-object v1
+07bbb8: 7210 2a01 0100                         |0024: invoke-interface {v1}, Landroid/database/Cursor;.moveToNext:()Z // method@012a
+07bbbe: 0a02                                   |0027: move-result v2
+07bbc0: 3802 3c00                              |0028: if-eqz v2, 0064 // +003c
+07bbc4: 2203 8a02                              |002a: new-instance v3, Lli; // type@028a
+07bbc8: 1202                                   |002c: const/4 v2, #int 0 // #0
+07bbca: 7220 2701 2100                         |002d: invoke-interface {v1, v2}, Landroid/database/Cursor;.getLong:(I)J // method@0127
+07bbd0: 0b04                                   |0030: move-result-wide v4
+07bbd2: 1212                                   |0031: const/4 v2, #int 1 // #1
+07bbd4: 7220 2701 2100                         |0032: invoke-interface {v1, v2}, Landroid/database/Cursor;.getLong:(I)J // method@0127
+07bbda: 0b06                                   |0035: move-result-wide v6
+07bbdc: 1222                                   |0036: const/4 v2, #int 2 // #2
+07bbde: 7220 2701 2100                         |0037: invoke-interface {v1, v2}, Landroid/database/Cursor;.getLong:(I)J // method@0127
+07bbe4: 0b08                                   |003a: move-result-wide v8
+07bbe6: 1232                                   |003b: const/4 v2, #int 3 // #3
+07bbe8: 7220 2501 2100                         |003c: invoke-interface {v1, v2}, Landroid/database/Cursor;.getFloat:(I)F // method@0125
+07bbee: 0a0a                                   |003f: move-result v10
+07bbf0: 1242                                   |0040: const/4 v2, #int 4 // #4
+07bbf2: 7220 2601 2100                         |0041: invoke-interface {v1, v2}, Landroid/database/Cursor;.getInt:(I)I // method@0126
+07bbf8: 0a0b                                   |0044: move-result v11
+07bbfa: 1252                                   |0045: const/4 v2, #int 5 // #5
+07bbfc: 7220 2601 2100                         |0046: invoke-interface {v1, v2}, Landroid/database/Cursor;.getInt:(I)I // method@0126
+07bc02: 0a0c                                   |0049: move-result v12
+07bc04: 1262                                   |004a: const/4 v2, #int 6 // #6
+07bc06: 7220 2601 2100                         |004b: invoke-interface {v1, v2}, Landroid/database/Cursor;.getInt:(I)I // method@0126
+07bc0c: 0a0d                                   |004e: move-result v13
+07bc0e: 1272                                   |004f: const/4 v2, #int 7 // #7
+07bc10: 7220 2501 2100                         |0050: invoke-interface {v1, v2}, Landroid/database/Cursor;.getFloat:(I)F // method@0125
+07bc16: 0a0e                                   |0053: move-result v14
+07bc18: 1302 0800                              |0054: const/16 v2, #int 8 // #8
+07bc1c: 7220 2501 2100                         |0056: invoke-interface {v1, v2}, Landroid/database/Cursor;.getFloat:(I)F // method@0125
+07bc22: 0a0f                                   |0059: move-result v15
+07bc24: 760d cf09 0300                         |005a: invoke-direct/range {v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15}, Lli;.<init>:(JJJFIIIFF)V // method@09cf
+07bc2a: 6e20 1d08 3000                         |005d: invoke-virtual {v0, v3}, Ljava/util/ArrayList;.add:(Ljava/lang/Object;)Z // method@081d
+07bc30: 28c4                                   |0060: goto 0024 // -003c
+07bc32: 0d00                                   |0061: move-exception v0
+07bc34: 0702                                   |0062: move-object v2, v0
+07bc36: 2805                                   |0063: goto 0068 // +0005
+07bc38: 7210 f106 0100                         |0064: invoke-interface {v1}, Ljava/io/Closeable;.close:()V // method@06f1
+07bc3e: 1100                                   |0067: return-object v0
+07bc40: 2702                                   |0068: throw v2
+07bc42: 0d00                                   |0069: move-exception v0
+07bc44: 7120 3809 2100                         |006a: invoke-static {v1, v2}, Lk8;.p:(Ljava/io/Closeable;Ljava/lang/Throwable;)V // method@0938
+07bc4a: 2700                                   |006d: throw v0
+      catches       : 2
+        0x0024 - 0x0060
+          <any> -> 0x0061
+        0x0068 - 0x0069
+          <any> -> 0x0069
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+        0x0042 line=67
+        0x0043 line=68
+        0x0044 line=69
+        0x0045 line=70
+        0x0046 line=71
+        0x0047 line=72
+        0x0048 line=73
+        0x0049 line=74
+        0x004a line=75
+        0x004b line=76
+        0x004c line=77
+        0x004d line=78
+        0x004e line=79
+        0x004f line=80
+        0x0050 line=81
+        0x0051 line=82
+        0x0052 line=83
+        0x0053 line=84
+        0x0054 line=85
+        0x0055 line=86
+        0x0056 line=87
+        0x0057 line=88
+        0x0058 line=89
+        0x0059 line=90
+        0x005a line=91
+        0x005b line=92
+        0x005c line=93
+        0x005d line=94
+        0x005e line=95
+        0x005f line=96
+        0x0060 line=97
+        0x0061 line=98
+        0x0062 line=99
+        0x0063 line=100
+        0x0064 line=101
+        0x0065 line=102
+        0x0066 line=103
+        0x0067 line=104
+        0x0068 line=105
+        0x0069 line=106
+        0x006a line=107
+        0x006b line=108
+        0x006c line=109
+        0x006d line=110
+      locals        :
+        0x0000 - 0x006e reg=16 (null) Lkh;
+        0x0000 - 0x006e reg=17 (null) J
+        0x0000 - 0x006e reg=19 (null) J
+
+    #3              : (in Lkh;)
+      name          : 'g'
+      type          : '(Lkh;JJ)Ljava/util/ArrayList;'
+      access        : 0x0009 (PUBLIC STATIC)
+      code          -
+      registers     : 13
+      ins           : 5
+      outs          : 5
+      insns size    : 270 16-bit code units
+07bc64:                                        |[07bc64] kh.g:(Lkh;JJ)Ljava/util/ArrayList;
+07bc74: 6e10 8a07 0800                         |0000: invoke-virtual {v8}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+07bc7a: 2200 3302                              |0003: new-instance v0, Ljava/util/ArrayList; // type@0233
+07bc7e: 7010 1908 0000                         |0005: invoke-direct {v0}, Ljava/util/ArrayList;.<init>:()V // method@0819
+07bc84: 6e10 3501 0800                         |0008: invoke-virtual {v8}, Landroid/database/sqlite/SQLiteOpenHelper;.getReadableDatabase:()Landroid/database/sqlite/SQLiteDatabase; // method@0135
+07bc8a: 0c08                                   |000b: move-result-object v8
+07bc8c: 7120 b007 a900                         |000c: invoke-static {v9, v10}, Ljava/lang/String;.valueOf:(J)Ljava/lang/String; // method@07b0
+07bc92: 0c09                                   |000f: move-result-object v9
+07bc94: 7120 b007 cb00                         |0010: invoke-static {v11, v12}, Ljava/lang/String;.valueOf:(J)Ljava/lang/String; // method@07b0
+07bc9a: 0c0a                                   |0013: move-result-object v10
+07bc9c: 2420 e403 a900                         |0014: filled-new-array {v9, v10}, [Ljava/lang/String; // type@03e4
+07bca2: 0c09                                   |0017: move-result-object v9
+07bca4: 1a0a d706                              |0018: const-string v10, "SELECT ts, v, engine FROM voltage WHERE ts >= ? AND ts < ? ORDER BY ts" // string@06d7
+07bca8: 6e30 3201 a809                         |001a: invoke-virtual {v8, v10, v9}, Landroid/database/sqlite/SQLiteDatabase;.rawQuery:(Ljava/lang/String;[Ljava/lang/String;)Landroid/database/Cursor; // method@0132
+07bcae: 0c08                                   |001d: move-result-object v8
+07bcb0: 7210 2a01 0800                         |001e: invoke-interface {v8}, Landroid/database/Cursor;.moveToNext:()Z // method@012a
+07bcb6: 0a09                                   |0021: move-result v9
+07bcb8: 120a                                   |0022: const/4 v10, #int 0 // #0
+07bcba: 3809 1f00                              |0023: if-eqz v9, 0042 // +001f
+07bcbe: 2209 3003                              |0025: new-instance v9, Lsj; // type@0330
+07bcc2: 7220 2701 a800                         |0027: invoke-interface {v8, v10}, Landroid/database/Cursor;.getLong:(I)J // method@0127
+07bcc8: 0b0b                                   |002a: move-result-wide v11
+07bcca: 1211                                   |002b: const/4 v1, #int 1 // #1
+07bccc: 7220 2501 1800                         |002c: invoke-interface {v8, v1}, Landroid/database/Cursor;.getFloat:(I)F // method@0125
+07bcd2: 0a02                                   |002f: move-result v2
+07bcd4: 1223                                   |0030: const/4 v3, #int 2 // #2
+07bcd6: 7220 2601 3800                         |0031: invoke-interface {v8, v3}, Landroid/database/Cursor;.getInt:(I)I // method@0126
+07bcdc: 0a03                                   |0034: move-result v3
+07bcde: 3313 0300                              |0035: if-ne v3, v1, 0038 // +0003
+07bce2: 011a                                   |0037: move v10, v1
+07bce4: 705a 340d b92c                         |0038: invoke-direct {v9, v11, v12, v2, v10}, Lsj;.<init>:(JFZ)V // method@0d34
+07bcea: 6e20 1d08 9000                         |003b: invoke-virtual {v0, v9}, Ljava/util/ArrayList;.add:(Ljava/lang/Object;)Z // method@081d
+07bcf0: 28e0                                   |003e: goto 001e // -0020
+07bcf2: 0d09                                   |003f: move-exception v9
+07bcf4: 2900 c800                              |0040: goto/16 0108 // +00c8
+07bcf8: 7210 f106 0800                         |0042: invoke-interface {v8}, Ljava/io/Closeable;.close:()V // method@06f1
+07bcfe: 6e10 2a08 0000                         |0045: invoke-virtual {v0}, Ljava/util/ArrayList;.size:()I // method@082a
+07bd04: 0a08                                   |0048: move-result v8
+07bd06: 1309 6801                              |0049: const/16 v9, #int 360 // #168
+07bd0a: 3798 bc00                              |004b: if-le v8, v9, 0107 // +00bc
+07bd0e: 6e10 2a08 0000                         |004d: invoke-virtual {v0}, Ljava/util/ArrayList;.size:()I // method@082a
+07bd14: 0a08                                   |0050: move-result v8
+07bd16: 838b                                   |0051: int-to-double v11, v8
+07bd18: 1801 0000 0000 0080 6640               |0052: const-wide v1, #double 180 // #4066800000000000
+07bd22: ce1b                                   |0057: div-double/2addr v11, v1
+07bd24: 2208 3302                              |0058: new-instance v8, Ljava/util/ArrayList; // type@0233
+07bd28: 7020 1a08 9800                         |005a: invoke-direct {v8, v9}, Ljava/util/ArrayList;.<init>:(I)V // method@081a
+07bd2e: 1309 b400                              |005d: const/16 v9, #int 180 // #b4
+07bd32: 359a a700                              |005f: if-ge v10, v9, 0106 // +00a7
+07bd36: 83a1                                   |0061: int-to-double v1, v10
+07bd38: cdb1                                   |0062: mul-double/2addr v1, v11
+07bd3a: 8a19                                   |0063: double-to-int v9, v1
+07bd3c: 6e10 2a08 0000                         |0064: invoke-virtual {v0}, Ljava/util/ArrayList;.size:()I // method@082a
+07bd42: 0a01                                   |0067: move-result v1
+07bd44: d80a 0a01                              |0068: add-int/lit8 v10, v10, #int 1 // #01
+07bd48: 83a2                                   |006a: int-to-double v2, v10
+07bd4a: cdb2                                   |006b: mul-double/2addr v2, v11
+07bd4c: 8a22                                   |006c: double-to-int v2, v2
+07bd4e: 7120 7a07 2100                         |006d: invoke-static {v1, v2}, Ljava/lang/Math;.min:(II)I // method@077a
+07bd54: 0a01                                   |0070: move-result v1
+07bd56: d802 0901                              |0071: add-int/lit8 v2, v9, #int 1 // #01
+07bd5a: 3521 0300                              |0073: if-ge v1, v2, 0076 // +0003
+07bd5e: 0121                                   |0075: move v1, v2
+07bd60: 6e30 2b08 9001                         |0076: invoke-virtual {v0, v9, v1}, Ljava/util/ArrayList;.subList:(II)Ljava/util/List; // method@082b
+07bd66: 0c09                                   |0079: move-result-object v9
+07bd68: 7210 6607 0900                         |007a: invoke-interface {v9}, Ljava/lang/Iterable;.iterator:()Ljava/util/Iterator; // method@0766
+07bd6e: 0c01                                   |007d: move-result-object v1
+07bd70: 7210 5b08 0100                         |007e: invoke-interface {v1}, Ljava/util/Iterator;.hasNext:()Z // method@085b
+07bd76: 0a02                                   |0081: move-result v2
+07bd78: 1203                                   |0082: const/4 v3, #int 0 // #0
+07bd7a: 3902 0400                              |0083: if-nez v2, 0087 // +0004
+07bd7e: 0732                                   |0085: move-object v2, v3
+07bd80: 2828                                   |0086: goto 00ae // +0028
+07bd82: 7210 5c08 0100                         |0087: invoke-interface {v1}, Ljava/util/Iterator;.next:()Ljava/lang/Object; // method@085c
+07bd88: 0c02                                   |008a: move-result-object v2
+07bd8a: 7210 5b08 0100                         |008b: invoke-interface {v1}, Ljava/util/Iterator;.hasNext:()Z // method@085b
+07bd90: 0a04                                   |008e: move-result v4
+07bd92: 3904 0300                              |008f: if-nez v4, 0092 // +0003
+07bd96: 281d                                   |0091: goto 00ae // +001d
+07bd98: 0724                                   |0092: move-object v4, v2
+07bd9a: 1f04 3003                              |0093: check-cast v4, Lsj; // type@0330
+07bd9e: 5244 7f07                              |0095: iget v4, v4, Lsj;.b:F // field@077f
+07bda2: 7210 5c08 0100                         |0097: invoke-interface {v1}, Ljava/util/Iterator;.next:()Ljava/lang/Object; // method@085c
+07bda8: 0c05                                   |009a: move-result-object v5
+07bdaa: 0756                                   |009b: move-object v6, v5
+07bdac: 1f06 3003                              |009c: check-cast v6, Lsj; // type@0330
+07bdb0: 5266 7f07                              |009e: iget v6, v6, Lsj;.b:F // field@077f
+07bdb4: 7120 5307 6400                         |00a0: invoke-static {v4, v6}, Ljava/lang/Float;.compare:(FF)I // method@0753
+07bdba: 0a07                                   |00a3: move-result v7
+07bdbc: 3d07 0400                              |00a4: if-lez v7, 00a8 // +0004
+07bdc0: 0752                                   |00a6: move-object v2, v5
+07bdc2: 0164                                   |00a7: move v4, v6
+07bdc4: 7210 5b08 0100                         |00a8: invoke-interface {v1}, Ljava/util/Iterator;.hasNext:()Z // method@085b
+07bdca: 0a05                                   |00ab: move-result v5
+07bdcc: 3905 ebff                              |00ac: if-nez v5, 0097 // -0015
+07bdd0: 6e10 8a07 0200                         |00ae: invoke-virtual {v2}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+07bdd6: 0725                                   |00b1: move-object v5, v2
+07bdd8: 1f05 3003                              |00b2: check-cast v5, Lsj; // type@0330
+07bddc: 7210 6607 0900                         |00b4: invoke-interface {v9}, Ljava/lang/Iterable;.iterator:()Ljava/util/Iterator; // method@0766
+07bde2: 0c06                                   |00b7: move-result-object v6
+07bde4: 7210 5b08 0600                         |00b8: invoke-interface {v6}, Ljava/util/Iterator;.hasNext:()Z // method@085b
+07bdea: 0a09                                   |00bb: move-result v9
+07bdec: 3909 0300                              |00bc: if-nez v9, 00bf // +0003
+07bdf0: 2828                                   |00be: goto 00e6 // +0028
+07bdf2: 7210 5c08 0600                         |00bf: invoke-interface {v6}, Ljava/util/Iterator;.next:()Ljava/lang/Object; // method@085c
+07bdf8: 0c03                                   |00c2: move-result-object v3
+07bdfa: 7210 5b08 0600                         |00c3: invoke-interface {v6}, Ljava/util/Iterator;.hasNext:()Z // method@085b
+07be00: 0a09                                   |00c6: move-result v9
+07be02: 3909 0300                              |00c7: if-nez v9, 00ca // +0003
+07be06: 281d                                   |00c9: goto 00e6 // +001d
+07be08: 0739                                   |00ca: move-object v9, v3
+07be0a: 1f09 3003                              |00cb: check-cast v9, Lsj; // type@0330
+07be0e: 5299 7f07                              |00cd: iget v9, v9, Lsj;.b:F // field@077f
+07be12: 7210 5c08 0600                         |00cf: invoke-interface {v6}, Ljava/util/Iterator;.next:()Ljava/lang/Object; // method@085c
+07be18: 0c01                                   |00d2: move-result-object v1
+07be1a: 0712                                   |00d3: move-object v2, v1
+07be1c: 1f02 3003                              |00d4: check-cast v2, Lsj; // type@0330
+07be20: 5222 7f07                              |00d6: iget v2, v2, Lsj;.b:F // field@077f
+07be24: 7120 5307 2900                         |00d8: invoke-static {v9, v2}, Ljava/lang/Float;.compare:(FF)I // method@0753
+07be2a: 0a04                                   |00db: move-result v4
+07be2c: 3b04 0400                              |00dc: if-gez v4, 00e0 // +0004
+07be30: 0713                                   |00de: move-object v3, v1
+07be32: 0129                                   |00df: move v9, v2
+07be34: 7210 5b08 0600                         |00e0: invoke-interface {v6}, Ljava/util/Iterator;.hasNext:()Z // method@085b
+07be3a: 0a01                                   |00e3: move-result v1
+07be3c: 3901 ebff                              |00e4: if-nez v1, 00cf // -0015
+07be40: 6e10 8a07 0300                         |00e6: invoke-virtual {v3}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+07be46: 1f03 3003                              |00e9: check-cast v3, Lsj; // type@0330
+07be4a: 3335 0700                              |00eb: if-ne v5, v3, 00f2 // +0007
+07be4e: 6e20 1d08 5800                         |00ed: invoke-virtual {v8, v5}, Ljava/util/ArrayList;.add:(Ljava/lang/Object;)Z // method@081d
+07be54: 2900 6dff                              |00f0: goto/16 005d // -0093
+07be58: 5351 7e07                              |00f2: iget-wide v1, v5, Lsj;.a:J // field@077e
+07be5c: 5336 7e07                              |00f4: iget-wide v6, v3, Lsj;.a:J // field@077e
+07be60: 3109 0106                              |00f6: cmp-long v9, v1, v6
+07be64: 3c09 0a00                              |00f8: if-gtz v9, 0102 // +000a
+07be68: 6e20 1d08 5800                         |00fa: invoke-virtual {v8, v5}, Ljava/util/ArrayList;.add:(Ljava/lang/Object;)Z // method@081d
+07be6e: 6e20 1d08 3800                         |00fd: invoke-virtual {v8, v3}, Ljava/util/ArrayList;.add:(Ljava/lang/Object;)Z // method@081d
+07be74: 2900 5dff                              |0100: goto/16 005d // -00a3
+07be78: 6e20 1d08 3800                         |0102: invoke-virtual {v8, v3}, Ljava/util/ArrayList;.add:(Ljava/lang/Object;)Z // method@081d
+07be7e: 28e8                                   |0105: goto 00ed // -0018
+07be80: 1108                                   |0106: return-object v8
+07be82: 1100                                   |0107: return-object v0
+07be84: 2709                                   |0108: throw v9
+07be86: 0d0a                                   |0109: move-exception v10
+07be88: 7120 3809 9800                         |010a: invoke-static {v8, v9}, Lk8;.p:(Ljava/io/Closeable;Ljava/lang/Throwable;)V // method@0938
+07be8e: 270a                                   |010d: throw v10
+      catches       : 2
+        0x001e - 0x003e
+          <any> -> 0x003f
+        0x0108 - 0x0109
+          <any> -> 0x0109
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+        0x0042 line=67
+        0x0043 line=68
+        0x0044 line=69
+        0x0045 line=70
+        0x0046 line=71
+        0x0047 line=72
+        0x0048 line=73
+        0x0049 line=74
+        0x004a line=75
+        0x004b line=76
+        0x004c line=77
+        0x004d line=78
+        0x004e line=79
+        0x004f line=80
+        0x0050 line=81
+        0x0051 line=82
+        0x0052 line=83
+        0x0053 line=84
+        0x0054 line=85
+        0x0055 line=86
+        0x0056 line=87
+        0x0057 line=88
+        0x0058 line=89
+        0x0059 line=90
+        0x005a line=91
+        0x005b line=92
+        0x005c line=93
+        0x005d line=94
+        0x005e line=95
+        0x005f line=96
+        0x0060 line=97
+        0x0061 line=98
+        0x0062 line=99
+        0x0063 line=100
+        0x0064 line=101
+        0x0065 line=102
+        0x0066 line=103
+        0x0067 line=104
+        0x0068 line=105
+        0x0069 line=106
+        0x006a line=107
+        0x006b line=108
+        0x006c line=109
+        0x006d line=110
+        0x006e line=111
+        0x006f line=112
+        0x0070 line=113
+        0x0071 line=114
+        0x0072 line=115
+        0x0073 line=116
+        0x0074 line=117
+        0x0075 line=118
+        0x0076 line=119
+        0x0077 line=120
+        0x0078 line=121
+        0x0079 line=122
+        0x007a line=123
+        0x007b line=124
+        0x007c line=125
+        0x007d line=126
+        0x007e line=127
+        0x007f line=128
+        0x0080 line=129
+        0x0081 line=130
+        0x0082 line=131
+        0x0083 line=132
+        0x0084 line=133
+        0x0085 line=134
+        0x0086 line=135
+        0x0087 line=136
+        0x0088 line=137
+        0x0089 line=138
+        0x008a line=139
+        0x008b line=140
+        0x008c line=141
+        0x008d line=142
+        0x008e line=143
+        0x008f line=144
+        0x0090 line=145
+        0x0091 line=146
+        0x0092 line=147
+        0x0093 line=148
+        0x0094 line=149
+        0x0095 line=150
+        0x0096 line=151
+        0x0097 line=152
+        0x0098 line=153
+        0x0099 line=154
+        0x009a line=155
+        0x009b line=156
+        0x009c line=157
+        0x009d line=158
+        0x009e line=159
+        0x009f line=160
+        0x00a0 line=161
+        0x00a1 line=162
+        0x00a2 line=163
+        0x00a3 line=164
+        0x00a4 line=165
+        0x00a5 line=166
+        0x00a6 line=167
+        0x00a7 line=168
+        0x00a8 line=169
+        0x00a9 line=170
+        0x00aa line=171
+        0x00ab line=172
+        0x00ac line=173
+        0x00ad line=174
+        0x00ae line=175
+        0x00af line=176
+        0x00b0 line=177
+        0x00b1 line=178
+        0x00b2 line=179
+        0x00b3 line=180
+        0x00b4 line=181
+        0x00b5 line=182
+        0x00b6 line=183
+        0x00b7 line=184
+        0x00b8 line=185
+        0x00b9 line=186
+        0x00ba line=187
+        0x00bb line=188
+        0x00bc line=189
+        0x00bd line=190
+        0x00be line=191
+        0x00bf line=192
+        0x00c0 line=193
+        0x00c1 line=194
+        0x00c2 line=195
+        0x00c3 line=196
+        0x00c4 line=197
+        0x00c5 line=198
+        0x00c6 line=199
+        0x00c7 line=200
+        0x00c8 line=201
+        0x00c9 line=202
+        0x00ca line=203
+        0x00cb line=204
+        0x00cc line=205
+        0x00cd line=206
+        0x00ce line=207
+        0x00cf line=208
+        0x00d0 line=209
+        0x00d1 line=210
+        0x00d2 line=211
+        0x00d3 line=212
+        0x00d4 line=213
+        0x00d5 line=214
+        0x00d6 line=215
+        0x00d7 line=216
+        0x00d8 line=217
+        0x00d9 line=218
+        0x00da line=219
+        0x00db line=220
+        0x00dc line=221
+        0x00dd line=222
+        0x00de line=223
+        0x00df line=224
+        0x00e0 line=225
+        0x00e1 line=226
+        0x00e2 line=227
+        0x00e3 line=228
+        0x00e4 line=229
+        0x00e5 line=230
+        0x00e6 line=231
+        0x00e7 line=232
+        0x00e8 line=233
+        0x00e9 line=234
+        0x00ea line=235
+        0x00eb line=236
+        0x00ec line=237
+        0x00ed line=238
+        0x00ee line=239
+        0x00ef line=240
+        0x00f0 line=241
+        0x00f1 line=242
+        0x00f2 line=243
+        0x00f3 line=244
+        0x00f4 line=245
+        0x00f5 line=246
+        0x00f6 line=247
+        0x00f7 line=248
+        0x00f8 line=249
+        0x00f9 line=250
+        0x00fa line=251
+        0x00fb line=252
+        0x00fc line=253
+        0x00fd line=254
+        0x00fe line=255
+        0x00ff line=256
+        0x0100 line=257
+        0x0101 line=258
+        0x0102 line=259
+        0x0103 line=260
+        0x0104 line=261
+        0x0105 line=262
+        0x0106 line=263
+        0x0107 line=264
+        0x0108 line=265
+        0x0109 line=266
+        0x010a line=267
+        0x010b line=268
+        0x010c line=269
+        0x010d line=270
+      locals        :
+        0x0000 - 0x010e reg=8 (null) Lkh;
+        0x0000 - 0x010e reg=9 (null) J
+        0x0000 - 0x010e reg=11 (null) J
+
+  Virtual methods   -
+    #0              : (in Lkh;)
+      name          : 'a'
+      type          : '(JIFFFZZ)J'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 11
+      ins           : 9
+      outs          : 4
+      insns size    : 80 16-bit code units
+07bea8:                                        |[07bea8] kh.a:(JIFFFZZ)J
+07beb8: 2200 4100                              |0000: new-instance v0, Landroid/content/ContentValues; // type@0041
+07bebc: 7010 b000 0000                         |0002: invoke-direct {v0}, Landroid/content/ContentValues;.<init>:()V // method@00b0
+07bec2: 1a01 8e13                              |0005: const-string v1, "ts" // string@138e
+07bec6: 7120 6b07 4300                         |0007: invoke-static {v3, v4}, Ljava/lang/Long;.valueOf:(J)Ljava/lang/Long; // method@076b
+07becc: 0c03                                   |000a: move-result-object v3
+07bece: 6e30 b300 1003                         |000b: invoke-virtual {v0, v1, v3}, Landroid/content/ContentValues;.put:(Ljava/lang/String;Ljava/lang/Long;)V // method@00b3
+07bed4: 1a03 430f                              |000e: const-string v3, "odometerKm" // string@0f43
+07bed8: 7110 6507 0500                         |0010: invoke-static {v5}, Ljava/lang/Integer;.valueOf:(I)Ljava/lang/Integer; // method@0765
+07bede: 0c04                                   |0013: move-result-object v4
+07bee0: 6e30 b200 3004                         |0014: invoke-virtual {v0, v3, v4}, Landroid/content/ContentValues;.put:(Ljava/lang/String;Ljava/lang/Integer;)V // method@00b2
+07bee6: 1a03 ec0f                              |0017: const-string v3, "percentBefore" // string@0fec
+07beea: 7110 5807 0600                         |0019: invoke-static {v6}, Ljava/lang/Float;.valueOf:(F)Ljava/lang/Float; // method@0758
+07bef0: 0c04                                   |001c: move-result-object v4
+07bef2: 6e30 b100 3004                         |001d: invoke-virtual {v0, v3, v4}, Landroid/content/ContentValues;.put:(Ljava/lang/String;Ljava/lang/Float;)V // method@00b1
+07bef8: 1a03 eb0f                              |0020: const-string v3, "percentAfter" // string@0feb
+07befc: 7110 5807 0700                         |0022: invoke-static {v7}, Ljava/lang/Float;.valueOf:(F)Ljava/lang/Float; // method@0758
+07bf02: 0c04                                   |0025: move-result-object v4
+07bf04: 6e30 b100 3004                         |0026: invoke-virtual {v0, v3, v4}, Landroid/content/ContentValues;.put:(Ljava/lang/String;Ljava/lang/Float;)V // method@00b1
+07bf0a: 1a03 7a0e                              |0029: const-string v3, "liters" // string@0e7a
+07bf0e: 7110 5807 0800                         |002b: invoke-static {v8}, Ljava/lang/Float;.valueOf:(F)Ljava/lang/Float; // method@0758
+07bf14: 0c04                                   |002e: move-result-object v4
+07bf16: 6e30 b100 3004                         |002f: invoke-virtual {v0, v3, v4}, Landroid/content/ContentValues;.put:(Ljava/lang/String;Ljava/lang/Float;)V // method@00b1
+07bf1c: 1a03 210c                              |0032: const-string v3, "full" // string@0c21
+07bf20: 7110 6507 0900                         |0034: invoke-static {v9}, Ljava/lang/Integer;.valueOf:(I)Ljava/lang/Integer; // method@0765
+07bf26: 0c04                                   |0037: move-result-object v4
+07bf28: 6e30 b200 3004                         |0038: invoke-virtual {v0, v3, v4}, Landroid/content/ContentValues;.put:(Ljava/lang/String;Ljava/lang/Integer;)V // method@00b2
+07bf2e: 1a03 950e                              |003b: const-string v3, "manual" // string@0e95
+07bf32: 7110 6507 0a00                         |003d: invoke-static {v10}, Ljava/lang/Integer;.valueOf:(I)Ljava/lang/Integer; // method@0765
+07bf38: 0c04                                   |0040: move-result-object v4
+07bf3a: 6e30 b200 3004                         |0041: invoke-virtual {v0, v3, v4}, Landroid/content/ContentValues;.put:(Ljava/lang/String;Ljava/lang/Integer;)V // method@00b2
+07bf40: 6e10 3601 0200                         |0044: invoke-virtual {v2}, Landroid/database/sqlite/SQLiteOpenHelper;.getWritableDatabase:()Landroid/database/sqlite/SQLiteDatabase; // method@0136
+07bf46: 0c02                                   |0047: move-result-object v2
+07bf48: 1a03 8e10                              |0048: const-string v3, "refuels" // string@108e
+07bf4c: 1204                                   |004a: const/4 v4, #int 0 // #0
+07bf4e: 6e40 3001 3204                         |004b: invoke-virtual {v2, v3, v4, v0}, Landroid/database/sqlite/SQLiteDatabase;.insert:(Ljava/lang/String;Ljava/lang/String;Landroid/content/ContentValues;)J // method@0130
+07bf54: 0b02                                   |004e: move-result-wide v2
+07bf56: 1002                                   |004f: return-wide v2
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+        0x0042 line=67
+        0x0043 line=68
+        0x0044 line=69
+        0x0045 line=70
+        0x0046 line=71
+        0x0047 line=72
+        0x0048 line=73
+        0x0049 line=74
+        0x004a line=75
+        0x004b line=76
+        0x004c line=77
+        0x004d line=78
+        0x004e line=79
+        0x004f line=80
+      locals        :
+        0x0000 - 0x0050 reg=2 this Lkh;
+        0x0000 - 0x0050 reg=3 (null) J
+        0x0000 - 0x0050 reg=5 (null) I
+        0x0000 - 0x0050 reg=6 (null) F
+        0x0000 - 0x0050 reg=7 (null) F
+        0x0000 - 0x0050 reg=8 (null) F
+        0x0000 - 0x0050 reg=9 (null) Z
+        0x0000 - 0x0050 reg=10 (null) Z
+
+    #1              : (in Lkh;)
+      name          : 'b'
+      type          : '()Ljava/util/ArrayList;'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 15
+      ins           : 1
+      outs          : 11
+      insns size    : 113 16-bit code units
+07ba54:                                        |[07ba54] kh.b:()Ljava/util/ArrayList;
+07ba64: 2200 3302                              |0000: new-instance v0, Ljava/util/ArrayList; // type@0233
+07ba68: 7010 1908 0000                         |0002: invoke-direct {v0}, Ljava/util/ArrayList;.<init>:()V // method@0819
+07ba6e: 6e10 3501 0e00                         |0005: invoke-virtual {v14}, Landroid/database/sqlite/SQLiteOpenHelper;.getReadableDatabase:()Landroid/database/sqlite/SQLiteDatabase; // method@0135
+07ba74: 0c0e                                   |0008: move-result-object v14
+07ba76: 1301 1e00                              |0009: const/16 v1, #int 30 // #1e
+07ba7a: 7110 af07 0100                         |000b: invoke-static {v1}, Ljava/lang/String;.valueOf:(I)Ljava/lang/String; // method@07af
+07ba80: 0c01                                   |000e: move-result-object v1
+07ba82: 2410 e403 0100                         |000f: filled-new-array {v1}, [Ljava/lang/String; // type@03e4
+07ba88: 0c01                                   |0012: move-result-object v1
+07ba8a: 1a02 d506                              |0013: const-string v2, "SELECT id, ts, odometerKm, percentBefore, percentAfter, liters, full, manual FROM refuels ORDER BY ts DESC LIMIT ?" // string@06d5
+07ba8e: 6e30 3201 2e01                         |0015: invoke-virtual {v14, v2, v1}, Landroid/database/sqlite/SQLiteDatabase;.rawQuery:(Ljava/lang/String;[Ljava/lang/String;)Landroid/database/Cursor; // method@0132
+07ba94: 0c0e                                   |0018: move-result-object v14
+07ba96: 7210 2a01 0e00                         |0019: invoke-interface {v14}, Landroid/database/Cursor;.moveToNext:()Z // method@012a
+07ba9c: 0a01                                   |001c: move-result v1
+07ba9e: 3801 4a00                              |001d: if-eqz v1, 0067 // +004a
+07baa2: 2202 dc02                              |001f: new-instance v2, Lpe; // type@02dc
+07baa6: 1201                                   |0021: const/4 v1, #int 0 // #0
+07baa8: 7220 2701 1e00                         |0022: invoke-interface {v14, v1}, Landroid/database/Cursor;.getLong:(I)J // method@0127
+07baae: 0b03                                   |0025: move-result-wide v3
+07bab0: 1215                                   |0026: const/4 v5, #int 1 // #1
+07bab2: 0157                                   |0027: move v7, v5
+07bab4: 7220 2701 7e00                         |0028: invoke-interface {v14, v7}, Landroid/database/Cursor;.getLong:(I)J // method@0127
+07baba: 0b05                                   |002b: move-result-wide v5
+07babc: 1228                                   |002c: const/4 v8, #int 2 // #2
+07babe: 7220 2601 8e00                         |002d: invoke-interface {v14, v8}, Landroid/database/Cursor;.getInt:(I)I // method@0126
+07bac4: 0a08                                   |0030: move-result v8
+07bac6: 1239                                   |0031: const/4 v9, #int 3 // #3
+07bac8: 7220 2501 9e00                         |0032: invoke-interface {v14, v9}, Landroid/database/Cursor;.getFloat:(I)F // method@0125
+07bace: 0a09                                   |0035: move-result v9
+07bad0: 124a                                   |0036: const/4 v10, #int 4 // #4
+07bad2: 7220 2501 ae00                         |0037: invoke-interface {v14, v10}, Landroid/database/Cursor;.getFloat:(I)F // method@0125
+07bad8: 0a0a                                   |003a: move-result v10
+07bada: 125b                                   |003b: const/4 v11, #int 5 // #5
+07badc: 7220 2501 be00                         |003c: invoke-interface {v14, v11}, Landroid/database/Cursor;.getFloat:(I)F // method@0125
+07bae2: 0a0b                                   |003f: move-result v11
+07bae4: 126c                                   |0040: const/4 v12, #int 6 // #6
+07bae6: 7220 2601 ce00                         |0041: invoke-interface {v14, v12}, Landroid/database/Cursor;.getInt:(I)I // method@0126
+07baec: 0a0c                                   |0044: move-result v12
+07baee: 337c 0900                              |0045: if-ne v12, v7, 004e // +0009
+07baf2: 017c                                   |0047: move v12, v7
+07baf4: 0187                                   |0048: move v7, v8
+07baf6: 0198                                   |0049: move v8, v9
+07baf8: 01a9                                   |004a: move v9, v10
+07bafa: 01ba                                   |004b: move v10, v11
+07bafc: 01cb                                   |004c: move v11, v12
+07bafe: 2807                                   |004d: goto 0054 // +0007
+07bb00: 017c                                   |004e: move v12, v7
+07bb02: 0187                                   |004f: move v7, v8
+07bb04: 0198                                   |0050: move v8, v9
+07bb06: 01a9                                   |0051: move v9, v10
+07bb08: 01ba                                   |0052: move v10, v11
+07bb0a: 011b                                   |0053: move v11, v1
+07bb0c: 127d                                   |0054: const/4 v13, #int 7 // #7
+07bb0e: 7220 2601 de00                         |0055: invoke-interface {v14, v13}, Landroid/database/Cursor;.getInt:(I)I // method@0126
+07bb14: 0a0d                                   |0058: move-result v13
+07bb16: 33cd 0300                              |0059: if-ne v13, v12, 005c // +0003
+07bb1a: 2802                                   |005b: goto 005d // +0002
+07bb1c: 011c                                   |005c: move v12, v1
+07bb1e: 760b 0d0b 0200                         |005d: invoke-direct/range {v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12}, Lpe;.<init>:(JJIFFFZZ)V // method@0b0d
+07bb24: 6e20 1d08 2000                         |0060: invoke-virtual {v0, v2}, Ljava/util/ArrayList;.add:(Ljava/lang/Object;)Z // method@081d
+07bb2a: 28b6                                   |0063: goto 0019 // -004a
+07bb2c: 0d00                                   |0064: move-exception v0
+07bb2e: 0701                                   |0065: move-object v1, v0
+07bb30: 2805                                   |0066: goto 006b // +0005
+07bb32: 7210 f106 0e00                         |0067: invoke-interface {v14}, Ljava/io/Closeable;.close:()V // method@06f1
+07bb38: 1100                                   |006a: return-object v0
+07bb3a: 2701                                   |006b: throw v1
+07bb3c: 0d00                                   |006c: move-exception v0
+07bb3e: 7120 3809 1e00                         |006d: invoke-static {v14, v1}, Lk8;.p:(Ljava/io/Closeable;Ljava/lang/Throwable;)V // method@0938
+07bb44: 2700                                   |0070: throw v0
+      catches       : 2
+        0x0019 - 0x0063
+          <any> -> 0x0064
+        0x006b - 0x006c
+          <any> -> 0x006c
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+        0x0042 line=67
+        0x0043 line=68
+        0x0044 line=69
+        0x0045 line=70
+        0x0046 line=71
+        0x0047 line=72
+        0x0048 line=73
+        0x0049 line=74
+        0x004a line=75
+        0x004b line=76
+        0x004c line=77
+        0x004d line=78
+        0x004e line=79
+        0x004f line=80
+        0x0050 line=81
+        0x0051 line=82
+        0x0052 line=83
+        0x0053 line=84
+        0x0054 line=85
+        0x0055 line=86
+        0x0056 line=87
+        0x0057 line=88
+        0x0058 line=89
+        0x0059 line=90
+        0x005a line=91
+        0x005b line=92
+        0x005c line=93
+        0x005d line=94
+        0x005e line=95
+        0x005f line=96
+        0x0060 line=97
+        0x0061 line=98
+        0x0062 line=99
+        0x0063 line=100
+        0x0064 line=101
+        0x0065 line=102
+        0x0066 line=103
+        0x0067 line=104
+        0x0068 line=105
+        0x0069 line=106
+        0x006a line=107
+        0x006b line=108
+        0x006c line=109
+        0x006d line=110
+        0x006e line=111
+        0x006f line=112
+        0x0070 line=113
+      locals        :
+        0x0000 - 0x0071 reg=14 this Lkh;
+
+    #2              : (in Lkh;)
+      name          : 'c'
+      type          : '(JJ)Ldi;'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 11
+      ins           : 5
+      outs          : 6
+      insns size    : 79 16-bit code units
+07b7f0:                                        |[07b7f0] kh.c:(JJ)Ldi;
+07b800: 6e10 3501 0600                         |0000: invoke-virtual {v6}, Landroid/database/sqlite/SQLiteOpenHelper;.getReadableDatabase:()Landroid/database/sqlite/SQLiteDatabase; // method@0135
+07b806: 0c06                                   |0003: move-result-object v6
+07b808: 7120 b007 8700                         |0004: invoke-static {v7, v8}, Ljava/lang/String;.valueOf:(J)Ljava/lang/String; // method@07b0
+07b80e: 0c07                                   |0007: move-result-object v7
+07b810: 7120 b007 a900                         |0008: invoke-static {v9, v10}, Ljava/lang/String;.valueOf:(J)Ljava/lang/String; // method@07b0
+07b816: 0c08                                   |000b: move-result-object v8
+07b818: 2420 e403 8700                         |000c: filled-new-array {v7, v8}, [Ljava/lang/String; // type@03e4
+07b81e: 0c07                                   |000f: move-result-object v7
+07b820: 1a08 d106                              |0010: const-string v8, "SELECT IFNULL(SUM(distanceKm),0), COUNT(*), IFNULL(SUM(driveSec),0),\n       IFNULL(SUM(idleSec),0), IFNULL(SUM(fuelUsedL),0)\nFROM trips WHERE endedAt >= ? AND endedAt < ?" // string@06d1
+07b824: 6e30 3201 8607                         |0012: invoke-virtual {v6, v8, v7}, Landroid/database/sqlite/SQLiteDatabase;.rawQuery:(Ljava/lang/String;[Ljava/lang/String;)Landroid/database/Cursor; // method@0132
+07b82a: 0c06                                   |0015: move-result-object v6
+07b82c: 7210 2901 0600                         |0016: invoke-interface {v6}, Landroid/database/Cursor;.moveToFirst:()Z // method@0129
+07b832: 0a07                                   |0019: move-result v7
+07b834: 1208                                   |001a: const/4 v8, #int 0 // #0
+07b836: 3907 0b00                              |001b: if-nez v7, 0026 // +000b
+07b83a: 6207 af01                              |001d: sget-object v7, Ldi;.f:Ldi; // field@01af
+07b83e: 7120 3809 8600                         |001f: invoke-static {v6, v8}, Lk8;.p:(Ljava/io/Closeable;Ljava/lang/Throwable;)V // method@0938
+07b844: 1107                                   |0022: return-object v7
+07b846: 0d00                                   |0023: move-exception v0
+07b848: 0707                                   |0024: move-object v7, v0
+07b84a: 2823                                   |0025: goto 0048 // +0023
+07b84c: 2200 5b01                              |0026: new-instance v0, Ldi; // type@015b
+07b850: 1207                                   |0028: const/4 v7, #int 0 // #0
+07b852: 7220 2501 7600                         |0029: invoke-interface {v6, v7}, Landroid/database/Cursor;.getFloat:(I)F // method@0125
+07b858: 0a01                                   |002c: move-result v1
+07b85a: 1217                                   |002d: const/4 v7, #int 1 // #1
+07b85c: 7220 2601 7600                         |002e: invoke-interface {v6, v7}, Landroid/database/Cursor;.getInt:(I)I // method@0126
+07b862: 0a02                                   |0031: move-result v2
+07b864: 1227                                   |0032: const/4 v7, #int 2 // #2
+07b866: 7220 2601 7600                         |0033: invoke-interface {v6, v7}, Landroid/database/Cursor;.getInt:(I)I // method@0126
+07b86c: 0a03                                   |0036: move-result v3
+07b86e: 1237                                   |0037: const/4 v7, #int 3 // #3
+07b870: 7220 2601 7600                         |0038: invoke-interface {v6, v7}, Landroid/database/Cursor;.getInt:(I)I // method@0126
+07b876: 0a04                                   |003b: move-result v4
+07b878: 1247                                   |003c: const/4 v7, #int 4 // #4
+07b87a: 7220 2501 7600                         |003d: invoke-interface {v6, v7}, Landroid/database/Cursor;.getFloat:(I)F // method@0125
+07b880: 0a05                                   |0040: move-result v5
+07b882: 7606 a304 0000                         |0041: invoke-direct/range {v0, v1, v2, v3, v4, v5}, Ldi;.<init>:(FIIIF)V // method@04a3
+07b888: 7120 3809 8600                         |0044: invoke-static {v6, v8}, Lk8;.p:(Ljava/io/Closeable;Ljava/lang/Throwable;)V // method@0938
+07b88e: 1100                                   |0047: return-object v0
+07b890: 2707                                   |0048: throw v7
+07b892: 0d00                                   |0049: move-exception v0
+07b894: 0708                                   |004a: move-object v8, v0
+07b896: 7120 3809 7600                         |004b: invoke-static {v6, v7}, Lk8;.p:(Ljava/io/Closeable;Ljava/lang/Throwable;)V // method@0938
+07b89c: 2708                                   |004e: throw v8
+      catches       : 3
+        0x0016 - 0x001f
+          <any> -> 0x0023
+        0x0026 - 0x0044
+          <any> -> 0x0023
+        0x0048 - 0x0049
+          <any> -> 0x0049
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+        0x0042 line=67
+        0x0043 line=68
+        0x0044 line=69
+        0x0045 line=70
+        0x0046 line=71
+        0x0047 line=72
+        0x0048 line=73
+        0x0049 line=74
+        0x004a line=75
+        0x004b line=76
+        0x004c line=77
+        0x004d line=78
+        0x004e line=79
+      locals        :
+        0x0000 - 0x004f reg=6 this Lkh;
+        0x0000 - 0x004f reg=7 (null) J
+        0x0000 - 0x004f reg=9 (null) J
+
+    #3              : (in Lkh;)
+      name          : 'd'
+      type          : '()Ldi;'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 8
+      ins           : 1
+      outs          : 6
+      insns size    : 87 16-bit code units
+07b8c0:                                        |[07b8c0] kh.d:()Ldi;
+07b8d0: 7100 c307 0000                         |0000: invoke-static {}, Ljava/lang/System;.currentTimeMillis:()J // method@07c3
+07b8d6: 0b00                                   |0003: move-result-wide v0
+07b8d8: 2202 3c02                              |0004: new-instance v2, Ljava/util/Date; // type@023c
+07b8dc: 7030 5308 0201                         |0006: invoke-direct {v2, v0, v1}, Ljava/util/Date;.<init>:(J)V // method@0853
+07b8e2: 6200 c803                              |0009: sget-object v0, Lkh;.a:Ljava/text/SimpleDateFormat; // field@03c8
+07b8e6: 6e20 fc07 2000                         |000b: invoke-virtual {v0, v2}, Ljava/text/DateFormat;.format:(Ljava/util/Date;)Ljava/lang/String; // method@07fc
+07b8ec: 0c00                                   |000e: move-result-object v0
+07b8ee: 6e10 8a07 0000                         |000f: invoke-virtual {v0}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+07b8f4: 6e10 3501 0700                         |0012: invoke-virtual {v7}, Landroid/database/sqlite/SQLiteOpenHelper;.getReadableDatabase:()Landroid/database/sqlite/SQLiteDatabase; // method@0135
+07b8fa: 0c07                                   |0015: move-result-object v7
+07b8fc: 1a01 d306                              |0016: const-string v1, "SELECT distanceKm, trips, driveSec, idleSec, fuelUsedL FROM days WHERE date = ?" // string@06d3
+07b900: 2410 e403 0000                         |0018: filled-new-array {v0}, [Ljava/lang/String; // type@03e4
+07b906: 0c00                                   |001b: move-result-object v0
+07b908: 6e30 3201 1700                         |001c: invoke-virtual {v7, v1, v0}, Landroid/database/sqlite/SQLiteDatabase;.rawQuery:(Ljava/lang/String;[Ljava/lang/String;)Landroid/database/Cursor; // method@0132
+07b90e: 0c07                                   |001f: move-result-object v7
+07b910: 7210 2901 0700                         |0020: invoke-interface {v7}, Landroid/database/Cursor;.moveToFirst:()Z // method@0129
+07b916: 0a00                                   |0023: move-result v0
+07b918: 3900 0b00                              |0024: if-nez v0, 002f // +000b
+07b91c: 6200 af01                              |0026: sget-object v0, Ldi;.f:Ldi; // field@01af
+07b920: 7210 f106 0700                         |0028: invoke-interface {v7}, Ljava/io/Closeable;.close:()V // method@06f1
+07b926: 1100                                   |002b: return-object v0
+07b928: 0d00                                   |002c: move-exception v0
+07b92a: 0701                                   |002d: move-object v1, v0
+07b92c: 2823                                   |002e: goto 0051 // +0023
+07b92e: 2201 5b01                              |002f: new-instance v1, Ldi; // type@015b
+07b932: 1200                                   |0031: const/4 v0, #int 0 // #0
+07b934: 7220 2501 0700                         |0032: invoke-interface {v7, v0}, Landroid/database/Cursor;.getFloat:(I)F // method@0125
+07b93a: 0a02                                   |0035: move-result v2
+07b93c: 1210                                   |0036: const/4 v0, #int 1 // #1
+07b93e: 7220 2601 0700                         |0037: invoke-interface {v7, v0}, Landroid/database/Cursor;.getInt:(I)I // method@0126
+07b944: 0a03                                   |003a: move-result v3
+07b946: 1220                                   |003b: const/4 v0, #int 2 // #2
+07b948: 7220 2601 0700                         |003c: invoke-interface {v7, v0}, Landroid/database/Cursor;.getInt:(I)I // method@0126
+07b94e: 0a04                                   |003f: move-result v4
+07b950: 1230                                   |0040: const/4 v0, #int 3 // #3
+07b952: 7220 2601 0700                         |0041: invoke-interface {v7, v0}, Landroid/database/Cursor;.getInt:(I)I // method@0126
+07b958: 0a05                                   |0044: move-result v5
+07b95a: 1240                                   |0045: const/4 v0, #int 4 // #4
+07b95c: 7220 2501 0700                         |0046: invoke-interface {v7, v0}, Landroid/database/Cursor;.getFloat:(I)F // method@0125
+07b962: 0a06                                   |0049: move-result v6
+07b964: 7606 a304 0100                         |004a: invoke-direct/range {v1, v2, v3, v4, v5, v6}, Ldi;.<init>:(FIIIF)V // method@04a3
+07b96a: 7210 f106 0700                         |004d: invoke-interface {v7}, Ljava/io/Closeable;.close:()V // method@06f1
+07b970: 1101                                   |0050: return-object v1
+07b972: 2701                                   |0051: throw v1
+07b974: 0d00                                   |0052: move-exception v0
+07b976: 7120 3809 1700                         |0053: invoke-static {v7, v1}, Lk8;.p:(Ljava/io/Closeable;Ljava/lang/Throwable;)V // method@0938
+07b97c: 2700                                   |0056: throw v0
+      catches       : 3
+        0x0020 - 0x0028
+          <any> -> 0x002c
+        0x002f - 0x004d
+          <any> -> 0x002c
+        0x0051 - 0x0052
+          <any> -> 0x0052
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+        0x0042 line=67
+        0x0043 line=68
+        0x0044 line=69
+        0x0045 line=70
+        0x0046 line=71
+        0x0047 line=72
+        0x0048 line=73
+        0x0049 line=74
+        0x004a line=75
+        0x004b line=76
+        0x004c line=77
+        0x004d line=78
+        0x004e line=79
+        0x004f line=80
+        0x0050 line=81
+        0x0051 line=82
+        0x0052 line=83
+        0x0053 line=84
+        0x0054 line=85
+        0x0055 line=86
+        0x0056 line=87
+      locals        :
+        0x0000 - 0x0057 reg=7 this Lkh;
+
+    #4              : (in Lkh;)
+      name          : 'e'
+      type          : '()Ldi;'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 9
+      ins           : 1
+      outs          : 6
+      insns size    : 66 16-bit code units
+07b9a0:                                        |[07b9a0] kh.e:()Ldi;
+07b9b0: 6e10 3501 0800                         |0000: invoke-virtual {v8}, Landroid/database/sqlite/SQLiteOpenHelper;.getReadableDatabase:()Landroid/database/sqlite/SQLiteDatabase; // method@0135
+07b9b6: 0c08                                   |0003: move-result-object v8
+07b9b8: 1a00 d006                              |0004: const-string v0, "SELECT IFNULL(SUM(distanceKm),0), COUNT(*), IFNULL(SUM(driveSec),0),\n       IFNULL(SUM(idleSec),0), IFNULL(SUM(fuelUsedL),0)\nFROM trips" // string@06d0
+07b9bc: 1201                                   |0006: const/4 v1, #int 0 // #0
+07b9be: 6e30 3201 0801                         |0007: invoke-virtual {v8, v0, v1}, Landroid/database/sqlite/SQLiteDatabase;.rawQuery:(Ljava/lang/String;[Ljava/lang/String;)Landroid/database/Cursor; // method@0132
+07b9c4: 0c08                                   |000a: move-result-object v8
+07b9c6: 7210 2901 0800                         |000b: invoke-interface {v8}, Landroid/database/Cursor;.moveToFirst:()Z // method@0129
+07b9cc: 0a00                                   |000e: move-result v0
+07b9ce: 3900 0b00                              |000f: if-nez v0, 001a // +000b
+07b9d2: 6200 af01                              |0011: sget-object v0, Ldi;.f:Ldi; // field@01af
+07b9d6: 7120 3809 1800                         |0013: invoke-static {v8, v1}, Lk8;.p:(Ljava/io/Closeable;Ljava/lang/Throwable;)V // method@0938
+07b9dc: 1100                                   |0016: return-object v0
+07b9de: 0d00                                   |0017: move-exception v0
+07b9e0: 0701                                   |0018: move-object v1, v0
+07b9e2: 2823                                   |0019: goto 003c // +0023
+07b9e4: 2202 5b01                              |001a: new-instance v2, Ldi; // type@015b
+07b9e8: 1200                                   |001c: const/4 v0, #int 0 // #0
+07b9ea: 7220 2501 0800                         |001d: invoke-interface {v8, v0}, Landroid/database/Cursor;.getFloat:(I)F // method@0125
+07b9f0: 0a03                                   |0020: move-result v3
+07b9f2: 1210                                   |0021: const/4 v0, #int 1 // #1
+07b9f4: 7220 2601 0800                         |0022: invoke-interface {v8, v0}, Landroid/database/Cursor;.getInt:(I)I // method@0126
+07b9fa: 0a04                                   |0025: move-result v4
+07b9fc: 1220                                   |0026: const/4 v0, #int 2 // #2
+07b9fe: 7220 2601 0800                         |0027: invoke-interface {v8, v0}, Landroid/database/Cursor;.getInt:(I)I // method@0126
+07ba04: 0a05                                   |002a: move-result v5
+07ba06: 1230                                   |002b: const/4 v0, #int 3 // #3
+07ba08: 7220 2601 0800                         |002c: invoke-interface {v8, v0}, Landroid/database/Cursor;.getInt:(I)I // method@0126
+07ba0e: 0a06                                   |002f: move-result v6
+07ba10: 1240                                   |0030: const/4 v0, #int 4 // #4
+07ba12: 7220 2501 0800                         |0031: invoke-interface {v8, v0}, Landroid/database/Cursor;.getFloat:(I)F // method@0125
+07ba18: 0a07                                   |0034: move-result v7
+07ba1a: 7606 a304 0200                         |0035: invoke-direct/range {v2, v3, v4, v5, v6, v7}, Ldi;.<init>:(FIIIF)V // method@04a3
+07ba20: 7120 3809 1800                         |0038: invoke-static {v8, v1}, Lk8;.p:(Ljava/io/Closeable;Ljava/lang/Throwable;)V // method@0938
+07ba26: 1102                                   |003b: return-object v2
+07ba28: 2701                                   |003c: throw v1
+07ba2a: 0d00                                   |003d: move-exception v0
+07ba2c: 7120 3809 1800                         |003e: invoke-static {v8, v1}, Lk8;.p:(Ljava/io/Closeable;Ljava/lang/Throwable;)V // method@0938
+07ba32: 2700                                   |0041: throw v0
+      catches       : 3
+        0x000b - 0x0013
+          <any> -> 0x0017
+        0x001a - 0x0038
+          <any> -> 0x0017
+        0x003c - 0x003d
+          <any> -> 0x003d
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+      locals        :
+        0x0000 - 0x0042 reg=8 this Lkh;
+
+    #5              : (in Lkh;)
+      name          : 'h'
+      type          : '(J)Lyc;'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 5
+      ins           : 3
+      outs          : 3
+      insns size    : 72 16-bit code units
+07b738:                                        |[07b738] kh.h:(J)Lyc;
+07b748: 6e10 3501 0200                         |0000: invoke-virtual {v2}, Landroid/database/sqlite/SQLiteOpenHelper;.getReadableDatabase:()Landroid/database/sqlite/SQLiteDatabase; // method@0135
+07b74e: 0c02                                   |0003: move-result-object v2
+07b750: 7120 b007 4300                         |0004: invoke-static {v3, v4}, Ljava/lang/String;.valueOf:(J)Ljava/lang/String; // method@07b0
+07b756: 0c03                                   |0007: move-result-object v3
+07b758: 2410 e403 0300                         |0008: filled-new-array {v3}, [Ljava/lang/String; // type@03e4
+07b75e: 0c03                                   |000b: move-result-object v3
+07b760: 1a04 d206                              |000c: const-string v4, "SELECT MIN(v), MAX(v), COUNT(*) FROM voltage WHERE ts >= ?" // string@06d2
+07b764: 6e30 3201 4203                         |000e: invoke-virtual {v2, v4, v3}, Landroid/database/sqlite/SQLiteDatabase;.rawQuery:(Ljava/lang/String;[Ljava/lang/String;)Landroid/database/Cursor; // method@0132
+07b76a: 0c02                                   |0011: move-result-object v2
+07b76c: 7210 2901 0200                         |0012: invoke-interface {v2}, Landroid/database/Cursor;.moveToFirst:()Z // method@0129
+07b772: 0a03                                   |0015: move-result v3
+07b774: 1204                                   |0016: const/4 v4, #int 0 // #0
+07b776: 3803 2700                              |0017: if-eqz v3, 003e // +0027
+07b77a: 1223                                   |0019: const/4 v3, #int 2 // #2
+07b77c: 7220 2601 3200                         |001a: invoke-interface {v2, v3}, Landroid/database/Cursor;.getInt:(I)I // method@0126
+07b782: 0a03                                   |001d: move-result v3
+07b784: 3903 0300                              |001e: if-nez v3, 0021 // +0003
+07b788: 281e                                   |0020: goto 003e // +001e
+07b78a: 1203                                   |0021: const/4 v3, #int 0 // #0
+07b78c: 7220 2501 3200                         |0022: invoke-interface {v2, v3}, Landroid/database/Cursor;.getFloat:(I)F // method@0125
+07b792: 0a03                                   |0025: move-result v3
+07b794: 7110 5807 0300                         |0026: invoke-static {v3}, Ljava/lang/Float;.valueOf:(F)Ljava/lang/Float; // method@0758
+07b79a: 0c03                                   |0029: move-result-object v3
+07b79c: 1210                                   |002a: const/4 v0, #int 1 // #1
+07b79e: 7220 2501 0200                         |002b: invoke-interface {v2, v0}, Landroid/database/Cursor;.getFloat:(I)F // method@0125
+07b7a4: 0a00                                   |002e: move-result v0
+07b7a6: 7110 5807 0000                         |002f: invoke-static {v0}, Ljava/lang/Float;.valueOf:(F)Ljava/lang/Float; // method@0758
+07b7ac: 0c00                                   |0032: move-result-object v0
+07b7ae: 2201 a703                              |0033: new-instance v1, Lyc; // type@03a7
+07b7b2: 7030 2c0f 3100                         |0035: invoke-direct {v1, v3, v0}, Lyc;.<init>:(Ljava/lang/Object;Ljava/lang/Object;)V // method@0f2c
+07b7b8: 7120 3809 4200                         |0038: invoke-static {v2, v4}, Lk8;.p:(Ljava/io/Closeable;Ljava/lang/Throwable;)V // method@0938
+07b7be: 1101                                   |003b: return-object v1
+07b7c0: 0d03                                   |003c: move-exception v3
+07b7c2: 2805                                   |003d: goto 0042 // +0005
+07b7c4: 7120 3809 4200                         |003e: invoke-static {v2, v4}, Lk8;.p:(Ljava/io/Closeable;Ljava/lang/Throwable;)V // method@0938
+07b7ca: 1104                                   |0041: return-object v4
+07b7cc: 2703                                   |0042: throw v3
+07b7ce: 0d04                                   |0043: move-exception v4
+07b7d0: 7120 3809 3200                         |0044: invoke-static {v2, v3}, Lk8;.p:(Ljava/io/Closeable;Ljava/lang/Throwable;)V // method@0938
+07b7d6: 2704                                   |0047: throw v4
+      catches       : 2
+        0x0012 - 0x0038
+          <any> -> 0x003c
+        0x0042 - 0x0043
+          <any> -> 0x0043
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+        0x0042 line=67
+        0x0043 line=68
+        0x0044 line=69
+        0x0045 line=70
+        0x0046 line=71
+        0x0047 line=72
+      locals        :
+        0x0000 - 0x0048 reg=2 this Lkh;
+        0x0000 - 0x0048 reg=3 (null) J
+
+    #6              : (in Lkh;)
+      name          : 'onCreate'
+      type          : '(Landroid/database/sqlite/SQLiteDatabase;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 2
+      ins           : 2
+      outs          : 2
+      insns size    : 24 16-bit code units
+07bfa8:                                        |[07bfa8] kh.onCreate:(Landroid/database/sqlite/SQLiteDatabase;)V
+07bfb8: 6e10 8a07 0100                         |0000: invoke-virtual {v1}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+07bfbe: 1a00 9201                              |0003: const-string v0, "CREATE TABLE trips (\n    id INTEGER PRIMARY KEY AUTOINCREMENT,\n    startedAt INTEGER NOT NULL,\n    endedAt INTEGER NOT NULL,\n    startOdo INTEGER NOT NULL,\n    endOdo INTEGER NOT NULL,\n    distanceKm REAL NOT NULL,\n    driveSec INTEGER NOT NULL,\n    idleSec INTEGER NOT NULL,\n    maxSpeed INTEGER NOT NULL,\n    avgConsumption REAL NOT NULL,\n    fuelUsedL REAL NOT NULL\n)" // string@0192
+07bfc2: 6e20 2e01 0100                         |0005: invoke-virtual {v1, v0}, Landroid/database/sqlite/SQLiteDatabase;.execSQL:(Ljava/lang/String;)V // method@012e
+07bfc8: 1a00 9101                              |0008: const-string v0, "CREATE TABLE days (\n    date TEXT PRIMARY KEY,\n    distanceKm REAL NOT NULL,\n    trips INTEGER NOT NULL,\n    driveSec INTEGER NOT NULL,\n    idleSec INTEGER NOT NULL,\n    fuelUsedL REAL NOT NULL\n)" // string@0191
+07bfcc: 6e20 2e01 0100                         |000a: invoke-virtual {v1, v0}, Landroid/database/sqlite/SQLiteDatabase;.execSQL:(Ljava/lang/String;)V // method@012e
+07bfd2: 1a00 9301                              |000d: const-string v0, "CREATE TABLE voltage (\n    ts INTEGER PRIMARY KEY,\n    v REAL NOT NULL,\n    engine INTEGER NOT NULL\n)" // string@0193
+07bfd6: 6e20 2e01 0100                         |000f: invoke-virtual {v1, v0}, Landroid/database/sqlite/SQLiteDatabase;.execSQL:(Ljava/lang/String;)V // method@012e
+07bfdc: 1a00 9001                              |0012: const-string v0, "CREATE TABLE IF NOT EXISTS refuels (\n    id INTEGER PRIMARY KEY AUTOINCREMENT,\n    ts INTEGER NOT NULL,\n    odometerKm INTEGER NOT NULL,\n    percentBefore REAL NOT NULL,\n    percentAfter REAL NOT NULL,\n    liters REAL NOT NULL,\n    full INTEGER NOT NULL,\n    manual INTEGER NOT NULL\n)" // string@0190
+07bfe0: 6e20 2e01 0100                         |0014: invoke-virtual {v1, v0}, Landroid/database/sqlite/SQLiteDatabase;.execSQL:(Ljava/lang/String;)V // method@012e
+07bfe6: 0e00                                   |0017: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+      locals        :
+        0x0000 - 0x0018 reg=0 this Lkh;
+        0x0000 - 0x0018 reg=1 (null) Landroid/database/sqlite/SQLiteDatabase;
+
+    #7              : (in Lkh;)
+      name          : 'onUpgrade'
+      type          : '(Landroid/database/sqlite/SQLiteDatabase;II)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 4
+      ins           : 4
+      outs          : 2
+      insns size    : 12 16-bit code units
+07bfe8:                                        |[07bfe8] kh.onUpgrade:(Landroid/database/sqlite/SQLiteDatabase;II)V
+07bff8: 6e10 8a07 0100                         |0000: invoke-virtual {v1}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+07bffe: 1220                                   |0003: const/4 v0, #int 2 // #2
+07c000: 3502 0700                              |0004: if-ge v2, v0, 000b // +0007
+07c004: 1a00 9001                              |0006: const-string v0, "CREATE TABLE IF NOT EXISTS refuels (\n    id INTEGER PRIMARY KEY AUTOINCREMENT,\n    ts INTEGER NOT NULL,\n    odometerKm INTEGER NOT NULL,\n    percentBefore REAL NOT NULL,\n    percentAfter REAL NOT NULL,\n    liters REAL NOT NULL,\n    full INTEGER NOT NULL,\n    manual INTEGER NOT NULL\n)" // string@0190
+07c008: 6e20 2e01 0100                         |0008: invoke-virtual {v1, v0}, Landroid/database/sqlite/SQLiteDatabase;.execSQL:(Ljava/lang/String;)V // method@012e
+07c00e: 0e00                                   |000b: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+      locals        :
+        0x0000 - 0x000c reg=0 this Lkh;
+        0x0000 - 0x000c reg=1 (null) Landroid/database/sqlite/SQLiteDatabase;
+        0x0000 - 0x000c reg=2 (null) I
+        0x0000 - 0x000c reg=3 (null) I
+
+  source_file_idx   : 4152 (r8-map-id-df02db20992efcdad8c8628fa158af402193d9214b2257c75897211101eb46a6)

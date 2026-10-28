@@ -1,0 +1,67 @@
+    #40              : (in Lpi;)
+      name          : 'h'
+      type          : '(Landroid/widget/FrameLayout;Lorg/reference/panel/MainActivity;Lc9;)V'
+      access        : 0x0019 (PUBLIC STATIC FINAL)
+      code          -
+      registers     : 6
+      ins           : 3
+      outs          : 5
+      insns size    : 35 16-bit code units
+084ac4:                                        |[084ac4] pi.h:(Landroid/widget/FrameLayout;Lorg/reference/panel/MainActivity;Lc9;)V
+084ad4: 6e10 2903 0300                         |0000: invoke-virtual {v3}, Landroid/view/ViewGroup;.removeAllViews:()V // method@0329
+084ada: 2200 1201                              |0003: new-instance v0, Landroid/widget/ScrollView; // type@0112
+084ade: 7020 8303 4000                         |0005: invoke-direct {v0, v4}, Landroid/widget/ScrollView;.<init>:(Landroid/content/Context;)V // method@0383
+084ae4: 1201                                   |0008: const/4 v1, #int 0 // #0
+084ae6: 6e20 1703 1000                         |0009: invoke-virtual {v0, v1}, Landroid/view/View;.setVerticalScrollBarEnabled:(Z)V // method@0317
+084aec: 2201 4603                              |000c: new-instance v1, Lu0; // type@0346
+084af0: 1212                                   |000e: const/4 v2, #int 1 // #1
+084af2: 7052 860d 4153                         |000f: invoke-direct {v1, v4, v3, v5, v2}, Lu0;.<init>:(Lorg/reference/panel/MainActivity;Ljava/lang/Object;Ljava/lang/Object;I)V // method@0d86
+084af8: 7130 3b0b 5401                         |0012: invoke-static {v4, v5, v1}, Lpi;.e:(Lorg/reference/panel/MainActivity;Lc9;Ly5;)Landroid/widget/LinearLayout; // method@0b3b
+084afe: 0c04                                   |0015: move-result-object v4
+084b00: 6e20 8403 4000                         |0016: invoke-virtual {v0, v4}, Landroid/widget/ScrollView;.addView:(Landroid/view/View;)V // method@0384
+084b06: 2204 0501                              |0019: new-instance v4, Landroid/widget/FrameLayout$LayoutParams; // type@0105
+084b0a: 12f5                                   |001b: const/4 v5, #int -1 // #ff
+084b0c: 7030 5e03 5405                         |001c: invoke-direct {v4, v5, v5}, Landroid/widget/FrameLayout$LayoutParams;.<init>:(II)V // method@035e
+084b12: 6e30 2103 0304                         |001f: invoke-virtual {v3, v0, v4}, Landroid/view/ViewGroup;.addView:(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V // method@0321
+084b18: 0e00                                   |0022: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+      locals        :
+        0x0000 - 0x0023 reg=3 (null) Landroid/widget/FrameLayout;
+        0x0000 - 0x0023 reg=4 (null) Lorg/reference/panel/MainActivity;
+        0x0000 - 0x0023 reg=5 (null) Lc9;

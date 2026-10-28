@@ -1,0 +1,151 @@
+[
+  {
+    "file": "r4-A.json",
+    "evidence_id": "ev_7726aba9875101ea261e35e8204addae19605bdf4daf4ed95dbd296b408cad1d",
+    "operation": "inspect_android_method",
+    "parameters": {
+      "path": "reference.apk",
+      "class_name": "r4",
+      "method_name": "A"
+    }
+  },
+  {
+    "file": "r4-B.json",
+    "evidence_id": "ev_1bd94bfc14728c996a7259d8f681482f855bc176b9f263fc0aef3afa5b0d77fd",
+    "operation": "inspect_android_method",
+    "parameters": {
+      "path": "reference.apk",
+      "class_name": "r4",
+      "method_name": "B"
+    }
+  },
+  {
+    "file": "r4-C.json",
+    "evidence_id": "ev_263f137e9abe2f014f195f51aed4b3dbadf60b38c5bc3a83c8dd57885419f2a6",
+    "operation": "inspect_android_method",
+    "parameters": {
+      "path": "reference.apk",
+      "class_name": "r4",
+      "method_name": "C"
+    }
+  },
+  {
+    "file": "r4-D.json",
+    "evidence_id": "ev_82d95e74975b975694bccae171cac8cbae4c230588b2ca2e3602256353f47c53",
+    "operation": "inspect_android_method",
+    "parameters": {
+      "path": "reference.apk",
+      "class_name": "r4",
+      "method_name": "D"
+    }
+  },
+  {
+    "file": "r4-J.json",
+    "evidence_id": "ev_a80592c6e9fb4722767a6bbfed37aa53747216cec8b9d6b6a06c90f723c015d0",
+    "operation": "inspect_android_method",
+    "parameters": {
+      "path": "reference.apk",
+      "class_name": "r4",
+      "method_name": "J"
+    }
+  },
+  {
+    "file": "r4-a.json",
+    "evidence_id": "ev_ac5325ae86403508d4c9813779452cdfafeb0915f6b4197f338ec393755a3dbb",
+    "operation": "inspect_android_method",
+    "parameters": {
+      "path": "reference.apk",
+      "class_name": "r4",
+      "method_name": "a"
+    }
+  },
+  {
+    "file": "r4-b.json",
+    "evidence_id": "ev_b7e26298858e4400726aa8e539a112d3220eccf88b0959b8470e2730afee110a",
+    "operation": "inspect_android_method",
+    "parameters": {
+      "path": "reference.apk",
+      "class_name": "r4",
+      "method_name": "b"
+    }
+  },
+  {
+    "file": "r4-class.json",
+    "evidence_id": "ev_7e06b6010d237a565e87194b075c94b1238ad397b7f126625d38bb92c979c122",
+    "operation": "inspect_android_class",
+    "parameters": {
+      "path": "reference.apk",
+      "class_name": "r4"
+    }
+  },
+  {
+    "file": "r4-g.json",
+    "evidence_id": "ev_142bcc89bc5a04978ed5be0df41caaf5fac90c80dea8d51cea53b0514b03177a",
+    "operation": "inspect_android_method",
+    "parameters": {
+      "path": "reference.apk",
+      "class_name": "r4",
+      "method_name": "g"
+    }
+  },
+  {
+    "file": "r4-q.json",
+    "evidence_id": "ev_bd5a994ed85d3a72d480921780e58dcc305da2720144e781b0009c84f6abdbba",
+    "operation": "inspect_android_method",
+    "parameters": {
+      "path": "reference.apk",
+      "class_name": "r4",
+      "method_name": "q"
+    }
+  },
+  {
+    "file": "r4-u.json",
+    "evidence_id": "ev_ffca024ea852f201aac6c992566a8a811d2c6cd5577ff3c18b0b7525c39e1988",
+    "operation": "inspect_android_method",
+    "parameters": {
+      "path": "reference.apk",
+      "class_name": "r4",
+      "method_name": "u"
+    }
+  },
+  {
+    "file": "r4-w.json",
+    "evidence_id": "ev_b3e478418dfd030dd8e6aac4868d08b218440fd925a636fe37f2fa66227f7f42",
+    "operation": "inspect_android_method",
+    "parameters": {
+      "path": "reference.apk",
+      "class_name": "r4",
+      "method_name": "w"
+    }
+  },
+  {
+    "file": "r4-x.json",
+    "evidence_id": "ev_88fd1e6655afa7180732554d42df2332e1fe4947ca7d9061100d998d87a16ee0",
+    "operation": "inspect_android_method",
+    "parameters": {
+      "path": "reference.apk",
+      "class_name": "r4",
+      "method_name": "x"
+    }
+  },
+  {
+    "file": "r4-y.json",
+    "evidence_id": "ev_904fd40793070be5cacdd4781c4efd8166a7c31756ba7ad4773f1f60433f8fad",
+    "operation": "inspect_android_method",
+    "parameters": {
+      "path": "reference.apk",
+      "class_name": "r4",
+      "method_name": "y"
+    }
+  },
+  {
+    "file": "r4-z.json",
+    "evidence_id": "ev_08b3f7c6e5feed62afe88a1cd7d2025d47f5197a205ff5779b9da54cebe60266",
+    "operation": "inspect_android_method",
+    "parameters": {
+      "path": "reference.apk",
+      "class_name": "r4",
+      "method_name": "z"
+    }
+  }
+]

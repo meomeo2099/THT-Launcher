@@ -1,0 +1,147 @@
+{
+  "evidence_id": "ev_484c997ace1be7a4ea0a7b9eb988af514eade05095e209f768f0f2b74287689c",
+  "subject": {
+    "name": "reference.apk",
+    "digest": {
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+    },
+    "local_path": "reference.apk",
+    "format": "apk",
+    "architecture": null
+  },
+  "provider": {
+    "id": "jadx",
+    "name": "JADX headless",
+    "version": "0.7.1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_android_method",
+  "parameters": {
+    "path": "reference.apk",
+    "class_name": "q1",
+    "method_name": "run"
+  },
+  "raw_result": {
+    "server": {
+      "name": "rea-jadx-bridge",
+      "version": "7"
+    },
+    "bridge_sha256": "e5044a8312dd0731f53af3f095508b3e5cff54df6b971c95d4305e2f39b4fa30",
+    "jar_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "loaded": {
+      "state": "LOADED",
+      "apk_path": "<temporary-analysis-session>/target.apk",
+      "class_count": 485,
+      "resource_count": 264,
+      "threads": 1,
+      "resources": "full"
+    },
+    "calls": [
+      {
+        "operation": "rea_jvm_status",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"metadata_scope\":\"parsed_members\",\"max_heap_bytes\":2147483648,\"java_version\":\"21.0.12.1\",\"available_processors\":2,\"engine_reported_version\":\"0.7.1\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "load_apk",
+        "input": {
+          "path": "<temporary-analysis-session>/target.apk",
+          "threads": 1,
+          "resources": "full"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"state\":\"LOADED\",\"apk_path\":\"<temporary-analysis-session>/target.apk\",\"class_count\":485,\"raw_class_count\":485,\"resource_count\":264,\"load_duration_ms\":2405,\"decompile_timeout_ms\":90000,\"threads\":1,\"code_cache_size\":64,\"resources\":\"full\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_class_summary",
+        "input": {
+          "class_name": "q1"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"fields\":[{\"name\":\"a\",\"type\":\"le\",\"def_pos\":0},{\"name\":\"b\",\"type\":\"java.lang.String\",\"def_pos\":0},{\"name\":\"c\",\"type\":\"s1\",\"def_pos\":0},{\"name\":\"d\",\"type\":\"y5\",\"def_pos\":0},{\"name\":\"e\",\"type\":\"y5\",\"def_pos\":0}],\"methods\":[{\"is_constructor\":true,\"dex_descriptor\":\"(Lle;Ljava/lang/String;Ls1;Ly5;Ly5;)V\",\"signature\":\"<init>(le, java.lang.String, s1, y5, y5): void\",\"def_pos\":0,\"name\":\"<init>\"},{\"is_constructor\":false,\"dex_descriptor\":\"()V\",\"signature\":\"run(): void\",\"def_pos\":0,\"name\":\"run\"}],\"inner_classes\":[],\"inner_class_count\":0,\"name\":\"q1\",\"field_count\":5,\"full_name\":\"defpackage.q1\",\"method_count\":2,\"raw_name\":\"q1\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_method_body",
+        "input": {
+          "class_name": "q1",
+          "method_name": "run",
+          "overload_index": 0,
+          "smali_fallback": true
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"class_name\":\"defpackage.q1\",\"mode\":\"java\",\"body\":\"    @Override // java.lang.Runnable\\n    public final void run() {\\n        Object ffVar;\\n        try {\\n            ffVar = (Boolean) this.d.a();\\n        } catch (Throwable th) {\\n            ffVar = new ff(th);\\n        }\\n        if (ffVar instanceof ff) {\\n            ffVar = null;\\n        }\\n        if (k8.e((Boolean) ffVar, Boolean.FALSE)) {\\n            le leVar = this.a;\\n            int i = leVar.a;\\n            if (i > 0) {\\n                leVar.a = i - 1;\\n                try {\\n                    ((Boolean) this.e.a()).getClass();\\n                } catch (Throwable unused) {\\n                }\\n                this.c.b.postDelayed(this, 4000L);\\n            } else {\\n                Log.w(\\\"ReferencePanel.Auto\\\", this.b + \\\": the car did not take it\\\");\\n            }\\n        }\\n    }\",\"markers\":[],\"fell_back\":false,\"full_name\":\"q1.run\",\"overload_index\":0,\"method_name\":\"run\",\"overload_count\":1,\"dex_descriptor\":\"()V\"}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "normalized_result": {
+    "engine": {
+      "name": "jadx-headless-mcp",
+      "version": "0.7.1",
+      "artifact_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+      "source_revision": "5844800a486d2248fa949b74c9896285f5b54de2",
+      "worker_count": 1,
+      "heap_limit_mib": 2048
+    },
+    "class_name": "defpackage.q1",
+    "method": {
+      "name": "run",
+      "reported_signature": "run(): void",
+      "overload_index": 0,
+      "is_constructor": false,
+      "dex_descriptor": "()V"
+    },
+    "overload_count": 1,
+    "representation": "java",
+    "body_status": "available",
+    "fell_back": false,
+    "markers": [],
+    "source": {
+      "status": "complete",
+      "text": "    @Override // java.lang.Runnable\n    public final void run() {\n        Object ffVar;\n        try {\n            ffVar = (Boolean) this.d.a();\n        } catch (Throwable th) {\n            ffVar = new ff(th);\n        }\n        if (ffVar instanceof ff) {\n            ffVar = null;\n        }\n        if (k8.e((Boolean) ffVar, Boolean.FALSE)) {\n            le leVar = this.a;\n            int i = leVar.a;\n            if (i > 0) {\n                leVar.a = i - 1;\n                try {\n                    ((Boolean) this.e.a()).getClass();\n                } catch (Throwable unused) {\n                }\n                this.c.b.postDelayed(this, 4000L);\n            } else {\n                Log.w(\"ReferencePanel.Auto\", this.b + \": the car did not take it\");\n            }\n        }\n    }",
+      "reported_total_bytes": null
+    }
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Static decompiler observations do not establish runtime behavior; the APK is never executed.",
+    "Method signatures use provider display types; DEX prototypes come from frozen JADX metadata. Display names may be aliases, and overload indices are local to this engine and artifact.",
+    "Class inventories use parsed metadata before code generation, including synthetic members that may be omitted from decompiled source. Source positions remain unknown.",
+    "Incoming reference totals count JADX using nodes. Direct invoke entries within a using method report raw DEX code-unit offsets and method indexes, but coverage is limited to those nodes and directly matched invokes; it does not establish every possible dynamic or reflective call site.",
+    "Manifest summaries are parsed once by REA's bridge from the exact root AndroidManifest.xml resource, using namespace-aware XML attributes; decoded XML is retained. APK signatures, split APKs, native libraries and Android runtime capture are not verified by this provider."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

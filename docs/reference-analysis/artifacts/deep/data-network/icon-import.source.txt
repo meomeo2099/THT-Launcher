@@ -1,0 +1,186 @@
+    public static d7 d(Context context, Uri uri) {
+        ZipInputStream zipInputStream;
+        Throwable th;
+        Object ffVar;
+        JSONObject jSONObject;
+        int i;
+        uri.getClass();
+        File file = new File(context.getCacheDir(), "icon-import-" + System.nanoTime());
+        file.mkdirs();
+        try {
+            InputStream inputStreamOpenInputStream = context.getContentResolver().openInputStream(uri);
+            int i2 = 0;
+            if (inputStreamOpenInputStream == null) {
+                throw new IllegalStateException(si.a("icon_set_file_unavailable", new Object[0]).toString());
+            }
+            try {
+                ZipInputStream zipInputStream2 = new ZipInputStream(inputStreamOpenInputStream);
+                int i3 = 0;
+                long j = 0;
+                while (true) {
+                    try {
+                        ZipEntry nextEntry = zipInputStream2.getNextEntry();
+                        me meVar = a;
+                        if (nextEntry == null) {
+                            zipInputStream2.close();
+                            inputStreamOpenInputStream.close();
+                            File[] fileArrListFiles = file.listFiles();
+                            if (fileArrListFiles == null) {
+                                fileArrListFiles = new File[i2];
+                            }
+                            ArrayList arrayList = new ArrayList();
+                            int length = fileArrListFiles.length;
+                            for (int i4 = i2; i4 < length; i4++) {
+                                File file2 = fileArrListFiles[i4];
+                                String name = file2.getName();
+                                name.getClass();
+                                if (meVar.a(name)) {
+                                    arrayList.add(file2);
+                                }
+                            }
+                            if (arrayList.isEmpty()) {
+                                throw new IllegalArgumentException(si.a("icon_set_no_icons", new Object[i2]).toString());
+                            }
+                            int size = arrayList.size();
+                            int i5 = i2;
+                            while (i5 < size) {
+                                Object obj = arrayList.get(i5);
+                                i5++;
+                                File file3 = (File) obj;
+                                BitmapFactory.Options options = new BitmapFactory.Options();
+                                options.inJustDecodeBounds = true;
+                                BitmapFactory.decodeFile(file3.getAbsolutePath(), options);
+                                int i6 = options.outWidth;
+                                if (1 > i6 || i6 >= 1025 || 1 > (i = options.outHeight) || i >= 1025) {
+                                    List list = si.a;
+                                    throw new IllegalArgumentException(si.a("icon_set_bad_image_0", file3.getName()).toString());
+                                }
+                            }
+                            File file4 = new File(file, "manifest.json");
+                            if (!file4.isFile()) {
+                                file4 = null;
+                            }
+                            if (file4 != null) {
+                                try {
+                                    ffVar = new JSONObject(m5.k0(file4));
+                                } catch (Throwable th2) {
+                                    ffVar = new ff(th2);
+                                }
+                                if (ffVar instanceof ff) {
+                                    ffVar = null;
+                                }
+                                jSONObject = (JSONObject) ffVar;
+                            } else {
+                                jSONObject = null;
+                            }
+                            String strOptString = jSONObject != null ? jSONObject.optString("name") : null;
+                            if (strOptString == null) {
+                                strOptString = "";
+                            }
+                            if (th.A(strOptString)) {
+                                strOptString = si.a("icon_set_unnamed", new Object[i2]);
+                            }
+                            String strH = h(th.I(60, strOptString));
+                            if (strH.length() == 0) {
+                                strH = "set";
+                            }
+                            File fileB = b(context, ((Object) strH) + "-" + Long.toString(System.currentTimeMillis() % 1000000, 36));
+                            new File(context.getFilesDir(), "icon_sets").mkdirs();
+                            if (!file.renameTo(fileB) && !m5.g0(file, fileB)) {
+                                throw new IllegalStateException(si.a("icon_set_file_unavailable", new Object[i2]).toString());
+                            }
+                            d7 d7VarF = f(fileB);
+                            if (d7VarF == null) {
+                                throw new IllegalStateException(si.a("icon_set_no_icons", new Object[i2]).toString());
+                            }
+                            m5.i0(file);
+                            return d7VarF;
+                        }
+                        if (!nextEntry.isDirectory()) {
+                            String name2 = nextEntry.getName();
+                            name2.getClass();
+                            String lowerCase = th.E(name2, '/').toLowerCase(Locale.ROOT);
+                            lowerCase.getClass();
+                            if (!lowerCase.equals("manifest.json")) {
+                                try {
+                                    if (!meVar.a(lowerCase)) {
+                                        continue;
+                                    }
+                                } catch (Throwable th3) {
+                                    th = th3;
+                                    zipInputStream = zipInputStream2;
+                                }
+                            }
+                            i3++;
+                            if (i3 > 300) {
+                                throw new IllegalArgumentException(si.a("icon_set_too_large", new Object[i2]).toString());
+                            }
+                            FileOutputStream fileOutputStream = new FileOutputStream(new File(file, lowerCase));
+                            try {
+                                byte[] bArr = new byte[8192];
+                                long j2 = 0;
+                                while (true) {
+                                    int i7 = zipInputStream2.read(bArr);
+                                    if (i7 >= 0) {
+                                        zipInputStream = zipInputStream2;
+                                        long j3 = i7;
+                                        j2 += j3;
+                                        j += j3;
+                                        if (j2 > 2097152 || j > 41943040) {
+                                            throw new IllegalArgumentException(si.a("icon_set_too_large", new Object[0]).toString());
+                                        }
+                                        try {
+                                            fileOutputStream.write(bArr, 0, i7);
+                                            zipInputStream2 = zipInputStream;
+                                        } catch (Throwable th4) {
+                                            th = th4;
+                                        }
+                                        th = th4;
+                                        Throwable th5 = th;
+                                        try {
+                                            throw th5;
+                                        } catch (Throwable th6) {
+                                            k8.p(fileOutputStream, th5);
+                                            throw th6;
+                                        }
+                                    }
+                                    zipInputStream = zipInputStream2;
+                                    try {
+                                        fileOutputStream.close();
+                                        zipInputStream2 = zipInputStream;
+                                        i2 = 0;
+                                        break;
+                                    } catch (Throwable th7) {
+                                        th = th7;
+                                    }
+                                }
+                            } catch (Throwable th8) {
+                                th = th8;
+                                zipInputStream = zipInputStream2;
+                            }
+                        }
+                    } catch (Throwable th9) {
+                        th = th9;
+                        zipInputStream = zipInputStream2;
+                    }
+                    th = th;
+                    try {
+                        throw th;
+                    } catch (Throwable th10) {
+                        k8.p(zipInputStream, th);
+                        throw th10;
+                    }
+                }
+            } catch (Throwable th11) {
+                try {
+                    throw th11;
+                } catch (Throwable th12) {
+                    k8.p(inputStreamOpenInputStream, th11);
+                    throw th12;
+                }
+            }
+        } catch (Throwable th13) {
+            m5.i0(file);
+            throw th13;
+        }
+    }

@@ -1,0 +1,336 @@
+{
+  "evidence_id": "ev_9dc712001f967a6c18968a5f14477fd87e7af710b6320f49f7e170384b04527a",
+  "subject": {
+    "name": "reference.apk",
+    "digest": {
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+    },
+    "local_path": "reference.apk",
+    "format": "apk",
+    "architecture": null
+  },
+  "provider": {
+    "id": "jadx",
+    "name": "JADX headless",
+    "version": "0.7.1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_android_package",
+  "parameters": {
+    "path": "reference.apk"
+  },
+  "raw_result": {
+    "server": {
+      "name": "rea-jadx-bridge",
+      "version": "7"
+    },
+    "bridge_sha256": "e5044a8312dd0731f53af3f095508b3e5cff54df6b971c95d4305e2f39b4fa30",
+    "jar_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "loaded": {
+      "state": "LOADED",
+      "apk_path": "<temporary-analysis-session>/target.apk",
+      "class_count": 485,
+      "resource_count": 264,
+      "threads": 1,
+      "resources": "full"
+    },
+    "calls": [
+      {
+        "operation": "rea_jvm_status",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"engine_reported_version\":\"0.7.1\",\"available_processors\":3,\"java_version\":\"17.0.18\",\"max_heap_bytes\":2615148544,\"metadata_scope\":\"parsed_members\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "load_apk",
+        "input": {
+          "path": "<temporary-analysis-session>/target.apk",
+          "threads": 1,
+          "resources": "full"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"state\":\"LOADED\",\"apk_path\":\"<temporary-analysis-session>/target.apk\",\"class_count\":485,\"raw_class_count\":485,\"resource_count\":264,\"load_duration_ms\":1838,\"decompile_timeout_ms\":90000,\"threads\":1,\"code_cache_size\":64,\"resources\":\"full\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_app_info",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"package\":\"org.reference.panel\",\"version_name\":\"1.0.2\",\"version_code\":\"16\",\"min_sdk\":\"28\",\"target_sdk\":\"28\",\"permissions\":[\"android.permission.INJECT_EVENTS\",\"android.permission.SYSTEM_ALERT_WINDOW\",\"android.permission.INTERNAL_SYSTEM_WINDOW\",\"android.permission.MANAGE_ACTIVITY_STACKS\",\"android.permission.START_TASKS_FROM_RECENTS\",\"android.permission.EXPAND_STATUS_BAR\",\"android.permission.STATUS_BAR\",\"android.permission.FORCE_STOP_PACKAGES\",\"android.permission.KILL_BACKGROUND_PROCESSES\",\"android.permission.REORDER_TASKS\",\"android.permission.RECEIVE_BOOT_COMPLETED\",\"android.permission.REQUEST_DELETE_PACKAGES\",\"android.permission.INTERNET\",\"android.permission.INSTALL_PACKAGES\",\"android.permission.REQUEST_INSTALL_PACKAGES\",\"android.permission.FOREGROUND_SERVICE\",\"android.permission.ACCESS_NETWORK_STATE\",\"android.permission.WRITE_SETTINGS\",\"android.permission.MODIFY_AUDIO_SETTINGS\",\"android.permission.ACCESS_COARSE_LOCATION\",\"android.permission.ACCESS_FINE_LOCATION\",\"android.permission.WAKE_LOCK\",\"android.permission.READ_EXTERNAL_STORAGE\",\"android.permission.WRITE_EXTERNAL_STORAGE\",\"android.car.permission.CAR_ENERGY\",\"android.car.permission.CAR_INFO\",\"android.car.permission.CAR_VENDOR_EXTENSION\",\"android.car.permission.CONTROL_CAR_CLIMATE\",\"android.permission.ACCESS_WIFI_STATE\",\"android.permission.CHANGE_WIFI_STATE\",\"android.permission.BLUETOOTH\",\"android.permission.BLUETOOTH_ADMIN\"]}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_android_manifest",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    android:versionCode=\"16\"\n    android:versionName=\"1.0.2\"\n    android:compileSdkVersion=\"36\"\n    android:compileSdkVersionCodename=\"16\"\n    package=\"org.reference.panel\"\n    platformBuildVersionCode=\"36\"\n    platformBuildVersionName=\"16\">\n    <uses-sdk\n        android:minSdkVersion=\"28\"\n        android:targetSdkVersion=\"28\"/>\n    <uses-permission android:name=\"android.permission.INJECT_EVENTS\"/>\n    <uses-permission android:name=\"android.permission.SYSTEM_ALERT_WINDOW\"/>\n    <uses-permission android:name=\"android.permission.INTERNAL_SYSTEM_WINDOW\"/>\n    <uses-permission android:name=\"android.permission.MANAGE_ACTIVITY_STACKS\"/>\n    <uses-permission android:name=\"android.permission.START_TASKS_FROM_RECENTS\"/>\n    <uses-permission android:name=\"android.permission.EXPAND_STATUS_BAR\"/>\n    <uses-permission android:name=\"android.permission.STATUS_BAR\"/>\n    <uses-permission android:name=\"android.permission.FORCE_STOP_PACKAGES\"/>\n    <uses-permission android:name=\"android.permission.KILL_BACKGROUND_PROCESSES\"/>\n    <uses-permission android:name=\"android.permission.REORDER_TASKS\"/>\n    <uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>\n    <uses-permission android:name=\"android.permission.REQUEST_DELETE_PACKAGES\"/>\n    <uses-permission android:name=\"android.permission.INTERNET\"/>\n    <uses-permission android:name=\"android.permission.INSTALL_PACKAGES\"/>\n    <uses-permission android:name=\"android.permission.REQUEST_INSTALL_PACKAGES\"/>\n    <uses-permission android:name=\"android.permission.FOREGROUND_SERVICE\"/>\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>\n    <uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>\n    <uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>\n    <uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>\n    <uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>\n    <uses-permission android:name=\"android.permission.WAKE_LOCK\"/>\n    <uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\"/>\n    <uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>\n    <uses-permission android:name=\"android.car.permission.CAR_ENERGY\"/>\n    <uses-permission android:name=\"android.car.permission.CAR_INFO\"/>\n    <uses-permission android:name=\"android.car.permission.CAR_VENDOR_EXTENSION\"/>\n    <uses-permission android:name=\"android.car.permission.CONTROL_CAR_CLIMATE\"/>\n    <uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>\n    <uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>\n    <uses-permission android:name=\"android.permission.BLUETOOTH\"/>\n    <uses-permission android:name=\"android.permission.BLUETOOTH_ADMIN\"/>\n    <uses-feature\n        android:name=\"android.hardware.wifi\"\n        android:required=\"false\"/>\n    <uses-feature\n        android:name=\"android.hardware.bluetooth\"\n        android:required=\"false\"/>\n    <application\n        android:theme=\"@android:style/Theme.Material.NoActionBar\"\n        android:label=\"ReferencePanel\"\n        android:icon=\"@drawable/ic_ReferencePanel\"\n        android:name=\"org.reference.panel.LauncherApplication\"\n        android:allowBackup=\"false\"\n        android:supportsRtl=\"true\"\n        android:extractNativeLibs=\"false\"\n        android:roundIcon=\"@drawable/ic_ReferencePanel\">\n        <uses-library\n            android:name=\"android.car\"\n            android:required=\"false\"/>\n        <service\n            android:name=\"org.reference.panel.BootPlaybackService\"\n            android:exported=\"false\"/>\n        <service\n            android:name=\"org.reference.panel.AutomationService\"\n            android:exported=\"false\"/>\n        <service\n            android:label=\"@string/navigation_assist_label\"\n            android:name=\"org.reference.panel.NavigationAssistService\"\n            android:permission=\"android.permission.BIND_ACCESSIBILITY_SERVICE\"\n            android:exported=\"true\">\n            <intent-filter>\n                <action android:name=\"android.accessibilityservice.AccessibilityService\"/>\n            </intent-filter>\n            <meta-data\n                android:name=\"android.accessibilityservice\"\n                android:resource=\"@xml/navigation_assist\"/>\n        </service>\n        <receiver\n            android:name=\"org.reference.panel.UpdateInstallReceiver\"\n            android:exported=\"false\"/>\n        <provider\n            android:name=\"org.reference.panel.UpdateApkProvider\"\n            android:exported=\"false\"\n            android:authorities=\"org.reference.panel.update\"\n            android:grantUriPermissions=\"true\"/>\n        <receiver\n            android:name=\"org.reference.panel.RadioCommandReceiver\"\n            android:exported=\"true\">\n            <intent-filter>\n                <action android:name=\"org.reference.panel.RADIO_NEXT\"/>\n                <action android:name=\"org.reference.panel.RADIO_PREVIOUS\"/>\n                <action android:name=\"org.reference.panel.RADIO_SEEK_UP\"/>\n                <action android:name=\"org.reference.panel.RADIO_SEEK_DOWN\"/>\n                <action android:name=\"org.reference.panel.RADIO_PLAY_PAUSE\"/>\n                <action android:name=\"org.reference.panel.RADIO_PLAY\"/>\n                <action android:name=\"org.reference.panel.RADIO_PAUSE\"/>\n                <action android:name=\"org.reference.panel.RADIO_FAVORITE\"/>\n            </intent-filter>\n        </receiver>\n        <receiver\n            android:name=\"org.reference.panel.BootReceiver\"\n            android:exported=\"false\">\n            <intent-filter>\n                <action android:name=\"android.intent.action.BOOT_COMPLETED\"/>\n            </intent-filter>\n        </receiver>\n        <service\n            android:label=\"@string/music_listener_label\"\n            android:name=\"org.reference.panel.MusicNotificationListener\"\n            android:permission=\"android.permission.BIND_NOTIFICATION_LISTENER_SERVICE\"\n            android:exported=\"true\">\n            <intent-filter>\n                <action android:name=\"android.service.notification.NotificationListenerService\"/>\n            </intent-filter>\n        </service>\n        <activity\n            android:name=\"org.reference.panel.MainActivity\"\n            android:exported=\"true\"\n            android:screenOrientation=\"landscape\">\n            <intent-filter>\n                <action android:name=\"android.intent.action.MAIN\"/>\n                <category android:name=\"android.intent.category.LAUNCHER\"/>\n            </intent-filter>\n            <intent-filter>\n                <action android:name=\"android.intent.action.MAIN\"/>\n                <category android:name=\"android.intent.category.HOME\"/>\n                <category android:name=\"android.intent.category.DEFAULT\"/>\n            </intent-filter>\n        </activity>\n    </application>\n</manifest>"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "normalized_result": {
+    "engine": {
+      "name": "jadx-headless-mcp",
+      "version": "0.7.1",
+      "artifact_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+      "source_revision": "5844800a486d2248fa949b74c9896285f5b54de2",
+      "worker_count": 1,
+      "heap_limit_mib": 2494
+    },
+    "package_name": "org.reference.panel",
+    "version_name": "1.0.2",
+    "version_code": "16",
+    "min_sdk": "28",
+    "target_sdk": "28",
+    "permissions": [
+      "android.permission.INJECT_EVENTS",
+      "android.permission.SYSTEM_ALERT_WINDOW",
+      "android.permission.INTERNAL_SYSTEM_WINDOW",
+      "android.permission.MANAGE_ACTIVITY_STACKS",
+      "android.permission.START_TASKS_FROM_RECENTS",
+      "android.permission.EXPAND_STATUS_BAR",
+      "android.permission.STATUS_BAR",
+      "android.permission.FORCE_STOP_PACKAGES",
+      "android.permission.KILL_BACKGROUND_PROCESSES",
+      "android.permission.REORDER_TASKS",
+      "android.permission.RECEIVE_BOOT_COMPLETED",
+      "android.permission.REQUEST_DELETE_PACKAGES",
+      "android.permission.INTERNET",
+      "android.permission.INSTALL_PACKAGES",
+      "android.permission.REQUEST_INSTALL_PACKAGES",
+      "android.permission.FOREGROUND_SERVICE",
+      "android.permission.ACCESS_NETWORK_STATE",
+      "android.permission.WRITE_SETTINGS",
+      "android.permission.MODIFY_AUDIO_SETTINGS",
+      "android.permission.ACCESS_COARSE_LOCATION",
+      "android.permission.ACCESS_FINE_LOCATION",
+      "android.permission.WAKE_LOCK",
+      "android.permission.READ_EXTERNAL_STORAGE",
+      "android.permission.WRITE_EXTERNAL_STORAGE",
+      "android.car.permission.CAR_ENERGY",
+      "android.car.permission.CAR_INFO",
+      "android.car.permission.CAR_VENDOR_EXTENSION",
+      "android.car.permission.CONTROL_CAR_CLIMATE",
+      "android.permission.ACCESS_WIFI_STATE",
+      "android.permission.CHANGE_WIFI_STATE",
+      "android.permission.BLUETOOTH",
+      "android.permission.BLUETOOTH_ADMIN"
+    ],
+    "manifest": {
+      "status": "complete",
+      "text": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    android:versionCode=\"16\"\n    android:versionName=\"1.0.2\"\n    android:compileSdkVersion=\"36\"\n    android:compileSdkVersionCodename=\"16\"\n    package=\"org.reference.panel\"\n    platformBuildVersionCode=\"36\"\n    platformBuildVersionName=\"16\">\n    <uses-sdk\n        android:minSdkVersion=\"28\"\n        android:targetSdkVersion=\"28\"/>\n    <uses-permission android:name=\"android.permission.INJECT_EVENTS\"/>\n    <uses-permission android:name=\"android.permission.SYSTEM_ALERT_WINDOW\"/>\n    <uses-permission android:name=\"android.permission.INTERNAL_SYSTEM_WINDOW\"/>\n    <uses-permission android:name=\"android.permission.MANAGE_ACTIVITY_STACKS\"/>\n    <uses-permission android:name=\"android.permission.START_TASKS_FROM_RECENTS\"/>\n    <uses-permission android:name=\"android.permission.EXPAND_STATUS_BAR\"/>\n    <uses-permission android:name=\"android.permission.STATUS_BAR\"/>\n    <uses-permission android:name=\"android.permission.FORCE_STOP_PACKAGES\"/>\n    <uses-permission android:name=\"android.permission.KILL_BACKGROUND_PROCESSES\"/>\n    <uses-permission android:name=\"android.permission.REORDER_TASKS\"/>\n    <uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>\n    <uses-permission android:name=\"android.permission.REQUEST_DELETE_PACKAGES\"/>\n    <uses-permission android:name=\"android.permission.INTERNET\"/>\n    <uses-permission android:name=\"android.permission.INSTALL_PACKAGES\"/>\n    <uses-permission android:name=\"android.permission.REQUEST_INSTALL_PACKAGES\"/>\n    <uses-permission android:name=\"android.permission.FOREGROUND_SERVICE\"/>\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>\n    <uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>\n    <uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>\n    <uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>\n    <uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>\n    <uses-permission android:name=\"android.permission.WAKE_LOCK\"/>\n    <uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\"/>\n    <uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>\n    <uses-permission android:name=\"android.car.permission.CAR_ENERGY\"/>\n    <uses-permission android:name=\"android.car.permission.CAR_INFO\"/>\n    <uses-permission android:name=\"android.car.permission.CAR_VENDOR_EXTENSION\"/>\n    <uses-permission android:name=\"android.car.permission.CONTROL_CAR_CLIMATE\"/>\n    <uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>\n    <uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>\n    <uses-permission android:name=\"android.permission.BLUETOOTH\"/>\n    <uses-permission android:name=\"android.permission.BLUETOOTH_ADMIN\"/>\n    <uses-feature\n        android:name=\"android.hardware.wifi\"\n        android:required=\"false\"/>\n    <uses-feature\n        android:name=\"android.hardware.bluetooth\"\n        android:required=\"false\"/>\n    <application\n        android:theme=\"@android:style/Theme.Material.NoActionBar\"\n        android:label=\"ReferencePanel\"\n        android:icon=\"@drawable/ic_ReferencePanel\"\n        android:name=\"org.reference.panel.LauncherApplication\"\n        android:allowBackup=\"false\"\n        android:supportsRtl=\"true\"\n        android:extractNativeLibs=\"false\"\n        android:roundIcon=\"@drawable/ic_ReferencePanel\">\n        <uses-library\n            android:name=\"android.car\"\n            android:required=\"false\"/>\n        <service\n            android:name=\"org.reference.panel.BootPlaybackService\"\n            android:exported=\"false\"/>\n        <service\n            android:name=\"org.reference.panel.AutomationService\"\n            android:exported=\"false\"/>\n        <service\n            android:label=\"@string/navigation_assist_label\"\n            android:name=\"org.reference.panel.NavigationAssistService\"\n            android:permission=\"android.permission.BIND_ACCESSIBILITY_SERVICE\"\n            android:exported=\"true\">\n            <intent-filter>\n                <action android:name=\"android.accessibilityservice.AccessibilityService\"/>\n            </intent-filter>\n            <meta-data\n                android:name=\"android.accessibilityservice\"\n                android:resource=\"@xml/navigation_assist\"/>\n        </service>\n        <receiver\n            android:name=\"org.reference.panel.UpdateInstallReceiver\"\n            android:exported=\"false\"/>\n        <provider\n            android:name=\"org.reference.panel.UpdateApkProvider\"\n            android:exported=\"false\"\n            android:authorities=\"org.reference.panel.update\"\n            android:grantUriPermissions=\"true\"/>\n        <receiver\n            android:name=\"org.reference.panel.RadioCommandReceiver\"\n            android:exported=\"true\">\n            <intent-filter>\n                <action android:name=\"org.reference.panel.RADIO_NEXT\"/>\n                <action android:name=\"org.reference.panel.RADIO_PREVIOUS\"/>\n                <action android:name=\"org.reference.panel.RADIO_SEEK_UP\"/>\n                <action android:name=\"org.reference.panel.RADIO_SEEK_DOWN\"/>\n                <action android:name=\"org.reference.panel.RADIO_PLAY_PAUSE\"/>\n                <action android:name=\"org.reference.panel.RADIO_PLAY\"/>\n                <action android:name=\"org.reference.panel.RADIO_PAUSE\"/>\n                <action android:name=\"org.reference.panel.RADIO_FAVORITE\"/>\n            </intent-filter>\n        </receiver>\n        <receiver\n            android:name=\"org.reference.panel.BootReceiver\"\n            android:exported=\"false\">\n            <intent-filter>\n                <action android:name=\"android.intent.action.BOOT_COMPLETED\"/>\n            </intent-filter>\n        </receiver>\n        <service\n            android:label=\"@string/music_listener_label\"\n            android:name=\"org.reference.panel.MusicNotificationListener\"\n            android:permission=\"android.permission.BIND_NOTIFICATION_LISTENER_SERVICE\"\n            android:exported=\"true\">\n            <intent-filter>\n                <action android:name=\"android.service.notification.NotificationListenerService\"/>\n            </intent-filter>\n        </service>\n        <activity\n            android:name=\"org.reference.panel.MainActivity\"\n            android:exported=\"true\"\n            android:screenOrientation=\"landscape\">\n            <intent-filter>\n                <action android:name=\"android.intent.action.MAIN\"/>\n                <category android:name=\"android.intent.category.LAUNCHER\"/>\n            </intent-filter>\n            <intent-filter>\n                <action android:name=\"android.intent.action.MAIN\"/>\n                <category android:name=\"android.intent.category.HOME\"/>\n                <category android:name=\"android.intent.category.DEFAULT\"/>\n            </intent-filter>\n        </activity>\n    </application>\n</manifest>",
+      "reported_total_bytes": null
+    },
+    "components": {
+      "status": "complete",
+      "items": [
+        {
+          "kind": "service",
+          "declared_name": "org.reference.panel.BootPlaybackService",
+          "name": "org.reference.panel.BootPlaybackService",
+          "exported": false,
+          "exported_default": false,
+          "permission": null,
+          "permission_source": "none",
+          "intent_filter_count": 0,
+          "actions": [],
+          "categories": [],
+          "foreground_service_type": null,
+          "authorities": null,
+          "target_activity": null
+        },
+        {
+          "kind": "service",
+          "declared_name": "org.reference.panel.AutomationService",
+          "name": "org.reference.panel.AutomationService",
+          "exported": false,
+          "exported_default": false,
+          "permission": null,
+          "permission_source": "none",
+          "intent_filter_count": 0,
+          "actions": [],
+          "categories": [],
+          "foreground_service_type": null,
+          "authorities": null,
+          "target_activity": null
+        },
+        {
+          "kind": "service",
+          "declared_name": "org.reference.panel.NavigationAssistService",
+          "name": "org.reference.panel.NavigationAssistService",
+          "exported": true,
+          "exported_default": true,
+          "permission": "android.permission.BIND_ACCESSIBILITY_SERVICE",
+          "permission_source": "component",
+          "intent_filter_count": 1,
+          "actions": [
+            "android.accessibilityservice.AccessibilityService"
+          ],
+          "categories": [],
+          "foreground_service_type": null,
+          "authorities": null,
+          "target_activity": null
+        },
+        {
+          "kind": "receiver",
+          "declared_name": "org.reference.panel.UpdateInstallReceiver",
+          "name": "org.reference.panel.UpdateInstallReceiver",
+          "exported": false,
+          "exported_default": false,
+          "permission": null,
+          "permission_source": "none",
+          "intent_filter_count": 0,
+          "actions": [],
+          "categories": [],
+          "foreground_service_type": null,
+          "authorities": null,
+          "target_activity": null
+        },
+        {
+          "kind": "provider",
+          "declared_name": "org.reference.panel.UpdateApkProvider",
+          "name": "org.reference.panel.UpdateApkProvider",
+          "exported": false,
+          "exported_default": false,
+          "permission": null,
+          "permission_source": "none",
+          "intent_filter_count": 0,
+          "actions": [],
+          "categories": [],
+          "foreground_service_type": null,
+          "authorities": [
+            "org.reference.panel.update"
+          ],
+          "target_activity": null
+        },
+        {
+          "kind": "receiver",
+          "declared_name": "org.reference.panel.RadioCommandReceiver",
+          "name": "org.reference.panel.RadioCommandReceiver",
+          "exported": true,
+          "exported_default": true,
+          "permission": null,
+          "permission_source": "none",
+          "intent_filter_count": 1,
+          "actions": [
+            "org.reference.panel.RADIO_NEXT",
+            "org.reference.panel.RADIO_PREVIOUS",
+            "org.reference.panel.RADIO_SEEK_UP",
+            "org.reference.panel.RADIO_SEEK_DOWN",
+            "org.reference.panel.RADIO_PLAY_PAUSE",
+            "org.reference.panel.RADIO_PLAY",
+            "org.reference.panel.RADIO_PAUSE",
+            "org.reference.panel.RADIO_FAVORITE"
+          ],
+          "categories": [],
+          "foreground_service_type": null,
+          "authorities": null,
+          "target_activity": null
+        },
+        {
+          "kind": "receiver",
+          "declared_name": "org.reference.panel.BootReceiver",
+          "name": "org.reference.panel.BootReceiver",
+          "exported": false,
+          "exported_default": true,
+          "permission": null,
+          "permission_source": "none",
+          "intent_filter_count": 1,
+          "actions": [
+            "android.intent.action.BOOT_COMPLETED"
+          ],
+          "categories": [],
+          "foreground_service_type": null,
+          "authorities": null,
+          "target_activity": null
+        },
+        {
+          "kind": "service",
+          "declared_name": "org.reference.panel.MusicNotificationListener",
+          "name": "org.reference.panel.MusicNotificationListener",
+          "exported": true,
+          "exported_default": true,
+          "permission": "android.permission.BIND_NOTIFICATION_LISTENER_SERVICE",
+          "permission_source": "component",
+          "intent_filter_count": 1,
+          "actions": [
+            "android.service.notification.NotificationListenerService"
+          ],
+          "categories": [],
+          "foreground_service_type": null,
+          "authorities": null,
+          "target_activity": null
+        },
+        {
+          "kind": "activity",
+          "declared_name": "org.reference.panel.MainActivity",
+          "name": "org.reference.panel.MainActivity",
+          "exported": true,
+          "exported_default": true,
+          "permission": null,
+          "permission_source": "none",
+          "intent_filter_count": 2,
+          "actions": [
+            "android.intent.action.MAIN"
+          ],
+          "categories": [
+            "android.intent.category.LAUNCHER",
+            "android.intent.category.HOME",
+            "android.intent.category.DEFAULT"
+          ],
+          "foreground_service_type": null,
+          "authorities": null,
+          "target_activity": null
+        }
+      ],
+      "limitations": []
+    },
+    "class_count": 485,
+    "resource_count": 264,
+    "signature_verification": "not_performed"
+  },
+  "confidence": "observed",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Static decompiler observations do not establish runtime behavior; the APK is never executed.",
+    "Method signatures use provider display types; DEX prototypes come from frozen JADX metadata. Display names may be aliases, and overload indices are local to this engine and artifact.",
+    "Class inventories use parsed metadata before code generation, including synthetic members that may be omitted from decompiled source. Source positions remain unknown.",
+    "Incoming reference totals count JADX using nodes. Direct invoke entries within a using method report raw DEX code-unit offsets and method indexes, but coverage is limited to those nodes and directly matched invokes; it does not establish every possible dynamic or reflective call site.",
+    "Manifest summaries are parsed once by REA's bridge from the exact root AndroidManifest.xml resource, using namespace-aware XML attributes; decoded XML is retained. APK signatures, split APKs, native libraries and Android runtime capture are not verified by this provider."
+  ],
+  "relationship_coverage": null,
+  "locations": [
+    {
+      "kind": "artifact-path",
+      "path": "AndroidManifest.xml"
+    }
+  ],
+  "evidence_links": []
+}

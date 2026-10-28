@@ -1,0 +1,15 @@
+    public static void s(Context context, File file) {
+        file.getClass();
+        if (!file.isFile()) {
+            w.a("no file");
+            return;
+        }
+        if (!o(context)) {
+            throw new IllegalStateException(si.a("update_freetuga_missing", new Object[0]));
+        }
+        int i = UpdateApkProvider.a;
+        Uri uri = Uri.parse("content://" + context.getPackageName() + ".update/ReferencePanel.apk");
+        uri.getClass();
+        context.grantUriPermission(new ComponentName("com.teto.inputservice", "com.teto.inputservice.autoboot.ApkInstallActivity").getPackageName(), uri, 1);
+        context.startActivity(new Intent("android.intent.action.VIEW").setComponent(new ComponentName("com.teto.inputservice", "com.teto.inputservice.autoboot.ApkInstallActivity")).setDataAndType(uri, "application/vnd.android.package-archive").addFlags(268435457));
+    }

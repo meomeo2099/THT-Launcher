@@ -1,0 +1,14 @@
+{
+  "apk_sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c",
+  "zip_entries": 264,
+  "duplicate_entry_names": [],
+  "zip_crc_failure": null,
+  "dex_files": [
+    "classes.dex"
+  ],
+  "native_libraries": [
+    "lib/arm64-v8a/libdhguard.so",
+    "lib/armeabi-v7a/libdhguard.so"
+  ],
+  "asset_files": 241
+}

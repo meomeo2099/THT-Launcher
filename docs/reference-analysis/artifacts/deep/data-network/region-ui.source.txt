@@ -1,0 +1,77 @@
+    /* JADX WARN: Code duplicated, block: B:19:0x0041  */
+    public final void e() {
+        String strA;
+        FrameLayout frameLayout = this.c0;
+        if (frameLayout == null) {
+            return;
+        }
+        ze zeVarA = bf.a(this);
+        int i = 0;
+        boolean z = zeVarA != null;
+        b2 b2Var = new b2(this, 26);
+        SharedPreferences sharedPreferences = getSharedPreferences("panel", 0);
+        long jCurrentTimeMillis = System.currentTimeMillis() - sharedPreferences.getLong("region_pass_checked", 0L);
+        if (!pi.d) {
+            if (0 > jCurrentTimeMillis) {
+                pi.d = true;
+                new Thread(new l(getApplicationContext(), sharedPreferences, new Handler(Looper.getMainLooper()), b2Var, 3)).start();
+            } else {
+                if (jCurrentTimeMillis >= (z ? 600000L : 86400000L)) {
+                    pi.d = true;
+                    new Thread(new l(getApplicationContext(), sharedPreferences, new Handler(Looper.getMainLooper()), b2Var, 3)).start();
+                }
+            }
+        }
+        df dfVar = this.f0;
+        if ((dfVar != null ? dfVar.getTag() : null) == zeVarA) {
+            if ((zeVarA != null) == (this.f0 != null)) {
+                return;
+            }
+        }
+        View view = this.f0;
+        if (view != null) {
+            frameLayout.removeView(view);
+        }
+        this.f0 = null;
+        if (zeVarA != null) {
+            s0();
+            float f = getResources().getDisplayMetrics().density;
+            df dfVar2 = new df(this);
+            dfVar2.setOrientation(1);
+            dfVar2.setGravity(17);
+            dfVar2.setBackgroundColor(Color.rgb(11, 14, 20));
+            dfVar2.setClickable(true);
+            dfVar2.setFocusable(true);
+            dfVar2.setFocusableInTouchMode(true);
+            ImageView imageView = new ImageView(this);
+            imageView.setImageResource(org.reference.panel.R.drawable.ic_ReferencePanel);
+            int i2 = (int) (150.0f * f);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(i2, i2);
+            layoutParams.bottomMargin = (int) (28.0f * f);
+            dfVar2.addView(imageView, layoutParams);
+            cf cfVar = new cf(f, i);
+            dfVar2.addView(df.a(this, si.a("region_lock_title", new Object[0]), 30.0f, -1), (ViewGroup.LayoutParams) cfVar.b(0));
+            dfVar2.addView(df.a(this, "ReferencePanel works only in Russia, Belarus and Kazakhstan", 22.0f, Color.rgb(233, 240, 247)), (ViewGroup.LayoutParams) cfVar.b(10));
+            int iOrdinal = zeVarA.ordinal();
+            if (iOrdinal == 0) {
+                Locale localeB = bf.b();
+                String displayLanguage = localeB.getDisplayLanguage(localeB);
+                if (th.A(displayLanguage)) {
+                    displayLanguage = localeB.getLanguage();
+                }
+                strA = si.a("region_lock_language_0", displayLanguage);
+            } else {
+                if (iOrdinal != 1) {
+                    throw new vc();
+                }
+                strA = si.a("region_lock_location", new Object[0]);
+            }
+            dfVar2.addView(df.a(this, strA, 20.0f, Color.rgb(157, 177, 196)), (ViewGroup.LayoutParams) cfVar.b(18));
+            dfVar2.addView(df.a(this, si.a("region_pass_code_0", pi.w(this)), 17.0f, Color.rgb(120, 140, 160)), (ViewGroup.LayoutParams) cfVar.b(30));
+            dfVar2.setTag(zeVarA);
+            z9.a(dfVar2);
+            frameLayout.addView(dfVar2, new FrameLayout.LayoutParams(-1, -1));
+            this.f0 = dfVar2;
+        }
+        d();
+    }

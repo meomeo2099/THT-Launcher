@@ -1,0 +1,139 @@
+{
+  "evidence_id": "ev_f391195ecd33856b9a605b3964ed3d8d8d8cca3e35dc6cf5acfed3594382c89a",
+  "subject": {
+    "name": "reference.apk",
+    "digest": {
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+    },
+    "local_path": "reference.apk",
+    "format": "apk",
+    "architecture": null
+  },
+  "provider": {
+    "id": "jadx",
+    "name": "JADX headless",
+    "version": "0.7.1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "trace_android_references",
+  "parameters": {
+    "path": "reference.apk",
+    "class_name": "org.reference.panel.Guard",
+    "method_name": "probe"
+  },
+  "raw_result": {
+    "server": {
+      "name": "rea-jadx-bridge",
+      "version": "7"
+    },
+    "bridge_sha256": "e5044a8312dd0731f53af3f095508b3e5cff54df6b971c95d4305e2f39b4fa30",
+    "jar_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "loaded": {
+      "state": "LOADED",
+      "apk_path": "<temporary-analysis-session>/target.apk",
+      "class_count": 485,
+      "resource_count": 264,
+      "threads": 1,
+      "resources": "full"
+    },
+    "calls": [
+      {
+        "operation": "rea_jvm_status",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"metadata_scope\":\"parsed_members\",\"max_heap_bytes\":2147483648,\"java_version\":\"21.0.12.1\",\"available_processors\":2,\"engine_reported_version\":\"0.7.1\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "load_apk",
+        "input": {
+          "path": "<temporary-analysis-session>/target.apk",
+          "threads": 1,
+          "resources": "full"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"state\":\"LOADED\",\"apk_path\":\"<temporary-analysis-session>/target.apk\",\"class_count\":485,\"raw_class_count\":485,\"resource_count\":264,\"load_duration_ms\":4677,\"decompile_timeout_ms\":90000,\"threads\":1,\"code_cache_size\":64,\"resources\":\"full\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_class_summary",
+        "input": {
+          "class_name": "org.reference.panel.Guard"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"inner_class_count\":0,\"name\":\"Guard\",\"field_count\":4,\"full_name\":\"org.reference.panel.Guard\",\"method_count\":6,\"raw_name\":\"org.reference.panel.Guard\",\"fields\":[{\"type\":\"org.reference.panel.Guard\",\"def_pos\":0,\"name\":\"INSTANCE\"},{\"type\":\"int\",\"def_pos\":0,\"name\":\"NOMINAL_BROKEN\"},{\"type\":\"int\",\"def_pos\":0,\"name\":\"cached\"},{\"type\":\"boolean\",\"def_pos\":0,\"name\":\"loaded\"}],\"methods\":[{\"signature\":\"<clinit>(): void\",\"def_pos\":0,\"name\":\"<clinit>\",\"is_constructor\":false,\"dex_descriptor\":\"()V\"},{\"signature\":\"<init>(): void\",\"def_pos\":0,\"name\":\"<init>\",\"is_constructor\":true,\"dex_descriptor\":\"()V\"},{\"signature\":\"id(int): int\",\"def_pos\":0,\"name\":\"id\",\"is_constructor\":false,\"dex_descriptor\":\"(I)I\"},{\"signature\":\"offset(android.content.Context): int\",\"def_pos\":0,\"name\":\"offset\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;)I\"},{\"signature\":\"probe(android.content.Context): int\",\"def_pos\":0,\"name\":\"probe\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;)I\"},{\"signature\":\"resolve(int): int\",\"def_pos\":0,\"name\":\"resolve\",\"is_constructor\":false,\"dex_descriptor\":\"(I)I\"}],\"inner_classes\":[]}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_xrefs_to_method",
+        "input": {
+          "class_name": "org.reference.panel.Guard",
+          "method_name": "probe",
+          "overload_index": 0,
+          "limit": 2147483647,
+          "resolve_line": false
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"count\":0,\"target\":\"org.reference.panel.Guard.probe\",\"resolve_line\":false,\"total\":0,\"items\":[],\"overload_index\":0,\"reported_signature\":\"probe(android.content.Context): int\"}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "normalized_result": {
+    "engine": {
+      "name": "jadx-headless-mcp",
+      "version": "0.7.1",
+      "artifact_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+      "source_revision": "5844800a486d2248fa949b74c9896285f5b54de2",
+      "worker_count": 1,
+      "heap_limit_mib": 2048
+    },
+    "class_name": "org.reference.panel.Guard",
+    "method_name": "probe",
+    "overload_index": 0,
+    "reported_signature": "probe(android.content.Context): int",
+    "dex_descriptor": "(Landroid/content/Context;)I",
+    "total": 0,
+    "references": [],
+    "coverage": "complete",
+    "reference_unit": "using_node"
+  },
+  "confidence": "observed",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Static decompiler observations do not establish runtime behavior; the APK is never executed.",
+    "Method signatures use provider display types; DEX prototypes come from frozen JADX metadata. Display names may be aliases, and overload indices are local to this engine and artifact.",
+    "Class inventories use parsed metadata before code generation, including synthetic members that may be omitted from decompiled source. Source positions remain unknown.",
+    "Incoming reference totals count JADX using nodes. Direct invoke entries within a using method report raw DEX code-unit offsets and method indexes, but coverage is limited to those nodes and directly matched invokes; it does not establish every possible dynamic or reflective call site.",
+    "Manifest summaries are parsed once by REA's bridge from the exact root AndroidManifest.xml resource, using namespace-aware XML attributes; decoded XML is retained. APK signatures, split APKs, native libraries and Android runtime capture are not verified by this provider."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

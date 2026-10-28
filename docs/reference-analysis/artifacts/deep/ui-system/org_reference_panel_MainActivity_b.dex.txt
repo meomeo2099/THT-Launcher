@@ -1,0 +1,111 @@
+    #27              : (in Lorg/reference/panel/MainActivity;)
+      name          : 'b'
+      type          : '(Z)Lt;'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 9
+      ins           : 2
+      outs          : 7
+      insns size    : 64 16-bit code units
+099f2c:                                        |[099f2c] org.reference.panel.MainActivity.b:(Z)Lt;
+099f3c: 2200 3b03                              |0000: new-instance v0, Lt; // type@033b
+099f40: 6e10 950c 0700                         |0002: invoke-virtual {v7}, Lorg/reference/panel/MainActivity;.z:()Z // method@0c95
+099f46: 0a02                                   |0005: move-result v2
+099f48: 2204 1a01                              |0006: new-instance v4, Lb2; // type@011a
+099f4c: 1301 0b00                              |0008: const/16 v1, #int 11 // #b
+099f50: 7030 b203 7401                         |000a: invoke-direct {v4, v7, v1}, Lb2;.<init>:(Lorg/reference/panel/MainActivity;I)V // method@03b2
+099f56: 2205 1a01                              |000d: new-instance v5, Lb2; // type@011a
+099f5a: 1301 0c00                              |000f: const/16 v1, #int 12 // #c
+099f5e: 7030 b203 7501                         |0011: invoke-direct {v5, v7, v1}, Lb2;.<init>:(Lorg/reference/panel/MainActivity;I)V // method@03b2
+099f64: 2206 5c03                              |0014: new-instance v6, Lv1; // type@035c
+099f68: 1301 1100                              |0016: const/16 v1, #int 17 // #11
+099f6c: 7030 ff0d 7601                         |0018: invoke-direct {v6, v7, v1}, Lv1;.<init>:(Lorg/reference/panel/MainActivity;I)V // method@0dff
+099f72: 0771                                   |001b: move-object v1, v7
+099f74: 0183                                   |001c: move v3, v8
+099f76: 7607 590d 0000                         |001d: invoke-direct/range {v0, v1, v2, v3, v4, v5, v6}, Lt;.<init>:(Landroid/content/Context;ZZLb2;Lb2;Lv1;)V // method@0d59
+099f7c: 5417 ea06                              |0020: iget-object v7, v1, Lorg/reference/panel/MainActivity;.v0:Ljava/util/ArrayList; // field@06ea
+099f80: 6e20 1d08 0700                         |0022: invoke-virtual {v7, v0}, Ljava/util/ArrayList;.add:(Ljava/lang/Object;)Z // method@081d
+099f86: 5417 be06                              |0025: iget-object v7, v1, Lorg/reference/panel/MainActivity;.Z:Lbj; // field@06be
+099f8a: 5477 0701                              |0027: iget-object v7, v7, Lbj;.i:Lv2; // field@0107
+099f8e: 5478 1208                              |0029: iget-object v8, v7, Lv2;.f:Ljava/util/Map; // field@0812
+099f92: 7210 7e08 0800                         |002b: invoke-interface {v8}, Ljava/util/Map;.isEmpty:()Z // method@087e
+099f98: 0a08                                   |002e: move-result v8
+099f9a: 3808 0c00                              |002f: if-eqz v8, 003b // +000c
+099f9e: 5478 0d08                              |0031: iget-object v8, v7, Lv2;.a:Ljava/util/Map; // field@080d
+099fa2: 7210 7e08 0800                         |0033: invoke-interface {v8}, Ljava/util/Map;.isEmpty:()Z // method@087e
+099fa8: 0a08                                   |0036: move-result v8
+099faa: 3908 0300                              |0037: if-nez v8, 003a // +0003
+099fae: 2802                                   |0039: goto 003b // +0002
+099fb0: 1207                                   |003a: const/4 v7, #int 0 // #0
+099fb2: 1218                                   |003b: const/4 v8, #int 1 // #1
+099fb4: 6e30 5d0d 7008                         |003c: invoke-virtual {v0, v7, v8}, Lt;.d:(Lv2;I)V // method@0d5d
+099fba: 1100                                   |003f: return-object v0
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+      locals        :
+        0x0000 - 0x0040 reg=7 this Lorg/reference/panel/MainActivity;
+        0x0000 - 0x0040 reg=8 (null) Z

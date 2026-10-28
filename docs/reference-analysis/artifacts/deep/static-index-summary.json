@@ -1,0 +1,77 @@
+{
+  "kind": "supporting DEX disassembly index, not REA Evidence",
+  "apk_sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c",
+  "total_invoke_instructions": 33267,
+  "categories": {
+    "network": {
+      "call_instructions": 104,
+      "caller_methods": 33
+    },
+    "reflection": {
+      "call_instructions": 181,
+      "caller_methods": 40
+    },
+    "dynamic_code": {
+      "call_instructions": 2,
+      "caller_methods": 2
+    },
+    "broadcast": {
+      "call_instructions": 3,
+      "caller_methods": 3
+    },
+    "filesystem": {
+      "call_instructions": 434,
+      "caller_methods": 77
+    },
+    "sqlite": {
+      "call_instructions": 48,
+      "caller_methods": 19
+    },
+    "preferences": {
+      "call_instructions": 1205,
+      "caller_methods": 203
+    },
+    "location": {
+      "call_instructions": 49,
+      "caller_methods": 13
+    },
+    "vehicle": {
+      "call_instructions": 0,
+      "caller_methods": 0
+    },
+    "permission": {
+      "call_instructions": 26,
+      "caller_methods": 21
+    },
+    "app_management": {
+      "call_instructions": 115,
+      "caller_methods": 38
+    },
+    "crypto": {
+      "call_instructions": 16,
+      "caller_methods": 5
+    },
+    "webview": {
+      "call_instructions": 0,
+      "caller_methods": 0
+    },
+    "sms_contacts_camera_mic": {
+      "call_instructions": 0,
+      "caller_methods": 0
+    }
+  },
+  "classes_with_warning_markers": 102,
+  "files_with_unavailable_or_error_markers": [
+    "c4.java",
+    "gc.java",
+    "ie.java",
+    "k8.java",
+    "l0.java",
+    "q7.java",
+    "qf.java",
+    "org/reference/panel/MainActivity.java",
+    "uh.java",
+    "xd.java",
+    "za.java"
+  ]
+}

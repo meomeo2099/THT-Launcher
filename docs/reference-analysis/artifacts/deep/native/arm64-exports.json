@@ -1,0 +1,86 @@
+{
+  "evidence_id": "ev_8565bd9aee14c3f2c93b28b272af00fe8535aafdb7cb8b9ce6a69d8d2093e72c",
+  "subject": {
+    "name": "libdhguard.so",
+    "digest": {
+      "sha256": "23126f1022e48b5147c6e4505a587b0d12300155361859f524c4fffe7b7827aa"
+    },
+    "local_path": "docs/reference-analysis/artifacts/deep/native/arm64-v8a/libdhguard.so",
+    "format": "elf",
+    "architecture": null
+  },
+  "provider": {
+    "id": "rea-native-exports",
+    "name": "REA PE/ELF export table reader",
+    "version": "1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_native_exports",
+  "parameters": {
+    "path": "docs/reference-analysis/artifacts/deep/native/arm64-v8a/libdhguard.so",
+    "max_file_bytes": 268435456
+  },
+  "raw_result": null,
+  "normalized_result": {
+    "artifact": {
+      "path": "docs/reference-analysis/artifacts/deep/native/arm64-v8a/libdhguard.so",
+      "sha256": "23126f1022e48b5147c6e4505a587b0d12300155361859f524c4fffe7b7827aa",
+      "bytes": 7224
+    },
+    "format": "elf",
+    "architecture": "arm64",
+    "bits": 64,
+    "byte_order": "little",
+    "exports": [
+      {
+        "name": "Java_org_reference_panel_Guard_resolve",
+        "name_bytes_base64": null,
+        "name_utf8_decodable": true,
+        "value": "0xa08",
+        "size": "44",
+        "type": "function",
+        "binding": "global",
+        "version": null
+      },
+      {
+        "name": "Java_org_reference_panel_Guard_probe",
+        "name_bytes_base64": null,
+        "name_utf8_decodable": true,
+        "value": "0xa34",
+        "size": "1116",
+        "type": "function",
+        "binding": "global",
+        "version": null
+      }
+    ],
+    "coverage": {
+      "status": "complete",
+      "reason": null,
+      "examined_entries": 7,
+      "exports": 2
+    },
+    "issues": [],
+    "limitations": [
+      "Rows list defined default- or protected-visibility global, weak and unique dynamic symbols; local, hidden, internal and undefined symbols are not exports.",
+      "A hidden symbol version is not the default version that a by-name dlsym lookup selects.",
+      "Rows reproduce the dynamic symbol table; they do not establish that a symbol is reachable, safe to call or loaded at runtime."
+    ]
+  },
+  "confidence": "observed",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Rows list defined default- or protected-visibility global, weak and unique dynamic symbols; local, hidden, internal and undefined symbols are not exports.",
+    "A hidden symbol version is not the default version that a by-name dlsym lookup selects.",
+    "Rows reproduce the dynamic symbol table; they do not establish that a symbol is reachable, safe to call or loaded at runtime."
+  ],
+  "relationship_coverage": null,
+  "locations": [
+    {
+      "kind": "artifact-path",
+      "path": "docs/reference-analysis/artifacts/deep/native/arm64-v8a/libdhguard.so"
+    }
+  ],
+  "evidence_links": []
+}

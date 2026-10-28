@@ -1,0 +1,320 @@
+Class #392            -
+  Class descriptor  : 'Lorg/reference/panel/Guard;'
+  Access flags      : 0x0011 (PUBLIC FINAL)
+  Superclass        : 'Ljava/lang/Object;'
+  Interfaces        -
+  Static fields     -
+    #0              : (in Lorg/reference/panel/Guard;)
+      name          : 'INSTANCE'
+      type          : 'Lorg/reference/panel/Guard;'
+      access        : 0x0019 (PUBLIC STATIC FINAL)
+      value         : null
+    #1              : (in Lorg/reference/panel/Guard;)
+      name          : 'NOMINAL_BROKEN'
+      type          : 'I'
+      access        : 0x001a (PRIVATE STATIC FINAL)
+      value         : 81
+    #2              : (in Lorg/reference/panel/Guard;)
+      name          : 'cached'
+      type          : 'I'
+      access        : 0x004a (PRIVATE STATIC VOLATILE)
+    #3              : (in Lorg/reference/panel/Guard;)
+      name          : 'loaded'
+      type          : 'Z'
+      access        : 0x000a (PRIVATE STATIC)
+  Instance fields   -
+  Direct methods    -
+    #0              : (in Lorg/reference/panel/Guard;)
+      name          : '<clinit>'
+      type          : '()V'
+      access        : 0x10008 (STATIC CONSTRUCTOR)
+      code          -
+      registers     : 2
+      ins           : 0
+      outs          : 2
+      insns size    : 33 16-bit code units
+099db8:                                        |[099db8] org.reference.panel.Guard.<clinit>:()V
+099dc8: 2200 0f03                              |0000: new-instance v0, Lorg/reference/panel/Guard; // type@030f
+099dcc: 7010 2d0c 0000                         |0002: invoke-direct {v0}, Lorg/reference/panel/Guard;.<init>:()V // method@0c2d
+099dd2: 6900 9c06                              |0005: sput-object v0, Lorg/reference/panel/Guard;.INSTANCE:Lorg/reference/panel/Guard; // field@069c
+099dd6: 1a00 fd0a                              |0007: const-string v0, "dhguard" // string@0afd
+099dda: 7110 c507 0000                         |0009: invoke-static {v0}, Ljava/lang/System;.loadLibrary:(Ljava/lang/String;)V // method@07c5
+099de0: 6200 ca07                              |000c: sget-object v0, Lti;.a:Lti; // field@07ca
+099de4: 2808                                   |000e: goto 0016 // +0008
+099de6: 0d00                                   |000f: move-exception v0
+099de8: 2201 8201                              |0010: new-instance v1, Lff; // type@0182
+099dec: 7020 4a05 0100                         |0012: invoke-direct {v1, v0}, Lff;.<init>:(Ljava/lang/Throwable;)V // method@054a
+099df2: 0710                                   |0015: move-object v0, v1
+099df4: 2000 8201                              |0016: instance-of v0, v0, Lff; // type@0182
+099df8: df00 0001                              |0018: xor-int/lit8 v0, v0, #int 1 // #01
+099dfc: 6a00 9f06                              |001a: sput-boolean v0, Lorg/reference/panel/Guard;.loaded:Z // field@069f
+099e00: 1500 0080                              |001c: const/high16 v0, #int -2147483648 // #8000
+099e04: 6700 9e06                              |001e: sput v0, Lorg/reference/panel/Guard;.cached:I // field@069e
+099e08: 0e00                                   |0020: return-void
+      catches       : 1
+        0x0007 - 0x000e
+          <any> -> 0x000f
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+      locals        :
+
+    #1              : (in Lorg/reference/panel/Guard;)
+      name          : '<init>'
+      type          : '()V'
+      access        : 0x10002 (PRIVATE CONSTRUCTOR)
+      code          -
+      registers     : 1
+      ins           : 1
+      outs          : 1
+      insns size    : 4 16-bit code units
+099e18:                                        |[099e18] org.reference.panel.Guard.<init>:()V
+099e28: 7010 8707 0000                         |0000: invoke-direct {v0}, Ljava/lang/Object;.<init>:()V // method@0787
+099e2e: 0e00                                   |0003: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+      locals        :
+        0x0000 - 0x0004 reg=0 this Lorg/reference/panel/Guard;
+
+    #2              : (in Lorg/reference/panel/Guard;)
+      name          : 'probe'
+      type          : '(Landroid/content/Context;)I'
+      access        : 0x0112 (PRIVATE FINAL NATIVE)
+      code          : (none)
+
+    #3              : (in Lorg/reference/panel/Guard;)
+      name          : 'resolve'
+      type          : '(I)I'
+      access        : 0x0112 (PRIVATE FINAL NATIVE)
+      code          : (none)
+
+  Virtual methods   -
+    #0              : (in Lorg/reference/panel/Guard;)
+      name          : 'id'
+      type          : '(I)I'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 4
+      ins           : 2
+      outs          : 2
+      insns size    : 38 16-bit code units
+099cb4:                                        |[099cb4] org.reference.panel.Guard.id:(I)I
+099cc4: 6300 9f06                              |0000: sget-boolean v0, Lorg/reference/panel/Guard;.loaded:Z // field@069f
+099cc8: 1201                                   |0002: const/4 v1, #int 0 // #0
+099cca: 3800 2200                              |0003: if-eqz v0, 0025 // +0022
+099cce: 7020 310c 3200                         |0005: invoke-direct {v2, v3}, Lorg/reference/panel/Guard;.resolve:(I)I // method@0c31
+099cd4: 0a02                                   |0008: move-result v2
+099cd6: 7110 6507 0200                         |0009: invoke-static {v2}, Ljava/lang/Integer;.valueOf:(I)Ljava/lang/Integer; // method@0765
+099cdc: 0c02                                   |000c: move-result-object v2
+099cde: 2808                                   |000d: goto 0015 // +0008
+099ce0: 0d02                                   |000e: move-exception v2
+099ce2: 2203 8201                              |000f: new-instance v3, Lff; // type@0182
+099ce6: 7020 4a05 2300                         |0011: invoke-direct {v3, v2}, Lff;.<init>:(Ljava/lang/Throwable;)V // method@054a
+099cec: 0732                                   |0014: move-object v2, v3
+099cee: 7110 6507 0100                         |0015: invoke-static {v1}, Ljava/lang/Integer;.valueOf:(I)Ljava/lang/Integer; // method@0765
+099cf4: 0c03                                   |0018: move-result-object v3
+099cf6: 2020 8201                              |0019: instance-of v0, v2, Lff; // type@0182
+099cfa: 3800 0300                              |001b: if-eqz v0, 001e // +0003
+099cfe: 0732                                   |001d: move-object v2, v3
+099d00: 1f02 fe01                              |001e: check-cast v2, Ljava/lang/Number; // type@01fe
+099d04: 6e10 8507 0200                         |0020: invoke-virtual {v2}, Ljava/lang/Number;.intValue:()I // method@0785
+099d0a: 0a02                                   |0023: move-result v2
+099d0c: 0f02                                   |0024: return v2
+099d0e: 0f01                                   |0025: return v1
+      catches       : 1
+        0x0005 - 0x000d
+          <any> -> 0x000e
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+      locals        :
+        0x0000 - 0x0026 reg=2 this Lorg/reference/panel/Guard;
+        0x0000 - 0x0026 reg=3 (null) I
+
+    #1              : (in Lorg/reference/panel/Guard;)
+      name          : 'offset'
+      type          : '(Landroid/content/Context;)I'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 3
+      ins           : 2
+      outs          : 2
+      insns size    : 63 16-bit code units
+099d1c:                                        |[099d1c] org.reference.panel.Guard.offset:(Landroid/content/Context;)I
+099d2c: 6e10 8a07 0200                         |0000: invoke-virtual {v2}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+099d32: 6001 9e06                              |0003: sget v1, Lorg/reference/panel/Guard;.cached:I // field@069e
+099d36: 1500 0080                              |0005: const/high16 v0, #int -2147483648 // #8000
+099d3a: 3201 0300                              |0007: if-eq v1, v0, 000a // +0003
+099d3e: 0f01                                   |0009: return v1
+099d40: 6201 e302                              |000a: sget-object v1, Lhh;.a:Lfi; // field@02e3
+099d44: 6e10 b700 0200                         |000c: invoke-virtual {v2}, Landroid/content/Context;.getApplicationContext:()Landroid/content/Context; // method@00b7
+099d4a: 0c01                                   |000f: move-result-object v1
+099d4c: 6e10 8a07 0100                         |0010: invoke-virtual {v1}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+099d52: 7110 0d06 0100                         |0013: invoke-static {v1}, Lhh;.a:(Landroid/content/Context;)Ljava/lang/String; // method@060d
+099d58: 0c01                                   |0016: move-result-object v1
+099d5a: 1a02 1202                              |0017: const-string v2, "GENUINE" // string@0212
+099d5e: 6e20 8907 2100                         |0019: invoke-virtual {v1, v2}, Ljava/lang/Object;.equals:(Ljava/lang/Object;)Z // method@0789
+099d64: 0a01                                   |001c: move-result v1
+099d66: 7110 2607 0100                         |001d: invoke-static {v1}, Ljava/lang/Boolean;.valueOf:(Z)Ljava/lang/Boolean; // method@0726
+099d6c: 0c01                                   |0020: move-result-object v1
+099d6e: 2808                                   |0021: goto 0029 // +0008
+099d70: 0d01                                   |0022: move-exception v1
+099d72: 2202 8201                              |0023: new-instance v2, Lff; // type@0182
+099d76: 7020 4a05 1200                         |0025: invoke-direct {v2, v1}, Lff;.<init>:(Ljava/lang/Throwable;)V // method@054a
+099d7c: 0721                                   |0028: move-object v1, v2
+099d7e: 6202 5c03                              |0029: sget-object v2, Ljava/lang/Boolean;.FALSE:Ljava/lang/Boolean; // field@035c
+099d82: 2010 8201                              |002b: instance-of v0, v1, Lff; // type@0182
+099d86: 3800 0300                              |002d: if-eqz v0, 0030 // +0003
+099d8a: 0721                                   |002f: move-object v1, v2
+099d8c: 1f01 e601                              |0030: check-cast v1, Ljava/lang/Boolean; // type@01e6
+099d90: 6e10 2407 0100                         |0032: invoke-virtual {v1}, Ljava/lang/Boolean;.booleanValue:()Z // method@0724
+099d96: 0a01                                   |0035: move-result v1
+099d98: 3801 0400                              |0036: if-eqz v1, 003a // +0004
+099d9c: 1201                                   |0038: const/4 v1, #int 0 // #0
+099d9e: 2803                                   |0039: goto 003c // +0003
+099da0: 1301 5100                              |003a: const/16 v1, #int 81 // #51
+099da4: 6701 9e06                              |003c: sput v1, Lorg/reference/panel/Guard;.cached:I // field@069e
+099da8: 0f01                                   |003e: return v1
+      catches       : 1
+        0x0013 - 0x0021
+          <any> -> 0x0022
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+      locals        :
+        0x0000 - 0x003f reg=1 this Lorg/reference/panel/Guard;
+        0x0000 - 0x003f reg=2 (null) Landroid/content/Context;
+
+  source_file_idx   : 4152 (r8-map-id-df02db20992efcdad8c8628fa158af402193d9214b2257c75897211101eb46a6)

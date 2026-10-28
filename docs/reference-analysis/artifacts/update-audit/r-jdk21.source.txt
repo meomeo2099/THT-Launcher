@@ -1,0 +1,48 @@
+    public static void r(Context context, File file) throws IOException {
+        file.getClass();
+        PackageInstaller packageInstaller = context.getPackageManager().getPackageInstaller();
+        packageInstaller.getClass();
+        PackageInstaller.SessionParams sessionParams = new PackageInstaller.SessionParams(1);
+        sessionParams.setAppPackageName(context.getPackageName());
+        sessionParams.setSize(file.length());
+        int iCreateSession = packageInstaller.createSession(sessionParams);
+        PackageInstaller.Session sessionOpenSession = packageInstaller.openSession(iCreateSession);
+        try {
+            OutputStream outputStreamOpenWrite = sessionOpenSession.openWrite("base.apk", 0L, file.length());
+            try {
+                FileInputStream fileInputStream = new FileInputStream(file);
+                try {
+                    outputStreamOpenWrite.getClass();
+                    pi.u(fileInputStream, outputStreamOpenWrite);
+                    fileInputStream.close();
+                    sessionOpenSession.fsync(outputStreamOpenWrite);
+                    outputStreamOpenWrite.close();
+                    Intent action = new Intent(context, (Class<?>) UpdateInstallReceiver.class).setAction("org.reference.panel.UPDATE_STATUS");
+                    action.getClass();
+                    sessionOpenSession.commit(PendingIntent.getBroadcast(context, iCreateSession, action, 134217728).getIntentSender());
+                    sessionOpenSession.close();
+                } catch (Throwable th) {
+                    try {
+                        throw th;
+                    } catch (Throwable th2) {
+                        k8.p(fileInputStream, th);
+                        throw th2;
+                    }
+                }
+            } catch (Throwable th3) {
+                try {
+                    throw th3;
+                } catch (Throwable th4) {
+                    k8.p(outputStreamOpenWrite, th3);
+                    throw th4;
+                }
+            }
+        } catch (Throwable th5) {
+            try {
+                throw th5;
+            } catch (Throwable th6) {
+                k8.p(sessionOpenSession, th5);
+                throw th6;
+            }
+        }
+    }

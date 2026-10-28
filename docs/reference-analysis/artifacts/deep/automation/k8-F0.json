@@ -1,0 +1,147 @@
+{
+  "evidence_id": "ev_d0df9d7b0addd95d6c6515f93eae880f752b87fd2be3361da164c12873ead0b2",
+  "subject": {
+    "name": "reference.apk",
+    "digest": {
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+    },
+    "local_path": "reference.apk",
+    "format": "apk",
+    "architecture": null
+  },
+  "provider": {
+    "id": "jadx",
+    "name": "JADX headless",
+    "version": "0.7.1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_android_method",
+  "parameters": {
+    "path": "reference.apk",
+    "class_name": "k8",
+    "method_name": "F0"
+  },
+  "raw_result": {
+    "server": {
+      "name": "rea-jadx-bridge",
+      "version": "7"
+    },
+    "bridge_sha256": "e5044a8312dd0731f53af3f095508b3e5cff54df6b971c95d4305e2f39b4fa30",
+    "jar_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "loaded": {
+      "state": "LOADED",
+      "apk_path": "<temporary-analysis-session>/target.apk",
+      "class_count": 485,
+      "resource_count": 264,
+      "threads": 1,
+      "resources": "full"
+    },
+    "calls": [
+      {
+        "operation": "rea_jvm_status",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"java_version\":\"21.0.12.1\",\"available_processors\":2,\"engine_reported_version\":\"0.7.1\",\"metadata_scope\":\"parsed_members\",\"max_heap_bytes\":2147483648}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "load_apk",
+        "input": {
+          "path": "<temporary-analysis-session>/target.apk",
+          "threads": 1,
+          "resources": "full"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"state\":\"LOADED\",\"apk_path\":\"<temporary-analysis-session>/target.apk\",\"class_count\":485,\"raw_class_count\":485,\"resource_count\":264,\"load_duration_ms\":2940,\"decompile_timeout_ms\":90000,\"threads\":1,\"code_cache_size\":64,\"resources\":\"full\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_class_summary",
+        "input": {
+          "class_name": "k8"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"method_count\":95,\"raw_name\":\"k8\",\"fields\":[{\"def_pos\":0,\"name\":\"a\",\"type\":\"android.os.IBinder\"},{\"def_pos\":0,\"name\":\"b\",\"type\":\"boolean\"},{\"def_pos\":0,\"name\":\"c\",\"type\":\"a3\"},{\"def_pos\":0,\"name\":\"d\",\"type\":\"u2\"},{\"def_pos\":0,\"name\":\"e\",\"type\":\"u2\"},{\"def_pos\":0,\"name\":\"f\",\"type\":\"int\"},{\"def_pos\":0,\"name\":\"g\",\"type\":\"boolean\"},{\"def_pos\":0,\"name\":\"h\",\"type\":\"boolean\"},{\"def_pos\":0,\"name\":\"i\",\"type\":\"wa\"}],\"methods\":[{\"name\":\"<clinit>\",\"is_constructor\":false,\"dex_descriptor\":\"()V\",\"signature\":\"<clinit>(): void\",\"def_pos\":0},{\"name\":\"A\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/String;Lorg/reference/panel/MainActivity;)V\",\"signature\":\"A(java.lang.String, org.reference.panel.MainActivity): void\",\"def_pos\":0},{\"name\":\"A0\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/String;Lorg/reference/panel/MainActivity;)Ljava/lang/String;\",\"signature\":\"A0(java.lang.String, org.reference.panel.MainActivity): java.lang.String\",\"def_pos\":0},{\"name\":\"B\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/widget/LinearLayout;Lorg/reference/panel/MainActivity;Ljava/lang/String;Ljava/lang/String;)V\",\"signature\":\"B(android.widget.LinearLayout, org.reference.panel.MainActivity, java.lang.String, java.lang.String): void\",\"def_pos\":0},{\"name\":\"B0\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Landroid/content/ComponentName;)Ljava/lang/String;\",\"signature\":\"B0(org.reference.panel.MainActivity, android.content.ComponentName): java.lang.String\",\"def_pos\":0},{\"name\":\"C\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)V\",\"signature\":\"C(org.reference.panel.MainActivity): void\",\"def_pos\":0},{\"name\":\"C0\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/String;Lorg/reference/panel/MainActivity;Z)Lgh;\",\"signature\":\"C0(java.lang.String, org.reference.panel.MainActivity, boolean): gh\",\"def_pos\":0},{\"name\":\"D\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Ljava/lang/Integer;)V\",\"signature\":\"D(org.reference.panel.MainActivity, java.lang.Integer): void\",\"def_pos\":0},{\"name\":\"D0\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Landroid/content/ComponentName;)Landroid/graphics/drawable/Drawable;\",\"signature\":\"D0(org.reference.panel.MainActivity, android.content.ComponentName): android.graphics.drawable.Drawable\",\"def_pos\":0},{\"name\":\"E\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Ljava/lang/String;FIZ)Landroid/widget/TextView;\",\"signature\":\"E(org.reference.panel.MainActivity, java.lang.String, float, int, boolean): android.widget.TextView\",\"def_pos\":0},{\"name\":\"E0\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;)V\",\"signature\":\"E0(android.content.Context): void\",\"def_pos\":0},{\"name\":\"F\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/graphics/Canvas;Ljava/lang/String;FFLandroid/graphics/Paint;)V\",\"signature\":\"F(android.graphics.Canvas, java.lang.String, float, float, android.graphics.Paint): void\",\"def_pos\":0},{\"name\":\"F0\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;)V\",\"signature\":\"F0(android.content.Context): void\",\"def_pos\":0},{\"name\":\"G\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)V\",\"signature\":\"G(org.reference.panel.MainActivity): void\",\"def_pos\":0},{\"name\":\"G0\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/Object;)V\",\"signature\":\"G0(java.lang.Object): void\",\"def_pos\":0},{\"name\":\"H\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)V\",\"signature\":\"H(org.reference.panel.MainActivity): void\",\"def_pos\":0},{\"name\":\"H0\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/String;)V\",\"signature\":\"H0(java.lang.String): void\",\"def_pos\":0},{\"name\":\"I\",\"is_constructor\":false,\"dex_descriptor\":\"()Luc;\",\"signature\":\"I(): uc\",\"def_pos\":0},{\"name\":\"I0\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;Lkd;)V\",\"signature\":\"I0(android.content.Context, kd): void\",\"def_pos\":0},{\"name\":\"J\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)Ljava/util/ArrayList;\",\"signature\":\"J(org.reference.panel.MainActivity): java.util.ArrayList\",\"def_pos\":0},{\"name\":\"J0\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/String;Lorg/reference/panel/MainActivity;)V\",\"signature\":\"J0(java.lang.String, org.reference.panel.MainActivity): void\",\"def_pos\":0},{\"name\":\"K\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Z)V\",\"signature\":\"K(org.reference.panel.MainActivity, boolean): void\",\"def_pos\":0},{\"name\":\"K0\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Landroid/net/Uri;Z)V\",\"signature\":\"K0(org.reference.panel.MainActivity, android.net.Uri, boolean): void\",\"def_pos\":0},{\"name\":\"L\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/String;)Lhc;\",\"signature\":\"L(java.lang.String): hc\",\"def_pos\":0},{\"name\":\"L0\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Ljava/lang/String;Ly5;)V\",\"signature\":\"L0(org.reference.panel.MainActivity, java.lang.String, y5): void\",\"def_pos\":0},{\"name\":\"M\",\"is_constructor\":false,\"dex_descriptor\":\"(Ls2;)Ljava/lang/Class;\",\"signature\":\"M(s2): java.lang.Class\",\"def_pos\":0},{\"name\":\"M0\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/String;Ljava/lang/String;)D\",\"signature\":\"M0(java.lang.String, java.lang.String): double\",\"def_pos\":0},{\"name\":\"N\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;ZLjava/lang/String;Ljava/lang/Integer;)Landroid/view/View;\",\"signature\":\"N(android.content.Context, boolean, java.lang.String, java.lang.Integer): android.view.View\",\"def_pos\":0},{\"name\":\"N0\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)Ljava/util/ArrayList;\",\"signature\":\"N0(org.reference.panel.MainActivity): java.util.ArrayList\",\"def_pos\":0},{\"name\":\"O\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;ZZ)V\",\"signature\":\"O(org.reference.panel.MainActivity, boolean, boolean): void\",\"def_pos\":0},{\"name\":\"O0\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Ljava/lang/String;FLandroid/widget/LinearLayout;)Landroid/widget/EditText;\",\"signature\":\"O0(org.reference.panel.MainActivity, java.lang.String, float, android.widget.LinearLayout): android.widget.EditText\",\"def_pos\":0},{\"name\":\"P\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/String;Lorg/reference/panel/MainActivity;)Ld9;\",\"signature\":\"P(java.lang.String, org.reference.panel.MainActivity): d9\",\"def_pos\":0},{\"name\":\"P0\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;Ljava/lang/String;Ljava/util/List;)V\",\"signature\":\"P0(android.content.Context, java.lang.String, java.util.List): void\",\"def_pos\":0},{\"name\":\"Q\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Z)V\",\"signature\":\"Q(org.reference.panel.MainActivity, boolean): void\",\"def_pos\":0},{\"name\":\"R\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Lxj;)Ljava/lang/String;\",\"signature\":\"R(org.reference.panel.MainActivity, xj): java.lang.String\",\"def_pos\":0},{\"name\":\"S\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;)Ljava/util/ArrayList;\",\"signature\":\"S(android.content.Context): java.util.ArrayList\",\"def_pos\":0},{\"name\":\"T\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)Ljava/util/ArrayList;\",\"signature\":\"T(org.reference.panel.MainActivity): java.util.ArrayList\",\"def_pos\":0},{\"name\":\"U\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)Ljava/util/List;\",\"signature\":\"U(org.reference.panel.MainActivity): java.util.List\",\"def_pos\":0},{\"name\":\"V\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;II)V\",\"signature\":\"V(org.reference.panel.MainActivity, int, int): void\",\"def_pos\":0},{\"name\":\"W\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;\",\"signature\":\"W(android.content.Context, java.lang.String, java.lang.String): java.lang.String\",\"def_pos\":0},{\"name\":\"X\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;)Z\",\"signature\":\"X(android.content.Context): boolean\",\"def_pos\":0},{\"name\":\"Y\",\"is_constructor\":false,\"dex_descriptor\":\"()Ljava/util/ArrayList;\",\"signature\":\"Y(): java.util.ArrayList\",\"def_pos\":0},{\"name\":\"Z\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/app/Activity;Landroid/content/ComponentName;Lc3;Lya;)V\",\"signature\":\"Z(android.app.Activity, android.content.ComponentName, c3, ya): void\",\"def_pos\":0},{\"name\":\"a\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ly5;Lv1;Lv1;Lj6;I)V\",\"signature\":\"a(org.reference.panel.MainActivity, java.lang.String, java.lang.String, java.util.List, y5, v1, v1, j6, int): void\",\"def_pos\":0},{\"name\":\"a0\",\"is_constructor\":false,\"dex_descriptor\":\"(Lc3;Landroid/app/Activity;Landroid/content/ComponentName;Ljava/util/ArrayList;Lya;Ljava/lang/String;)V\",\"signature\":\"a0(c3, android.app.Activity, android.content.ComponentName, java.util.ArrayList, ya, java.lang.String): void\",\"def_pos\":0},{\"name\":\"b\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/String;Lorg/reference/panel/MainActivity;)Z\",\"signature\":\"b(java.lang.String, org.reference.panel.MainActivity): boolean\",\"def_pos\":0},{\"name\":\"b0\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/ComponentName;Ljava/lang/Object;)Z\",\"signature\":\"b0(android.content.ComponentName, java.lang.Object): boolean\",\"def_pos\":0},{\"name\":\"c\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Ljava/lang/Integer;)V\",\"signature\":\"c(org.reference.panel.MainActivity, java.lang.Integer): void\",\"def_pos\":0},{\"name\":\"c0\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/util/ArrayList;Lya;Ljava/lang/String;)V\",\"signature\":\"c0(java.util.ArrayList, ya, java.lang.String): void\",\"def_pos\":0},{\"name\":\"d\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)V\",\"signature\":\"d(org.reference.panel.MainActivity): void\",\"def_pos\":0},{\"name\":\"d0\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)V\",\"signature\":\"d0(org.reference.panel.MainActivity): void\",\"def_pos\":0},{\"name\":\"e\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/Object;Ljava/lang/Object;)Z\",\"signature\":\"e(java.lang.Object, java.lang.Object): boolean\",\"def_pos\":0},{\"name\":\"e0\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)V\",\"signature\":\"e0(org.reference.panel.MainActivity): void\",\"def_pos\":0},{\"name\":\"f\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Z)V\",\"signature\":\"f(org.reference.panel.MainActivity, boolean): void\",\"def_pos\":0},{\"name\":\"f0\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/app/Dialog;Landroid/widget/GridLayout;Ljava/util/ArrayList;Lorg/reference/panel/MainActivity;)V\",\"signature\":\"f0(android.app.Dialog, android.widget.GridLayout, java.util.ArrayList, org.reference.panel.MainActivity): void\",\"def_pos\":0},{\"name\":\"g\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/String;)I\",\"signature\":\"g(java.lang.String): int\",\"def_pos\":0},{\"name\":\"g0\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Ljava/lang/Integer;)V\",\"signature\":\"g0(org.reference.panel.MainActivity, java.lang.Integer): void\",\"def_pos\":0},{\"name\":\"h\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/String;)Ljava/lang/String;\",\"signature\":\"h(java.lang.String): java.lang.String\",\"def_pos\":0},{\"name\":\"h0\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)V\",\"signature\":\"h0(org.reference.panel.MainActivity): void\",\"def_pos\":0},{\"name\":\"i\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;\",\"signature\":\"i(android.content.Context, java.lang.String): java.lang.String\",\"def_pos\":0},{\"name\":\"i0\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;)V\",\"signature\":\"i0(android.content.Context): void\",\"def_pos\":0},{\"name\":\"j\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)I\",\"signature\":\"j(org.reference.panel.MainActivity): int\",\"def_pos\":0},{\"name\":\"j0\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Landroid/app/Dialog;Lld;)V\",\"signature\":\"j0(org.reference.panel.MainActivity, android.app.Dialog, ld): void\",\"def_pos\":0},{\"name\":\"k\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;II)V\",\"signature\":\"k(org.reference.panel.MainActivity, int, int): void\",\"def_pos\":0},{\"name\":\"k0\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/widget/LinearLayout;Li4;Lorg/reference/panel/MainActivity;Ljava/util/List;Landroid/app/Dialog;Ljava/util/Map;Ljava/lang/String;)V\",\"signature\":\"k0(android.widget.LinearLayout, i4, org.reference.panel.MainActivity, java.util.List, android.app.Dialog, java.util.Map, java.lang.String): void\",\"def_pos\":0},{\"name\":\"l\",\"is_constructor\":false,\"dex_descriptor\":\"(III)V\",\"signature\":\"l(int, int, int): void\",\"def_pos\":0},{\"name\":\"l0\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;Ljava/lang/String;)Ljava/util/List;\",\"signature\":\"l0(android.content.Context, java.lang.String): java.util.List\",\"def_pos\":0},{\"name\":\"m\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)V\",\"signature\":\"m(org.reference.panel.MainActivity): void\",\"def_pos\":0},{\"name\":\"m0\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)V\",\"signature\":\"m0(org.reference.panel.MainActivity): void\",\"def_pos\":0},{\"name\":\"n\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/String;Lorg/reference/panel/MainActivity;)Landroid/view/View;\",\"signature\":\"n(java.lang.String, org.reference.panel.MainActivity): android.view.View\",\"def_pos\":0},{\"name\":\"n0\",\"is_constructor\":false,\"dex_descriptor\":\"(D)I\",\"signature\":\"n0(double): int\",\"def_pos\":0},{\"name\":\"o\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Ljava/lang/String;Ljava/lang/Integer;)V\",\"signature\":\"o(org.reference.panel.MainActivity, java.lang.String, java.lang.Integer): void\",\"def_pos\":0},{\"name\":\"o0\",\"is_constructor\":false,\"dex_descriptor\":\"(F)I\",\"signature\":\"o0(float): int\",\"def_pos\":0},{\"name\":\"p\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/io/Closeable;Ljava/lang/Throwable;)V\",\"signature\":\"p(java.io.Closeable, java.lang.Throwable): void\",\"def_pos\":0},{\"name\":\"p0\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;I)V\",\"signature\":\"p0(org.reference.panel.MainActivity, int): void\",\"def_pos\":0},{\"name\":\"q\",\"is_constructor\":false,\"dex_descriptor\":\"(ILorg/reference/panel/MainActivity;Z)Ls8;\",\"signature\":\"q(int, org.reference.panel.MainActivity, boolean): s8\",\"def_pos\":0},{\"name\":\"q0\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/RuntimeException;Ljava/lang/String;)V\",\"signature\":\"q0(java.lang.RuntimeException, java.lang.String): void\",\"def_pos\":0},{\"name\":\"r\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;I)Ls8;\",\"signature\":\"r(org.reference.panel.MainActivity, int): s8\",\"def_pos\":0},{\"name\":\"r0\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;Ljava/util/List;)V\",\"signature\":\"r0(android.content.Context, java.util.List): void\",\"def_pos\":0},{\"name\":\"s\",\"is_constructor\":false,\"dex_descriptor\":\"([Lj6;)Lr3;\",\"signature\":\"s(j6[]): r3\",\"def_pos\":0},{\"name\":\"s0\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/util/List;Lorg/reference/panel/MainActivity;)V\",\"signature\":\"s0(java.util.List, org.reference.panel.MainActivity): void\",\"def_pos\":0},{\"name\":\"t\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/Comparable;Ljava/lang/Comparable;)I\",\"signature\":\"t(java.lang.Comparable, java.lang.Comparable): int\",\"def_pos\":0},{\"name\":\"t0\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;I)V\",\"signature\":\"t0(org.reference.panel.MainActivity, int): void\",\"def_pos\":0},{\"name\":\"u\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;I)V\",\"signature\":\"u(org.reference.panel.MainActivity, int): void\",\"def_pos\":0},{\"name\":\"u0\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;)Landroid/widget/FrameLayout;\",\"signature\":\"u0(org.reference.panel.MainActivity): android.widget.FrameLayout\",\"def_pos\":0},{\"name\":\"v\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;Llb;)Z\",\"signature\":\"v(android.content.Context, lb): boolean\",\"def_pos\":0},{\"name\":\"v0\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/String;Lorg/reference/panel/MainActivity;)V\",\"signature\":\"v0(java.lang.String, org.reference.panel.MainActivity): void\",\"def_pos\":0},{\"name\":\"w\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Landroid/net/Uri;Ljava/lang/String;ZLjava/io/File;Lw7;I)V\",\"signature\":\"w(org.reference.panel.MainActivity, android.net.Uri, java.lang.String, boolean, java.io.File, w7, int): void\",\"def_pos\":0},{\"name\":\"w0\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/app/AlertDialog$Builder;)V\",\"signature\":\"w0(android.app.AlertDialog$Builder): void\",\"def_pos\":0},{\"name\":\"x\",\"is_constructor\":false,\"dex_descriptor\":\"(II)V\",\"signature\":\"x(int, int): void\",\"def_pos\":0},{\"name\":\"x0\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/util/ArrayList;)Ljava/util/List;\",\"signature\":\"x0(java.util.ArrayList): java.util.List\",\"def_pos\":0},{\"name\":\"y\",\"is_constructor\":false,\"dex_descriptor\":\"(FFFF)I\",\"signature\":\"y(float, float, float, float): int\",\"def_pos\":0},{\"name\":\"y0\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/String;Lorg/reference/panel/MainActivity;)V\",\"signature\":\"y0(java.lang.String, org.reference.panel.MainActivity): void\",\"def_pos\":0},{\"name\":\"z\",\"is_constructor\":false,\"dex_descriptor\":\"(Ljava/lang/String;Lorg/reference/panel/MainActivity;)V\",\"signature\":\"z(java.lang.String, org.reference.panel.MainActivity): void\",\"def_pos\":0},{\"name\":\"z0\",\"is_constructor\":false,\"dex_descriptor\":\"(Lorg/reference/panel/MainActivity;Landroid/content/ComponentName;)Ljava/lang/String;\",\"signature\":\"z0(org.reference.panel.MainActivity, android.content.ComponentName): java.lang.String\",\"def_pos\":0}],\"inner_classes\":[],\"inner_class_count\":0,\"name\":\"k8\",\"field_count\":9,\"full_name\":\"defpackage.k8\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_method_body",
+        "input": {
+          "class_name": "k8",
+          "method_name": "F0",
+          "overload_index": 0,
+          "smali_fallback": true
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"fell_back\":false,\"full_name\":\"k8.F0\",\"overload_index\":0,\"method_name\":\"F0\",\"overload_count\":1,\"dex_descriptor\":\"(Landroid/content/Context;)V\",\"class_name\":\"defpackage.k8\",\"mode\":\"java\",\"body\":\"    public static void F0(Context context) {\\n        context.getClass();\\n        Intent intent = new Intent(context, (Class<?>) AutomationService.class);\\n        try {\\n            if (X(context)) {\\n                context.startForegroundService(intent);\\n            } else {\\n                context.stopService(intent);\\n            }\\n        } catch (Throwable unused) {\\n        }\\n    }\",\"markers\":[]}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "normalized_result": {
+    "engine": {
+      "name": "jadx-headless-mcp",
+      "version": "0.7.1",
+      "artifact_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+      "source_revision": "5844800a486d2248fa949b74c9896285f5b54de2",
+      "worker_count": 1,
+      "heap_limit_mib": 2048
+    },
+    "class_name": "defpackage.k8",
+    "method": {
+      "name": "F0",
+      "reported_signature": "F0(android.content.Context): void",
+      "overload_index": 0,
+      "is_constructor": false,
+      "dex_descriptor": "(Landroid/content/Context;)V"
+    },
+    "overload_count": 1,
+    "representation": "java",
+    "body_status": "available",
+    "fell_back": false,
+    "markers": [],
+    "source": {
+      "status": "complete",
+      "text": "    public static void F0(Context context) {\n        context.getClass();\n        Intent intent = new Intent(context, (Class<?>) AutomationService.class);\n        try {\n            if (X(context)) {\n                context.startForegroundService(intent);\n            } else {\n                context.stopService(intent);\n            }\n        } catch (Throwable unused) {\n        }\n    }",
+      "reported_total_bytes": null
+    }
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Static decompiler observations do not establish runtime behavior; the APK is never executed.",
+    "Method signatures use provider display types; DEX prototypes come from frozen JADX metadata. Display names may be aliases, and overload indices are local to this engine and artifact.",
+    "Class inventories use parsed metadata before code generation, including synthetic members that may be omitted from decompiled source. Source positions remain unknown.",
+    "Incoming reference totals count JADX using nodes. Direct invoke entries within a using method report raw DEX code-unit offsets and method indexes, but coverage is limited to those nodes and directly matched invokes; it does not establish every possible dynamic or reflective call site.",
+    "Manifest summaries are parsed once by REA's bridge from the exact root AndroidManifest.xml resource, using namespace-aware XML attributes; decoded XML is retained. APK signatures, split APKs, native libraries and Android runtime capture are not verified by this provider."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

@@ -1,0 +1,8 @@
+    public final void a(Location location) {
+        if (this.h) {
+            return;
+        }
+        this.h = true;
+        Locale locale = Locale.US;
+        this.e.execute(new l(this, String.format(locale, "%.4f", Arrays.copyOf(new Object[]{Double.valueOf(location.getLatitude())}, 1)), String.format(locale, "%.4f", Arrays.copyOf(new Object[]{Double.valueOf(location.getLongitude())}, 1)), location, 6));
+    }

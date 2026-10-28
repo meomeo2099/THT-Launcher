@@ -1,0 +1,10 @@
+{
+  "abi": "arm64",
+  "bytes": 7224,
+  "sha256": "23126f1022e48b5147c6e4505a587b0d12300155361859f524c4fffe7b7827aa",
+  "same_resolve_table": true,
+  "resolve_table_file_offset": 1408,
+  "same_masked_digest": true,
+  "probe_digest_file_offset": 1709,
+  "expected_probe_digest": "ea793ae30214dad2074abbfcdb7ce8950b757d3e615d6fc1307da21fec515a94"
+}

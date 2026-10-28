@@ -1,0 +1,26 @@
+    public k0 l() throws JSONException, IOException {
+        byte[] bArrF = f(65536, "https://example.invalid/reference-releases/releases/latest/download/update.json");
+        if (!y(this, bArrF, new String(f(8192, "https://example.invalid/reference-releases/releases/latest/download/update.json.sig"), q2.c))) {
+            throw new SecurityException("bad signature");
+        }
+        JSONObject jSONObject = new JSONObject(new String(bArrF, q2.a));
+        int i = jSONObject.getInt("versionCode");
+        String string = jSONObject.getString("versionName");
+        string.getClass();
+        String string2 = jSONObject.getString("url");
+        string2.getClass();
+        String strOptString = jSONObject.optString("mirror");
+        String str = th.A(strOptString) ? null : strOptString;
+        String string3 = jSONObject.getString("sha256");
+        string3.getClass();
+        String lowerCase = string3.toLowerCase(Locale.ROOT);
+        lowerCase.getClass();
+        long j = jSONObject.getLong("size");
+        String strOptString2 = jSONObject.optString("notes");
+        strOptString2.getClass();
+        k0 k0Var = new k0(i, string, string2, str, lowerCase, j, strOptString2);
+        if (i > 16) {
+            return k0Var;
+        }
+        return null;
+    }

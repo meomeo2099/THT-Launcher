@@ -1,0 +1,35 @@
+    #2              : (in Leh;)
+      name          : 'b'
+      type          : '()Ljava/lang/Object;'
+      access        : 0x0009 (PUBLIC STATIC)
+      code          -
+      registers     : 3
+      ins           : 0
+      outs          : 3
+      insns size    : 14 16-bit code units
+07a6d4:                                        |[07a6d4] eh.b:()Ljava/lang/Object;
+07a6e4: 1c00 2500                              |0000: const-class v0, Landroid/app/ActivityManager; // type@0025
+07a6e8: 1a01 0f0d                              |0002: const-string v1, "getService" // string@0d0f
+07a6ec: 1202                                   |0004: const/4 v2, #int 0 // #0
+07a6ee: 6e30 4107 1002                         |0005: invoke-virtual {v0, v1, v2}, Ljava/lang/Class;.getMethod:(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method; // method@0741
+07a6f4: 0c00                                   |0008: move-result-object v0
+07a6f6: 6e30 de07 2002                         |0009: invoke-virtual {v0, v2, v2}, Ljava/lang/reflect/Method;.invoke:(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object; // method@07de
+07a6fc: 0c00                                   |000c: move-result-object v0
+07a6fe: 1100                                   |000d: return-object v0
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+      locals        :

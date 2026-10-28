@@ -1,0 +1,1603 @@
+Class #398            -
+  Class descriptor  : 'Lorg/reference/panel/NavigationAssistService;'
+  Access flags      : 0x0011 (PUBLIC FINAL)
+  Superclass        : 'Landroid/accessibilityservice/AccessibilityService;'
+  Interfaces        -
+    #0              : 'Landroid/content/SharedPreferences$OnSharedPreferenceChangeListener;'
+  Static fields     -
+    #0              : (in Lorg/reference/panel/NavigationAssistService;)
+      name          : 'd'
+      type          : 'I'
+      access        : 0x1019 (PUBLIC STATIC FINAL SYNTHETIC)
+  Instance fields   -
+    #0              : (in Lorg/reference/panel/NavigationAssistService;)
+      name          : 'a'
+      type          : 'Lfi;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #1              : (in Lorg/reference/panel/NavigationAssistService;)
+      name          : 'b'
+      type          : 'Lfi;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #2              : (in Lorg/reference/panel/NavigationAssistService;)
+      name          : 'c'
+      type          : 'Landroid/view/ViewGroup;'
+      access        : 0x0001 (PUBLIC)
+  Direct methods    -
+    #0              : (in Lorg/reference/panel/NavigationAssistService;)
+      name          : '<init>'
+      type          : '()V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      code          -
+      registers     : 3
+      ins           : 1
+      outs          : 3
+      insns size    : 30 16-bit code units
+0a616c:                                        |[0a616c] org.reference.panel.NavigationAssistService.<init>:()V
+0a617c: 7010 3300 0200                         |0000: invoke-direct {v2}, Landroid/accessibilityservice/AccessibilityService;.<init>:()V // method@0033
+0a6182: 2200 9902                              |0003: new-instance v0, Lmc; // type@0299
+0a6186: 1231                                   |0005: const/4 v1, #int 3 // #3
+0a6188: 7030 030a 2001                         |0006: invoke-direct {v0, v2, v1}, Lmc;.<init>:(Lorg/reference/panel/NavigationAssistService;I)V // method@0a03
+0a618e: 2201 8501                              |0009: new-instance v1, Lfi; // type@0185
+0a6192: 7020 5405 0100                         |000b: invoke-direct {v1, v0}, Lfi;.<init>:(Ly5;)V // method@0554
+0a6198: 5b21 0007                              |000e: iput-object v1, v2, Lorg/reference/panel/NavigationAssistService;.a:Lfi; // field@0700
+0a619c: 2200 9902                              |0010: new-instance v0, Lmc; // type@0299
+0a61a0: 1241                                   |0012: const/4 v1, #int 4 // #4
+0a61a2: 7030 030a 2001                         |0013: invoke-direct {v0, v2, v1}, Lmc;.<init>:(Lorg/reference/panel/NavigationAssistService;I)V // method@0a03
+0a61a8: 2201 8501                              |0016: new-instance v1, Lfi; // type@0185
+0a61ac: 7020 5405 0100                         |0018: invoke-direct {v1, v0}, Lfi;.<init>:(Ly5;)V // method@0554
+0a61b2: 5b21 0107                              |001b: iput-object v1, v2, Lorg/reference/panel/NavigationAssistService;.b:Lfi; // field@0701
+0a61b6: 0e00                                   |001d: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+      locals        :
+        0x0000 - 0x001e reg=2 this Lorg/reference/panel/NavigationAssistService;
+
+    #1              : (in Lorg/reference/panel/NavigationAssistService;)
+      name          : 'f'
+      type          : '(Lorg/reference/panel/NavigationAssistService;Landroid/widget/LinearLayout;ZLjava/lang/String;Ljava/lang/String;ILy5;)Landroid/widget/FrameLayout;'
+      access        : 0x0019 (PUBLIC STATIC FINAL)
+      code          -
+      registers     : 12
+      ins           : 7
+      outs          : 4
+      insns size    : 93 16-bit code units
+0a6074:                                        |[0a6074] org.reference.panel.NavigationAssistService.f:(Lorg/reference/panel/NavigationAssistService;Landroid/widget/LinearLayout;ZLjava/lang/String;Ljava/lang/String;ILy5;)Landroid/widget/FrameLayout;
+0a6084: 2200 0601                              |0000: new-instance v0, Landroid/widget/FrameLayout; // type@0106
+0a6088: 7020 6003 5000                         |0002: invoke-direct {v0, v5}, Landroid/widget/FrameLayout;.<init>:(Landroid/content/Context;)V // method@0360
+0a608e: 6e20 ff02 9000                         |0005: invoke-virtual {v0, v9}, Landroid/view/View;.setContentDescription:(Ljava/lang/CharSequence;)V // method@02ff
+0a6094: 1219                                   |0008: const/4 v9, #int 1 // #1
+0a6096: 6e20 0203 9000                         |0009: invoke-virtual {v0, v9}, Landroid/view/View;.setFocusable:(Z)V // method@0302
+0a609c: 6e20 fd02 9000                         |000c: invoke-virtual {v0, v9}, Landroid/view/View;.setClickable:(Z)V // method@02fd
+0a60a2: 2209 4b01                              |000f: new-instance v9, Ld9; // type@014b
+0a60a6: 7030 7904 5908                         |0011: invoke-direct {v9, v5, v8}, Ld9;.<init>:(Landroid/content/Context;Ljava/lang/String;)V // method@0479
+0a60ac: 7110 af09 0700                         |0014: invoke-static {v7}, Ll8;.j:(Z)I // method@09af
+0a60b2: 0a07                                   |0017: move-result v7
+0a60b4: 6e20 7d04 7900                         |0018: invoke-virtual {v9, v7}, Ld9;.setColor:(I)V // method@047d
+0a60ba: 2207 0501                              |001b: new-instance v7, Landroid/widget/FrameLayout$LayoutParams; // type@0105
+0a60be: 1a01 610d                              |001d: const-string v1, "handle" // string@0d61
+0a60c2: 6e20 8907 1800                         |001f: invoke-virtual {v8, v1}, Ljava/lang/Object;.equals:(Ljava/lang/Object;)Z // method@0789
+0a60c8: 0a02                                   |0022: move-result v2
+0a60ca: 1303 1b00                              |0023: const/16 v3, #int 27 // #1b
+0a60ce: 1304 1400                              |0025: const/16 v4, #int 20 // #14
+0a60d2: 3802 0400                              |0027: if-eqz v2, 002b // +0004
+0a60d6: 0142                                   |0029: move v2, v4
+0a60d8: 2802                                   |002a: goto 002c // +0002
+0a60da: 0132                                   |002b: move v2, v3
+0a60dc: 6e20 b10c 2500                         |002c: invoke-virtual {v5, v2}, Lorg/reference/panel/NavigationAssistService;.a:(I)I // method@0cb1
+0a60e2: 0a02                                   |002f: move-result v2
+0a60e4: 6e20 8907 1800                         |0030: invoke-virtual {v8, v1}, Ljava/lang/Object;.equals:(Ljava/lang/Object;)Z // method@0789
+0a60ea: 0a08                                   |0033: move-result v8
+0a60ec: 3808 0300                              |0034: if-eqz v8, 0037 // +0003
+0a60f0: 0143                                   |0036: move v3, v4
+0a60f2: 6e20 b10c 3500                         |0037: invoke-virtual {v5, v3}, Lorg/reference/panel/NavigationAssistService;.a:(I)I // method@0cb1
+0a60f8: 0a08                                   |003a: move-result v8
+0a60fa: 1301 1100                              |003b: const/16 v1, #int 17 // #11
+0a60fe: 7040 5f03 2718                         |003d: invoke-direct {v7, v2, v8, v1}, Landroid/widget/FrameLayout$LayoutParams;.<init>:(III)V // method@035f
+0a6104: 6e30 2103 9007                         |0040: invoke-virtual {v0, v9, v7}, Landroid/view/ViewGroup;.addView:(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V // method@0321
+0a610a: 380b 0c00                              |0043: if-eqz v11, 004f // +000c
+0a610e: 2207 8e02                              |0045: new-instance v7, Lm2; // type@028e
+0a6112: 1308 0b00                              |0047: const/16 v8, #int 11 // #b
+0a6116: 7030 d809 b708                         |0049: invoke-direct {v7, v11, v8}, Lm2;.<init>:(Ly5;I)V // method@09d8
+0a611c: 6e20 0b03 7000                         |004c: invoke-virtual {v0, v7}, Landroid/view/View;.setOnClickListener:(Landroid/view/View$OnClickListener;)V // method@030b
+0a6122: 2207 0e01                              |004f: new-instance v7, Landroid/widget/LinearLayout$LayoutParams; // type@010e
+0a6126: 6e20 b10c a500                         |0051: invoke-virtual {v5, v10}, Lorg/reference/panel/NavigationAssistService;.a:(I)I // method@0cb1
+0a612c: 0a05                                   |0054: move-result v5
+0a612e: 12f8                                   |0055: const/4 v8, #int -1 // #ff
+0a6130: 7030 7903 5708                         |0056: invoke-direct {v7, v5, v8}, Landroid/widget/LinearLayout$LayoutParams;.<init>:(II)V // method@0379
+0a6136: 6e30 2103 0607                         |0059: invoke-virtual {v6, v0, v7}, Landroid/view/ViewGroup;.addView:(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V // method@0321
+0a613c: 1100                                   |005c: return-object v0
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+        0x0042 line=67
+        0x0043 line=68
+        0x0044 line=69
+        0x0045 line=70
+        0x0046 line=71
+        0x0047 line=72
+        0x0048 line=73
+        0x0049 line=74
+        0x004a line=75
+        0x004b line=76
+        0x004c line=77
+        0x004d line=78
+        0x004e line=79
+        0x004f line=80
+        0x0050 line=81
+        0x0051 line=82
+        0x0052 line=83
+        0x0053 line=84
+        0x0054 line=85
+        0x0055 line=86
+        0x0056 line=87
+        0x0057 line=88
+        0x0058 line=89
+        0x0059 line=90
+        0x005a line=91
+        0x005b line=92
+        0x005c line=93
+      locals        :
+        0x0000 - 0x005d reg=5 (null) Lorg/reference/panel/NavigationAssistService;
+        0x0000 - 0x005d reg=6 (null) Landroid/widget/LinearLayout;
+        0x0000 - 0x005d reg=7 (null) Z
+        0x0000 - 0x005d reg=8 (null) Ljava/lang/String;
+        0x0000 - 0x005d reg=9 (null) Ljava/lang/String;
+        0x0000 - 0x005d reg=10 (null) I
+        0x0000 - 0x005d reg=11 (null) Ly5;
+
+  Virtual methods   -
+    #0              : (in Lorg/reference/panel/NavigationAssistService;)
+      name          : 'a'
+      type          : '(I)I'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 2
+      ins           : 2
+      outs          : 1
+      insns size    : 14 16-bit code units
+0a6140:                                        |[0a6140] org.reference.panel.NavigationAssistService.a:(I)I
+0a6150: 8211                                   |0000: int-to-float v1, v1
+0a6152: 6e10 c300 0000                         |0001: invoke-virtual {v0}, Landroid/content/Context;.getResources:()Landroid/content/res/Resources; // method@00c3
+0a6158: 0c00                                   |0004: move-result-object v0
+0a615a: 6e10 2201 0000                         |0005: invoke-virtual {v0}, Landroid/content/res/Resources;.getDisplayMetrics:()Landroid/util/DisplayMetrics; // method@0122
+0a6160: 0c00                                   |0008: move-result-object v0
+0a6162: 5200 8c00                              |0009: iget v0, v0, Landroid/util/DisplayMetrics;.density:F // field@008c
+0a6166: c801                                   |000b: mul-float/2addr v1, v0
+0a6168: 8710                                   |000c: float-to-int v0, v1
+0a616a: 0f00                                   |000d: return v0
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+      locals        :
+        0x0000 - 0x000e reg=0 this Lorg/reference/panel/NavigationAssistService;
+        0x0000 - 0x000e reg=1 (null) I
+
+    #1              : (in Lorg/reference/panel/NavigationAssistService;)
+      name          : 'b'
+      type          : '()Landroid/content/SharedPreferences;'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 1
+      ins           : 1
+      outs          : 1
+      insns size    : 9 16-bit code units
+0a6050:                                        |[0a6050] org.reference.panel.NavigationAssistService.b:()Landroid/content/SharedPreferences;
+0a6060: 5400 0007                              |0000: iget-object v0, v0, Lorg/reference/panel/NavigationAssistService;.a:Lfi; // field@0700
+0a6064: 6e10 5505 0000                         |0002: invoke-virtual {v0}, Lfi;.a:()Ljava/lang/Object; // method@0555
+0a606a: 0c00                                   |0005: move-result-object v0
+0a606c: 1f00 4e00                              |0006: check-cast v0, Landroid/content/SharedPreferences; // type@004e
+0a6070: 1100                                   |0008: return-object v0
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+      locals        :
+        0x0000 - 0x0009 reg=0 this Lorg/reference/panel/NavigationAssistService;
+
+    #2              : (in Lorg/reference/panel/NavigationAssistService;)
+      name          : 'c'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 4
+      ins           : 1
+      outs          : 3
+      insns size    : 49 16-bit code units
+0a6318:                                        |[0a6318] org.reference.panel.NavigationAssistService.c:()V
+0a6328: 2200 4800                              |0000: new-instance v0, Landroid/content/Intent; // type@0048
+0a632c: 1c01 1103                              |0002: const-class v1, Lorg/reference/panel/MainActivity; // type@0311
+0a6330: 7030 d200 3001                         |0004: invoke-direct {v0, v3, v1}, Landroid/content/Intent;.<init>:(Landroid/content/Context;Ljava/lang/Class;)V // method@00d2
+0a6336: 1501 0034                              |0007: const/high16 v1, #int 872415232 // #3400
+0a633a: 6e20 d600 1000                         |0009: invoke-virtual {v0, v1}, Landroid/content/Intent;.addFlags:(I)Landroid/content/Intent; // method@00d6
+0a6340: 0c00                                   |000c: move-result-object v0
+0a6342: 1a01 ea10                              |000d: const-string v1, "org.reference.panel.OPEN_HOME" // string@10ea
+0a6346: 1212                                   |000f: const/4 v2, #int 1 // #1
+0a6348: 6e30 e300 1002                         |0010: invoke-virtual {v0, v1, v2}, Landroid/content/Intent;.putExtra:(Ljava/lang/String;Z)Landroid/content/Intent; // method@00e3
+0a634e: 0c00                                   |0013: move-result-object v0
+0a6350: 6e20 ca00 0300                         |0014: invoke-virtual {v3, v0}, Landroid/content/Context;.startActivity:(Landroid/content/Intent;)V // method@00ca
+0a6356: 0e00                                   |0017: return-void
+0a6358: 0d00                                   |0018: move-exception v0
+0a635a: 1a01 9406                              |0019: const-string v1, "NavigationAssist" // string@0694
+0a635e: 1a02 9b01                              |001b: const-string v2, "Cannot open ReferencePanel" // string@019b
+0a6362: 7130 a302 2100                         |001d: invoke-static {v1, v2, v0}, Landroid/util/Log;.w:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I // method@02a3
+0a6368: 1a00 8e0a                              |0020: const-string v0, "could_not_open_ReferencePanel" // string@0a8e
+0a636c: 1201                                   |0022: const/4 v1, #int 0 // #0
+0a636e: 2312 e203                              |0023: new-array v2, v1, [Ljava/lang/Object; // type@03e2
+0a6372: 7120 320d 2000                         |0025: invoke-static {v0, v2}, Lsi;.a:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String; // method@0d32
+0a6378: 0c00                                   |0028: move-result-object v0
+0a637a: 7130 ac03 0301                         |0029: invoke-static {v3, v0, v1}, Landroid/widget/Toast;.makeText:(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast; // method@03ac
+0a6380: 0c03                                   |002c: move-result-object v3
+0a6382: 6e10 ad03 0300                         |002d: invoke-virtual {v3}, Landroid/widget/Toast;.show:()V // method@03ad
+0a6388: 0e00                                   |0030: return-void
+      catches       : 1
+        0x0000 - 0x0017
+          Ljava/lang/Exception; -> 0x0018
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+      locals        :
+        0x0000 - 0x0031 reg=3 this Lorg/reference/panel/NavigationAssistService;
+
+    #3              : (in Lorg/reference/panel/NavigationAssistService;)
+      name          : 'd'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 3
+      ins           : 1
+      outs          : 2
+      insns size    : 19 16-bit code units
+0a639c:                                        |[0a639c] org.reference.panel.NavigationAssistService.d:()V
+0a63ac: 5420 0207                              |0000: iget-object v0, v2, Lorg/reference/panel/NavigationAssistService;.c:Landroid/view/ViewGroup; // field@0702
+0a63b0: 3800 0d00                              |0002: if-eqz v0, 000f // +000d
+0a63b4: 5421 0107                              |0004: iget-object v1, v2, Lorg/reference/panel/NavigationAssistService;.b:Lfi; // field@0701
+0a63b8: 6e10 5505 0100                         |0006: invoke-virtual {v1}, Lfi;.a:()Ljava/lang/Object; // method@0555
+0a63be: 0c01                                   |0009: move-result-object v1
+0a63c0: 1f01 f600                              |000a: check-cast v1, Landroid/view/WindowManager; // type@00f6
+0a63c4: 7220 2e03 0100                         |000c: invoke-interface {v1, v0}, Landroid/view/ViewManager;.removeView:(Landroid/view/View;)V // method@032e
+0a63ca: 1200                                   |000f: const/4 v0, #int 0 // #0
+0a63cc: 5b20 0207                              |0010: iput-object v0, v2, Lorg/reference/panel/NavigationAssistService;.c:Landroid/view/ViewGroup; // field@0702
+0a63d0: 0e00                                   |0012: return-void
+      catches       : 1
+        0x0004 - 0x000f
+          <any> -> 0x000f
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+      locals        :
+        0x0000 - 0x0013 reg=2 this Lorg/reference/panel/NavigationAssistService;
+
+    #4              : (in Lorg/reference/panel/NavigationAssistService;)
+      name          : 'e'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 23
+      ins           : 1
+      outs          : 12
+      insns size    : 569 16-bit code units
+0a63e0:                                        |[0a63e0] org.reference.panel.NavigationAssistService.e:()V
+0a63f0: 0801 1600                              |0000: move-object/from16 v1, v22
+0a63f4: 6e10 b20c 0100                         |0002: invoke-virtual {v1}, Lorg/reference/panel/NavigationAssistService;.b:()Landroid/content/SharedPreferences; // method@0cb2
+0a63fa: 0c00                                   |0005: move-result-object v0
+0a63fc: 1a02 ed0e                              |0006: const-string v2, "navigation_assist" // string@0eed
+0a6400: 120c                                   |0008: const/4 v12, #int 0 // #0
+0a6402: 7230 f800 200c                         |0009: invoke-interface {v0, v2, v12}, Landroid/content/SharedPreferences;.getBoolean:(Ljava/lang/String;Z)Z // method@00f8
+0a6408: 0a00                                   |000c: move-result v0
+0a640a: 3900 0600                              |000d: if-nez v0, 0013 // +0006
+0a640e: 6e10 b40c 0100                         |000f: invoke-virtual {v1}, Lorg/reference/panel/NavigationAssistService;.d:()V // method@0cb4
+0a6414: 0e00                                   |0012: return-void
+0a6416: 6200 6f05                              |0013: sget-object v0, Lpc;.a:Ljava/util/LinkedHashSet; // field@056f
+0a641a: 7210 4508 0000                         |0015: invoke-interface {v0}, Ljava/util/Collection;.isEmpty:()Z // method@0845
+0a6420: 0a00                                   |0018: move-result v0
+0a6422: 3900 0600                              |0019: if-nez v0, 001f // +0006
+0a6426: 6e10 b40c 0100                         |001b: invoke-virtual {v1}, Lorg/reference/panel/NavigationAssistService;.d:()V // method@0cb4
+0a642c: 0e00                                   |001e: return-void
+0a642e: 5410 0207                              |001f: iget-object v0, v1, Lorg/reference/panel/NavigationAssistService;.c:Landroid/view/ViewGroup; // field@0702
+0a6432: 3800 0300                              |0021: if-eqz v0, 0024 // +0003
+0a6436: 0e00                                   |0023: return-void
+0a6438: 6e10 b20c 0100                         |0024: invoke-virtual {v1}, Lorg/reference/panel/NavigationAssistService;.b:()Landroid/content/SharedPreferences; // method@0cb2
+0a643e: 0c00                                   |0027: move-result-object v0
+0a6440: 1a02 ee0e                              |0028: const-string v2, "navigation_assist_mode" // string@0eee
+0a6444: 1a03 360c                              |002a: const-string v3, "gestures" // string@0c36
+0a6448: 7230 fc00 2003                         |002c: invoke-interface {v0, v2, v3}, Landroid/content/SharedPreferences;.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; // method@00fc
+0a644e: 0c00                                   |002f: move-result-object v0
+0a6450: 7120 2209 3000                         |0030: invoke-static {v0, v3}, Lk8;.e:(Ljava/lang/Object;Ljava/lang/Object;)Z // method@0922
+0a6456: 0a00                                   |0033: move-result v0
+0a6458: 541d 0107                              |0034: iget-object v13, v1, Lorg/reference/panel/NavigationAssistService;.b:Lfi; // field@0701
+0a645c: 1a0e 9406                              |0036: const-string v14, "NavigationAssist" // string@0694
+0a6460: 1302 1800                              |0038: const/16 v2, #int 24 // #18
+0a6464: 121f                                   |003a: const/4 v15, #int 1 // #1
+0a6466: 3800 9d00                              |003b: if-eqz v0, 00d8 // +009d
+0a646a: 2200 0601                              |003d: new-instance v0, Landroid/widget/FrameLayout; // type@0106
+0a646e: 7020 6003 1000                         |003f: invoke-direct {v0, v1}, Landroid/widget/FrameLayout;.<init>:(Landroid/content/Context;)V // method@0360
+0a6474: 1a03 af09                              |0042: const-string v3, "bottom_gestures_left_for_back_up_for" // string@09af
+0a6478: 23c4 e203                              |0044: new-array v4, v12, [Ljava/lang/Object; // type@03e2
+0a647c: 7120 320d 4300                         |0046: invoke-static {v3, v4}, Lsi;.a:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String; // method@0d32
+0a6482: 0c03                                   |0049: move-result-object v3
+0a6484: 6e20 ff02 3000                         |004a: invoke-virtual {v0, v3}, Landroid/view/View;.setContentDescription:(Ljava/lang/CharSequence;)V // method@02ff
+0a648a: 2203 e800                              |004d: new-instance v3, Landroid/view/View; // type@00e8
+0a648e: 7020 c602 1300                         |004f: invoke-direct {v3, v1}, Landroid/view/View;.<init>:(Landroid/content/Context;)V // method@02c6
+0a6494: 2204 8e00                              |0052: new-instance v4, Landroid/graphics/drawable/GradientDrawable; // type@008e
+0a6498: 7010 cf01 0400                         |0054: invoke-direct {v4}, Landroid/graphics/drawable/GradientDrawable;.<init>:()V // method@01cf
+0a649e: 1405 f0c9 8f99                         |0057: const v5, #float -1.48674e-23 // #998fc9f0
+0a64a4: 6e20 d101 5400                         |005a: invoke-virtual {v4, v5}, Landroid/graphics/drawable/GradientDrawable;.setColor:(I)V // method@01d1
+0a64aa: 1235                                   |005d: const/4 v5, #int 3 // #3
+0a64ac: 6e20 b10c 5100                         |005e: invoke-virtual {v1, v5}, Lorg/reference/panel/NavigationAssistService;.a:(I)I // method@0cb1
+0a64b2: 0a05                                   |0061: move-result v5
+0a64b4: 8255                                   |0062: int-to-float v5, v5
+0a64b6: 6e20 d301 5400                         |0063: invoke-virtual {v4, v5}, Landroid/graphics/drawable/GradientDrawable;.setCornerRadius:(F)V // method@01d3
+0a64bc: 6e20 fb02 4300                         |0066: invoke-virtual {v3, v4}, Landroid/view/View;.setBackground:(Landroid/graphics/drawable/Drawable;)V // method@02fb
+0a64c2: 2204 0501                              |0069: new-instance v4, Landroid/widget/FrameLayout$LayoutParams; // type@0105
+0a64c6: 1305 5800                              |006b: const/16 v5, #int 88 // #58
+0a64ca: 6e20 b10c 5100                         |006d: invoke-virtual {v1, v5}, Lorg/reference/panel/NavigationAssistService;.a:(I)I // method@0cb1
+0a64d0: 0a05                                   |0070: move-result v5
+0a64d2: 1246                                   |0071: const/4 v6, #int 4 // #4
+0a64d4: 6e20 b10c 6100                         |0072: invoke-virtual {v1, v6}, Lorg/reference/panel/NavigationAssistService;.a:(I)I // method@0cb1
+0a64da: 0a06                                   |0075: move-result v6
+0a64dc: 1307 1100                              |0076: const/16 v7, #int 17 // #11
+0a64e0: 7040 5f03 5476                         |0078: invoke-direct {v4, v5, v6, v7}, Landroid/widget/FrameLayout$LayoutParams;.<init>:(III)V // method@035f
+0a64e6: 6e30 2103 3004                         |007b: invoke-virtual {v0, v3, v4}, Landroid/view/ViewGroup;.addView:(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V // method@0321
+0a64ec: 2210 f500                              |007e: new-instance v16, Landroid/view/WindowManager$LayoutParams; // type@00f5
+0a64f0: 1303 b400                              |0080: const/16 v3, #int 180 // #b4
+0a64f4: 6e20 b10c 3100                         |0082: invoke-virtual {v1, v3}, Lorg/reference/panel/NavigationAssistService;.a:(I)I // method@0cb1
+0a64fa: 0a11                                   |0085: move-result v17
+0a64fc: 6e20 b10c 2100                         |0086: invoke-virtual {v1, v2}, Lorg/reference/panel/NavigationAssistService;.a:(I)I // method@0cb1
+0a6502: 0a12                                   |0089: move-result v18
+0a6504: 1314 2800                              |008a: const/16 v20, #int 40 // #28
+0a6508: 1315 fdff                              |008c: const/16 v21, #int -3 // #fffd
+0a650c: 1313 f007                              |008e: const/16 v19, #int 2032 // #7f0
+0a6510: 7606 4c03 1000                         |0090: invoke-direct/range {v16, v17, v18, v19, v20, v21}, Landroid/view/WindowManager$LayoutParams;.<init>:(IIIII)V // method@034c
+0a6516: 0802 1000                              |0093: move-object/from16 v2, v16
+0a651a: 1303 5100                              |0095: const/16 v3, #int 81 // #51
+0a651e: 5923 9200                              |0097: iput v3, v2, Landroid/view/WindowManager$LayoutParams;.gravity:I // field@0092
+0a6522: 2203 7102                              |0099: new-instance v3, Lke; // type@0271
+0a6526: 7010 8707 0300                         |009b: invoke-direct {v3}, Ljava/lang/Object;.<init>:()V // method@0787
+0a652c: 2204 7102                              |009e: new-instance v4, Lke; // type@0271
+0a6530: 7010 8707 0400                         |00a0: invoke-direct {v4}, Ljava/lang/Object;.<init>:()V // method@0787
+0a6536: 2205 5c02                              |00a3: new-instance v5, Lje; // type@025c
+0a653a: 7010 8707 0500                         |00a5: invoke-direct {v5}, Ljava/lang/Object;.<init>:()V // method@0787
+0a6540: 2206 c302                              |00a8: new-instance v6, Loc; // type@02c3
+0a6544: 7051 9f0a 3654                         |00aa: invoke-direct {v6, v3, v4, v5, v1}, Loc;.<init>:(Lke;Lke;Lje;Lorg/reference/panel/NavigationAssistService;)V // method@0a9f
+0a654a: 6e20 0d03 6000                         |00ad: invoke-virtual {v0, v6}, Landroid/view/View;.setOnTouchListener:(Landroid/view/View$OnTouchListener;)V // method@030d
+0a6550: 1403 6666 263f                         |00b0: const v3, #float 0.65 // #3f266666
+0a6556: 6e20 fa02 3000                         |00b3: invoke-virtual {v0, v3}, Landroid/view/View;.setAlpha:(F)V // method@02fa
+0a655c: 6e10 5505 0d00                         |00b6: invoke-virtual {v13}, Lfi;.a:()Ljava/lang/Object; // method@0555
+0a6562: 0c03                                   |00b9: move-result-object v3
+0a6564: 1f03 f600                              |00ba: check-cast v3, Landroid/view/WindowManager; // type@00f6
+0a6568: 7230 2d03 0302                         |00bc: invoke-interface {v3, v0, v2}, Landroid/view/ViewManager;.addView:(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V // method@032d
+0a656e: 5b10 0207                              |00bf: iput-object v0, v1, Lorg/reference/panel/NavigationAssistService;.c:Landroid/view/ViewGroup; // field@0702
+0a6572: 0e00                                   |00c1: return-void
+0a6574: 0d00                                   |00c2: move-exception v0
+0a6576: 1a02 a101                              |00c3: const-string v2, "Cannot show gesture zone" // string@01a1
+0a657a: 7130 a302 2e00                         |00c5: invoke-static {v14, v2, v0}, Landroid/util/Log;.w:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I // method@02a3
+0a6580: 1a00 4013                              |00c8: const-string v0, "the_firmware_blocked_gestures" // string@1340
+0a6584: 23c2 e203                              |00ca: new-array v2, v12, [Ljava/lang/Object; // type@03e2
+0a6588: 7120 320d 2000                         |00cc: invoke-static {v0, v2}, Lsi;.a:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String; // method@0d32
+0a658e: 0c00                                   |00cf: move-result-object v0
+0a6590: 7130 ac03 010f                         |00d0: invoke-static {v1, v0, v15}, Landroid/widget/Toast;.makeText:(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast; // method@03ac
+0a6596: 0c00                                   |00d3: move-result-object v0
+0a6598: 6e10 ad03 0000                         |00d4: invoke-virtual {v0}, Landroid/widget/Toast;.show:()V // method@03ad
+0a659e: 0e00                                   |00d7: return-void
+0a65a0: 6e10 c300 0100                         |00d8: invoke-virtual {v1}, Landroid/content/Context;.getResources:()Landroid/content/res/Resources; // method@00c3
+0a65a6: 0c00                                   |00db: move-result-object v0
+0a65a8: 6e10 2201 0000                         |00dc: invoke-virtual {v0}, Landroid/content/res/Resources;.getDisplayMetrics:()Landroid/util/DisplayMetrics; // method@0122
+0a65ae: 0c00                                   |00df: move-result-object v0
+0a65b0: 1303 8c00                              |00e0: const/16 v3, #int 140 // #8c
+0a65b4: 6e20 b10c 3100                         |00e2: invoke-virtual {v1, v3}, Lorg/reference/panel/NavigationAssistService;.a:(I)I // method@0cb1
+0a65ba: 0a03                                   |00e5: move-result v3
+0a65bc: 5204 9000                              |00e6: iget v4, v0, Landroid/util/DisplayMetrics;.widthPixels:I // field@0090
+0a65c0: 3743 0400                              |00e8: if-le v3, v4, 00ec // +0004
+0a65c4: 0146                                   |00ea: move v6, v4
+0a65c6: 2802                                   |00eb: goto 00ed // +0002
+0a65c8: 0136                                   |00ec: move v6, v3
+0a65ca: 1303 3000                              |00ed: const/16 v3, #int 48 // #30
+0a65ce: 6e20 b10c 3100                         |00ef: invoke-virtual {v1, v3}, Lorg/reference/panel/NavigationAssistService;.a:(I)I // method@0cb1
+0a65d4: 0a04                                   |00f2: move-result v4
+0a65d6: 5205 8e00                              |00f3: iget v5, v0, Landroid/util/DisplayMetrics;.heightPixels:I // field@008e
+0a65da: 3754 0400                              |00f5: if-le v4, v5, 00f9 // +0004
+0a65de: 0157                                   |00f7: move v7, v5
+0a65e0: 2802                                   |00f8: goto 00fa // +0002
+0a65e2: 0147                                   |00f9: move v7, v4
+0a65e4: 5200 9000                              |00fa: iget v0, v0, Landroid/util/DisplayMetrics;.widthPixels:I // field@0090
+0a65e8: b160                                   |00fc: sub-int/2addr v0, v6
+0a65ea: 3b00 0300                              |00fd: if-gez v0, 0100 // +0003
+0a65ee: 01c0                                   |00ff: move v0, v12
+0a65f0: b175                                   |0100: sub-int/2addr v5, v7
+0a65f2: 3b05 0400                              |0101: if-gez v5, 0105 // +0004
+0a65f6: 01cb                                   |0103: move v11, v12
+0a65f8: 2802                                   |0104: goto 0106 // +0002
+0a65fa: 015b                                   |0105: move v11, v5
+0a65fc: 2204 f500                              |0106: new-instance v4, Landroid/view/WindowManager$LayoutParams; // type@00f5
+0a6600: 1309 2800                              |0108: const/16 v9, #int 40 // #28
+0a6604: 12da                                   |010a: const/4 v10, #int -3 // #fd
+0a6606: 1308 f007                              |010b: const/16 v8, #int 2032 // #7f0
+0a660a: 0745                                   |010d: move-object v5, v4
+0a660c: 7606 4c03 0500                         |010e: invoke-direct/range {v5, v6, v7, v8, v9, v10}, Landroid/view/WindowManager$LayoutParams;.<init>:(IIIII)V // method@034c
+0a6612: 0758                                   |0111: move-object v8, v5
+0a6614: 1304 3300                              |0112: const/16 v4, #int 51 // #33
+0a6618: 5984 9200                              |0114: iput v4, v8, Landroid/view/WindowManager$LayoutParams;.gravity:I // field@0092
+0a661c: 6e10 b20c 0100                         |0116: invoke-virtual {v1}, Lorg/reference/panel/NavigationAssistService;.b:()Landroid/content/SharedPreferences; // method@0cb2
+0a6622: 0c04                                   |0119: move-result-object v4
+0a6624: 1a05 ef0e                              |011a: const-string v5, "navigation_assist_x" // string@0eef
+0a6628: 1206                                   |011c: const/4 v6, #int 0 // #0
+0a662a: 7230 f900 5406                         |011d: invoke-interface {v4, v5, v6}, Landroid/content/SharedPreferences;.getFloat:(Ljava/lang/String;F)F // method@00f9
+0a6630: 0a04                                   |0120: move-result v4
+0a6632: 1505 803f                              |0121: const/high16 v5, #int 1065353216 // #3f80
+0a6636: 7130 4a0b 6405                         |0123: invoke-static {v4, v6, v5}, Lpi;.r:(FFF)F // method@0b4a
+0a663c: 0a04                                   |0126: move-result v4
+0a663e: 8207                                   |0127: int-to-float v7, v0
+0a6640: c874                                   |0128: mul-float/2addr v4, v7
+0a6642: 8744                                   |0129: float-to-int v4, v4
+0a6644: 5984 9700                              |012a: iput v4, v8, Landroid/view/WindowManager$LayoutParams;.x:I // field@0097
+0a6648: 6e10 b20c 0100                         |012c: invoke-virtual {v1}, Lorg/reference/panel/NavigationAssistService;.b:()Landroid/content/SharedPreferences; // method@0cb2
+0a664e: 0c04                                   |012f: move-result-object v4
+0a6650: 1a07 f00e                              |0130: const-string v7, "navigation_assist_y" // string@0ef0
+0a6654: 1509 003f                              |0132: const/high16 v9, #int 1056964608 // #3f00
+0a6658: 7230 f900 7409                         |0134: invoke-interface {v4, v7, v9}, Landroid/content/SharedPreferences;.getFloat:(Ljava/lang/String;F)F // method@00f9
+0a665e: 0a04                                   |0137: move-result v4
+0a6660: 7130 4a0b 6405                         |0138: invoke-static {v4, v6, v5}, Lpi;.r:(FFF)F // method@0b4a
+0a6666: 0a04                                   |013b: move-result v4
+0a6668: 82b5                                   |013c: int-to-float v5, v11
+0a666a: c854                                   |013d: mul-float/2addr v4, v5
+0a666c: 8744                                   |013e: float-to-int v4, v4
+0a666e: 5984 9800                              |013f: iput v4, v8, Landroid/view/WindowManager$LayoutParams;.y:I // field@0098
+0a6672: 6e10 b20c 0100                         |0141: invoke-virtual {v1}, Lorg/reference/panel/NavigationAssistService;.b:()Landroid/content/SharedPreferences; // method@0cb2
+0a6678: 0c04                                   |0144: move-result-object v4
+0a667a: 1a05 4d13                              |0145: const-string v5, "theme_mode" // string@134d
+0a667e: 1206                                   |0147: const/4 v6, #int 0 // #0
+0a6680: 7230 fc00 5406                         |0148: invoke-interface {v4, v5, v6}, Landroid/content/SharedPreferences;.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; // method@00fc
+0a6686: 0c04                                   |014b: move-result-object v4
+0a6688: 1a05 bc0a                              |014c: const-string v5, "day" // string@0abc
+0a668c: 3904 1100                              |014e: if-nez v4, 015f // +0011
+0a6690: 6e10 b20c 0100                         |0150: invoke-virtual {v1}, Lorg/reference/panel/NavigationAssistService;.b:()Landroid/content/SharedPreferences; // method@0cb2
+0a6696: 0c04                                   |0153: move-result-object v4
+0a6698: 1a06 0c0f                              |0154: const-string v6, "night" // string@0f0c
+0a669c: 7230 f800 640f                         |0156: invoke-interface {v4, v6, v15}, Landroid/content/SharedPreferences;.getBoolean:(Ljava/lang/String;Z)Z // method@00f8
+0a66a2: 0a04                                   |0159: move-result v4
+0a66a4: 3804 0400                              |015a: if-eqz v4, 015e // +0004
+0a66a8: 0764                                   |015c: move-object v4, v6
+0a66aa: 2802                                   |015d: goto 015f // +0002
+0a66ac: 0754                                   |015e: move-object v4, v5
+0a66ae: 6e20 8907 5400                         |015f: invoke-virtual {v4, v5}, Ljava/lang/Object;.equals:(Ljava/lang/Object;)Z // method@0789
+0a66b4: 0a05                                   |0162: move-result v5
+0a66b6: 3805 0400                              |0163: if-eqz v5, 0167 // +0004
+0a66ba: 01c3                                   |0165: move v3, v12
+0a66bc: 2819                                   |0166: goto 017f // +0019
+0a66be: 1a05 0c13                              |0167: const-string v5, "system" // string@130c
+0a66c2: 6e20 8907 5400                         |0169: invoke-virtual {v4, v5}, Ljava/lang/Object;.equals:(Ljava/lang/Object;)Z // method@0789
+0a66c8: 0a04                                   |016c: move-result v4
+0a66ca: 3804 1100                              |016d: if-eqz v4, 017e // +0011
+0a66ce: 6e10 c300 0100                         |016f: invoke-virtual {v1}, Landroid/content/Context;.getResources:()Landroid/content/res/Resources; // method@00c3
+0a66d4: 0c04                                   |0172: move-result-object v4
+0a66d6: 6e10 2001 0400                         |0173: invoke-virtual {v4}, Landroid/content/res/Resources;.getConfiguration:()Landroid/content/res/Configuration; // method@0120
+0a66dc: 0c04                                   |0176: move-result-object v4
+0a66de: 5244 5b00                              |0177: iget v4, v4, Landroid/content/res/Configuration;.uiMode:I // field@005b
+0a66e2: b543                                   |0179: and-int/2addr v3, v4
+0a66e4: 1304 2000                              |017a: const/16 v4, #int 32 // #20
+0a66e8: 3343 e9ff                              |017c: if-ne v3, v4, 0165 // -0017
+0a66ec: 01f3                                   |017e: move v3, v15
+0a66ee: 2204 0f01                              |017f: new-instance v4, Landroid/widget/LinearLayout; // type@010f
+0a66f2: 7020 7b03 1400                         |0181: invoke-direct {v4, v1}, Landroid/widget/LinearLayout;.<init>:(Landroid/content/Context;)V // method@037b
+0a66f8: 6e20 7d03 c400                         |0184: invoke-virtual {v4, v12}, Landroid/widget/LinearLayout;.setOrientation:(I)V // method@037d
+0a66fe: 6e20 0603 c400                         |0187: invoke-virtual {v4, v12}, Landroid/view/View;.setLayoutDirection:(I)V // method@0306
+0a6704: 1255                                   |018a: const/4 v5, #int 5 // #5
+0a6706: 6e20 1503 5400                         |018b: invoke-virtual {v4, v5}, Landroid/view/View;.setTextDirection:(I)V // method@0315
+0a670c: 1305 1000                              |018e: const/16 v5, #int 16 // #10
+0a6710: 6e20 7c03 5400                         |0190: invoke-virtual {v4, v5}, Landroid/widget/LinearLayout;.setGravity:(I)V // method@037c
+0a6716: 1265                                   |0193: const/4 v5, #int 6 // #6
+0a6718: 6e20 b10c 5100                         |0194: invoke-virtual {v1, v5}, Lorg/reference/panel/NavigationAssistService;.a:(I)I // method@0cb1
+0a671e: 0a05                                   |0197: move-result v5
+0a6720: 8255                                   |0198: int-to-float v5, v5
+0a6722: 6e20 0003 5400                         |0199: invoke-virtual {v4, v5}, Landroid/view/View;.setElevation:(F)V // method@0300
+0a6728: 2205 1f01                              |019c: new-instance v5, Lb7; // type@011f
+0a672c: 6e20 b10c 2100                         |019e: invoke-virtual {v1, v2}, Lorg/reference/panel/NavigationAssistService;.a:(I)I // method@0cb1
+0a6732: 0a02                                   |01a1: move-result v2
+0a6734: 8222                                   |01a2: int-to-float v2, v2
+0a6736: 7040 be03 35c2                         |01a3: invoke-direct {v5, v3, v2, v12}, Lb7;.<init>:(ZFZ)V // method@03be
+0a673c: 6e20 fb02 5400                         |01a6: invoke-virtual {v4, v5}, Landroid/view/View;.setBackground:(Landroid/graphics/drawable/Drawable;)V // method@02fb
+0a6742: 1a02 ca0e                              |01a9: const-string v2, "move_navigation_panel" // string@0eca
+0a6746: 23c5 e203                              |01ab: new-array v5, v12, [Ljava/lang/Object; // type@03e2
+0a674a: 7120 320d 5200                         |01ad: invoke-static {v2, v5}, Lsi;.a:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String; // method@0d32
+0a6750: 0c05                                   |01b0: move-result-object v5
+0a6752: 1306 1c00                              |01b1: const/16 v6, #int 28 // #1c
+0a6756: 1207                                   |01b3: const/4 v7, #int 0 // #0
+0a6758: 0742                                   |01b4: move-object v2, v4
+0a675a: 1a04 610d                              |01b5: const-string v4, "handle" // string@0d61
+0a675e: 7707 b60c 0100                         |01b7: invoke-static/range {v1, v2, v3, v4, v5, v6, v7}, Lorg/reference/panel/NavigationAssistService;.f:(Lorg/reference/panel/NavigationAssistService;Landroid/widget/LinearLayout;ZLjava/lang/String;Ljava/lang/String;ILy5;)Landroid/widget/FrameLayout; // method@0cb6
+0a6764: 0c09                                   |01ba: move-result-object v9
+0a6766: 1a04 8709                              |01bb: const-string v4, "back" // string@0987
+0a676a: 23c5 e203                              |01bd: new-array v5, v12, [Ljava/lang/Object; // type@03e2
+0a676e: 7120 320d 5400                         |01bf: invoke-static {v4, v5}, Lsi;.a:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String; // method@0d32
+0a6774: 0c05                                   |01c2: move-result-object v5
+0a6776: 2207 9902                              |01c3: new-instance v7, Lmc; // type@0299
+0a677a: 7030 030a 170c                         |01c5: invoke-direct {v7, v1, v12}, Lmc;.<init>:(Lorg/reference/panel/NavigationAssistService;I)V // method@0a03
+0a6780: 1a04 8709                              |01c8: const-string v4, "back" // string@0987
+0a6784: 1306 3800                              |01ca: const/16 v6, #int 56 // #38
+0a6788: 7707 b60c 0100                         |01cc: invoke-static/range {v1, v2, v3, v4, v5, v6, v7}, Lorg/reference/panel/NavigationAssistService;.f:(Lorg/reference/panel/NavigationAssistService;Landroid/widget/LinearLayout;ZLjava/lang/String;Ljava/lang/String;ILy5;)Landroid/widget/FrameLayout; // method@0cb6
+0a678e: 1a04 7709                              |01cf: const-string v4, "ReferencePanel_home_screen" // string@0977
+0a6792: 23c5 e203                              |01d1: new-array v5, v12, [Ljava/lang/Object; // type@03e2
+0a6796: 7120 320d 5400                         |01d3: invoke-static {v4, v5}, Lsi;.a:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String; // method@0d32
+0a679c: 0c05                                   |01d6: move-result-object v5
+0a679e: 2207 9902                              |01d7: new-instance v7, Lmc; // type@0299
+0a67a2: 7030 030a 170f                         |01d9: invoke-direct {v7, v1, v15}, Lmc;.<init>:(Lorg/reference/panel/NavigationAssistService;I)V // method@0a03
+0a67a8: 1a04 7e0d                              |01dc: const-string v4, "home" // string@0d7e
+0a67ac: 7707 b60c 0100                         |01de: invoke-static/range {v1, v2, v3, v4, v5, v6, v7}, Lorg/reference/panel/NavigationAssistService;.f:(Lorg/reference/panel/NavigationAssistService;Landroid/widget/LinearLayout;ZLjava/lang/String;Ljava/lang/String;ILy5;)Landroid/widget/FrameLayout; // method@0cb6
+0a67b2: 2201 7102                              |01e1: new-instance v1, Lke; // type@0271
+0a67b6: 7010 8707 0100                         |01e3: invoke-direct {v1}, Ljava/lang/Object;.<init>:()V // method@0787
+0a67bc: 0793                                   |01e6: move-object v3, v9
+0a67be: 01b9                                   |01e7: move v9, v11
+0a67c0: 072b                                   |01e8: move-object v11, v2
+0a67c2: 2202 7102                              |01e9: new-instance v2, Lke; // type@0271
+0a67c6: 7010 8707 0200                         |01eb: invoke-direct {v2}, Ljava/lang/Object;.<init>:()V // method@0787
+0a67cc: 0734                                   |01ee: move-object v4, v3
+0a67ce: 2203 8602                              |01ef: new-instance v3, Lle; // type@0286
+0a67d2: 7010 8707 0300                         |01f1: invoke-direct {v3}, Ljava/lang/Object;.<init>:()V // method@0787
+0a67d8: 2205 8602                              |01f4: new-instance v5, Lle; // type@0286
+0a67dc: 7010 8707 0500                         |01f6: invoke-direct {v5}, Ljava/lang/Object;.<init>:()V // method@0787
+0a67e2: 2206 5c02                              |01f9: new-instance v6, Lje; // type@025c
+0a67e6: 7010 8707 0600                         |01fb: invoke-direct {v6}, Ljava/lang/Object;.<init>:()V // method@0787
+0a67ec: 7701 1a03 1600                         |01fe: invoke-static/range {v22}, Landroid/view/ViewConfiguration;.get:(Landroid/content/Context;)Landroid/view/ViewConfiguration; // method@031a
+0a67f2: 0c07                                   |0201: move-result-object v7
+0a67f4: 6e10 1b03 0700                         |0202: invoke-virtual {v7}, Landroid/view/ViewConfiguration;.getScaledTouchSlop:()I // method@031b
+0a67fa: 0a07                                   |0205: move-result v7
+0a67fc: 074a                                   |0206: move-object v10, v4
+0a67fe: 0784                                   |0207: move-object v4, v8
+0a6800: 0108                                   |0208: move v8, v0
+0a6802: 2200 ae02                              |0209: new-instance v0, Lnc; // type@02ae
+0a6806: 07af                                   |020b: move-object v15, v10
+0a6808: 080a 1600                              |020c: move-object/from16 v10, v22
+0a680c: 760c 480a 0000                         |020e: invoke-direct/range {v0, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11}, Lnc;.<init>:(Lke;Lke;Lle;Landroid/view/WindowManager$LayoutParams;Lle;Lje;IIILorg/reference/panel/NavigationAssistService;Landroid/widget/LinearLayout;)V // method@0a48
+0a6812: 07a1                                   |0211: move-object v1, v10
+0a6814: 07b2                                   |0212: move-object v2, v11
+0a6816: 6e20 0d03 0f00                         |0213: invoke-virtual {v15, v0}, Landroid/view/View;.setOnTouchListener:(Landroid/view/View$OnTouchListener;)V // method@030d
+0a681c: 6e10 5505 0d00                         |0216: invoke-virtual {v13}, Lfi;.a:()Ljava/lang/Object; // method@0555
+0a6822: 0c00                                   |0219: move-result-object v0
+0a6824: 1f00 f600                              |021a: check-cast v0, Landroid/view/WindowManager; // type@00f6
+0a6828: 7230 2d03 2004                         |021c: invoke-interface {v0, v2, v4}, Landroid/view/ViewManager;.addView:(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V // method@032d
+0a682e: 5b12 0207                              |021f: iput-object v2, v1, Lorg/reference/panel/NavigationAssistService;.c:Landroid/view/ViewGroup; // field@0702
+0a6832: 0e00                                   |0221: return-void
+0a6834: 0d00                                   |0222: move-exception v0
+0a6836: 1a02 a201                              |0223: const-string v2, "Cannot show navigation controls" // string@01a2
+0a683a: 7130 a302 2e00                         |0225: invoke-static {v14, v2, v0}, Landroid/util/Log;.w:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I // method@02a3
+0a6840: 1a00 4113                              |0228: const-string v0, "the_firmware_blocked_the_navigation_panel" // string@1341
+0a6844: 23c2 e203                              |022a: new-array v2, v12, [Ljava/lang/Object; // type@03e2
+0a6848: 7120 320d 2000                         |022c: invoke-static {v0, v2}, Lsi;.a:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String; // method@0d32
+0a684e: 0c00                                   |022f: move-result-object v0
+0a6850: 1212                                   |0230: const/4 v2, #int 1 // #1
+0a6852: 7130 ac03 0102                         |0231: invoke-static {v1, v0, v2}, Landroid/widget/Toast;.makeText:(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast; // method@03ac
+0a6858: 0c00                                   |0234: move-result-object v0
+0a685a: 6e10 ad03 0000                         |0235: invoke-virtual {v0}, Landroid/widget/Toast;.show:()V // method@03ad
+0a6860: 0e00                                   |0238: return-void
+      catches       : 2
+        0x00b6 - 0x00c1
+          Ljava/lang/Exception; -> 0x00c2
+        0x0216 - 0x0221
+          Ljava/lang/Exception; -> 0x0222
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+        0x003f line=64
+        0x0040 line=65
+        0x0041 line=66
+        0x0042 line=67
+        0x0043 line=68
+        0x0044 line=69
+        0x0045 line=70
+        0x0046 line=71
+        0x0047 line=72
+        0x0048 line=73
+        0x0049 line=74
+        0x004a line=75
+        0x004b line=76
+        0x004c line=77
+        0x004d line=78
+        0x004e line=79
+        0x004f line=80
+        0x0050 line=81
+        0x0051 line=82
+        0x0052 line=83
+        0x0053 line=84
+        0x0054 line=85
+        0x0055 line=86
+        0x0056 line=87
+        0x0057 line=88
+        0x0058 line=89
+        0x0059 line=90
+        0x005a line=91
+        0x005b line=92
+        0x005c line=93
+        0x005d line=94
+        0x005e line=95
+        0x005f line=96
+        0x0060 line=97
+        0x0061 line=98
+        0x0062 line=99
+        0x0063 line=100
+        0x0064 line=101
+        0x0065 line=102
+        0x0066 line=103
+        0x0067 line=104
+        0x0068 line=105
+        0x0069 line=106
+        0x006a line=107
+        0x006b line=108
+        0x006c line=109
+        0x006d line=110
+        0x006e line=111
+        0x006f line=112
+        0x0070 line=113
+        0x0071 line=114
+        0x0072 line=115
+        0x0073 line=116
+        0x0074 line=117
+        0x0075 line=118
+        0x0076 line=119
+        0x0077 line=120
+        0x0078 line=121
+        0x0079 line=122
+        0x007a line=123
+        0x007b line=124
+        0x007c line=125
+        0x007d line=126
+        0x007e line=127
+        0x007f line=128
+        0x0080 line=129
+        0x0081 line=130
+        0x0082 line=131
+        0x0083 line=132
+        0x0084 line=133
+        0x0085 line=134
+        0x0086 line=135
+        0x0087 line=136
+        0x0088 line=137
+        0x0089 line=138
+        0x008a line=139
+        0x008b line=140
+        0x008c line=141
+        0x008d line=142
+        0x008e line=143
+        0x008f line=144
+        0x0090 line=145
+        0x0091 line=146
+        0x0092 line=147
+        0x0093 line=148
+        0x0094 line=149
+        0x0095 line=150
+        0x0096 line=151
+        0x0097 line=152
+        0x0098 line=153
+        0x0099 line=154
+        0x009a line=155
+        0x009b line=156
+        0x009c line=157
+        0x009d line=158
+        0x009e line=159
+        0x009f line=160
+        0x00a0 line=161
+        0x00a1 line=162
+        0x00a2 line=163
+        0x00a3 line=164
+        0x00a4 line=165
+        0x00a5 line=166
+        0x00a6 line=167
+        0x00a7 line=168
+        0x00a8 line=169
+        0x00a9 line=170
+        0x00aa line=171
+        0x00ab line=172
+        0x00ac line=173
+        0x00ad line=174
+        0x00ae line=175
+        0x00af line=176
+        0x00b0 line=177
+        0x00b1 line=178
+        0x00b2 line=179
+        0x00b3 line=180
+        0x00b4 line=181
+        0x00b5 line=182
+        0x00b6 line=183
+        0x00b7 line=184
+        0x00b8 line=185
+        0x00b9 line=186
+        0x00ba line=187
+        0x00bb line=188
+        0x00bc line=189
+        0x00bd line=190
+        0x00be line=191
+        0x00bf line=192
+        0x00c0 line=193
+        0x00c1 line=194
+        0x00c2 line=195
+        0x00c3 line=196
+        0x00c4 line=197
+        0x00c5 line=198
+        0x00c6 line=199
+        0x00c7 line=200
+        0x00c8 line=201
+        0x00c9 line=202
+        0x00ca line=203
+        0x00cb line=204
+        0x00cc line=205
+        0x00cd line=206
+        0x00ce line=207
+        0x00cf line=208
+        0x00d0 line=209
+        0x00d1 line=210
+        0x00d2 line=211
+        0x00d3 line=212
+        0x00d4 line=213
+        0x00d5 line=214
+        0x00d6 line=215
+        0x00d7 line=216
+        0x00d8 line=217
+        0x00d9 line=218
+        0x00da line=219
+        0x00db line=220
+        0x00dc line=221
+        0x00dd line=222
+        0x00de line=223
+        0x00df line=224
+        0x00e0 line=225
+        0x00e1 line=226
+        0x00e2 line=227
+        0x00e3 line=228
+        0x00e4 line=229
+        0x00e5 line=230
+        0x00e6 line=231
+        0x00e7 line=232
+        0x00e8 line=233
+        0x00e9 line=234
+        0x00ea line=235
+        0x00eb line=236
+        0x00ec line=237
+        0x00ed line=238
+        0x00ee line=239
+        0x00ef line=240
+        0x00f0 line=241
+        0x00f1 line=242
+        0x00f2 line=243
+        0x00f3 line=244
+        0x00f4 line=245
+        0x00f5 line=246
+        0x00f6 line=247
+        0x00f7 line=248
+        0x00f8 line=249
+        0x00f9 line=250
+        0x00fa line=251
+        0x00fb line=252
+        0x00fc line=253
+        0x00fd line=254
+        0x00fe line=255
+        0x00ff line=256
+        0x0100 line=257
+        0x0101 line=258
+        0x0102 line=259
+        0x0103 line=260
+        0x0104 line=261
+        0x0105 line=262
+        0x0106 line=263
+        0x0107 line=264
+        0x0108 line=265
+        0x0109 line=266
+        0x010a line=267
+        0x010b line=268
+        0x010c line=269
+        0x010d line=270
+        0x010e line=271
+        0x010f line=272
+        0x0110 line=273
+        0x0111 line=274
+        0x0112 line=275
+        0x0113 line=276
+        0x0114 line=277
+        0x0115 line=278
+        0x0116 line=279
+        0x0117 line=280
+        0x0118 line=281
+        0x0119 line=282
+        0x011a line=283
+        0x011b line=284
+        0x011c line=285
+        0x011d line=286
+        0x011e line=287
+        0x011f line=288
+        0x0120 line=289
+        0x0121 line=290
+        0x0122 line=291
+        0x0123 line=292
+        0x0124 line=293
+        0x0125 line=294
+        0x0126 line=295
+        0x0127 line=296
+        0x0128 line=297
+        0x0129 line=298
+        0x012a line=299
+        0x012b line=300
+        0x012c line=301
+        0x012d line=302
+        0x012e line=303
+        0x012f line=304
+        0x0130 line=305
+        0x0131 line=306
+        0x0132 line=307
+        0x0133 line=308
+        0x0134 line=309
+        0x0135 line=310
+        0x0136 line=311
+        0x0137 line=312
+        0x0138 line=313
+        0x0139 line=314
+        0x013a line=315
+        0x013b line=316
+        0x013c line=317
+        0x013d line=318
+        0x013e line=319
+        0x013f line=320
+        0x0140 line=321
+        0x0141 line=322
+        0x0142 line=323
+        0x0143 line=324
+        0x0144 line=325
+        0x0145 line=326
+        0x0146 line=327
+        0x0147 line=328
+        0x0148 line=329
+        0x0149 line=330
+        0x014a line=331
+        0x014b line=332
+        0x014c line=333
+        0x014d line=334
+        0x014e line=335
+        0x014f line=336
+        0x0150 line=337
+        0x0151 line=338
+        0x0152 line=339
+        0x0153 line=340
+        0x0154 line=341
+        0x0155 line=342
+        0x0156 line=343
+        0x0157 line=344
+        0x0158 line=345
+        0x0159 line=346
+        0x015a line=347
+        0x015b line=348
+        0x015c line=349
+        0x015d line=350
+        0x015e line=351
+        0x015f line=352
+        0x0160 line=353
+        0x0161 line=354
+        0x0162 line=355
+        0x0163 line=356
+        0x0164 line=357
+        0x0165 line=358
+        0x0166 line=359
+        0x0167 line=360
+        0x0168 line=361
+        0x0169 line=362
+        0x016a line=363
+        0x016b line=364
+        0x016c line=365
+        0x016d line=366
+        0x016e line=367
+        0x016f line=368
+        0x0170 line=369
+        0x0171 line=370
+        0x0172 line=371
+        0x0173 line=372
+        0x0174 line=373
+        0x0175 line=374
+        0x0176 line=375
+        0x0177 line=376
+        0x0178 line=377
+        0x0179 line=378
+        0x017a line=379
+        0x017b line=380
+        0x017c line=381
+        0x017d line=382
+        0x017e line=383
+        0x017f line=384
+        0x0180 line=385
+        0x0181 line=386
+        0x0182 line=387
+        0x0183 line=388
+        0x0184 line=389
+        0x0185 line=390
+        0x0186 line=391
+        0x0187 line=392
+        0x0188 line=393
+        0x0189 line=394
+        0x018a line=395
+        0x018b line=396
+        0x018c line=397
+        0x018d line=398
+        0x018e line=399
+        0x018f line=400
+        0x0190 line=401
+        0x0191 line=402
+        0x0192 line=403
+        0x0193 line=404
+        0x0194 line=405
+        0x0195 line=406
+        0x0196 line=407
+        0x0197 line=408
+        0x0198 line=409
+        0x0199 line=410
+        0x019a line=411
+        0x019b line=412
+        0x019c line=413
+        0x019d line=414
+        0x019e line=415
+        0x019f line=416
+        0x01a0 line=417
+        0x01a1 line=418
+        0x01a2 line=419
+        0x01a3 line=420
+        0x01a4 line=421
+        0x01a5 line=422
+        0x01a6 line=423
+        0x01a7 line=424
+        0x01a8 line=425
+        0x01a9 line=426
+        0x01aa line=427
+        0x01ab line=428
+        0x01ac line=429
+        0x01ad line=430
+        0x01ae line=431
+        0x01af line=432
+        0x01b0 line=433
+        0x01b1 line=434
+        0x01b2 line=435
+        0x01b3 line=436
+        0x01b4 line=437
+        0x01b5 line=438
+        0x01b6 line=439
+        0x01b7 line=440
+        0x01b8 line=441
+        0x01b9 line=442
+        0x01ba line=443
+        0x01bb line=444
+        0x01bc line=445
+        0x01bd line=446
+        0x01be line=447
+        0x01bf line=448
+        0x01c0 line=449
+        0x01c1 line=450
+        0x01c2 line=451
+        0x01c3 line=452
+        0x01c4 line=453
+        0x01c5 line=454
+        0x01c6 line=455
+        0x01c7 line=456
+        0x01c8 line=457
+        0x01c9 line=458
+        0x01ca line=459
+        0x01cb line=460
+        0x01cc line=461
+        0x01cd line=462
+        0x01ce line=463
+        0x01cf line=464
+        0x01d0 line=465
+        0x01d1 line=466
+        0x01d2 line=467
+        0x01d3 line=468
+        0x01d4 line=469
+        0x01d5 line=470
+        0x01d6 line=471
+        0x01d7 line=472
+        0x01d8 line=473
+        0x01d9 line=474
+        0x01da line=475
+        0x01db line=476
+        0x01dc line=477
+        0x01dd line=478
+        0x01de line=479
+        0x01df line=480
+        0x01e0 line=481
+        0x01e1 line=482
+        0x01e2 line=483
+        0x01e3 line=484
+        0x01e4 line=485
+        0x01e5 line=486
+        0x01e6 line=487
+        0x01e7 line=488
+        0x01e8 line=489
+        0x01e9 line=490
+        0x01ea line=491
+        0x01eb line=492
+        0x01ec line=493
+        0x01ed line=494
+        0x01ee line=495
+        0x01ef line=496
+        0x01f0 line=497
+        0x01f1 line=498
+        0x01f2 line=499
+        0x01f3 line=500
+        0x01f4 line=501
+        0x01f5 line=502
+        0x01f6 line=503
+        0x01f7 line=504
+        0x01f8 line=505
+        0x01f9 line=506
+        0x01fa line=507
+        0x01fb line=508
+        0x01fc line=509
+        0x01fd line=510
+        0x01fe line=511
+        0x01ff line=512
+        0x0200 line=513
+        0x0201 line=514
+        0x0202 line=515
+        0x0203 line=516
+        0x0204 line=517
+        0x0205 line=518
+        0x0206 line=519
+        0x0207 line=520
+        0x0208 line=521
+        0x0209 line=522
+        0x020a line=523
+        0x020b line=524
+        0x020c line=525
+        0x020d line=526
+        0x020e line=527
+        0x020f line=528
+        0x0210 line=529
+        0x0211 line=530
+        0x0212 line=531
+        0x0213 line=532
+        0x0214 line=533
+        0x0215 line=534
+        0x0216 line=535
+        0x0217 line=536
+        0x0218 line=537
+        0x0219 line=538
+        0x021a line=539
+        0x021b line=540
+        0x021c line=541
+        0x021d line=542
+        0x021e line=543
+        0x021f line=544
+        0x0220 line=545
+        0x0221 line=546
+        0x0222 line=547
+        0x0223 line=548
+        0x0224 line=549
+        0x0225 line=550
+        0x0226 line=551
+        0x0227 line=552
+        0x0228 line=553
+        0x0229 line=554
+        0x022a line=555
+        0x022b line=556
+        0x022c line=557
+        0x022d line=558
+        0x022e line=559
+        0x022f line=560
+        0x0230 line=561
+        0x0231 line=562
+        0x0232 line=563
+        0x0233 line=564
+        0x0234 line=565
+        0x0235 line=566
+        0x0236 line=567
+        0x0237 line=568
+        0x0238 line=569
+      locals        :
+        0x0000 - 0x0239 reg=22 this Lorg/reference/panel/NavigationAssistService;
+
+    #5              : (in Lorg/reference/panel/NavigationAssistService;)
+      name          : 'onAccessibilityEvent'
+      type          : '(Landroid/view/accessibility/AccessibilityEvent;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 2
+      ins           : 2
+      outs          : 0
+      insns size    : 1 16-bit code units
+0a61b8:                                        |[0a61b8] org.reference.panel.NavigationAssistService.onAccessibilityEvent:(Landroid/view/accessibility/AccessibilityEvent;)V
+0a61c8: 0e00                                   |0000: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+      locals        :
+        0x0000 - 0x0001 reg=0 this Lorg/reference/panel/NavigationAssistService;
+        0x0000 - 0x0001 reg=1 (null) Landroid/view/accessibility/AccessibilityEvent;
+
+    #6              : (in Lorg/reference/panel/NavigationAssistService;)
+      name          : 'onConfigurationChanged'
+      type          : '(Landroid/content/res/Configuration;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 2
+      ins           : 2
+      outs          : 2
+      insns size    : 13 16-bit code units
+0a61cc:                                        |[0a61cc] org.reference.panel.NavigationAssistService.onConfigurationChanged:(Landroid/content/res/Configuration;)V
+0a61dc: 6e10 8a07 0100                         |0000: invoke-virtual {v1}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+0a61e2: 6f20 9600 1000                         |0003: invoke-super {v0, v1}, Landroid/app/Service;.onConfigurationChanged:(Landroid/content/res/Configuration;)V // method@0096
+0a61e8: 6e10 b40c 0000                         |0006: invoke-virtual {v0}, Lorg/reference/panel/NavigationAssistService;.d:()V // method@0cb4
+0a61ee: 6e10 b50c 0000                         |0009: invoke-virtual {v0}, Lorg/reference/panel/NavigationAssistService;.e:()V // method@0cb5
+0a61f4: 0e00                                   |000c: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+      locals        :
+        0x0000 - 0x000d reg=0 this Lorg/reference/panel/NavigationAssistService;
+        0x0000 - 0x000d reg=1 (null) Landroid/content/res/Configuration;
+
+    #7              : (in Lorg/reference/panel/NavigationAssistService;)
+      name          : 'onDestroy'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 2
+      ins           : 1
+      outs          : 2
+      insns size    : 17 16-bit code units
+0a61f8:                                        |[0a61f8] org.reference.panel.NavigationAssistService.onDestroy:()V
+0a6208: 6e10 b20c 0100                         |0000: invoke-virtual {v1}, Lorg/reference/panel/NavigationAssistService;.b:()Landroid/content/SharedPreferences; // method@0cb2
+0a620e: 0c00                                   |0003: move-result-object v0
+0a6210: 7220 ff00 1000                         |0004: invoke-interface {v0, v1}, Landroid/content/SharedPreferences;.unregisterOnSharedPreferenceChangeListener:(Landroid/content/SharedPreferences$OnSharedPreferenceChangeListener;)V // method@00ff
+0a6216: 1200                                   |0007: const/4 v0, #int 0 // #0
+0a6218: 6900 7005                              |0008: sput-object v0, Lpc;.b:Lmc; // field@0570
+0a621c: 6e10 b40c 0100                         |000a: invoke-virtual {v1}, Lorg/reference/panel/NavigationAssistService;.d:()V // method@0cb4
+0a6222: 6f10 9700 0100                         |000d: invoke-super {v1}, Landroid/app/Service;.onDestroy:()V // method@0097
+0a6228: 0e00                                   |0010: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+      locals        :
+        0x0000 - 0x0011 reg=1 this Lorg/reference/panel/NavigationAssistService;
+
+    #8              : (in Lorg/reference/panel/NavigationAssistService;)
+      name          : 'onInterrupt'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 1
+      ins           : 1
+      outs          : 0
+      insns size    : 1 16-bit code units
+0a622c:                                        |[0a622c] org.reference.panel.NavigationAssistService.onInterrupt:()V
+0a623c: 0e00                                   |0000: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+      locals        :
+        0x0000 - 0x0001 reg=0 this Lorg/reference/panel/NavigationAssistService;
+
+    #9              : (in Lorg/reference/panel/NavigationAssistService;)
+      name          : 'onServiceConnected'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 3
+      ins           : 1
+      outs          : 3
+      insns size    : 27 16-bit code units
+0a6240:                                        |[0a6240] org.reference.panel.NavigationAssistService.onServiceConnected:()V
+0a6250: 6200 da00                              |0000: sget-object v0, Lba;.h:Ll0; // field@00da
+0a6254: 6e20 9009 2000                         |0002: invoke-virtual {v0, v2}, Ll0;.q:(Landroid/content/ContextWrapper;)V // method@0990
+0a625a: 1210                                   |0005: const/4 v0, #int 1 // #1
+0a625c: 6a00 de00                              |0006: sput-boolean v0, Lba;.l:Z // field@00de
+0a6260: 6e10 b20c 0200                         |0008: invoke-virtual {v2}, Lorg/reference/panel/NavigationAssistService;.b:()Landroid/content/SharedPreferences; // method@0cb2
+0a6266: 0c00                                   |000b: move-result-object v0
+0a6268: 7220 fe00 2000                         |000c: invoke-interface {v0, v2}, Landroid/content/SharedPreferences;.registerOnSharedPreferenceChangeListener:(Landroid/content/SharedPreferences$OnSharedPreferenceChangeListener;)V // method@00fe
+0a626e: 2200 9902                              |000f: new-instance v0, Lmc; // type@0299
+0a6272: 1221                                   |0011: const/4 v1, #int 2 // #2
+0a6274: 7030 030a 2001                         |0012: invoke-direct {v0, v2, v1}, Lmc;.<init>:(Lorg/reference/panel/NavigationAssistService;I)V // method@0a03
+0a627a: 6900 7005                              |0015: sput-object v0, Lpc;.b:Lmc; // field@0570
+0a627e: 6e10 b50c 0200                         |0017: invoke-virtual {v2}, Lorg/reference/panel/NavigationAssistService;.e:()V // method@0cb5
+0a6284: 0e00                                   |001a: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+      locals        :
+        0x0000 - 0x001b reg=2 this Lorg/reference/panel/NavigationAssistService;
+
+    #10              : (in Lorg/reference/panel/NavigationAssistService;)
+      name          : 'onSharedPreferenceChanged'
+      type          : '(Landroid/content/SharedPreferences;Ljava/lang/String;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 10
+      ins           : 3
+      outs          : 7
+      insns size    : 63 16-bit code units
+0a6288:                                        |[0a6288] org.reference.panel.NavigationAssistService.onSharedPreferenceChanged:(Landroid/content/SharedPreferences;Ljava/lang/String;)V
+0a6298: 1a08 4109                              |0000: const-string v8, "app_language" // string@0941
+0a629c: 7120 2209 8900                         |0002: invoke-static {v9, v8}, Lk8;.e:(Ljava/lang/Object;Ljava/lang/Object;)Z // method@0922
+0a62a2: 0a08                                   |0005: move-result v8
+0a62a4: 3808 0500                              |0006: if-eqz v8, 000b // +0005
+0a62a8: 7110 9d06 0700                         |0008: invoke-static {v7}, Lj0;.a:(Landroid/content/Context;)V // method@069d
+0a62ae: 1a08 930d                              |000b: const-string v8, "icon_set" // string@0d93
+0a62b2: 7120 2209 8900                         |000d: invoke-static {v9, v8}, Lk8;.e:(Ljava/lang/Object;Ljava/lang/Object;)Z // method@0922
+0a62b8: 0a08                                   |0010: move-result v8
+0a62ba: 3808 0b00                              |0011: if-eqz v8, 001c // +000b
+0a62be: 6208 da00                              |0013: sget-object v8, Lba;.h:Ll0; // field@00da
+0a62c2: 6208 dd00                              |0015: sget-object v8, Lba;.k:Lba; // field@00dd
+0a62c6: 3808 0500                              |0017: if-eqz v8, 001c // +0005
+0a62ca: 6e20 d403 7800                         |0019: invoke-virtual {v8, v7}, Lba;.c:(Landroid/content/Context;)V // method@03d4
+0a62d0: 1a05 4109                              |001c: const-string v5, "app_language" // string@0941
+0a62d4: 1a06 930d                              |001e: const-string v6, "icon_set" // string@0d93
+0a62d8: 1a00 ed0e                              |0020: const-string v0, "navigation_assist" // string@0eed
+0a62dc: 1a01 ee0e                              |0022: const-string v1, "navigation_assist_mode" // string@0eee
+0a62e0: 1a02 920d                              |0024: const-string v2, "icon_pack" // string@0d92
+0a62e4: 1a03 4d13                              |0026: const-string v3, "theme_mode" // string@134d
+0a62e8: 1a04 0c0f                              |0028: const-string v4, "night" // string@0f0c
+0a62ec: 2507 e403 0000                         |002a: filled-new-array/range {v0, v1, v2, v3, v4, v5, v6}, [Ljava/lang/String; // type@03e4
+0a62f2: 0c08                                   |002d: move-result-object v8
+0a62f4: 7110 b10e 0800                         |002e: invoke-static {v8}, Lx0;.Y0:([Ljava/lang/Object;)Ljava/util/Set; // method@0eb1
+0a62fa: 0c08                                   |0031: move-result-object v8
+0a62fc: 7120 2c06 9800                         |0032: invoke-static {v8, v9}, Li3;.r0:(Ljava/lang/Iterable;Ljava/lang/Object;)Z // method@062c
+0a6302: 0a08                                   |0035: move-result v8
+0a6304: 3808 0800                              |0036: if-eqz v8, 003e // +0008
+0a6308: 6e10 b40c 0700                         |0038: invoke-virtual {v7}, Lorg/reference/panel/NavigationAssistService;.d:()V // method@0cb4
+0a630e: 6e10 b50c 0700                         |003b: invoke-virtual {v7}, Lorg/reference/panel/NavigationAssistService;.e:()V // method@0cb5
+0a6314: 0e00                                   |003e: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+        0x003d line=62
+        0x003e line=63
+      locals        :
+        0x0000 - 0x003f reg=7 this Lorg/reference/panel/NavigationAssistService;
+        0x0000 - 0x003f reg=8 (null) Landroid/content/SharedPreferences;
+        0x0000 - 0x003f reg=9 (null) Ljava/lang/String;
+
+  source_file_idx   : 4152 (r8-map-id-df02db20992efcdad8c8628fa158af402193d9214b2257c75897211101eb46a6)

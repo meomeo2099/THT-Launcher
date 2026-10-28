@@ -1,0 +1,297 @@
+      name          : 'a'
+      type          : 'Lfi;'
+      name          : 'b'
+      type          : 'Lfi;'
+      name          : 'c'
+      type          : 'J'
+      name          : 'd'
+      type          : 'J'
+      name          : '<clinit>'
+      type          : '()V'
+07b2d0:                                        |[07b2d0] hh.<clinit>:()V
+07b2e0: 2200 cf01                              |0000: new-instance v0, Lj; // type@01cf
+07b2e4: 1301 0f00                              |0002: const/16 v1, #int 15 // #f
+07b2e8: 7020 c506 1000                         |0004: invoke-direct {v0, v1}, Lj;.<init>:(I)V // method@06c5
+07b2ee: 2201 8501                              |0007: new-instance v1, Lfi; // type@0185
+07b2f2: 7020 5405 0100                         |0009: invoke-direct {v1, v0}, Lfi;.<init>:(Ly5;)V // method@0554
+07b2f8: 6901 e302                              |000c: sput-object v1, Lhh;.a:Lfi; // field@02e3
+07b2fc: 2200 cf01                              |000e: new-instance v0, Lj; // type@01cf
+07b300: 1301 1000                              |0010: const/16 v1, #int 16 // #10
+07b304: 7020 c506 1000                         |0012: invoke-direct {v0, v1}, Lj;.<init>:(I)V // method@06c5
+07b30a: 2201 8501                              |0015: new-instance v1, Lfi; // type@0185
+07b30e: 7020 5405 0100                         |0017: invoke-direct {v1, v0}, Lfi;.<init>:(Ly5;)V // method@0554
+07b314: 6901 e402                              |001a: sput-object v1, Lhh;.b:Lfi; // field@02e4
+07b318: 1700 0d80 ff6d                         |001c: const-wide/32 v0, #float 9.88419e+27 // #6dff800d
+07b31e: 6800 e502                              |001f: sput-wide v0, Lhh;.c:J // field@02e5
+07b322: 1700 9e18 092b                         |0021: const-wide/32 v0, #float 4.87063e-13 // #2b09189e
+07b328: 6800 e602                              |0024: sput-wide v0, Lhh;.d:J // field@02e6
+07b32c: 0e00                                   |0026: return-void
+      name          : 'a'
+      type          : '(Landroid/content/Context;)Ljava/lang/String;'
+07ae70:                                        |[07ae70] hh.a:(Landroid/content/Context;)Ljava/lang/String;
+07ae80: 7401 b800 1200                         |0000: invoke-virtual/range {v18}, Landroid/content/Context;.getApplicationInfo:()Landroid/content/pm/ApplicationInfo; // method@00b8
+07ae86: 0c00                                   |0003: move-result-object v0
+07ae88: 5400 4f00                              |0004: iget-object v0, v0, Landroid/content/pm/ApplicationInfo;.sourceDir:Ljava/lang/String; // field@004f
+07ae8c: 3900 0500                              |0006: if-nez v0, 000b // +0005
+07ae90: 1a00 150f                              |0008: const-string v0, "no sourceDir" // string@0f15
+07ae94: 1100                                   |000a: return-object v0
+07ae96: 2201 de01                              |000b: new-instance v1, Ljava/io/RandomAccessFile; // type@01de
+07ae9a: 1a02 3610                              |000d: const-string v2, "r" // string@1036
+07ae9e: 7030 1a07 0102                         |000f: invoke-direct {v1, v0, v2}, Ljava/io/RandomAccessFile;.<init>:(Ljava/lang/String;Ljava/lang/String;)V // method@071a
+07aea4: 6e10 1c07 0100                         |0012: invoke-virtual {v1}, Ljava/io/RandomAccessFile;.length:()J // method@071c
+07aeaa: 0b02                                   |0015: move-result-wide v2
+07aeac: 1704 1600 0100                         |0016: const-wide/32 v4, #float 9.18663e-41 // #00010016
+07aeb2: 7140 7b07 3254                         |0019: invoke-static {v2, v3, v4, v5}, Ljava/lang/Math;.min:(JJ)J // method@077b
+07aeb8: 0b04                                   |001c: move-result-wide v4
+07aeba: 8440                                   |001d: long-to-int v0, v4
+07aebc: 2304 c703                              |001e: new-array v4, v0, [B // type@03c7
+07aec0: 8105                                   |0020: int-to-long v5, v0
+07aec2: bc52                                   |0021: sub-long/2addr v2, v5
+07aec4: 6e30 1e07 2103                         |0022: invoke-virtual {v1, v2, v3}, Ljava/io/RandomAccessFile;.seek:(J)V // method@071e
+07aeca: 6e20 1d07 4100                         |0025: invoke-virtual {v1, v4}, Ljava/io/RandomAccessFile;.readFully:([B)V // method@071d
+07aed0: d800 00ea                              |0028: add-int/lit8 v0, v0, #int -22 // #ea
+07aed4: 1202                                   |002a: const/4 v2, #int 0 // #0
+07aed6: 1303 1000                              |002b: const/16 v3, #int 16 // #10
+07aeda: 3a00 2b00                              |002d: if-ltz v0, 0058 // +002b
+07aede: 4805 0400                              |002f: aget-byte v5, v4, v0
+07aee2: 1306 5000                              |0031: const/16 v6, #int 80 // #50
+07aee6: 3365 2200                              |0033: if-ne v5, v6, 0055 // +0022
+07aeea: d805 0001                              |0035: add-int/lit8 v5, v0, #int 1 // #01
+07aeee: 4805 0405                              |0037: aget-byte v5, v4, v5
+07aef2: 1306 4b00                              |0039: const/16 v6, #int 75 // #4b
+07aef6: 3365 1a00                              |003b: if-ne v5, v6, 0055 // +001a
+07aefa: d805 0002                              |003d: add-int/lit8 v5, v0, #int 2 // #02
+07aefe: 4805 0405                              |003f: aget-byte v5, v4, v5
+07af02: 1256                                   |0041: const/4 v6, #int 5 // #5
+07af04: 3365 1300                              |0042: if-ne v5, v6, 0055 // +0013
+07af08: d805 0003                              |0044: add-int/lit8 v5, v0, #int 3 // #03
+07af0c: 4805 0405                              |0046: aget-byte v5, v4, v5
+07af10: 1266                                   |0048: const/4 v6, #int 6 // #6
+07af12: 3365 0c00                              |0049: if-ne v5, v6, 0055 // +000c
+07af16: b030                                   |004b: add-int/2addr v0, v3
+07af18: 7120 0e06 0400                         |004c: invoke-static {v4, v0}, Lhh;.b:([BI)J // method@060e
+07af1e: 0b04                                   |004f: move-result-wide v4
+07af20: 7120 6b07 5400                         |0050: invoke-static {v4, v5}, Ljava/lang/Long;.valueOf:(J)Ljava/lang/Long; // method@076b
+07af26: 0c00                                   |0053: move-result-object v0
+07af28: 2805                                   |0054: goto 0059 // +0005
+07af2a: d800 00ff                              |0055: add-int/lit8 v0, v0, #int -1 // #ff
+07af2e: 28d3                                   |0057: goto 002a // -002d
+07af30: 0720                                   |0058: move-object v0, v2
+07af32: 3800 5c01                              |0059: if-eqz v0, 01b5 // +015c
+07af36: 6e10 6807 0000                         |005b: invoke-virtual {v0}, Ljava/lang/Long;.longValue:()J // method@0768
+07af3c: 0b04                                   |005e: move-result-wide v4
+07af3e: 1606 2000                              |005f: const-wide/16 v6, #int 32 // #20
+07af42: 3100 0406                              |0061: cmp-long v0, v4, v6
+07af46: 3b00 0c00                              |0063: if-gez v0, 006f // +000c
+07af4a: 1a00 130f                              |0065: const-string v0, "no signing block" // string@0f13
+07af4e: 6e10 1b07 0100                         |0067: invoke-virtual {v1}, Ljava/io/RandomAccessFile;.close:()V // method@071b
+07af54: 1100                                   |006a: return-object v0
+07af56: 0d00                                   |006b: move-exception v0
+07af58: 0702                                   |006c: move-object v2, v0
+07af5a: 2900 4e01                              |006d: goto/16 01bb // +014e
+07af5e: 2330 c703                              |006f: new-array v0, v3, [B // type@03c7
+07af62: 1606 1000                              |0071: const-wide/16 v6, #int 16 // #10
+07af66: 9c06 0406                              |0073: sub-long v6, v4, v6
+07af6a: 6e30 1e07 6107                         |0075: invoke-virtual {v1, v6, v7}, Ljava/io/RandomAccessFile;.seek:(J)V // method@071e
+07af70: 6e20 1d07 0100                         |0078: invoke-virtual {v1, v0}, Ljava/io/RandomAccessFile;.readFully:([B)V // method@071d
+07af76: 2203 0802                              |007b: new-instance v3, Ljava/lang/String; // type@0208
+07af7a: 6206 a705                              |007d: sget-object v6, Lq2;.c:Ljava/nio/charset/Charset; // field@05a7
+07af7e: 7030 9507 0306                         |007f: invoke-direct {v3, v0, v6}, Ljava/lang/String;.<init>:([BLjava/nio/charset/Charset;)V // method@0795
+07af84: 6200 e402                              |0082: sget-object v0, Lhh;.b:Lfi; // field@02e4
+07af88: 6e10 5505 0000                         |0084: invoke-virtual {v0}, Lfi;.a:()Ljava/lang/Object; // method@0555
+07af8e: 0c00                                   |0087: move-result-object v0
+07af90: 1f00 0802                              |0088: check-cast v0, Ljava/lang/String; // type@0208
+07af94: 6e20 8907 0300                         |008a: invoke-virtual {v3, v0}, Ljava/lang/Object;.equals:(Ljava/lang/Object;)Z // method@0789
+07af9a: 0a00                                   |008d: move-result v0
+07af9c: 3900 0800                              |008e: if-nez v0, 0096 // +0008
+07afa0: 1a00 140f                              |0090: const-string v0, "no signing block magic" // string@0f14
+07afa4: 6e10 1b07 0100                         |0092: invoke-virtual {v1}, Ljava/io/RandomAccessFile;.close:()V // method@071b
+07afaa: 1100                                   |0095: return-object v0
+07afac: 1606 1800                              |0096: const-wide/16 v6, #int 24 // #18
+07afb0: 9c06 0406                              |0098: sub-long v6, v4, v6
+07afb4: 1300 0800                              |009a: const/16 v0, #int 8 // #8
+07afb8: 2303 c703                              |009c: new-array v3, v0, [B // type@03c7
+07afbc: 6e30 1e07 6107                         |009e: invoke-virtual {v1, v6, v7}, Ljava/io/RandomAccessFile;.seek:(J)V // method@071e
+07afc2: 6e20 1d07 3100                         |00a1: invoke-virtual {v1, v3}, Ljava/io/RandomAccessFile;.readFully:([B)V // method@071d
+07afc8: 1208                                   |00a4: const/4 v8, #int 0 // #0
+07afca: 7120 0f06 8300                         |00a5: invoke-static {v3, v8}, Lhh;.c:([BI)J // method@060f
+07afd0: 0b09                                   |00a8: move-result-wide v9
+07afd2: bc94                                   |00a9: sub-long/2addr v4, v9
+07afd4: 1609 0800                              |00aa: const-wide/16 v9, #int 8 // #8
+07afd8: 9c0b 0409                              |00ac: sub-long v11, v4, v9
+07afdc: 160d 0000                              |00ae: const-wide/16 v13, #int 0 // #0
+07afe0: 3103 0b0d                              |00b0: cmp-long v3, v11, v13
+07afe4: 3b03 0800                              |00b2: if-gez v3, 00ba // +0008
+07afe8: 1a00 9009                              |00b4: const-string v0, "bad block size" // string@0990
+07afec: 6e10 1b07 0100                         |00b6: invoke-virtual {v1}, Ljava/io/RandomAccessFile;.close:()V // method@071b
+07aff2: 1100                                   |00b9: return-object v0
+07aff4: bc46                                   |00ba: sub-long/2addr v6, v4
+07aff6: 8463                                   |00bb: long-to-int v3, v6
+07aff8: 3c03 0800                              |00bc: if-gtz v3, 00c4 // +0008
+07affc: 1a00 800b                              |00be: const-string v0, "empty block" // string@0b80
+07b000: 6e10 1b07 0100                         |00c0: invoke-virtual {v1}, Ljava/io/RandomAccessFile;.close:()V // method@071b
+07b006: 1100                                   |00c3: return-object v0
+07b008: 2336 c703                              |00c4: new-array v6, v3, [B // type@03c7
+07b00c: 6e30 1e07 4105                         |00c6: invoke-virtual {v1, v4, v5}, Ljava/io/RandomAccessFile;.seek:(J)V // method@071e
+07b012: 6e20 1d07 6100                         |00c9: invoke-virtual {v1, v6}, Ljava/io/RandomAccessFile;.readFully:([B)V // method@071d
+07b018: 2204 0902                              |00cc: new-instance v4, Ljava/lang/StringBuilder; // type@0209
+07b01c: 7010 b307 0400                         |00ce: invoke-direct {v4}, Ljava/lang/StringBuilder;.<init>:()V // method@07b3
+07b022: 0185                                   |00d1: move v5, v8
+07b024: d807 050c                              |00d2: add-int/lit8 v7, v5, #int 12 // #0c
+07b028: 3637 4800                              |00d4: if-gt v7, v3, 011c // +0048
+07b02c: 7120 0f06 5600                         |00d6: invoke-static {v6, v5}, Lhh;.c:([BI)J // method@060f
+07b032: 0b0b                                   |00d9: move-result-wide v11
+07b034: 160d 0400                              |00da: const-wide/16 v13, #int 4 // #4
+07b038: 310d 0b0d                              |00dc: cmp-long v13, v11, v13
+07b03c: 3a0d 3e00                              |00de: if-ltz v13, 011c // +003e
+07b040: d80d 0508                              |00e0: add-int/lit8 v13, v5, #int 8 // #08
+07b044: 81de                                   |00e2: int-to-long v14, v13
+07b046: bbbe                                   |00e3: add-long/2addr v14, v11
+07b048: 0510 0900                              |00e4: move-wide/from16 v16, v9
+07b04c: 8138                                   |00e6: int-to-long v8, v3
+07b04e: 3108 0e08                              |00e7: cmp-long v8, v14, v8
+07b052: 3d08 0300                              |00e9: if-lez v8, 00ec // +0003
+07b056: 2831                                   |00eb: goto 011c // +0031
+07b058: 7120 0e06 d600                         |00ec: invoke-static {v6, v13}, Lhh;.b:([BI)J // method@060e
+07b05e: 0b08                                   |00ef: move-result-wide v8
+07b060: 7120 6907 9800                         |00f0: invoke-static {v8, v9}, Ljava/lang/Long;.toHexString:(J)Ljava/lang/String; // method@0769
+07b066: 0c0a                                   |00f3: move-result-object v10
+07b068: 6e20 bf07 a400                         |00f4: invoke-virtual {v4, v10}, Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder; // method@07bf
+07b06e: 130a 2000                              |00f7: const/16 v10, #int 32 // #20
+07b072: 6e20 b807 a400                         |00f9: invoke-virtual {v4, v10}, Ljava/lang/StringBuilder;.append:(C)Ljava/lang/StringBuilder; // method@07b8
+07b078: 610e e502                              |00fc: sget-wide v14, Lhh;.c:J // field@02e5
+07b07c: 310a 080e                              |00fe: cmp-long v10, v8, v14
+07b080: 380a 0800                              |0100: if-eqz v10, 0108 // +0008
+07b084: 610e e602                              |0102: sget-wide v14, Lhh;.d:J // field@02e6
+07b088: 3108 080e                              |0104: cmp-long v8, v8, v14
+07b08c: 3908 0e00                              |0106: if-nez v8, 0114 // +000e
+07b090: 84b2                                   |0108: long-to-int v2, v11
+07b092: b02d                                   |0109: add-int/2addr v13, v2
+07b094: 7120 4809 3d00                         |010a: invoke-static {v13, v3}, Lk8;.x:(II)V // method@0948
+07b09a: 7130 3208 760d                         |010d: invoke-static {v6, v7, v13}, Ljava/util/Arrays;.copyOfRange:([BII)[B // method@0832
+07b0a0: 0c02                                   |0110: move-result-object v2
+07b0a2: 6e10 8a07 0200                         |0111: invoke-virtual {v2}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+07b0a8: 9b09 100b                              |0114: add-long v9, v16, v11
+07b0ac: 8497                                   |0116: long-to-int v7, v9
+07b0ae: b075                                   |0117: add-int/2addr v5, v7
+07b0b0: 0509 1000                              |0118: move-wide/from16 v9, v16
+07b0b4: 1208                                   |011a: const/4 v8, #int 0 // #0
+07b0b6: 28b7                                   |011b: goto 00d2 // -0049
+07b0b8: 1a03 6f01                              |011c: const-string v3, "ReferencePanel.Stamp" // string@016f
+07b0bc: 2205 0902                              |011e: new-instance v5, Ljava/lang/StringBuilder; // type@0209
+07b0c0: 7010 b307 0500                         |0120: invoke-direct {v5}, Ljava/lang/StringBuilder;.<init>:()V // method@07b3
+07b0c6: 1a06 6912                              |0123: const-string v6, "signing-block ids: " // string@1269
+07b0ca: 6e20 bf07 6500                         |0125: invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder; // method@07bf
+07b0d0: 6e20 be07 4500                         |0128: invoke-virtual {v5, v4}, Ljava/lang/StringBuilder;.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder; // method@07be
+07b0d6: 6e10 c107 0500                         |012b: invoke-virtual {v5}, Ljava/lang/StringBuilder;.toString:()Ljava/lang/String; // method@07c1
+07b0dc: 0c05                                   |012e: move-result-object v5
+07b0de: 7120 a202 5300                         |012f: invoke-static {v3, v5}, Landroid/util/Log;.w:(Ljava/lang/String;Ljava/lang/String;)I // method@02a2
+07b0e4: 3902 1c00                              |0132: if-nez v2, 014e // +001c
+07b0e8: 2200 0902                              |0134: new-instance v0, Ljava/lang/StringBuilder; // type@0209
+07b0ec: 7010 b307 0000                         |0136: invoke-direct {v0}, Ljava/lang/StringBuilder;.<init>:()V // method@07b3
+07b0f2: 1a02 8f06                              |0139: const-string v2, "NO STAMP (ids: " // string@068f
+07b0f6: 6e20 bf07 2000                         |013b: invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder; // method@07bf
+07b0fc: 6e20 be07 4000                         |013e: invoke-virtual {v0, v4}, Ljava/lang/StringBuilder;.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder; // method@07be
+07b102: 1a02 6300                              |0141: const-string v2, ")" // string@0063
+07b106: 6e20 bf07 2000                         |0143: invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder; // method@07bf
+07b10c: 6e10 c107 0000                         |0146: invoke-virtual {v0}, Ljava/lang/StringBuilder;.toString:()Ljava/lang/String; // method@07c1
+07b112: 0c00                                   |0149: move-result-object v0
+07b114: 6e10 1b07 0100                         |014a: invoke-virtual {v1}, Ljava/io/RandomAccessFile;.close:()V // method@071b
+07b11a: 1100                                   |014d: return-object v0
+07b11c: 1a03 d906                              |014e: const-string v3, "SHA-256" // string@06d9
+07b120: 7110 f307 0300                         |0150: invoke-static {v3}, Ljava/security/MessageDigest;.getInstance:(Ljava/lang/String;)Ljava/security/MessageDigest; // method@07f3
+07b126: 0c03                                   |0153: move-result-object v3
+07b128: 1208                                   |0154: const/4 v8, #int 0 // #0
+07b12a: d804 0804                              |0155: add-int/lit8 v4, v8, #int 4 // #04
+07b12e: 2125                                   |0157: array-length v5, v2
+07b130: 3554 5700                              |0158: if-ge v4, v5, 01af // +0057
+07b134: 4805 0208                              |015a: aget-byte v5, v2, v8
+07b138: 1306 3000                              |015c: const/16 v6, #int 48 // #30
+07b13c: 3365 4e00                              |015e: if-ne v5, v6, 01ac // +004e
+07b140: d805 0801                              |0160: add-int/lit8 v5, v8, #int 1 // #01
+07b144: 4805 0205                              |0162: aget-byte v5, v2, v5
+07b148: 1306 82ff                              |0164: const/16 v6, #int -126 // #ff82
+07b14c: 3365 4600                              |0166: if-ne v5, v6, 01ac // +0046
+07b150: d805 0802                              |0168: add-int/lit8 v5, v8, #int 2 // #02
+07b154: 4805 0205                              |016a: aget-byte v5, v2, v5
+07b158: d555 ff00                              |016c: and-int/lit16 v5, v5, #int 255 // #00ff
+07b15c: b805                                   |016e: shl-int/2addr v5, v0
+07b15e: d806 0803                              |016f: add-int/lit8 v6, v8, #int 3 // #03
+07b162: 4806 0206                              |0171: aget-byte v6, v2, v6
+07b166: d566 ff00                              |0173: and-int/lit16 v6, v6, #int 255 // #00ff
+07b16a: b665                                   |0175: or-int/2addr v5, v6
+07b16c: b054                                   |0176: add-int/2addr v4, v5
+07b16e: 2125                                   |0177: array-length v5, v2
+07b170: 3654 3400                              |0178: if-gt v4, v5, 01ac // +0034
+07b174: 2125                                   |017a: array-length v5, v2
+07b176: 7120 4809 5400                         |017b: invoke-static {v4, v5}, Lk8;.x:(II)V // method@0948
+07b17c: 7130 3208 8204                         |017e: invoke-static {v2, v8, v4}, Ljava/util/Arrays;.copyOfRange:([BII)[B // method@0832
+07b182: 0c04                                   |0181: move-result-object v4
+07b184: 6e10 8a07 0400                         |0182: invoke-virtual {v4}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+07b18a: 6e20 f207 4300                         |0185: invoke-virtual {v3, v4}, Ljava/security/MessageDigest;.digest:([B)[B // method@07f2
+07b190: 0c04                                   |0188: move-result-object v4
+07b192: 6e10 8a07 0400                         |0189: invoke-virtual {v4}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+07b198: 1a05 0000                              |018c: const-string v5, "" // string@0000
+07b19c: 2206 8301                              |018e: new-instance v6, Lfg; // type@0183
+07b1a0: 1227                                   |0190: const/4 v7, #int 2 // #2
+07b1a2: 7020 4e05 7600                         |0191: invoke-direct {v6, v7}, Lfg;.<init>:(I)V // method@054e
+07b1a8: 7130 ad0e 5406                         |0194: invoke-static {v4, v5, v6}, Lx0;.U0:([BLjava/lang/String;Lj6;)Ljava/lang/String; // method@0ead
+07b1ae: 0c04                                   |0197: move-result-object v4
+07b1b0: 6205 e302                              |0198: sget-object v5, Lhh;.a:Lfi; // field@02e3
+07b1b4: 6e10 5505 0500                         |019a: invoke-virtual {v5}, Lfi;.a:()Ljava/lang/Object; // method@0555
+07b1ba: 0c05                                   |019d: move-result-object v5
+07b1bc: 1f05 0802                              |019e: check-cast v5, Ljava/lang/String; // type@0208
+07b1c0: 6e20 8907 5400                         |01a0: invoke-virtual {v4, v5}, Ljava/lang/Object;.equals:(Ljava/lang/Object;)Z // method@0789
+07b1c6: 0a04                                   |01a3: move-result v4
+07b1c8: 3804 0800                              |01a4: if-eqz v4, 01ac // +0008
+07b1cc: 1a00 1202                              |01a6: const-string v0, "GENUINE" // string@0212
+07b1d0: 6e10 1b07 0100                         |01a8: invoke-virtual {v1}, Ljava/io/RandomAccessFile;.close:()V // method@071b
+07b1d6: 1100                                   |01ab: return-object v0
+07b1d8: d808 0801                              |01ac: add-int/lit8 v8, v8, #int 1 // #01
+07b1dc: 28a7                                   |01ae: goto 0155 // -0059
+07b1de: 1a00 e106                              |01af: const-string v0, "STAMP PRESENT, cert MISMATCH" // string@06e1
+07b1e2: 6e10 1b07 0100                         |01b1: invoke-virtual {v1}, Ljava/io/RandomAccessFile;.close:()V // method@071b
+07b1e8: 1100                                   |01b4: return-object v0
+07b1ea: 1a00 0f0f                              |01b5: const-string v0, "no EOCD" // string@0f0f
+07b1ee: 6e10 1b07 0100                         |01b7: invoke-virtual {v1}, Ljava/io/RandomAccessFile;.close:()V // method@071b
+07b1f4: 1100                                   |01ba: return-object v0
+07b1f6: 2702                                   |01bb: throw v2
+07b1f8: 0d00                                   |01bc: move-exception v0
+07b1fa: 7120 3809 2100                         |01bd: invoke-static {v1, v2}, Lk8;.p:(Ljava/io/Closeable;Ljava/lang/Throwable;)V // method@0938
+07b200: 2700                                   |01c0: throw v0
+      name          : 'b'
+      type          : '([BI)J'
+07b254:                                        |[07b254] hh.b:([BI)J
+07b264: 1600 0000                              |0000: const-wide/16 v0, #int 0 // #0
+07b268: 1202                                   |0002: const/4 v2, #int 0 // #0
+07b26a: 1243                                   |0003: const/4 v3, #int 4 // #4
+07b26c: 3532 1100                              |0004: if-ge v2, v3, 0015 // +0011
+07b270: 9003 0802                              |0006: add-int v3, v8, v2
+07b274: 4803 0703                              |0008: aget-byte v3, v7, v3
+07b278: 8133                                   |000a: int-to-long v3, v3
+07b27a: 1605 ff00                              |000b: const-wide/16 v5, #int 255 // #ff
+07b27e: c053                                   |000d: and-long/2addr v3, v5
+07b280: da05 0208                              |000e: mul-int/lit8 v5, v2, #int 8 // #08
+07b284: c353                                   |0010: shl-long/2addr v3, v5
+07b286: c130                                   |0011: or-long/2addr v0, v3
+07b288: d802 0201                              |0012: add-int/lit8 v2, v2, #int 1 // #01
+07b28c: 28ef                                   |0014: goto 0003 // -0011
+07b28e: 1000                                   |0015: return-wide v0
+      name          : 'c'
+      type          : '([BI)J'
+07b290:                                        |[07b290] hh.c:([BI)J
+07b2a0: 1600 0000                              |0000: const-wide/16 v0, #int 0 // #0
+07b2a4: 1202                                   |0002: const/4 v2, #int 0 // #0
+07b2a6: 1303 0800                              |0003: const/16 v3, #int 8 // #8
+07b2aa: 3532 1100                              |0005: if-ge v2, v3, 0016 // +0011
+07b2ae: 9003 0802                              |0007: add-int v3, v8, v2
+07b2b2: 4803 0703                              |0009: aget-byte v3, v7, v3
+07b2b6: 8133                                   |000b: int-to-long v3, v3
+07b2b8: 1605 ff00                              |000c: const-wide/16 v5, #int 255 // #ff
+07b2bc: c053                                   |000e: and-long/2addr v3, v5
+07b2be: da05 0208                              |000f: mul-int/lit8 v5, v2, #int 8 // #08
+07b2c2: c353                                   |0011: shl-long/2addr v3, v5
+07b2c4: c130                                   |0012: or-long/2addr v0, v3
+07b2c6: d802 0201                              |0013: add-int/lit8 v2, v2, #int 1 // #01
+07b2ca: 28ee                                   |0015: goto 0003 // -0012
+07b2cc: 1000                                   |0016: return-wide v0

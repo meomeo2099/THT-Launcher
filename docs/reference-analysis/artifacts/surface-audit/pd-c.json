@@ -1,0 +1,147 @@
+{
+  "evidence_id": "ev_6c9acf1ea7765338898cc63d10abef33c1da524b03ff33b7c90530a59f4a19fd",
+  "subject": {
+    "name": "reference.apk",
+    "digest": {
+      "sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+    },
+    "local_path": "reference.apk",
+    "format": "apk",
+    "architecture": null
+  },
+  "provider": {
+    "id": "jadx",
+    "name": "JADX headless",
+    "version": "0.7.1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_android_method",
+  "parameters": {
+    "path": "reference.apk",
+    "class_name": "pd",
+    "method_name": "c"
+  },
+  "raw_result": {
+    "server": {
+      "name": "rea-jadx-bridge",
+      "version": "7"
+    },
+    "bridge_sha256": "e5044a8312dd0731f53af3f095508b3e5cff54df6b971c95d4305e2f39b4fa30",
+    "jar_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "loaded": {
+      "state": "LOADED",
+      "apk_path": "<temporary-analysis-session>/target.apk",
+      "class_count": 485,
+      "resource_count": 264,
+      "threads": 1,
+      "resources": "full"
+    },
+    "calls": [
+      {
+        "operation": "rea_jvm_status",
+        "input": {},
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"available_processors\":3,\"engine_reported_version\":\"0.7.1\",\"metadata_scope\":\"parsed_members\",\"max_heap_bytes\":2615148544,\"java_version\":\"17.0.18\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "load_apk",
+        "input": {
+          "path": "<temporary-analysis-session>/target.apk",
+          "threads": 1,
+          "resources": "full"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"state\":\"LOADED\",\"apk_path\":\"<temporary-analysis-session>/target.apk\",\"class_count\":485,\"raw_class_count\":485,\"resource_count\":264,\"load_duration_ms\":5131,\"decompile_timeout_ms\":90000,\"threads\":1,\"code_cache_size\":64,\"resources\":\"full\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_class_summary",
+        "input": {
+          "class_name": "pd"
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"raw_name\":\"pd\",\"fields\":[{\"def_pos\":0,\"name\":\"a\",\"type\":\"fi\"},{\"def_pos\":0,\"name\":\"b\",\"type\":\"android.content.Context\"},{\"def_pos\":0,\"name\":\"c\",\"type\":\"fe\"},{\"def_pos\":0,\"name\":\"d\",\"type\":\"android.media.session.MediaSession\"},{\"def_pos\":0,\"name\":\"e\",\"type\":\"android.media.AudioTrack\"},{\"def_pos\":0,\"name\":\"f\",\"type\":\"int\"},{\"def_pos\":0,\"name\":\"g\",\"type\":\"java.lang.String\"},{\"def_pos\":0,\"name\":\"h\",\"type\":\"java.lang.Boolean\"},{\"def_pos\":0,\"name\":\"i\",\"type\":\"p1\"},{\"def_pos\":0,\"name\":\"j\",\"type\":\"j\"},{\"def_pos\":0,\"name\":\"k\",\"type\":\"boolean\"},{\"def_pos\":0,\"name\":\"l\",\"type\":\"java.lang.String\"},{\"def_pos\":0,\"name\":\"m\",\"type\":\"long\"},{\"def_pos\":0,\"name\":\"n\",\"type\":\"od\"}],\"methods\":[{\"name\":\"<clinit>\",\"is_constructor\":false,\"dex_descriptor\":\"()V\",\"signature\":\"<clinit>(): void\",\"def_pos\":0},{\"name\":\"a\",\"is_constructor\":false,\"dex_descriptor\":\"(I)V\",\"signature\":\"a(int): void\",\"def_pos\":0},{\"name\":\"b\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;)V\",\"signature\":\"b(android.content.Context): void\",\"def_pos\":0},{\"name\":\"c\",\"is_constructor\":false,\"dex_descriptor\":\"(Landroid/content/Context;Ljava/lang/String;I)V\",\"signature\":\"c(android.content.Context, java.lang.String, int): void\",\"def_pos\":0},{\"name\":\"d\",\"is_constructor\":false,\"dex_descriptor\":\"()Z\",\"signature\":\"d(): boolean\",\"def_pos\":0},{\"name\":\"e\",\"is_constructor\":false,\"dex_descriptor\":\"()Llb;\",\"signature\":\"e(): lb\",\"def_pos\":0},{\"name\":\"f\",\"is_constructor\":false,\"dex_descriptor\":\"(I)V\",\"signature\":\"f(int): void\",\"def_pos\":0},{\"name\":\"g\",\"is_constructor\":false,\"dex_descriptor\":\"()V\",\"signature\":\"g(): void\",\"def_pos\":0}],\"inner_classes\":[],\"inner_class_count\":0,\"name\":\"pd\",\"field_count\":14,\"full_name\":\"defpackage.pd\",\"method_count\":8}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "operation": "get_method_body",
+        "input": {
+          "class_name": "pd",
+          "method_name": "c",
+          "overload_index": 0,
+          "smali_fallback": true
+        },
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"overload_index\":0,\"method_name\":\"c\",\"overload_count\":1,\"dex_descriptor\":\"(Landroid/content/Context;Ljava/lang/String;I)V\",\"class_name\":\"defpackage.pd\",\"mode\":\"java\",\"body\":\"    /* JADX WARN: Code duplicated, block: B:53:0x00ec  */\\n    /* JADX WARN: Failed to restore switch over string. Please report as a decompilation issue */\\n    /* JADX WARN: Multi-variable type inference failed */\\n    public static void c(Context context, String str, int i2) {\\n        Double dO;\\n        Integer numValueOf;\\n        lb lbVarE;\\n        b(context);\\n        fe feVar = c;\\n        if (feVar == null) {\\n            return;\\n        }\\n        if (!feVar.c()) {\\n            if (i2 > 0) {\\n                ((Handler) a.a()).postDelayed(new u(context, str, i2, 4), 300L);\\n            }\\n            return;\\n        }\\n        int i3 = 5;\\n        int i4 = 0;\\n        Object[] objArr = 0;\\n        Object[] objArr2 = 0;\\n        boolean z = true;\\n        yc ycVar = null;\\n        switch (str.hashCode()) {\\n            case -1292297102:\\n                if (str.equals(\\\"RADIO_PAUSE\\\")) {\\n                    m = SystemClock.elapsedRealtime();\\n                    feVar.h();\\n                    break;\\n                }\\n                break;\\n            case -1283528997:\\n                if (str.equals(\\\"RADIO_PREVIOUS\\\")) {\\n                    f(-1);\\n                    break;\\n                }\\n                break;\\n            case 512446679:\\n                if (str.equals(\\\"RADIO_NEXT\\\")) {\\n                    f(1);\\n                    break;\\n                }\\n                break;\\n            case 512512280:\\n                if (str.equals(\\\"RADIO_PLAY\\\")) {\\n                    for (kd kdVar : k8.l0(context, \\\"radio_favorites\\\")) {\\n                        String strB = kdVar.b();\\n                        String str2 = kdVar.a;\\n                        str2.getClass();\\n                        if (strB.equals(\\\"FM\\\") || strB.equals(\\\"AM\\\")) {\\n                            Set set = nb.l;\\n                            String strZ = pi.z(strB, str2);\\n                            if (strZ == null || (dO = ai.o(strZ)) == null) {\\n                                numValueOf = null;\\n                            } else {\\n                                double dDoubleValue = dO.doubleValue();\\n                                if (!strB.equals(\\\"AM\\\")) {\\n                                    dDoubleValue *= 1000.0d;\\n                                }\\n                                numValueOf = Integer.valueOf(k8.n0(dDoubleValue));\\n                            }\\n                        } else {\\n                            numValueOf = null;\\n                        }\\n                        yc ycVar2 = numValueOf != null ? new yc(kdVar.b(), Integer.valueOf(numValueOf.intValue())) : null;\\n                        if (ycVar2 != null) {\\n                            ycVar = ycVar2;\\n                            feVar.b.post(new o(feVar, ycVar, i3));\\n                            break;\\n                        }\\n                    }\\n                    feVar.b.post(new o(feVar, ycVar, i3));\\n                    break;\\n                }\\n                break;\\n            case 556243621:\\n                if (str.equals(\\\"RADIO_SEEK_DOWN\\\")) {\\n                    feVar.b.post(new yd(feVar, objArr2 == true ? 1 : 0, objArr == true ? 1 : 0));\\n                    break;\\n                }\\n                break;\\n            case 1041036672:\\n                if (str.equals(\\\"RADIO_FAVORITE\\\") && (lbVarE = e()) != null) {\\n                    lb lbVar = th.A(lbVarE.b) ? null : lbVarE;\\n                    if (lbVar != null) {\\n                        k8.I0(context, new kd(lbVar.b, th.J(lbVar.c).toString(), lbVar.a));\\n                    }\\n                }\\n                break;\\n            case 2055450607:\\n                if (str.equals(\\\"RADIO_PLAY_PAUSE\\\")) {\\n                    if (d()) {\\n                        m = SystemClock.elapsedRealtime();\\n                        feVar.h();\\n                    } else {\\n                        feVar.b.post(new o(feVar, ycVar, i3));\\n                    }\\n                    break;\\n                }\\n                break;\\n            case 2110074206:\\n                if (str.equals(\\\"RADIO_SEEK_UP\\\")) {\\n                    feVar.b.post(new yd(feVar, z, i4));\\n                    break;\\n                }\\n                break;\\n        }\\n    }\",\"markers\":[],\"fell_back\":false,\"full_name\":\"pd.c\"}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "normalized_result": {
+    "engine": {
+      "name": "jadx-headless-mcp",
+      "version": "0.7.1",
+      "artifact_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+      "source_revision": "5844800a486d2248fa949b74c9896285f5b54de2",
+      "worker_count": 1,
+      "heap_limit_mib": 2494
+    },
+    "class_name": "defpackage.pd",
+    "method": {
+      "name": "c",
+      "reported_signature": "c(android.content.Context, java.lang.String, int): void",
+      "overload_index": 0,
+      "is_constructor": false,
+      "dex_descriptor": "(Landroid/content/Context;Ljava/lang/String;I)V"
+    },
+    "overload_count": 1,
+    "representation": "java",
+    "body_status": "available",
+    "fell_back": false,
+    "markers": [],
+    "source": {
+      "status": "complete",
+      "text": "    /* JADX WARN: Code duplicated, block: B:53:0x00ec  */\n    /* JADX WARN: Failed to restore switch over string. Please report as a decompilation issue */\n    /* JADX WARN: Multi-variable type inference failed */\n    public static void c(Context context, String str, int i2) {\n        Double dO;\n        Integer numValueOf;\n        lb lbVarE;\n        b(context);\n        fe feVar = c;\n        if (feVar == null) {\n            return;\n        }\n        if (!feVar.c()) {\n            if (i2 > 0) {\n                ((Handler) a.a()).postDelayed(new u(context, str, i2, 4), 300L);\n            }\n            return;\n        }\n        int i3 = 5;\n        int i4 = 0;\n        Object[] objArr = 0;\n        Object[] objArr2 = 0;\n        boolean z = true;\n        yc ycVar = null;\n        switch (str.hashCode()) {\n            case -1292297102:\n                if (str.equals(\"RADIO_PAUSE\")) {\n                    m = SystemClock.elapsedRealtime();\n                    feVar.h();\n                    break;\n                }\n                break;\n            case -1283528997:\n                if (str.equals(\"RADIO_PREVIOUS\")) {\n                    f(-1);\n                    break;\n                }\n                break;\n            case 512446679:\n                if (str.equals(\"RADIO_NEXT\")) {\n                    f(1);\n                    break;\n                }\n                break;\n            case 512512280:\n                if (str.equals(\"RADIO_PLAY\")) {\n                    for (kd kdVar : k8.l0(context, \"radio_favorites\")) {\n                        String strB = kdVar.b();\n                        String str2 = kdVar.a;\n                        str2.getClass();\n                        if (strB.equals(\"FM\") || strB.equals(\"AM\")) {\n                            Set set = nb.l;\n                            String strZ = pi.z(strB, str2);\n                            if (strZ == null || (dO = ai.o(strZ)) == null) {\n                                numValueOf = null;\n                            } else {\n                                double dDoubleValue = dO.doubleValue();\n                                if (!strB.equals(\"AM\")) {\n                                    dDoubleValue *= 1000.0d;\n                                }\n                                numValueOf = Integer.valueOf(k8.n0(dDoubleValue));\n                            }\n                        } else {\n                            numValueOf = null;\n                        }\n                        yc ycVar2 = numValueOf != null ? new yc(kdVar.b(), Integer.valueOf(numValueOf.intValue())) : null;\n                        if (ycVar2 != null) {\n                            ycVar = ycVar2;\n                            feVar.b.post(new o(feVar, ycVar, i3));\n                            break;\n                        }\n                    }\n                    feVar.b.post(new o(feVar, ycVar, i3));\n                    break;\n                }\n                break;\n            case 556243621:\n                if (str.equals(\"RADIO_SEEK_DOWN\")) {\n                    feVar.b.post(new yd(feVar, objArr2 == true ? 1 : 0, objArr == true ? 1 : 0));\n                    break;\n                }\n                break;\n            case 1041036672:\n                if (str.equals(\"RADIO_FAVORITE\") && (lbVarE = e()) != null) {\n                    lb lbVar = th.A(lbVarE.b) ? null : lbVarE;\n                    if (lbVar != null) {\n                        k8.I0(context, new kd(lbVar.b, th.J(lbVar.c).toString(), lbVar.a));\n                    }\n                }\n                break;\n            case 2055450607:\n                if (str.equals(\"RADIO_PLAY_PAUSE\")) {\n                    if (d()) {\n                        m = SystemClock.elapsedRealtime();\n                        feVar.h();\n                    } else {\n                        feVar.b.post(new o(feVar, ycVar, i3));\n                    }\n                    break;\n                }\n                break;\n            case 2110074206:\n                if (str.equals(\"RADIO_SEEK_UP\")) {\n                    feVar.b.post(new yd(feVar, z, i4));\n                    break;\n                }\n                break;\n        }\n    }",
+      "reported_total_bytes": null
+    }
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Static decompiler observations do not establish runtime behavior; the APK is never executed.",
+    "Method signatures use provider display types; DEX prototypes come from frozen JADX metadata. Display names may be aliases, and overload indices are local to this engine and artifact.",
+    "Class inventories use parsed metadata before code generation, including synthetic members that may be omitted from decompiled source. Source positions remain unknown.",
+    "Incoming reference totals count JADX using nodes. Direct invoke entries within a using method report raw DEX code-unit offsets and method indexes, but coverage is limited to those nodes and directly matched invokes; it does not establish every possible dynamic or reflective call site.",
+    "Manifest summaries are parsed once by REA's bridge from the exact root AndroidManifest.xml resource, using namespace-aware XML attributes; decoded XML is retained. APK signatures, split APKs, native libraries and Android runtime capture are not verified by this provider."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

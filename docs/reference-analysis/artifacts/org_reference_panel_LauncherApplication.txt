@@ -1,0 +1,199 @@
+Class #393            -
+  Class descriptor  : 'Lorg/reference/panel/LauncherApplication;'
+  Access flags      : 0x0011 (PUBLIC FINAL)
+  Superclass        : 'Landroid/app/Application;'
+  Interfaces        -
+  Static fields     -
+  Instance fields   -
+  Direct methods    -
+    #0              : (in Lorg/reference/panel/LauncherApplication;)
+      name          : '<init>'
+      type          : '()V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      code          -
+      registers     : 1
+      ins           : 1
+      outs          : 1
+      insns size    : 4 16-bit code units
+099e30:                                        |[099e30] org.reference.panel.LauncherApplication.<init>:()V
+099e40: 7010 7400 0000                         |0000: invoke-direct {v0}, Landroid/app/Application;.<init>:()V // method@0074
+099e46: 0e00                                   |0003: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+      locals        :
+        0x0000 - 0x0004 reg=0 this Lorg/reference/panel/LauncherApplication;
+
+  Virtual methods   -
+    #0              : (in Lorg/reference/panel/LauncherApplication;)
+      name          : 'attachBaseContext'
+      type          : '(Landroid/content/Context;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 2
+      ins           : 2
+      outs          : 2
+      insns size    : 11 16-bit code units
+099e48:                                        |[099e48] org.reference.panel.LauncherApplication.attachBaseContext:(Landroid/content/Context;)V
+099e58: 6e10 8a07 0100                         |0000: invoke-virtual {v1}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+099e5e: 7110 a106 0100                         |0003: invoke-static {v1}, Lj0;.e:(Landroid/content/Context;)Landroid/content/Context; // method@06a1
+099e64: 0c01                                   |0006: move-result-object v1
+099e66: 6f20 cf00 1000                         |0007: invoke-super {v0, v1}, Landroid/content/ContextWrapper;.attachBaseContext:(Landroid/content/Context;)V // method@00cf
+099e6c: 0e00                                   |000a: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+      locals        :
+        0x0000 - 0x000b reg=0 this Lorg/reference/panel/LauncherApplication;
+        0x0000 - 0x000b reg=1 (null) Landroid/content/Context;
+
+    #1              : (in Lorg/reference/panel/LauncherApplication;)
+      name          : 'onConfigurationChanged'
+      type          : '(Landroid/content/res/Configuration;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 2
+      ins           : 2
+      outs          : 2
+      insns size    : 10 16-bit code units
+099e70:                                        |[099e70] org.reference.panel.LauncherApplication.onConfigurationChanged:(Landroid/content/res/Configuration;)V
+099e80: 6e10 8a07 0100                         |0000: invoke-virtual {v1}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@078a
+099e86: 6f20 7500 1000                         |0003: invoke-super {v0, v1}, Landroid/app/Application;.onConfigurationChanged:(Landroid/content/res/Configuration;)V // method@0075
+099e8c: 7110 9d06 0000                         |0006: invoke-static {v0}, Lj0;.a:(Landroid/content/Context;)V // method@069d
+099e92: 0e00                                   |0009: return-void
+      catches       : (none)
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+      locals        :
+        0x0000 - 0x000a reg=0 this Lorg/reference/panel/LauncherApplication;
+        0x0000 - 0x000a reg=1 (null) Landroid/content/res/Configuration;
+
+    #2              : (in Lorg/reference/panel/LauncherApplication;)
+      name          : 'onCreate'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      code          -
+      registers     : 6
+      ins           : 1
+      outs          : 3
+      insns size    : 61 16-bit code units
+099e94:                                        |[099e94] org.reference.panel.LauncherApplication.onCreate:()V
+099ea4: 6f10 7600 0500                         |0000: invoke-super {v5}, Landroid/app/Application;.onCreate:()V // method@0076
+099eaa: 6200 0407                              |0003: sget-object v0, Lorg/reference/panel/RadioCommandReceiver;.a:Ljava/util/Set; // field@0704
+099eae: 2200 4900                              |0005: new-instance v0, Landroid/content/IntentFilter; // type@0049
+099eb2: 7010 e900 0000                         |0007: invoke-direct {v0}, Landroid/content/IntentFilter;.<init>:()V // method@00e9
+099eb8: 6201 0407                              |000a: sget-object v1, Lorg/reference/panel/RadioCommandReceiver;.a:Ljava/util/Set; // field@0704
+099ebc: 7210 6607 0100                         |000c: invoke-interface {v1}, Ljava/lang/Iterable;.iterator:()Ljava/util/Iterator; // method@0766
+099ec2: 0c01                                   |000f: move-result-object v1
+099ec4: 7210 5b08 0100                         |0010: invoke-interface {v1}, Ljava/util/Iterator;.hasNext:()Z // method@085b
+099eca: 0a02                                   |0013: move-result v2
+099ecc: 3802 1a00                              |0014: if-eqz v2, 002e // +001a
+099ed0: 7210 5c08 0100                         |0016: invoke-interface {v1}, Ljava/util/Iterator;.next:()Ljava/lang/Object; // method@085c
+099ed6: 0c02                                   |0019: move-result-object v2
+099ed8: 1f02 0802                              |001a: check-cast v2, Ljava/lang/String; // type@0208
+099edc: 2203 0902                              |001c: new-instance v3, Ljava/lang/StringBuilder; // type@0209
+099ee0: 1a04 e810                              |001e: const-string v4, "org.reference.panel." // string@10e8
+099ee4: 7020 b507 4300                         |0020: invoke-direct {v3, v4}, Ljava/lang/StringBuilder;.<init>:(Ljava/lang/String;)V // method@07b5
+099eea: 6e20 bf07 2300                         |0023: invoke-virtual {v3, v2}, Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder; // method@07bf
+099ef0: 6e10 c107 0300                         |0026: invoke-virtual {v3}, Ljava/lang/StringBuilder;.toString:()Ljava/lang/String; // method@07c1
+099ef6: 0c02                                   |0029: move-result-object v2
+099ef8: 6e20 ea00 2000                         |002a: invoke-virtual {v0, v2}, Landroid/content/IntentFilter;.addAction:(Ljava/lang/String;)V // method@00ea
+099efe: 28e3                                   |002d: goto 0010 // -001d
+099f00: 6e10 b700 0500                         |002e: invoke-virtual {v5}, Landroid/content/Context;.getApplicationContext:()Landroid/content/Context; // method@00b7
+099f06: 0c05                                   |0031: move-result-object v5
+099f08: 2201 5b02                              |0032: new-instance v1, Ljd; // type@025b
+099f0c: 6202 0407                              |0034: sget-object v2, Lorg/reference/panel/RadioCommandReceiver;.a:Ljava/util/Set; // field@0704
+099f10: 7010 a200 0100                         |0036: invoke-direct {v1}, Landroid/content/BroadcastReceiver;.<init>:()V // method@00a2
+099f16: 6e30 c800 1500                         |0039: invoke-virtual {v5, v1, v0}, Landroid/content/Context;.registerReceiver:(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent; // method@00c8
+099f1c: 0e00                                   |003c: return-void
+      catches       : 1
+        0x002e - 0x003c
+          <any> -> 0x003c
+      positions     :
+        0x0000 line=1
+        0x0001 line=2
+        0x0002 line=3
+        0x0003 line=4
+        0x0004 line=5
+        0x0005 line=6
+        0x0006 line=7
+        0x0007 line=8
+        0x0008 line=9
+        0x0009 line=10
+        0x000a line=11
+        0x000b line=12
+        0x000c line=13
+        0x000d line=14
+        0x000e line=15
+        0x000f line=16
+        0x0010 line=17
+        0x0011 line=18
+        0x0012 line=19
+        0x0013 line=20
+        0x0014 line=21
+        0x0015 line=22
+        0x0016 line=23
+        0x0017 line=24
+        0x0018 line=25
+        0x0019 line=26
+        0x001a line=27
+        0x001b line=28
+        0x001c line=29
+        0x001d line=30
+        0x001e line=31
+        0x001f line=32
+        0x0020 line=33
+        0x0021 line=34
+        0x0022 line=35
+        0x0023 line=36
+        0x0024 line=37
+        0x0025 line=38
+        0x0026 line=39
+        0x0027 line=40
+        0x0028 line=41
+        0x0029 line=42
+        0x002a line=43
+        0x002b line=44
+        0x002c line=45
+        0x002d line=46
+        0x002e line=47
+        0x002f line=48
+        0x0030 line=49
+        0x0031 line=50
+        0x0032 line=51
+        0x0033 line=52
+        0x0034 line=53
+        0x0035 line=54
+        0x0036 line=55
+        0x0037 line=56
+        0x0038 line=57
+        0x0039 line=58
+        0x003a line=59
+        0x003b line=60
+        0x003c line=61
+      locals        :
+        0x0000 - 0x003d reg=5 this Lorg/reference/panel/LauncherApplication;
+
+  source_file_idx   : 4152 (r8-map-id-df02db20992efcdad8c8628fa158af402193d9214b2257c75897211101eb46a6)

@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-28",
+  "state": "extended static investigation completed; runtime and vehicle effects unverified",
+  "successful_rea_records": 71,
+  "diagnostic_error_records": 10,
+  "raw_dex_classes": 561,
+  "jadx_top_level_classes": 485,
+  "source_java_files": 485,
+  "source_bytes": 3664755,
+  "source_lines": 78126,
+  "java_methods_unavailable": 13,
+  "total_direct_dex_invokes": 33267,
+  "permissions": 32,
+  "manifest_components": 9,
+  "report_files": [
+    "native",
+    "vehicle",
+    "automation",
+    "data-network",
+    "ui-system"
+  ],
+  "apk_sha256": "24ab6a3199655531ad80a1d651b961971896fad1715d93799f2bacb4ac93965c"
+}
