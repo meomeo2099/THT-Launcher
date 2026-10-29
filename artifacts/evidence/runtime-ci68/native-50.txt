@@ -1,0 +1,3 @@
+INSTRUMENTATION_RESULT: observations=[{"touch":"swap","x":1036,"y":104},{"touch":"close","x":1036,"y":40},{"closed":true,"clean":true,"ratio":50}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_CODE: 0

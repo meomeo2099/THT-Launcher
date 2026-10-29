@@ -1,0 +1,16 @@
+native-50 PASS INSTRUMENTATION_RESULT: observations=[{"touch":"swap","x":1036,"y":104},{"touch":"close","x":1036,"y":40},{"closed":true,"clean":true,"ratio":50}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_CODE: 0
+
+native-30 PASS INSTRUMENTATION_RESULT: observations=[{"touch":"swap","x":652,"y":104},{"touch":"close","x":1420,"y":40},{"closed":true,"clean":true,"ratio":30}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_CODE: 0
+
+auto-50 PASS INSTRUMENTATION_RESULT: observations=[{"touch":"swap","x":960,"y":96},{"touch":"close","x":960,"y":32},{"closed":true,"clean":true,"ratio":50}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_CODE: 0
+
+auto-30 PASS INSTRUMENTATION_RESULT: observations=[{"touch":"swap","x":588,"y":96},{"touch":"close","x":1331,"y":32},{"closed":true,"clean":true,"ratio":30}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_CODE: 0
+
