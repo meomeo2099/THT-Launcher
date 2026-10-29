@@ -579,19 +579,19 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     /**
      * Thanh hệ thống của ECARX không chịu ẩn theo cờ của cửa sổ. Android 9 còn `policy_control` (cần
-     * WRITE_SECURE_SETTINGS, chỉ có ở bản ký platform): ép chế độ toàn màn hình cho riêng gói launcher.
-     * Không đè cấu hình của người khác: chỉ ghi khi trống hoặc đang là của mình.
+     * WRITE_SECURE_SETTINGS): policy theo từng package, có khôi phục và giữ cấu hình khác.
      */
     private fun applyPolicyControl(on: Boolean) {
-        val mine = "immersive.full=$packageName"
-        runCatching {
-            val cur = Settings.Global.getString(contentResolver, "policy_control")
-            when {
-                on && cur.isNullOrEmpty() -> Settings.Global.putString(contentResolver, "policy_control", mine)
-                !on && cur == mine -> Settings.Global.putString(contentResolver, "policy_control", null)
-                else -> Unit
+        if (!on) {
+            vn.tht.launcher.system.AppWindowPolicy.restore(this)
+            // Migrate the launcher-only policy written by older versions as well.
+            runCatching {
+                if (Settings.Global.getString(contentResolver, "policy_control") == "immersive.full=$packageName")
+                    Settings.Global.putString(contentResolver, "policy_control", null)
             }
-        }.onFailure { Log.w("THT", "policy_control: $it") }
+        }
+        else if (inFront && !splitScreen.hasWork)
+            vn.tht.launcher.system.AppWindowPolicy.apply(this, setOf(packageName))
     }
 
     // ---- Ngăn kéo ứng dụng ----
@@ -1105,6 +1105,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         appendLine("== Mở ứng dụng ngoài")
         appendLine("Secondary-display activities: ${packageManager.hasSystemFeature(android.content.pm.PackageManager.FEATURE_ACTIVITIES_ON_SECONDARY_DISPLAYS)}")
         appendLine(vn.tht.launcher.system.ExternalAppLauncher.lastReport)
+        appendLine(vn.tht.launcher.system.AppWindowPolicy.lastReport)
+        appendLine(vn.tht.launcher.system.ExternalAppLauncher.stackReport())
         appendLine("== Chia đôi màn hình")
         appendLine(splitScreen.diagnosticReport())
         appendLine()

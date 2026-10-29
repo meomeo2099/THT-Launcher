@@ -39,3 +39,5 @@ Kết quả build, kiểm thử và ảnh máy ảo được ghi trong [validati
 ## Rà soát chia màn hình
 
 [Đối chiếu native split, giao dịch hủy/khôi phục và kiểm thử runtime](split-screen-review.md).
+
+[Bản 0.3.63: xử lý thanh OEM, vạch chia lệch và frame fullscreen dùng chung](oem-window-fix-63.md).

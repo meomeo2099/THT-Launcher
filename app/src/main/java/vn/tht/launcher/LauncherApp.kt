@@ -16,6 +16,7 @@ class LauncherApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        vn.tht.launcher.system.AppWindowPolicy.restore(this)
         profile = Profiles.detect()
         // One-time upgrade to the requested fullscreen-app + persistent THT dock behavior.
         // A later choice of "off" in Settings remains respected.

@@ -88,7 +88,11 @@ object OemFirmware {
         }.getOrNull()
 
     private fun launch(context: Context, intent: Intent?): Boolean =
-        intent != null && runCatching { context.startActivity(intent); true }.getOrDefault(false)
+        intent != null && vn.tht.launcher.system.ExternalAppLauncher.leaveSplit() && runCatching {
+            vn.tht.launcher.system.AppWindowPolicy.restore(context)
+            context.startActivity(intent)
+            true
+        }.getOrDefault(false)
 
     /** Read-only package report; an OEM package certificate is not the framework certificate. */
     @Suppress("DEPRECATION")

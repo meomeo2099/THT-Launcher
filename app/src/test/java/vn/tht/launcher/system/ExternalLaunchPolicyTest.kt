@@ -4,6 +4,17 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class ExternalLaunchPolicyTest {
+    @Test fun sharedFullscreenStackCanRestoreItsNormalFrameForTheSelectedTopApp() {
+        assertTrue(ExternalLaunchPolicy.mayClearFullscreenStack(true, 1, "test.map",
+            listOf("vn.tht.launcher/.MainActivity", "other/.Main", "test.map/.Main"), "test.map"))
+    }
+    @Test fun sharedFreeformHomeAndForeignForegroundStacksRemainProtected() {
+        val mixed = listOf("other/.Main", "test.map/.Main")
+        assertFalse(ExternalLaunchPolicy.mayClearFullscreenStack(true, 5, "test.map", mixed, "test.map"))
+        assertFalse(ExternalLaunchPolicy.mayClearFullscreenStack(false, 1, "test.map", mixed, "test.map"))
+        assertFalse(ExternalLaunchPolicy.mayClearFullscreenStack(true, 1, "other", mixed, "test.map"))
+        assertFalse(ExternalLaunchPolicy.mayClearFullscreenStack(true, 3, "test.map", mixed, "test.map"))
+    }
     @Test fun taskMatchingIsExactForPackagesAndComponents() {
         assertTrue(ExternalLaunchPolicy.belongs("test.map/.Main", "test.map"))
         assertTrue(ExternalLaunchPolicy.belongs("test.map", "test.map"))

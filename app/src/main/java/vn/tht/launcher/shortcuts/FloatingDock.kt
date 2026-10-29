@@ -76,6 +76,7 @@ class FloatingDock(private val c: Context, private val actions: DockBar.Actions)
         }
         try {
             bar = DockBar(c, row, actions, editable = false).also { it.reload() }
+            vn.tht.launcher.ui.ScreenOverlayPosition(box, wm, lp)
             wm.addView(box, lp)
             root = box
         } catch (t: Throwable) {

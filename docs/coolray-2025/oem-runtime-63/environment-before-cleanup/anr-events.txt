@@ -1,0 +1,2 @@
+10-29 09:11:23.607  1805  1833 I am_anr  : [0,1953,com.android.systemui,818429453,executing service com.android.systemui/.SystemUIService]
+10-29 09:14:35.240  1805  1833 I am_anr  : [0,2554,com.android.dialer,550026821,Broadcast of Intent { act=android.telephony.action.SHOW_VOICEMAIL_NOTIFICATION flg=0x10000010 pkg=com.android.dialer cmp=com.android.dialer/.app.voicemail.LegacyVoicemailNotificationReceiver (has extras) }]

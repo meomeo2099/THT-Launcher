@@ -1,0 +1,4 @@
+INSTRUMENTATION_RESULT: observations=[{"phase":"synthetic_offset40_72_corrected","left":938,"top":0,"center":960}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=offset
+INSTRUMENTATION_CODE: 0

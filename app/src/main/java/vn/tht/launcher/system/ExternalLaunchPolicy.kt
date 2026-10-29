@@ -11,6 +11,10 @@ internal object ExternalLaunchPolicy {
     fun activityType(info: Any): Int? = windowValue(info, "getActivityType")
     fun windowingMode(info: Any): Int? = windowValue(info, "getWindowingMode")
     fun mayRepairFullscreen(mode: Int?): Boolean = mode == 1 || mode == 5
+    /** A fullscreen standard stack shares one display-sized frame, even when it holds other tasks.
+     * Freeform stacks may intentionally be small, so they still require exclusive ownership. */
+    fun mayClearFullscreenStack(standard: Boolean, mode: Int?, top: String?, names: List<String?>, pkg: String): Boolean =
+        standard && top == pkg && (mode == 1 || mode == 5 && mayClearStack(names, pkg))
     private fun windowValue(info: Any, getter: String): Int? = runCatching {
         info.javaClass.getMethod(getter).invoke(info) as? Int
     }.getOrNull() ?: runCatching {

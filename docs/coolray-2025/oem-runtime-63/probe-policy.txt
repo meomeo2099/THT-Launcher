@@ -1,0 +1,4 @@
+INSTRUMENTATION_RESULT: observations=[{"phase":"scoped_policy_restored","active":"immersive.navigation=other.test:immersive.full=vn.tht.fixture,vn.tht.launcher","restored":"immersive.navigation=other.test"}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=policy
+INSTRUMENTATION_CODE: 0

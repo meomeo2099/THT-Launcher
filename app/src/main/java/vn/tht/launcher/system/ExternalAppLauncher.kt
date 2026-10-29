@@ -29,6 +29,7 @@ object ExternalAppLauncher {
     fun beginSplit(context: Context, packages: Set<String>): Set<String> {
         generation++
         handler.removeCallbacksAndMessages(null)
+        AppWindowPolicy.apply(context, packages)
         val fresh = mutableSetOf<String>()
         packages.forEach { pkg -> snapshot().forEach { if (it.prepareExternal(pkg)) fresh += pkg } }
         if (context.checkSelfPermission(PERMISSION) == PackageManager.PERMISSION_GRANTED) {
@@ -69,6 +70,12 @@ object ExternalAppLauncher {
         val lines = mutableListOf("package=$pkg display=0 fullscreen=1 privileged=$privileged")
         val token = ++generation
         try {
+            lines += "before: ${stackReport()}"
+            // An OEM split can predate this THT Activity, so leaveSplit alone is insufficient.
+            // Only exit a native pair containing the explicitly requested fullscreen app.
+            if (privileged && !releaseNativeSplit(pkg)) error("Không thoát được chia đôi cũ của ứng dụng")
+            AppWindowPolicy.apply(context, setOf(pkg))
+            lines += AppWindowPolicy.lastReport
             // Android can retain a navigator task on a virtual display after its surface closes.
             // Remove only that package's virtual-display tasks; never force-stop a package.
             if (privileged && pkg != context.packageName) stacks().forEach { stack ->
@@ -103,11 +110,16 @@ object ExternalAppLauncher {
 
     private fun repair(context: Context, pkg: String) {
         if (context.checkSelfPermission(PERMISSION) != PackageManager.PERMISSION_GRANTED) return
+        if (!releaseNativeSplit(pkg)) {
+            lastReport = (lastReport + "\nnative split restore failed: ${stackReport()}").takeLast(10000)
+            return
+        }
         stacks().filter { it.display == 0 && it.visible && it.top?.packageName == pkg &&
             ExternalLaunchPolicy.mayRepairFullscreen(it.mode) }.forEach { stack ->
             // Clear a stale stack override first. resizeTask is not permitted on an Android 9
             // fullscreen task, and changing its windowing mode alone leaves that override intact.
-            if (stack.standard && ExternalLaunchPolicy.mayClearStack(stack.tasks.map { it.second }, pkg)) {
+            if (ExternalLaunchPolicy.mayClearFullscreenStack(stack.standard, stack.mode,
+                    stack.top?.packageName, stack.tasks.map { it.second }, pkg)) {
                 val cleared = invoke("resizeStack", arrayOf(Int::class.javaPrimitiveType!!, Rect::class.java,
                     Boolean::class.javaPrimitiveType!!, Boolean::class.javaPrimitiveType!!,
                     Boolean::class.javaPrimitiveType!!, Int::class.javaPrimitiveType!!),
@@ -121,10 +133,29 @@ object ExternalAppLauncher {
                 lastReport = (lastReport + "\nrepair task=$id display=0 mode=$mode").takeLast(6000)
             }
         }
+        lastReport = (lastReport + "\nafter: ${stackReport()}").takeLast(10000)
+    }
+
+    private fun releaseNativeSplit(pkg: String): Boolean {
+        fun targets() = stacks().filter { it.display == 0 && it.standard && it.mode in listOf(3, 4) &&
+            it.tasks.any { task -> ExternalLaunchPolicy.belongs(task.second, pkg) } }
+        if (targets().isEmpty()) return true
+        val dismissed = invoke("dismissSplitScreenMode", arrayOf(Boolean::class.javaPrimitiveType!!), false)
+        // A vendor may reject dismiss. Retry only the selected app's tasks, never unrelated tasks.
+        targets().forEach { stack -> stack.tasks.filter { ExternalLaunchPolicy.belongs(it.second, pkg) }.forEach { (id, _) ->
+            invoke("setTaskWindowingMode", arrayOf(Int::class.javaPrimitiveType!!,
+                Int::class.javaPrimitiveType!!, Boolean::class.javaPrimitiveType!!), id, 1, false)
+        } }
+        Log.i(TAG, "restore native split package=$pkg dismissed=$dismissed")
+        return targets().isEmpty()
+    }
+
+    fun stackReport(): String = stacks().joinToString("; ") {
+        "stack=${it.id} display=${it.display} mode=${it.mode} standard=${it.standard} visible=${it.visible} bounds=${it.bounds} top=${it.top} tasks=${it.tasks}"
     }
 
     private data class Stack(val id: Int, val display: Int, val visible: Boolean, val standard: Boolean, val mode: Int?,
-                             val top: ComponentName?, val tasks: List<Pair<Int, String?>>)
+                             val top: ComponentName?, val tasks: List<Pair<Int, String?>>, val bounds: Rect?)
     private fun service(): Any? = ActivityManager::class.java.getMethod("getService").invoke(null)
     private fun invoke(name: String, types: Array<Class<*>>, vararg args: Any?): Boolean = runCatching {
         val result = Class.forName("android.app.IActivityManager").getMethod(name, *types).invoke(service(), *args)
@@ -144,7 +175,8 @@ object ExternalAppLauncher {
                     ExternalLaunchPolicy.activityType(value) == 1,
                     ExternalLaunchPolicy.windowingMode(value),
                     cls.getField("topActivity").get(value) as? ComponentName,
-                    ids.mapIndexed { index, id -> id to (names.getOrNull(index) as? String) })
+                    ids.mapIndexed { index, id -> id to (names.getOrNull(index) as? String) },
+                    runCatching { Rect(cls.getField("bounds").get(value) as Rect) }.getOrNull())
             }.getOrNull()
         }
     }.getOrElse { emptyList() }
