@@ -1,0 +1,3 @@
+# Diagnostic export without DocumentsUI
+
+Owner firmware cannot resolve ACTION_CREATE_DOCUMENT. Default export now builds report on car-io, saves UTF-8 in app external-files/reports (internal-files/reports fallback), then shows full selectable text, path and Copy/Share actions. Optional document picker remains available; absence leaves the already saved report intact. The FileProvider is non-exported and shares only reports/ with a temporary read URI. No storage permission or extra app required for saving/viewing/copying. Sharing still requires an installed receiver; otherwise UI suggests copying/screenshots. No report is sent automatically. This changes diagnostic export only; actual OEM letterboxing still requires device report.

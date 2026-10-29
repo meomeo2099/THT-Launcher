@@ -1,0 +1,12 @@
+{
+  "version": "0.3.74",
+  "run_id": 40911297566,
+  "head_sha": "3300fc662a4d280faef674077ff8473677d3916d",
+  "counts": {
+    "tests": 96,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "release_sha256": "0037d14ec3da31943a8d8deb9182bf0009c3cf10cf002dd345db970fa9dad53a"
+}

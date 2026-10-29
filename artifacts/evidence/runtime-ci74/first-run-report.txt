@@ -1,0 +1,3 @@
+INSTRUMENTATION_RESULT: error=java.lang.NoSuchMethodException: getUriForFile [class android.content.Context, class java.lang.String, class java.io.File]
+INSTRUMENTATION_RESULT: result=FAIL
+INSTRUMENTATION_CODE: 0
