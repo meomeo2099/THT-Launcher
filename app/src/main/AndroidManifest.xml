@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- Chia đôi màn hình (API ẩn IActivityManager): chỉ có hiệu lực khi APK ký khoá platform -->
     <uses-permission android:name="android.permission.MANAGE_ACTIVITY_STACKS" />
+    <uses-permission android:name="android.permission.REMOVE_TASKS" />
     <uses-permission android:name="android.permission.START_TASKS_FROM_RECENTS" />
     <uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW" />
     <!-- Gắn widget Android của app khác không cần hỏi (chỉ có hiệu lực với bản ký platform) -->
@@ -70,6 +71,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".split.HostedSplitActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:resizeableActivity="true"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/Theme.THT"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|uiMode|density" />
 
         <activity
             android:name=".settings.SettingsActivity"

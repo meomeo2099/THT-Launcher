@@ -37,7 +37,7 @@ object Backup {
         "auto_heat_wheel", "auto_heat_below", "auto_heat_off", "auto_vent_drv", "auto_vent_pas",
         "auto_vent_above", "auto_vent_off", "auto_air_above", "auto_air_fan", "auto_air_min", "auto_climate_temp", "auto_roof_speed", "nav_bar_overscan")
     private val strings = setOf("theme_mode", "bg_day", "bg_night", "card_style", "accent", "dock_size",
-        "dock_overlay", "nav_app", "autostart", "autoplay_player", "drawer_favorites", "splits", "nav_mode", "nav_bar_items")
+        "dock_overlay", "split_backend", "nav_app", "autostart", "autoplay_player", "drawer_favorites", "splits", "nav_mode", "nav_bar_items")
     private val floats = setOf("nav_pill_x", "nav_pill_y", "temp_info_x", "temp_info_y")
     private val longs = setOf("service_date")
     private val settingKeys get() = booleans + integers + strings + floats + longs

@@ -34,9 +34,12 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
     var bottomInset: () -> Int = { 0 }
     var usableBounds: () -> Rect? = { null }
     var onStateChanged: () -> Unit = {}
-    val openId: String? get() = session.request?.id?.takeIf { session.active }
-    val hasWork: Boolean get() = session.hasWork
-    fun owns(id: String): Boolean = session.request?.id == id
+    private var hostRequest: Split? = null
+    private var hostToken: String? = null
+    private var hostReady = false
+    val openId: String? get() = hostRequest?.id?.takeIf { hostReady } ?: session.request?.id?.takeIf { session.active }
+    val hasWork: Boolean get() = session.hasWork || hostRequest != null
+    fun owns(id: String): Boolean = session.request?.id == id || hostRequest?.id == id
     private var divider: View? = null
     private var dividerLp: WindowManager.LayoutParams? = null
     private var dividerPosition: vn.tht.launcher.ui.ScreenOverlayPosition? = null
@@ -101,15 +104,62 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
         }
     }
     fun toggle(split: Split) { if (owns(split.id)) close() else open(split) }
-    fun open(split: Split) { session.open(SplitSession.Request(split.id, split.left, split.right, split.ratio)) }
-    fun close(): Boolean = session.close()
+    fun open(split: Split) {
+        val embedded = context.getSharedPreferences("tht", Context.MODE_PRIVATE).getString("split_backend", "auto") != "native" &&
+            HostedSplitActivity.supported(context)
+        if (!embedded) {
+            closeHost()
+            session.open(SplitSession.Request(split.id, split.left, split.right, split.ratio))
+            return
+        }
+        if (split.left == split.right || listOf(split.left, split.right).any { it == context.packageName || launchIntent(it) == null }) {
+            toast("Chọn hai ứng dụng khác nhau có thể mở được"); return
+        }
+        if (!close()) return
+        if (!ExternalAppLauncher.prepareHosted(context, setOf(split.left, split.right))) {
+            toast("Hãy thoát chia đôi hệ thống trước khi mở hai ô trong THT"); return
+        }
+        val token = java.util.UUID.randomUUID().toString()
+        hostRequest = split; hostToken = token; hostReady = false
+        HostedSplitActivity.expectedToken = token
+        val owner = java.lang.ref.WeakReference(this)
+        HostedSplitActivity.listener = { id, ready -> owner.get()?.let { screen ->
+            if (screen.hostToken == id) {
+                if (ready) screen.hostReady = true else {
+                    screen.hostRequest = null; screen.hostToken = null; screen.hostReady = false
+                    if (HostedSplitActivity.expectedToken == id) HostedSplitActivity.expectedToken = null
+                }
+                screen.onStateChanged()
+            }
+        } }
+        HostedSplitActivity.pendingSwap = { next -> owner.get()?.open(next) }
+        onStateChanged()
+        try {
+            context.startActivity(Intent(context, HostedSplitActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+                putExtra("token", token); putExtra("id", split.id); putExtra("left", split.left)
+                putExtra("right", split.right); putExtra("ratio", split.ratio); putExtra("bottom", bottomInset())
+            }, ExternalAppLauncher.fullscreenOptions(context))
+        } catch (t: Exception) { closeHost(); toast("Không mở được hai ô: ${t.message}") }
+    }
+    private fun closeHost() {
+        val token = hostToken ?: return
+        val previous = hostRequest
+        if (HostedSplitActivity.expectedToken == token) HostedSplitActivity.expectedToken = null
+        HostedSplitActivity.close(token)
+        hostRequest = null; hostToken = null; hostReady = false
+        previous?.let { ExternalAppLauncher.finishSplit(setOf(it.left, it.right)) }
+        onStateChanged()
+    }
+    fun close(): Boolean { closeHost(); return session.close() }
     override fun exitForFullscreen(): Boolean = !hasWork || close()
     fun release() {
+        closeHost()
         if (!session.release()) pendingRecovery = cleanupRecord
         removeDivider()
         ExternalAppLauncher.unregisterSplit(this)
     }
-    fun diagnosticReport(): String = "id=${session.request?.id} starting=${session.starting} active=${session.active} tasks=$activeTasks layout=$lastLayout error=$lastProblem"
+    fun diagnosticReport(): String = "host=${hostRequest?.id} hostReady=$hostReady id=${session.request?.id} starting=${session.starting} active=${session.active} tasks=$activeTasks layout=$lastLayout error=$lastProblem"
     private fun SplitSession.Request.toSplit() = Split(id, left, right, ratio)
 
     private data class Stack(val id: Int, val display: Int, val visible: Boolean, val bounds: Rect,
@@ -321,6 +371,7 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
         return true
     }
     fun place(ratio: Int): Boolean {
+        hostToken?.let { return HostedSplitActivity.resize(it, ratio) }
         if (!session.active) return false
         val tasks = activeTasks ?: return false
         if (!resize(ratio, tasks)) { session.close(); return false }

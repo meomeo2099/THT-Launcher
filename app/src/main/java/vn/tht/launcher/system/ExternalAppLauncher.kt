@@ -46,6 +46,16 @@ object ExternalAppLauncher {
     private val previews = WeakHashMap<Preview, Unit>()
     private val handler = Handler(Looper.getMainLooper())
     private var generation = 0L
+    private val detachedHosted = mutableSetOf<String>()
+    fun hostedDetached(packages: Set<String>) { detachedHosted += packages }
+    fun prepareHosted(context: Context, packages: Set<String>): Boolean {
+        if (context.checkSelfPermission(PERMISSION) != PackageManager.PERMISSION_GRANTED) return false
+        if (packages.any { !releaseNativeSplit(it) }) return false
+        // Refuse a remaining foreign primary rather than put the host in its secondary pane.
+        if (stacks().any { it.display == 0 && it.mode == 3 }) return false
+        beginSplit(context, packages)
+        return true
+    }
     @Volatile var lastReport: String = "Chưa mở ứng dụng ngoài"
         private set
 
@@ -64,7 +74,7 @@ object ExternalAppLauncher {
         val pkg = component.packageName
         intent.component = component
         val listeners = snapshot()
-        var fresh = false
+        var fresh = detachedHosted.remove(pkg)
         listeners.forEach { if (it.prepareExternal(pkg)) fresh = true }
         val privileged = context.checkSelfPermission(PERMISSION) == PackageManager.PERMISSION_GRANTED
         val lines = mutableListOf("package=$pkg display=0 fullscreen=1 privileged=$privileged")

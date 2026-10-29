@@ -556,7 +556,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         val root = findViewById<View>(R.id.root)
         root.post {
             val x = IntArray(2).also { root.getLocationOnScreen(it) }[0]
-            val pad = (vn.tht.launcher.system.NavAssistService.homeInset - x).coerceAtLeast(0)
+            val pad = maxOf((vn.tht.launcher.system.NavAssistService.homeInset - x).coerceAtLeast(0),
+                vn.tht.launcher.system.NavAssistService.contentInsetLeft(root))
             for (id in intArrayOf(R.id.canvas_container, R.id.drawer)) {
                 val v = findViewById<View>(id)
                 if (v.paddingLeft != pad) v.setPadding(pad, v.paddingTop, v.paddingRight, v.paddingBottom)
@@ -1107,6 +1108,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         appendLine(vn.tht.launcher.system.ExternalAppLauncher.lastReport)
         appendLine(vn.tht.launcher.system.AppWindowPolicy.lastReport)
         appendLine(vn.tht.launcher.system.ExternalAppLauncher.stackReport())
+        appendLine(vn.tht.launcher.home.EmbeddedMap.lastReport)
         appendLine("== Chia đôi màn hình")
         appendLine(splitScreen.diagnosticReport())
         appendLine()

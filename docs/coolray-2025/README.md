@@ -41,3 +41,5 @@ Kết quả build, kiểm thử và ảnh máy ảo được ghi trong [validati
 [Đối chiếu native split, giao dịch hủy/khôi phục và kiểm thử runtime](split-screen-review.md).
 
 [Bản 0.3.63: xử lý thanh OEM, vạch chia lệch và frame fullscreen dùng chung](oem-window-fix-63.md).
+
+[0.3.64: hai app trong cửa sổ THT, tránh vạch native, sửa lề thanh bên và viewport bản đồ](hosted-split-64.md).

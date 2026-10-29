@@ -1,0 +1,4 @@
+INSTRUMENTATION_RESULT: observations=[{"phase":"host50","panes":[{"package":"vn.tht.fixture","display":4,"bounds":"Rect(0, 0 - 936, 620)","width":936,"height":620},{"package":"vn.tht.fixtureb","display":5,"bounds":"Rect(0, 0 - 936, 620)","width":936,"height":620}]},{"phase":"host_closed","panes":[]}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=hostexternal
+INSTRUMENTATION_CODE: 0

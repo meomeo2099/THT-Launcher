@@ -1,0 +1,4 @@
+INSTRUMENTATION_RESULT: observations=[{"phase":"settings_clear_of_rail","railRight":240,"menuLeft":272},{"phase":"settings_insets","panes":[]}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=insets
+INSTRUMENTATION_CODE: 0

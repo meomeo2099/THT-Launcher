@@ -1,0 +1,4 @@
+INSTRUMENTATION_RESULT: observations=[{"phase":"host_closed","panes":[]}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=hostcancel
+INSTRUMENTATION_CODE: 0

@@ -74,6 +74,7 @@ class SettingsActivity : Activity() {
             setPadding(Ui.dp(context, 16), Ui.dp(context, 16), Ui.dp(context, 16), Ui.dp(context, 16))
             addView(sidebar, LinearLayout.LayoutParams(Ui.dp(context, 260), -1))
             addView(body, LinearLayout.LayoutParams(0, -1, 1f))
+            vn.tht.launcher.ui.ContentInsets.bind(this)
         })
         if (prefs.fullScreen) window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
             View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
@@ -102,6 +103,10 @@ class SettingsActivity : Activity() {
         slider("Tỉ lệ giao diện", 75, 150, "%", { prefs.uiScale }) { prefs.uiScale = it }
 
         section("Dock")
+        choice("Cách chia hai ứng dụng", mapOf("auto" to "Trong THT (nếu thiết bị hỗ trợ)",
+            "native" to "Chia đôi hệ thống"), { prefs.sp.getString("split_backend", "auto") ?: "auto" }) {
+            prefs.sp.edit().putString("split_backend", it).apply()
+        }
         choice("Cỡ dock", mapOf("compact" to "Gọn", "normal" to "Thường", "large" to "Lớn"), { prefs.dockSize }) { prefs.dockSize = it }
         toggle("Hiện tên dưới biểu tượng", { prefs.dockLabels }) { prefs.dockLabels = it }
         choice("Dock nổi trên app", mapOf("off" to "Tắt", "split" to "Chỉ khi đang chia đôi", "always" to "Mọi lúc"),

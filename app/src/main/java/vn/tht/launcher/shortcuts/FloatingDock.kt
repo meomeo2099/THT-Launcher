@@ -7,6 +7,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.Gravity
 import android.view.ViewGroup
+import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.HorizontalScrollView
@@ -79,6 +80,7 @@ class FloatingDock(private val c: Context, private val actions: DockBar.Actions)
             vn.tht.launcher.ui.ScreenOverlayPosition(box, wm, lp)
             wm.addView(box, lp)
             root = box
+            visible = java.lang.ref.WeakReference(box)
         } catch (t: Throwable) {
             Log.w(TAG, "Không hiện được dock nổi: $t")
             bar = null
@@ -86,6 +88,7 @@ class FloatingDock(private val c: Context, private val actions: DockBar.Actions)
     }
 
     fun hide() {
+        if (visible?.get() === root) visible = null
         root?.let { runCatching { wm.removeView(it) } }
         root = null
         bar = null
@@ -93,7 +96,16 @@ class FloatingDock(private val c: Context, private val actions: DockBar.Actions)
 
     fun update(s: DockBar.Status) = bar?.update(s)
 
-    private companion object {
-        const val TAG = "FloatingDock"
+    companion object {
+        private const val TAG = "FloatingDock"
+        private var visible: java.lang.ref.WeakReference<View>? = null
+        fun coveredBottom(content: View): Int {
+            val dock = visible?.get() ?: return 0
+            if (!dock.isAttachedToWindow || !dock.isShown || dock.height <= 0) return 0
+            val d = IntArray(2).also(dock::getLocationOnScreen)
+            val c = IntArray(2).also(content::getLocationOnScreen)
+            if (d[0] >= c[0] + content.width || d[0] + dock.width <= c[0]) return 0
+            return (c[1] + content.height - d[1]).coerceIn(0, content.height.coerceAtLeast(0))
+        }
     }
 }

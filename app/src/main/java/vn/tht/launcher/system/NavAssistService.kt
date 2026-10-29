@@ -257,7 +257,9 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
             // trái bằng overscan để MỌI app lùi vào, thanh vẽ vào phần được chừa.
             val rail = systemRailWidth()
             val w = if (rail > 0) rail else Ui.dp(c, 120)
-            val shifted = rail == 0 && Overscan.set(c, prefs, w)
+            // Immersive apps can remove the OEM rail after we measured it. Reserve our own
+            // rail in fullscreen mode rather than drawing over app/settings content.
+            val shifted = (prefs.fullScreen || rail == 0) && Overscan.set(c, prefs, w)
             val col = LinearLayout(c).apply {
                 orientation = LinearLayout.VERTICAL
                 gravity = Gravity.CENTER_HORIZONTAL
@@ -355,6 +357,14 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
         /** Bề rộng (px) thanh bên đang chiếm trên màn chính; 0 = không hiện ở màn chính. */
         @Volatile var homeInset = 0
             private set
+
+        fun contentInsetLeft(content: View): Int {
+            val overlay = instance?.bar ?: return 0
+            if (!overlay.isAttachedToWindow || overlay.visibility != View.VISIBLE) return 0
+            val barXY = IntArray(2).also(overlay::getLocationOnScreen)
+            val windowXY = IntArray(2).also(content::getLocationOnScreen)
+            return (barXY[0] + overlay.width - windowXY[0]).coerceIn(0, content.width.coerceAtLeast(0))
+        }
 
         /** App đang ở trước (không phải launcher), null nếu đang ở launcher hoặc chưa biết. */
         @Volatile var foregroundApp: String? = null
