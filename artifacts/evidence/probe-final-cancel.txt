@@ -1,0 +1,4 @@
+INSTRUMENTATION_RESULT: observations=[{"phase":"before_cancel","state":"id=regression starting=true active=false tasks=null layout=null error="},{"phase":"cancelled_no_resurrection","mode3":null,"mode4":null,"state":"id=null starting=false active=false tasks=null layout=null error="}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=cancel
+INSTRUMENTATION_CODE: 0

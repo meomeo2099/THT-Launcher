@@ -1,0 +1,2 @@
+10-29 10:38:35.991  1809  1836 I am_anr  : [0,1956,com.android.systemui,818429453,executing service com.android.systemui/.keyguard.KeyguardService]
+10-29 10:39:11.784  1809  1836 I am_anr  : [0,2359,com.android.dialer,550026821,Broadcast of Intent { act=android.telephony.action.SHOW_VOICEMAIL_NOTIFICATION flg=0x10000010 pkg=com.android.dialer cmp=com.android.dialer/.app.voicemail.LegacyVoicemailNotificationReceiver (has extras) }]
