@@ -410,7 +410,9 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
 
         /** Hiện khung nhiệt độ nổi; false nếu dịch vụ trợ năng chưa chạy. */
         fun showTempInfo(temp: String, fan: String, airKey: String?, preview: Boolean = false): Boolean {
-            val t = instance?.tempInfo ?: return false
+            val service = instance ?: return false
+            if (StockMode.active(service)) return false
+            val t = service.tempInfo ?: return false
             t.show(temp, fan, airKey, if (preview) 8000 else 3500, draggable = preview)
             return true
         }
