@@ -39,3 +39,7 @@ Chưa có APK Vietmap, dump window/renderer hay kết nối đầu xe để ch�
 ## Bổ sung 0.3.65: vùng chừa thanh bên còn sót
 
 Khi xem ảnh bản CI 64 thấy một vùng trái còn được chừa dù đang dùng nút nổi. Service sau khi bị kill/rebind có thể không còn `bar` View, nên điều kiện cleanup cũ `bar != null` bỏ qua overscan đã lưu. Bản bổ sung trả overscan THT về 0 khi khởi động ở mode khác `bar`, và khi service rebuild ở mode đó. Chỉ tác động phần overscan có tracker của THT, không tự xóa cấu hình màn hình không do THT ghi.
+
+## Bổ sung 0.3.66: đặt thanh bên vào đúng vùng đã chừa
+
+Ảnh kiểm chứng cho thấy WindowManager cũng cộng origin overscan vào chính cửa sổ accessibility overlay: thanh bên dự định ở x=0 lại nằm ở x=120. Dùng cùng phép đo/bù `getLocationOnScreen` cho thanh bên mở rộng để đưa nó về mép màn hình; Settings không cần chừa thêm một vùng trống bên trái. Thanh thu gọn vẫn dùng vị trí giữa mép trái như trước.

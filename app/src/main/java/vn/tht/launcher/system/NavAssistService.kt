@@ -296,6 +296,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
             barEverywhere = shifted
             homeInset = if (shifted || prefs.sp.getBoolean(KEY_BAR_HOME, false)) w else 0
         }
+        if (!collapsed) vn.tht.launcher.ui.ScreenOverlayPosition(view, wm, lp)
         runCatching { wm.addView(view, lp) }.onSuccess {
             bar = view
             if (tempBlocks.isNotEmpty()) { barIo.removeCallbacks(tempPoll); barIo.post(tempPoll) }
