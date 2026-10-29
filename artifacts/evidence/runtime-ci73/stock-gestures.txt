@@ -1,0 +1,4 @@
+INSTRUMENTATION_RESULT: backTasks=232 -> 232 vn.tht.launcher
+INSTRUMENTATION_RESULT: observations=bar mode: UP -> THT; own overscan cleared; horizontal -> BACK; stock mode removes rail/gestures and blocks policy writes and temperature popups
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_CODE: 0
