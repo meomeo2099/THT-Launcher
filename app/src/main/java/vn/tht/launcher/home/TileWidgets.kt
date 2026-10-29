@@ -232,6 +232,7 @@ class NavWidget(host: WidgetHost) : HomeWidget(host), vn.tht.launcher.system.Ext
         if (embedded != null || !handoff.mayEmbed) return
         val intent = host.navLaunchIntent() ?: return
         if (!host.canEmbedMap()) return
+        if (EmbeddedMap.embeddingRejection(c, intent) != null) return
         val frame = view as android.widget.FrameLayout
         val map = EmbeddedMap(c) { why ->
             // Không nhúng được: quay về nút mở bản đồ

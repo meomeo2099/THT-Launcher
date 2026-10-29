@@ -113,7 +113,7 @@ class HvacOpener(private val context: Context) {
 
     private fun fallback(pkg: String): Boolean {
         val intent = OemFirmware.resolvePackage(context, pkg) ?: return false
-        return runCatching { context.startActivity(intent); true }.getOrDefault(false)
+        return runCatching { context.startActivity(intent, vn.tht.launcher.system.ExternalAppLauncher.fullscreenOptions(context)); true }.getOrDefault(false)
     }
 
     companion object {

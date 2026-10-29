@@ -49,6 +49,8 @@ class EmbeddedMap(private val c: Context, private val requireFocus: Boolean = tr
     } catch (t: Throwable) { lastError = t.toString(); false }
 
     fun start(intent: Intent) {
+        val reason = embeddingRejection(c, intent)
+        if (reason != null) { handler.post { if (!released) fail(reason) }; return }
         requested = Intent(intent)
         pending = Intent(intent).apply {
             flags = flags and (Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or Intent.FLAG_ACTIVITY_NEW_DOCUMENT).inv()
@@ -173,6 +175,19 @@ class EmbeddedMap(private val c: Context, private val requireFocus: Boolean = tr
     override fun onAttachedToWindow() { super.onAttachedToWindow(); if (active) handler.post { tryStart() } }
     override fun onDetachedFromWindow() { release(); super.onDetachedFromWindow() }
     companion object {
+        fun embeddingRejection(context: Context, intent: Intent): String? {
+            val component = intent.component ?: intent.resolveActivity(context.packageManager)
+                ?: return "Không tìm thấy ứng dụng"
+            if (component.packageName == context.packageName) return "Màn hình chính phải mở trên màn hình xe"
+            val homes = context.packageManager.queryIntentActivities(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), 0)
+            if (homes.any { it.activityInfo.packageName == component.packageName })
+                return "Launcher gốc chỉ mở trên màn hình xe"
+            val info = runCatching { context.packageManager.getActivityInfo(component, 0) }.getOrNull()
+                ?: return "Không đọc được thông tin ứng dụng"
+            val mode = runCatching { info.javaClass.getField("resizeMode").getInt(info) }.getOrNull()
+            if (mode == 0) return "Ứng dụng không hỗ trợ ô màn hình; hãy mở toàn màn hình"
+            return null
+        }
         @Volatile var lastError: String? = null
         @Volatile var lastReport = "Chưa nhúng app"
     }

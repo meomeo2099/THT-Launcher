@@ -113,6 +113,10 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
         if (split.left == split.right || listOf(split.left, split.right).any { it == context.packageName || launchIntent(it) == null }) {
             toast("Chọn hai ứng dụng khác nhau có thể mở được"); return
         }
+        val rejection = listOf(split.left, split.right).firstNotNullOfOrNull { pkg ->
+            launchIntent(pkg)?.let { vn.tht.launcher.home.EmbeddedMap.embeddingRejection(context, it) }
+        }
+        if (rejection != null) { toast(rejection); return }
         if (!close()) return
         if (!ExternalAppLauncher.prepareHosted(context, setOf(split.left, split.right))) {
             toast("Hãy thoát chia đôi hệ thống trước khi mở hai ô trong THT"); return

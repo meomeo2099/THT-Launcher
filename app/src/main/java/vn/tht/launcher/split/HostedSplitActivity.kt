@@ -48,29 +48,33 @@ class HostedSplitActivity : Activity() {
         row = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             addView(leftBox, LinearLayout.LayoutParams(0, -1, ratio.toFloat()))
-            addView(LinearLayout(context).apply {
-                orientation = LinearLayout.VERTICAL
-                setBackgroundColor(0xff202630.toInt())
-                addView(control("×", "Đóng chia màn hình") { finish() })
-                addView(control("⇄", "Đổi bên hai ứng dụng") { swap() })
-                addView(TextView(context).apply {
-                text = "⋮"; gravity = Gravity.CENTER; textSize = 24f
+            addView(TextView(context).apply {
+                text = "⋮"; gravity = Gravity.CENTER; textSize = 22f
+                contentDescription = "Điều khiển chia màn hình"
                 setTextColor(0xffffffff.toInt()); setBackgroundColor(0xff202630.toInt())
-                var start = ratio
-                setOnTouchListener { _, e ->
+                setOnClickListener {
+                    android.widget.PopupMenu(this@HostedSplitActivity, this).apply {
+                        menu.add("Đóng chia màn hình").setOnMenuItemClickListener { finish(); true }
+                        menu.add("Đổi bên hai ứng dụng").setOnMenuItemClickListener { swap(); true }
+                    }.show()
+                }
+                var downX = 0f; var start = ratio; var dragged = false
+                setOnTouchListener { v, e ->
                     when (e.actionMasked) {
-                        MotionEvent.ACTION_DOWN -> start = ratio
-                        MotionEvent.ACTION_MOVE, MotionEvent.ACTION_UP -> {
-                            val xy = IntArray(2).also(row::getLocationOnScreen)
-                            setRatio(((e.rawX - xy[0]) * 100 / row.width.coerceAtLeast(1)).toInt())
-                            if (e.actionMasked == MotionEvent.ACTION_UP) saveRatio()
+                        MotionEvent.ACTION_DOWN -> { downX = e.rawX; start = ratio; dragged = false }
+                        MotionEvent.ACTION_MOVE -> {
+                            if (kotlin.math.abs(e.rawX - downX) > android.view.ViewConfiguration.get(context).scaledTouchSlop) dragged = true
+                            if (dragged) {
+                                val xy = IntArray(2).also(row::getLocationOnScreen)
+                                setRatio(((e.rawX - xy[0]) * 100 / row.width.coerceAtLeast(1)).toInt())
+                            }
                         }
+                        MotionEvent.ACTION_UP -> if (dragged) saveRatio() else v.performClick()
                         MotionEvent.ACTION_CANCEL -> setRatio(start)
                     }
                     true
                 }
-                }, LinearLayout.LayoutParams(-1, 0, 1f))
-            }, LinearLayout.LayoutParams(Ui.dp(this@HostedSplitActivity, 64), -1))
+            }, LinearLayout.LayoutParams(Ui.dp(this@HostedSplitActivity, 24), -1))
             addView(rightBox, LinearLayout.LayoutParams(0, -1, (100 - ratio).toFloat()))
         }
         val canvas = FrameLayout(this).apply {
@@ -90,13 +94,6 @@ class HostedSplitActivity : Activity() {
             right.start(packageManager.getLaunchIntentForPackage(s.right) ?: error("App phải không mở được"))
         } catch (t: Exception) { failed(t.message ?: "Không mở được cặp ứng dụng") }
     }
-    private fun control(symbol: String, label: String, action: () -> Unit) =
-        Ui.button(this, symbol, 26f, action).apply {
-            contentDescription = label
-            minWidth = 0; minHeight = 0
-            setPadding(0, 0, 0, 0)
-            layoutParams = LinearLayout.LayoutParams(-1, Ui.dp(this@HostedSplitActivity, 64))
-        }
     private fun fullscreen() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
             View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
@@ -108,7 +105,7 @@ class HostedSplitActivity : Activity() {
     // surfaces must still finish their launch/rebuild; closeNow is the lifecycle boundary.
     override fun onSaveInstanceState(out: Bundle) { out.putInt("ratio", ratio); super.onSaveInstanceState(out) }
     private fun ready() { if (leftReady && rightReady && !released) listener?.invoke(token, true) }
-    private fun failed(why: String) { Toast.makeText(this, why, Toast.LENGTH_LONG).show(); closeNow() }
+    private fun failed(why: String) { Toast.makeText(this, why, Toast.LENGTH_LONG).show(); closeNow(); vn.tht.launcher.system.LauncherHome.open(this) }
     fun setRatio(value: Int) {
         ratio = value.coerceIn(20, 80)
         (leftBox.layoutParams as LinearLayout.LayoutParams).weight = ratio.toFloat()

@@ -90,7 +90,7 @@ object OemFirmware {
     private fun launch(context: Context, intent: Intent?): Boolean =
         intent != null && vn.tht.launcher.system.ExternalAppLauncher.leaveSplit() && runCatching {
             vn.tht.launcher.system.AppWindowPolicy.restore(context)
-            context.startActivity(intent)
+            context.startActivity(intent, vn.tht.launcher.system.ExternalAppLauncher.fullscreenOptions(context))
             true
         }.getOrDefault(false)
 

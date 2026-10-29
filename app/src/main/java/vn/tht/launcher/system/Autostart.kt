@@ -141,7 +141,7 @@ object Autostart {
 
     private fun home(c: Context) {
         runCatching {
-            c.startActivity(Intent(c, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP))
+            LauncherHome.open(c)
         }.onFailure { Log.w(TAG, "Không trở về được launcher", it) }
     }
 

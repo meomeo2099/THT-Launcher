@@ -105,7 +105,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
         if (m != "bar") Overscan.set(this, prefs, 0)
         if (m == "buttons" || m == "both") addPill()
         if (m == "gestures" || m == "both") addStrip()
-        if (m == "bar") addBar()
+        if (m == "bar") { addBar(); addStrip() }
         applyVisibility()
     }
 
@@ -258,10 +258,11 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
             // Xe có thanh trái riêng: nằm đè đúng chỗ đó (app đã chừa sẵn). Không có: thu hẹp màn hình bên
             // trái bằng overscan để MỌI app lùi vào, thanh vẽ vào phần được chừa.
             val rail = systemRailWidth()
-            val w = if (rail > 0) rail else Ui.dp(c, 120)
+            val w = Ui.dp(c, 120)
             // Immersive apps can remove the OEM rail after we measured it. Reserve our own
             // rail in fullscreen mode rather than drawing over app/settings content.
-            val shifted = (prefs.fullScreen || rail == 0) && Overscan.set(c, prefs, w)
+            Overscan.set(c, prefs, 0)
+            val shifted = true
             val col = LinearLayout(c).apply {
                 orientation = LinearLayout.VERTICAL
                 gravity = Gravity.CENTER_HORIZONTAL
@@ -310,8 +311,11 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
     private fun addStrip() {
         val c: Context = this
         val minMove = Ui.dp(c, 40)
-        val view = View(c).apply {
-            background = GradientDrawable().apply { cornerRadius = Ui.dp(c, 3).toFloat(); setColor(0x66FFFFFF) }
+        val view = android.widget.FrameLayout(c).apply {
+            contentDescription = "Vuốt lên về THT; vuốt ngang để quay lại"
+            addView(View(c).apply {
+                background = GradientDrawable().apply { cornerRadius = Ui.dp(c, 3).toFloat(); setColor(0x66FFFFFF) }
+            }, android.widget.FrameLayout.LayoutParams(Ui.dp(c, 160), Ui.dp(c, 4), Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL))
         }
         var sx = 0f; var sy = 0f
         view.setOnTouchListener { _, ev ->
@@ -328,7 +332,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
             }
             true
         }
-        val lp = params(Ui.dp(c, 320), Ui.dp(c, 14)).apply {
+        val lp = params(Ui.dp(c, 400), Ui.dp(c, 40)).apply {
             gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
             y = Ui.dp(c, 2)
         }
@@ -417,7 +421,14 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
 
         fun setLauncherInFront(front: Boolean) {
             launcherInFront = front
+            if (front) instance?.let { Overscan.set(it, it.prefs, 0); host?.onBarInset() }
             instance?.applyVisibility()
+        }
+        fun reserveForExternal() {
+            instance?.let { service ->
+                val width = service.bar?.takeIf { it.visibility == View.VISIBLE && !service.prefs.sp.getBoolean(KEY_BAR_COLLAPSED, false) }?.width ?: 0
+                Overscan.set(service, service.prefs, width)
+            }
         }
         private const val KEY_X = "nav_pill_x"
         private const val KEY_Y = "nav_pill_y"

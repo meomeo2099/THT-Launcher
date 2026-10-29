@@ -100,6 +100,7 @@ object ExternalAppLauncher {
                 Intent.FLAG_ACTIVITY_NEW_DOCUMENT or Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT).inv()
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             if (fresh) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            NavAssistService.reserveForExternal()
             context.startActivity(intent, fullscreenOptions(context))
             lines += "start accepted fresh=$fresh"
             lastReport = lines.joinToString("\n")
@@ -114,6 +115,7 @@ object ExternalAppLauncher {
             listeners.forEach { it.externalFailed(pkg) }
             lastReport = (lines + "start failed: ${t.javaClass.simpleName}: ${t.message}").joinToString("\n")
             Log.w(TAG, lastReport, t)
+            LauncherHome.open(context)
             return false
         }
     }
@@ -126,6 +128,8 @@ object ExternalAppLauncher {
         }
         stacks().filter { it.display == 0 && it.visible && it.top?.packageName == pkg &&
             ExternalLaunchPolicy.mayRepairFullscreen(it.mode) }.forEach { stack ->
+            // Resume/focus callbacks may have briefly reapplied the home-only policy.
+            AppWindowPolicy.apply(context, setOf(pkg))
             // Clear a stale stack override first. resizeTask is not permitted on an Android 9
             // fullscreen task, and changing its windowing mode alone leaves that override intact.
             if (ExternalLaunchPolicy.mayClearFullscreenStack(stack.standard, stack.mode,
