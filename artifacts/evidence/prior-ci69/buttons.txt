@@ -1,0 +1,4 @@
+INSTRUMENTATION_RESULT: error=java.lang.AssertionError: Swap touch had no effect
+INSTRUMENTATION_RESULT: observations=[{"touch":"swap","x":660,"y":644}]
+INSTRUMENTATION_RESULT: result=FAIL
+INSTRUMENTATION_CODE: 0

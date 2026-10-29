@@ -1,0 +1,16 @@
+{
+  "version": "0.3.70",
+  "run_id": 40900120970,
+  "head_sha": "93b04ce7111e8ca59d8fcafdb89b3aedeb1eed1e",
+  "counts": {
+    "tests": 96,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "release_sha256": "88bca6657189fead6a96a9b04012735c2b61d5cf49c5854dfb194cb759263063",
+  "runtime": {
+    "buttons": "PASS",
+    "gestures_and_embedding_preflight": "PASS"
+  }
+}
