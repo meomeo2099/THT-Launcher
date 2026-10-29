@@ -21,7 +21,10 @@ class ExternalLaunchPolicyTest {
         assertTrue(ExternalLaunchPolicy.binderAccepted(true))
         assertFalse(ExternalLaunchPolicy.binderAccepted(false))
     }
-    class Window(private val type: Int) { fun getActivityType() = type }
+    class Window(private val type: Int, private val mode: Int = 1) {
+        fun getActivityType() = type
+        fun getWindowingMode() = mode
+    }
     class Config(@JvmField val windowConfiguration: Window)
     class Legacy(@JvmField val configuration: Config)
     class Modern { fun getActivityType() = 1 }
@@ -34,5 +37,14 @@ class ExternalLaunchPolicyTest {
     }
     @Test fun unknownFrameworkShapeNeverGrantsPermissionToResizeAStack() {
         assertNull(ExternalLaunchPolicy.activityType(Any()))
+    }
+    @Test fun aFullscreenRepairCannotResizeANewlyRequestedSplit() {
+        for (mode in listOf(3, 4)) {
+            val stack = Legacy(Config(Window(1, mode)))
+            assertFalse(ExternalLaunchPolicy.mayRepairFullscreen(ExternalLaunchPolicy.windowingMode(stack)))
+        }
+        assertTrue(ExternalLaunchPolicy.mayRepairFullscreen(1))
+        assertTrue(ExternalLaunchPolicy.mayRepairFullscreen(5))
+        assertFalse(ExternalLaunchPolicy.mayRepairFullscreen(null))
     }
 }

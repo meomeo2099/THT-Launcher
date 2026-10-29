@@ -670,7 +670,9 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     override fun canSeekMedia(): Boolean = media.canSeek()
     override fun mediaSeekTo(positionMs: Long): Boolean = media.seekTo(positionMs)
     override fun hasMediaPermission() = media.hasPermission()
-    override fun requestMediaPermission() = startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+    override fun requestMediaPermission() {
+        vn.tht.launcher.system.ExternalAppLauncher.launch(this, Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+    }
 
     override fun openApp(pkg: String) = launch(pkg)
 
@@ -725,7 +727,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     }
 
     override fun openWifiSettings() {
-        runCatching { startActivity(Intent(Settings.ACTION_WIFI_SETTINGS)) }
+        vn.tht.launcher.system.ExternalAppLauncher.launch(this, Intent(Settings.ACTION_WIFI_SETTINGS))
     }
 
     private var lastStatusAt = 0L
@@ -888,7 +890,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     override fun lastStatus() = lastStatus
 
     override fun openSystemSettings(action: String) {
-        runCatching { startActivity(Intent(action)) }.onFailure { toast("Không mở được cài đặt") }
+        if (!vn.tht.launcher.system.ExternalAppLauncher.launch(this, Intent(action))) toast("Không mở được cài đặt")
     }
 
     private val navCandidates = listOf(
@@ -976,7 +978,9 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     override fun openClimate() = vn.tht.launcher.controls.ClimatePopup(this, ecarx, controller, overlay = !inFront).show()
 
-    override fun openStats() = startActivity(Intent(this, vn.tht.launcher.stats.StatsActivity::class.java))
+    override fun openStats() {
+        vn.tht.launcher.system.ExternalAppLauncher.launch(this, Intent(this, vn.tht.launcher.stats.StatsActivity::class.java))
+    }
 
     override fun currentTrip() = (application as LauncherApp).recorder.current
 
@@ -1008,7 +1012,9 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     @Suppress("DEPRECATION")
     override fun openSettings() {
-        startActivityForResult(Intent(this, SettingsActivity::class.java), REQ_SETTINGS)
+        if (!vn.tht.launcher.system.ExternalAppLauncher.leaveSplit()) return
+        startActivityForResult(Intent(this, SettingsActivity::class.java), REQ_SETTINGS,
+            vn.tht.launcher.system.ExternalAppLauncher.fullscreenOptions(this))
     }
 
     @Deprecated("Deprecated in Java")
@@ -1099,6 +1105,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         appendLine("== Mở ứng dụng ngoài")
         appendLine("Secondary-display activities: ${packageManager.hasSystemFeature(android.content.pm.PackageManager.FEATURE_ACTIVITIES_ON_SECONDARY_DISPLAYS)}")
         appendLine(vn.tht.launcher.system.ExternalAppLauncher.lastReport)
+        appendLine("== Chia đôi màn hình")
+        appendLine(splitScreen.diagnosticReport())
         appendLine()
         appendLine("== ECARX")
         appendLine("Trạng thái: ${ecarx.status} · ghi=${ecarx.writeAllowed}")
@@ -1144,7 +1152,25 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     private val splitScreen by lazy {
         SplitScreen(this, ::toast).apply {
-            bottomInset = { if (floatingDock.shown) Bitmaps.screen(this@MainActivity).second - floatingDock.top else 0 }
+            bottomInset = {
+                val height = Bitmaps.screen(this@MainActivity).second
+                if (prefs.dockOverlay != "off") height - (dockBounds?.top ?: height - Ui.dp(this@MainActivity, 100)) else 0
+            }
+            usableBounds = {
+                val root = findViewById<View>(R.id.root)
+                val size = Bitmaps.screen(this@MainActivity)
+                val inset = runCatching {
+                    val result = Rect()
+                    val service = Class.forName("android.view.WindowManagerGlobal")
+                        .getMethod("getWindowManagerService").invoke(null)
+                    Class.forName("android.view.IWindowManager").getMethod("getStableInsets",
+                        Int::class.javaPrimitiveType!!, Rect::class.java).invoke(service, 0, result)
+                    result.left
+                }.getOrNull() ?: (root.rootWindowInsets?.stableInsetLeft ?: 0)
+                // The launcher itself can be moved into the secondary pane while the pair opens.
+                // Its live window rectangle is then half a display, not the area we are splitting.
+                Rect(maxOf(inset, vn.tht.launcher.system.NavAssistService.homeInset), 0, size.first, size.second)
+            }
             onStateChanged = { refreshFloatingDock() }
         }
     }
@@ -1154,7 +1180,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
      * hai). Đang chia đôi thì bấm lần nữa để thoát. Cặp không lưu; muốn lưu dùng widget/nút "Chia đôi".
      */
     private fun quickSplit(current: String?) {
-        if (splitScreen.openId != null) return splitScreen.close()
+        if (splitScreen.hasWork) { splitScreen.close(); return }
         inLauncher {
             fun open(left: String) = pickApp { right -> splitScreen.open(vn.tht.launcher.split.Split.new(left, right)) }
             if (current != null) open(current) else { toast("Chọn app bên trái"); pickApp { open(it) } }
@@ -1180,7 +1206,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private fun refreshFloatingDock() {
         val want = !inFront && when (prefs.dockOverlay) {
             "always" -> true
-            "split" -> splitScreen.openId != null
+            "split" -> splitScreen.hasWork
             else -> false
         }
         if (!want) return floatingDock.hide()
@@ -1192,9 +1218,11 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     /** Hành động cần màn hình launcher (ngăn kéo app, bảng điều khiển): đưa launcher lên trước nếu đang bị che. */
     private fun inLauncher(action: () -> Unit) {
+        if (!vn.tht.launcher.system.ExternalAppLauncher.leaveSplit()) return
         if (inFront) return action()
         startActivity(Intent(this, MainActivity::class.java)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT),
+            vn.tht.launcher.system.ExternalAppLauncher.fullscreenOptions(this))
         handler.postDelayed(action, 350)
     }
 
@@ -1235,7 +1263,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     private fun launch(pkg: String) {
         val intent = packageManager.getLaunchIntentForPackage(pkg) ?: return toast("Không tìm thấy ứng dụng")
-        if (splitScreen.openId != null) splitScreen.close()
+        if (splitScreen.hasWork && !splitScreen.close()) return
         if (!vn.tht.launcher.system.ExternalAppLauncher.launch(this, intent)) {
             toast("Không mở được ứng dụng")
         }

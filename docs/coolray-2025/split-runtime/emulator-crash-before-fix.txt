@@ -1,0 +1,19 @@
+10-29 04:22:55.248  5922  5923 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0 in tid 5923 (Binder:5922_1), pid 5922 (cmd)
+10-29 09:06:12.347  1827  1865 E AndroidRuntime: *** FATAL EXCEPTION IN SYSTEM PROCESS: android.display
+10-29 09:06:12.347  1827  1865 E AndroidRuntime: java.lang.IllegalArgumentException: Drag resize mode not allow for stack stackId=22 dragResizeMode=1
+10-29 09:06:12.347  1827  1865 E AndroidRuntime: 	at com.android.server.wm.Task.setDragResizing(Task.java:487)
+10-29 09:06:12.347  1827  1865 E AndroidRuntime: 	at com.android.server.wm.TaskWindowContainerController.setTaskDockedResizing(TaskWindowContainerController.java:188)
+10-29 09:06:12.347  1827  1865 E AndroidRuntime: 	at com.android.server.am.TaskRecord.setTaskDockedResizing(TaskRecord.java:482)
+10-29 09:06:12.347  1827  1865 E AndroidRuntime: 	at com.android.server.am.ActivityStackSupervisor.notifyAppTransitionDone(ActivityStackSupervisor.java:2749)
+10-29 09:06:12.347  1827  1865 E AndroidRuntime: 	at com.android.server.am.ActivityManagerService$LocalService.notifyAppTransitionFinished(ActivityManagerService.java:26374)
+10-29 09:06:12.347  1827  1865 E AndroidRuntime: 	at com.android.server.wm.WindowManagerService$H.handleMessage(WindowManagerService.java:5010)
+10-29 09:06:12.347  1827  1865 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+10-29 09:06:12.347  1827  1865 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:193)
+10-29 09:06:12.347  1827  1865 E AndroidRuntime: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+10-29 09:06:12.347  1827  1865 E AndroidRuntime: 	at com.android.server.ServiceThread.run(ServiceThread.java:44)
+10-29 09:06:13.176  2102  2102 E AndroidRuntime: FATAL EXCEPTION: main
+10-29 09:06:13.176  2102  2102 E AndroidRuntime: Process: com.android.phone, PID: 2102
+10-29 09:06:13.176  2102  2102 E AndroidRuntime: DeadSystemException: The system died; earlier logs will point to the root cause
+10-29 09:06:13.268  7438  7438 E AndroidRuntime: FATAL EXCEPTION: main
+10-29 09:06:13.268  7438  7438 E AndroidRuntime: Process: vn.tht.launcher, PID: 7438
+10-29 09:06:13.268  7438  7438 E AndroidRuntime: DeadSystemException: The system died; earlier logs will point to the root cause

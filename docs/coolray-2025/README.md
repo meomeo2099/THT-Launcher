@@ -35,3 +35,7 @@ Kết quả build, kiểm thử và ảnh máy ảo được ghi trong [validati
 ## Sửa mở ứng dụng toàn màn hình
 
 [Đối chiếu cơ chế tham chiếu, nguyên nhân và bản sửa bản đồ/Home](map-fullscreen-fix.md), theo phản hồi trên xe ngày 29/10/2026.
+
+## Rà soát chia màn hình
+
+[Đối chiếu native split, giao dịch hủy/khôi phục và kiểm thử runtime](split-screen-review.md).

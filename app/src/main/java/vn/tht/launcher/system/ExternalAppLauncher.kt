@@ -9,8 +9,10 @@ import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.os.Handler
 import android.os.Looper
+import android.os.Bundle
 import android.util.Log
 import java.util.WeakHashMap
+import java.lang.ref.WeakReference
 
 /** Separates an ActivityView preview task from a real display-0 fullscreen launch. */
 object ExternalAppLauncher {
@@ -18,6 +20,27 @@ object ExternalAppLauncher {
         /** True when a live preview was released and a fresh external task is necessary. */
         fun prepareExternal(packageName: String): Boolean
         fun externalFailed(packageName: String)
+    }
+    interface SplitOwner { fun exitForFullscreen(): Boolean }
+    private var splitOwner: WeakReference<SplitOwner>? = null
+    fun registerSplit(owner: SplitOwner) { splitOwner = WeakReference(owner) }
+    fun unregisterSplit(owner: SplitOwner) { if (splitOwner?.get() === owner) splitOwner = null }
+    fun leaveSplit(): Boolean = splitOwner?.get()?.exitForFullscreen() ?: true
+    fun beginSplit(context: Context, packages: Set<String>): Set<String> {
+        generation++
+        handler.removeCallbacksAndMessages(null)
+        val fresh = mutableSetOf<String>()
+        packages.forEach { pkg -> snapshot().forEach { if (it.prepareExternal(pkg)) fresh += pkg } }
+        if (context.checkSelfPermission(PERMISSION) == PackageManager.PERMISSION_GRANTED) {
+            stacks().filter { it.display > 0 }.forEach { stack -> stack.tasks.forEach { (id, name) ->
+                val pkg = packages.firstOrNull { ExternalLaunchPolicy.belongs(name, it) }
+                if (pkg != null && invoke("removeTask", arrayOf(Int::class.javaPrimitiveType!!), id)) fresh += pkg
+            } }
+        }
+        return fresh
+    }
+    fun finishSplit(packages: Set<String>) {
+        packages.forEach { pkg -> snapshot().forEach { it.externalFailed(pkg) } }
     }
     private val previews = WeakHashMap<Preview, Unit>()
     private val handler = Handler(Looper.getMainLooper())
@@ -28,10 +51,15 @@ object ExternalAppLauncher {
     @Synchronized fun register(preview: Preview) { previews[preview] = Unit }
     @Synchronized fun unregister(preview: Preview) { previews.remove(preview) }
     @Synchronized private fun snapshot() = previews.keys.toList()
+    fun fullscreenOptions(context: Context): Bundle =
+        ActivityOptions.makeBasic().setLaunchDisplayId(0).apply { launchBounds = null }.toBundle().apply {
+            if (context.checkSelfPermission(PERMISSION) == PackageManager.PERMISSION_GRANTED) putInt("android.activity.windowingMode", 1)
+        }
 
     fun launch(context: Context, original: Intent): Boolean {
         val intent = Intent(original)
         val component = intent.component ?: intent.resolveActivity(context.packageManager) ?: return false
+        if (!leaveSplit()) return false
         val pkg = component.packageName
         intent.component = component
         val listeners = snapshot()
@@ -55,9 +83,7 @@ object ExternalAppLauncher {
                 Intent.FLAG_ACTIVITY_NEW_DOCUMENT or Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT).inv()
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             if (fresh) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            val options = ActivityOptions.makeBasic().setLaunchDisplayId(0).apply { launchBounds = null }.toBundle()
-            if (privileged) options.putInt("android.activity.windowingMode", 1)
-            context.startActivity(intent, options)
+            context.startActivity(intent, fullscreenOptions(context))
             lines += "start accepted fresh=$fresh"
             lastReport = lines.joinToString("\n")
             if (privileged && pkg != context.packageName) {
@@ -77,7 +103,8 @@ object ExternalAppLauncher {
 
     private fun repair(context: Context, pkg: String) {
         if (context.checkSelfPermission(PERMISSION) != PackageManager.PERMISSION_GRANTED) return
-        stacks().filter { it.display == 0 && it.visible && it.top?.packageName == pkg }.forEach { stack ->
+        stacks().filter { it.display == 0 && it.visible && it.top?.packageName == pkg &&
+            ExternalLaunchPolicy.mayRepairFullscreen(it.mode) }.forEach { stack ->
             // Clear a stale stack override first. resizeTask is not permitted on an Android 9
             // fullscreen task, and changing its windowing mode alone leaves that override intact.
             if (stack.standard && ExternalLaunchPolicy.mayClearStack(stack.tasks.map { it.second }, pkg)) {
@@ -96,7 +123,7 @@ object ExternalAppLauncher {
         }
     }
 
-    private data class Stack(val id: Int, val display: Int, val visible: Boolean, val standard: Boolean,
+    private data class Stack(val id: Int, val display: Int, val visible: Boolean, val standard: Boolean, val mode: Int?,
                              val top: ComponentName?, val tasks: List<Pair<Int, String?>>)
     private fun service(): Any? = ActivityManager::class.java.getMethod("getService").invoke(null)
     private fun invoke(name: String, types: Array<Class<*>>, vararg args: Any?): Boolean = runCatching {
@@ -115,6 +142,7 @@ object ExternalAppLauncher {
                 Stack(cls.getField("stackId").getInt(value), cls.getField("displayId").getInt(value),
                     cls.getField("visible").getBoolean(value),
                     ExternalLaunchPolicy.activityType(value) == 1,
+                    ExternalLaunchPolicy.windowingMode(value),
                     cls.getField("topActivity").get(value) as? ComponentName,
                     ids.mapIndexed { index, id -> id to (names.getOrNull(index) as? String) })
             }.getOrNull()
