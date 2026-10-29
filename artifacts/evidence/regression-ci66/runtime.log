@@ -1,0 +1,33 @@
+host stale_reservation_reset
+host host50
+host host50_settled
+host host30_resized
+host host_closed
+host INSTRUMENTATION_RESULT: observations=[{"phase":"host50","panes":[{"package":"vn.tht.fixture","display":24,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572},{"package":"vn.tht.fixtureb","display":25,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572}]},{"phase":"host50_settled","panes":[{"package":"vn.tht.fixture","display":24,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572},{"package":"vn.tht.fixtureb","display":25,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572}]},{"phase":"host30_resized","panes":[{"package":"vn.tht.fixture","display":24,"bounds":"Rect(0, 0 - 561, 572)","width":561,"height":572},{"package":"vn.tht.fixtureb","display":25,"bounds":"Rect(0, 0 - 1311, 572)","width":1311,"height":572}]},{"phase":"host_closed","panes":[]}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=host
+INSTRUMENTATION_CODE: 0
+
+widget host_closed
+widget widget700x400
+widget widget1200x500_same_display
+widget INSTRUMENTATION_RESULT: observations=[{"phase":"widget700x400","panes":[{"package":"vn.tht.fixture","display":26,"bounds":"Rect(0, 0 - 700, 400)","width":700,"height":400}]},{"phase":"widget1200x500_same_display","panes":[{"package":"vn.tht.fixture","display":26,"bounds":"Rect(0, 0 - 1200, 500)","width":1200,"height":500}]}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=widget
+INSTRUMENTATION_CODE: 0
+
+insets widget1200x500_same_display
+insets settings_insets
+insets host_with_rail
+insets INSTRUMENTATION_RESULT: observations=[{"phase":"settings_clear_of_rail","railRight":120,"menuLeft":152},{"phase":"settings_insets","panes":[]},{"phase":"host_with_rail","panes":[{"package":"vn.tht.fixture","display":27,"bounds":"Rect(0, 0 - 876, 572)","width":876,"height":572},{"package":"vn.tht.fixtureb","display":28,"bounds":"Rect(0, 0 - 876, 572)","width":876,"height":572}]}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=insets
+INSTRUMENTATION_CODE: 0
+
+stalereserve host_with_rail
+stalereserve stale_reservation_reset
+stalereserve INSTRUMENTATION_RESULT: observations=[{"phase":"stale_reservation_reset","panes":[]}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=stalereserve
+INSTRUMENTATION_CODE: 0
+

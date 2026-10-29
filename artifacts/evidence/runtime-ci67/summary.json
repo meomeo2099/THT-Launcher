@@ -1,0 +1,14 @@
+{
+  "apk_version": "0.3.67",
+  "ci_run": 40888898745,
+  "cases": {
+    "stalereserve": "PASS",
+    "widget": "PASS",
+    "insets": "PASS",
+    "host": "PASS",
+    "climate": "PASS"
+  },
+  "environment": "Own AOSP Android 9 1920x720 emulator, real secondary displays; no physical car or Vietmap APK",
+  "screenshots_note": "Screenshots are asynchronous captures. Widget resize image catches a transient grey Surface; geometry is verified via display/stack observations, not pixel-content assertions.",
+  "first_run_note": "Initial post-boot run failed a fixed 1.5-second close assertion. Raw log retained; second run waits for actual task removal up to 30s. No product change between runs."
+}

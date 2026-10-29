@@ -1,0 +1,14 @@
+{
+  "run_id": 40874375298,
+  "head_sha": "d842ae300793c73c18bf32a096e3b119987387ce",
+  "version": "0.3.65",
+  "counts": {
+    "tests": 96,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "release_sha256": "c9465b673ab371a9d402e1cf824965bd8027b76e487ff73fcb87231885ada88e",
+  "apk_artifact_id": 12896679897,
+  "tests_artifact_id": 12897223423
+}

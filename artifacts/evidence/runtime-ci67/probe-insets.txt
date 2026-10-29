@@ -1,0 +1,4 @@
+INSTRUMENTATION_RESULT: observations=[{"phase":"settings_clear_of_rail","railRight":120,"menuLeft":152},{"phase":"settings_insets","panes":[]},{"phase":"host_with_rail","panes":[{"package":"vn.tht.fixture","display":6,"bounds":"Rect(0, 0 - 876, 572)","width":876,"height":572},{"package":"vn.tht.fixtureb","display":7,"bounds":"Rect(0, 0 - 876, 572)","width":876,"height":572}]}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=insets
+INSTRUMENTATION_CODE: 0

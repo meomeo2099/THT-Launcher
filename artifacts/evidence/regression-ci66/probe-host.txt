@@ -1,0 +1,4 @@
+INSTRUMENTATION_RESULT: observations=[{"phase":"host50","panes":[{"package":"vn.tht.fixture","display":24,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572},{"package":"vn.tht.fixtureb","display":25,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572}]},{"phase":"host50_settled","panes":[{"package":"vn.tht.fixture","display":24,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572},{"package":"vn.tht.fixtureb","display":25,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572}]},{"phase":"host30_resized","panes":[{"package":"vn.tht.fixture","display":24,"bounds":"Rect(0, 0 - 561, 572)","width":561,"height":572},{"package":"vn.tht.fixtureb","display":25,"bounds":"Rect(0, 0 - 1311, 572)","width":1311,"height":572}]},{"phase":"host_closed","panes":[]}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=host
+INSTRUMENTATION_CODE: 0

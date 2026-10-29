@@ -1,0 +1,14 @@
+{
+  "run_id": 40876730937,
+  "head_sha": "942cbb5adb2b11ac752e04fca03f06179f34d402",
+  "version": "0.3.66",
+  "counts": {
+    "tests": 96,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "release_sha256": "83f12ce6029e2bd8cf3cc25350600a1b56e5c27df85336c0921a3b3fcbbb99f8",
+  "apk_artifact_id": 12898606777,
+  "tests_artifact_id": 12897909650
+}

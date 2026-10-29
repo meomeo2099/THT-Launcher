@@ -1,0 +1,14 @@
+{
+  "version": "0.3.67",
+  "head_sha": "1f51ed767a21033e2c06afad0a573ab082d28aaf",
+  "run_id": 40888898745,
+  "counts": {
+    "tests": 96,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "release_sha256": "9cc77c29a28aa778712e0590dff6f6fa861ee2b82214430702cbb060e6f2ad8f",
+  "apk_artifact_id": 12904476355,
+  "tests_artifact_id": 12904731687
+}

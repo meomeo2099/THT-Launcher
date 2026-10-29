@@ -1,0 +1,61 @@
+host failure
+host host50
+host host50_settled
+host host30_resized
+host host_closed
+host INSTRUMENTATION_RESULT: observations=[{"phase":"host50","panes":[{"package":"vn.tht.fixture","display":15,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572},{"package":"vn.tht.fixtureb","display":16,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572}]},{"phase":"host50_settled","panes":[{"package":"vn.tht.fixture","display":15,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572},{"package":"vn.tht.fixtureb","display":16,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572}]},{"phase":"host30_resized","panes":[{"package":"vn.tht.fixture","display":15,"bounds":"Rect(0, 0 - 561, 572)","width":561,"height":572},{"package":"vn.tht.fixtureb","display":16,"bounds":"Rect(0, 0 - 1311, 572)","width":1311,"height":572}]},{"phase":"host_closed","panes":[]}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=host
+INSTRUMENTATION_CODE: 0
+
+hostswap host_closed
+hostswap host50
+hostswap host50_settled
+hostswap host_swapped
+hostswap INSTRUMENTATION_RESULT: observations=[{"phase":"host50","panes":[{"package":"vn.tht.fixture","display":17,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572},{"package":"vn.tht.fixtureb","display":18,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572}]},{"phase":"host50_settled","panes":[{"package":"vn.tht.fixture","display":17,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572},{"package":"vn.tht.fixtureb","display":18,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572}]},{"phase":"host_swapped","panes":[{"package":"vn.tht.fixture","display":20,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572},{"package":"vn.tht.fixtureb","display":19,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572}]},{"phase":"host_closed","panes":[]}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=hostswap
+INSTRUMENTATION_CODE: 0
+
+widget host_closed
+widget widget700x400
+widget widget1200x500_same_display
+widget INSTRUMENTATION_RESULT: observations=[{"phase":"widget700x400","panes":[{"package":"vn.tht.fixture","display":21,"bounds":"Rect(0, 0 - 700, 400)","width":700,"height":400}]},{"phase":"widget1200x500_same_display","panes":[{"package":"vn.tht.fixture","display":21,"bounds":"Rect(0, 0 - 1200, 500)","width":1200,"height":500}]}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=widget
+INSTRUMENTATION_CODE: 0
+
+hostcancel widget1200x500_same_display
+hostcancel host_closed
+hostcancel INSTRUMENTATION_RESULT: observations=[{"phase":"host_closed","panes":[]}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=hostcancel
+INSTRUMENTATION_CODE: 0
+
+hostexternal host_closed
+hostexternal host50
+hostexternal host50_settled
+hostexternal INSTRUMENTATION_RESULT: observations=[{"phase":"host50","panes":[{"package":"vn.tht.fixture","display":22,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572},{"package":"vn.tht.fixtureb","display":23,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572}]},{"phase":"host50_settled","panes":[{"package":"vn.tht.fixture","display":22,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572},{"package":"vn.tht.fixtureb","display":23,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572}]},{"phase":"host_closed","panes":[]}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=hostexternal
+INSTRUMENTATION_CODE: 0
+
+insets host_closed
+insets settings_insets
+insets INSTRUMENTATION_RESULT: observations=[{"phase":"settings_clear_of_rail","railRight":240,"menuLeft":272},{"phase":"settings_insets","panes":[]}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=insets
+INSTRUMENTATION_CODE: 0
+
+stalereserve settings_insets
+stalereserve stale_reservation_reset
+stalereserve INSTRUMENTATION_RESULT: observations=[{"phase":"stale_reservation_reset","panes":[]}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=stalereserve
+INSTRUMENTATION_CODE: 0
+
+normal INSTRUMENTATION_RESULT: observations=[{"phase":"open50_after_old_fullscreen_timers","mode3":{"bounds":"Rect(0, 0 - 960, 572)","display":0,"visible":true,"names":["vn.tht.fixture\/vn.tht.fixture.MainActivity"]},"mode4":{"bounds":"Rect(960, 0 - 1920, 572)","display":0,"visible":true,"names":["vn.tht.fixtureb\/vn.tht.fixtureb.MainActivity"]},"state":"host=null hostReady=false id=regression starting=false active=true tasks=Tasks(left=131, right=135) layout=Layout(left=Bounds(left=0, top=0, right=960, bottom=572), right=Bounds(left=960, top=0, right=1920, bottom=572)) error="},{"phase":"ratio30","mode3":{"bounds":"Rect(0, 0 - 576, 572)","display":0,"visible":true,"names":["vn.tht.fixture\/vn.tht.fixture.MainActivity"]},"mode4":{"bounds":"Rect(576, 0 - 1920, 572)","display":0,"visible":true,"names":["vn.tht.fixtureb\/vn.tht.fixtureb.MainActivity"]},"state":"host=null hostReady=false id=regression starting=false active=true tasks=Tasks(left=131, right=135) layout=Layout(left=Bounds(left=0, top=0, right=576, bottom=572), right=Bounds(left=576, top=0, right=1920, bottom=572)) error="},{"phase":"native_bounds_refitted60","mode3":{"bounds":"Rect(0, 0 - 1152, 572)","display":0,"visible":true,"names":["vn.tht.fixture\/vn.tht.fixture.MainActivity"]},"mode4":{"bounds":"Rect(1152, 0 - 1920, 572)","display":0,"visible":true,"names":["vn.tht.fixtureb\/vn.tht.fixtureb.MainActivity"]},"state":"host=null hostReady=false id=regression starting=false active=true tasks=Tasks(left=131, right=135) layout=Layout(left=Bounds(left=0, top=0, right=1152, bottom=572), right=Bounds(left=1152, top=0, right=1920, bottom=572)) error="},{"phase":"swapped40","mode3":{"bounds":"Rect(0, 0 - 768, 572)","display":0,"visible":true,"names":["vn.tht.fixtureb\/vn.tht.fixtureb.MainActivity"]},"mode4":{"bounds":"Rect(768, 0 - 1920, 572)","display":0,"visible":true,"names":["vn.tht.fixture\/vn.tht.fixture.MainActivity"]},"state":"host=null hostReady=false id=regression starting=false active=true tasks=Tasks(left=135, right=131) layout=Layout(left=Bounds(left=0, top=0, right=768, bottom=572), right=Bounds(left=768, top=0, right=1920, bottom=572)) error="},{"phase":"closed","mode3":null,"mode4":null,"state":"host=null hostReady=false id=null starting=false active=false tasks=null layout=null error="}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=normal
+INSTRUMENTATION_CODE: 0
+

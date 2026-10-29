@@ -1,0 +1,4 @@
+INSTRUMENTATION_RESULT: observations=[{"phase":"single_zone_climate","barItems":["temp","apps","car","split","home","back"],"passengerControl":false},{"phase":"single_zone_climate","panes":[]}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=climate
+INSTRUMENTATION_CODE: 0

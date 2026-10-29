@@ -1,0 +1,5 @@
+INSTRUMENTATION_RESULT: error=java.lang.AssertionError: Owned virtual task survived close
+INSTRUMENTATION_RESULT: observations=[{"phase":"host50","panes":[{"package":"vn.tht.fixture","display":1,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572},{"package":"vn.tht.fixtureb","display":2,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572}]},{"phase":"host50_settled","panes":[{"package":"vn.tht.fixture","display":1,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572},{"package":"vn.tht.fixtureb","display":2,"bounds":"Rect(0, 0 - 936, 572)","width":936,"height":572}]},{"phase":"host30_resized","panes":[{"package":"vn.tht.fixture","display":1,"bounds":"Rect(0, 0 - 561, 572)","width":561,"height":572},{"package":"vn.tht.fixtureb","display":2,"bounds":"Rect(0, 0 - 1311, 572)","width":1311,"height":572}]},{"phase":"failure","panes":[{"package":"vn.tht.fixtureb","display":2,"bounds":"Rect(0, 0 - 1311, 572)","width":1311,"height":572}]}]
+INSTRUMENTATION_RESULT: result=FAIL
+INSTRUMENTATION_RESULT: scenario=host
+INSTRUMENTATION_CODE: 0

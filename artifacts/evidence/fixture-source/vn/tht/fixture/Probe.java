@@ -1,0 +1,256 @@
+package vn.tht.fixture;
+
+import android.app.Activity;
+import android.app.Instrumentation;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Rect;
+import android.os.Bundle;
+import android.os.SystemClock;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.lang.reflect.Method;
+import java.util.concurrent.Callable;
+
+/** Test-only instrumentation, signed like the target. Not packaged in THT. */
+public class Probe extends Instrumentation {
+    private Activity activity;
+    private Object split;
+    private Class<?> plan;
+    private JSONArray observations = new JSONArray();
+    private String scenario;
+
+    public void onCreate(Bundle args) { super.onCreate(args); scenario=args.getString("scenario", "normal"); start(); }
+    private Object ui(Callable<Object> action) throws Exception {
+        Object[] result=new Object[1]; Throwable[] error=new Throwable[1];
+        runOnMainSync(() -> { try { result[0]=action.call(); } catch(Throwable t) { error[0]=t; } });
+        if(error[0]!=null) throw new Exception(error[0]);
+        return result[0];
+    }
+    private Object call(String name, Class<?>[] types, Object... values) throws Exception {
+        Method m=split.getClass().getDeclaredMethod(name,types);m.setAccessible(true);return m.invoke(split,values);
+    }
+    private Object request(String left,String right,int ratio) throws Exception {
+        return plan.getConstructor(String.class,String.class,String.class,int.class).newInstance("regression",left,right,ratio);
+    }
+    private Object stack(int mode) throws Exception {
+        Object service=android.app.ActivityManager.class.getMethod("getService").invoke(null);
+        return Class.forName("android.app.IActivityManager").getMethod("getStackInfo",int.class,int.class).invoke(service,mode,1);
+    }
+    private JSONObject snapshot(String phase) throws Exception {
+        JSONObject value=new JSONObject().put("phase",phase);
+        for(int mode:new int[]{3,4}) {
+            Object s=stack(mode);
+            if(s==null) { value.put("mode"+mode,JSONObject.NULL);continue; }
+            Class<?> c=s.getClass();
+            value.put("mode"+mode,new JSONObject().put("bounds",c.getField("bounds").get(s).toString())
+                .put("display",c.getField("displayId").getInt(s)).put("visible",c.getField("visible").getBoolean(s))
+                .put("names",new JSONArray((Object[])c.getField("taskNames").get(s))));
+        }
+        value.put("state",ui(() -> call("diagnosticReport",new Class<?>[0])));
+        observations.put(value);
+        try(java.io.FileOutputStream out=new java.io.FileOutputStream(new java.io.File(getTargetContext().getFilesDir(),"split-probe-state.json"))) { out.write(value.toString().getBytes("UTF-8")); }
+        return value;
+    }
+    private void awaitOpen() throws Exception {
+        long until=SystemClock.uptimeMillis()+20000;
+        while(SystemClock.uptimeMillis()<until) {
+            if(ui(() -> call("getOpenId",new Class<?>[0]))!=null)return;
+            Thread.sleep(100);
+        }
+        throw new AssertionError("Split not committed: "+ui(() -> call("diagnosticReport",new Class<?>[0])));
+    }
+    private void assertNoSplit() throws Exception {
+        if(stack(3)!=null || stack(4)!=null) throw new AssertionError("Split remained after close");
+        if((Boolean)ui(() -> call("getHasWork",new Class<?>[0]))) throw new AssertionError("Owner remained after close");
+        Object service=android.app.ActivityManager.class.getMethod("getService").invoke(null);
+        java.util.List<?> all=(java.util.List<?>)Class.forName("android.app.IActivityManager").getMethod("getAllStackInfos").invoke(service);
+        for(Object info:all) {
+            String names=java.util.Arrays.toString((Object[])info.getClass().getField("taskNames").get(info));
+            if(names.contains("vn.tht.fixture")) {
+                Rect b=(Rect)info.getClass().getField("bounds").get(info);
+                if(b.left!=0||b.right!=1920||b.top!=0||b.bottom!=720) throw new AssertionError("Stale fullscreen bounds after close: "+b);
+            }
+        }
+    }
+    private void assertPair(String left, String right, int ratio) throws Exception {
+        Object a=stack(3),b=stack(4);
+        if(a==null||b==null)throw new AssertionError("Missing pane");
+        String la=String.valueOf(a.getClass().getField("topActivity").get(a));
+        String rb=String.valueOf(b.getClass().getField("topActivity").get(b));
+        if(!la.contains(left+"/")||!rb.contains(right+"/"))throw new AssertionError("Wrong apps: "+la+" "+rb);
+        Rect x=(Rect)a.getClass().getField("bounds").get(a),y=(Rect)b.getClass().getField("bounds").get(b);
+        if(Math.abs(x.right-(1920*ratio/100))>16||Math.abs(y.left-x.right)>16||x.bottom>588||y.bottom>588)
+            throw new AssertionError("Wrong geometry: "+x+" "+y);
+    }
+    private Object am(String method, Class<?>[] types, Object... args) throws Exception {
+        Object service=android.app.ActivityManager.class.getMethod("getService").invoke(null);
+        return Class.forName("android.app.IActivityManager").getMethod(method,types).invoke(service,args);
+    }
+    private void external(Context c, String pkg) throws Exception {
+        Class<?> cl=c.getClassLoader().loadClass("vn.tht.launcher.system.ExternalAppLauncher");
+        Object accepted=cl.getMethod("launch",Context.class,Intent.class).invoke(cl.getField("INSTANCE").get(null),c,c.getPackageManager().getLaunchIntentForPackage(pkg));
+        if(!Boolean.TRUE.equals(accepted))throw new AssertionError("Fullscreen launch rejected");
+    }
+    private Object find(String pkg) throws Exception {
+        for(Object info:(java.util.List<?>)am("getAllStackInfos",new Class<?>[0])) {
+            String names=java.util.Arrays.toString((Object[])info.getClass().getField("taskNames").get(info));
+            if(names.contains(pkg+"/"))return info;
+        }
+        throw new AssertionError("No stack for "+pkg);
+    }
+    private void touch(android.view.View v,int action,float rawX,float rawY) throws Exception {
+        ui(() -> {
+            int[] xy=new int[2];v.getLocationOnScreen(xy);
+            android.view.MotionEvent e=android.view.MotionEvent.obtain(SystemClock.uptimeMillis(),SystemClock.uptimeMillis(),action,rawX,rawY,0);
+            e.offsetLocation(-xy[0],-xy[1]);v.dispatchTouchEvent(e);e.recycle();return null;
+        });
+    }
+    private void oemScenario(Context c,Object pair) throws Exception {
+        if(scenario.equals("foreignsplit")) {
+            ui(() -> call("open",new Class<?>[]{plan},pair));awaitOpen();
+            ui(() -> {Method m=split.getClass().getDeclaredMethod("getSession");m.setAccessible(true);Object session=m.invoke(split);session.getClass().getMethod("abandon").invoke(session);return null;});
+            if(stack(3)==null)throw new AssertionError("Fixture did not leave an unmanaged native split");
+            snapshot("unmanaged_native_split");
+            ui(() -> {external(c,"vn.tht.fixture");return null;});
+            Thread.sleep(3500);assertNoSplit();snapshot("unmanaged_split_restored_fullscreen");
+        } else if(scenario.equals("mixedbounds")) {
+            ui(() -> {c.startActivity(c.getPackageManager().getLaunchIntentForPackage("vn.tht.fixtureb"));return null;});Thread.sleep(700);
+            ui(() -> {external(c,"vn.tht.fixture");return null;});Thread.sleep(700);
+            Object a=find("vn.tht.fixture"),b=find("vn.tht.fixtureb");
+            int aStack=a.getClass().getField("stackId").getInt(a);
+            int[] bTasks=(int[])b.getClass().getField("taskIds").get(b);
+            ui(() -> {am("moveTaskToStack",new Class<?>[]{int.class,int.class,boolean.class},bTasks[bTasks.length-1],aStack,true);return null;});
+            ui(() -> {external(c,"vn.tht.fixture");return null;});Thread.sleep(3500);
+            ui(() -> {am("resizeStack",new Class<?>[]{int.class,Rect.class,boolean.class,boolean.class,boolean.class,int.class},aStack,new Rect(0,0,960,720),false,false,false,-1);return null;});
+            Object mixed=find("vn.tht.fixture");
+            String names=java.util.Arrays.toString((Object[])mixed.getClass().getField("taskNames").get(mixed));
+            Rect small=(Rect)mixed.getClass().getField("bounds").get(mixed);
+            if(!names.contains("vn.tht.fixtureb/")||small.width()!=960)throw new AssertionError("Mixed stale frame not reproduced: "+names+" "+small);
+            observations.put(new JSONObject().put("phase","mixed_stack_half_bounds").put("names",names).put("bounds",small.toString()));
+            ui(() -> {external(c,"vn.tht.fixture");return null;});Thread.sleep(3500);assertNoSplit();snapshot("mixed_stack_restored_fullscreen");
+        } else if(scenario.equals("policy")) {
+            String original=android.provider.Settings.Global.getString(c.getContentResolver(),"policy_control");
+            Class<?> cl=c.getClassLoader().loadClass("vn.tht.launcher.system.AppWindowPolicy");Object instance=cl.getField("INSTANCE").get(null);
+            try {
+                ui(() -> {cl.getMethod("restore",Context.class).invoke(instance,c);return null;});
+                String base="immersive.navigation=other.test";
+                android.provider.Settings.Global.putString(c.getContentResolver(),"policy_control",base);
+                ui(() -> {cl.getMethod("apply",Context.class,java.util.Set.class).invoke(instance,c,java.util.Collections.singleton("vn.tht.fixture"));return null;});
+                String active=android.provider.Settings.Global.getString(c.getContentResolver(),"policy_control");
+                if(!active.contains("vn.tht.fixture")||!active.contains(base)||active.contains("immersive.full=*"))throw new AssertionError("Wrong scoped policy: "+active);
+                ui(() -> {cl.getMethod("restore",Context.class).invoke(instance,c);return null;});
+                if(!base.equals(android.provider.Settings.Global.getString(c.getContentResolver(),"policy_control")))throw new AssertionError("Baseline not restored");
+                observations.put(new JSONObject().put("phase","scoped_policy_restored").put("active",active).put("restored",base));
+            } finally {android.provider.Settings.Global.putString(c.getContentResolver(),"policy_control",original);}
+        } else if(scenario.equals("nativegesture")) {
+            ui(() -> call("open",new Class<?>[]{plan},pair));awaitOpen();Thread.sleep(700);
+            long down=SystemClock.uptimeMillis();
+            android.view.MotionEvent event=android.view.MotionEvent.obtain(down,down,0,964,360,0);
+            sendPointerSync(event);event.recycle();
+            for(int i=1;i<=4;i++) {
+                Thread.sleep(80);
+                event=android.view.MotionEvent.obtain(down,SystemClock.uptimeMillis(),2,964+48*i,360,0);
+                sendPointerSync(event);event.recycle();
+            }
+            Thread.sleep(300);
+            Object primary=stack(3);Rect during=(Rect)primary.getClass().getField("bounds").get(primary);
+            if(Math.abs(during.right-1152)>20)throw new AssertionError("Physical pointer did not resize split: "+during);
+            snapshot("physical_pointer_drag_before_up");Thread.sleep(2000);
+            event=android.view.MotionEvent.obtain(down,SystemClock.uptimeMillis(),1,1156,360,0);
+            sendPointerSync(event);event.recycle();Thread.sleep(3500);
+            Object left=stack(3),right=stack(4);
+            if(left==null||right==null)throw new AssertionError("Native pointer lost a pane");
+            Rect a=(Rect)left.getClass().getField("bounds").get(left),b=(Rect)right.getClass().getField("bounds").get(right);
+            if(a.width()<384||a.right>1536||Math.abs(b.left-a.right)>20||a.bottom>588||b.bottom>588)throw new AssertionError("Wrong native pointer release bounds: "+a+" "+b);
+            snapshot("physical_pointer_up_refitted");
+            ui(() -> call("close",new Class<?>[0]));Thread.sleep(700);assertNoSplit();
+        } else if(scenario.equals("offset")) {
+            ui(() -> call("open",new Class<?>[]{plan},pair));awaitOpen();Thread.sleep(700);
+            android.view.View handle=(android.view.View)ui(() -> {java.lang.reflect.Field f=split.getClass().getDeclaredField("divider");f.setAccessible(true);return f.get(split);});
+            ui(() -> {handle.setTranslationX(40);handle.setTranslationY(72);handle.requestLayout();return null;});
+            Thread.sleep(1000);
+            int[] xy=new int[2];ui(() -> {handle.getLocationOnScreen(xy);return null;});
+            if(Math.abs(xy[0]+handle.getWidth()/2-960)>2||Math.abs(xy[1])>2)throw new AssertionError("Inset calibration failed: "+java.util.Arrays.toString(xy));
+            observations.put(new JSONObject().put("phase","synthetic_offset40_72_corrected").put("left",xy[0]).put("top",xy[1]).put("center",xy[0]+handle.getWidth()/2));
+            ui(() -> {handle.setTranslationX(0);handle.setTranslationY(0);handle.requestLayout();return null;});Thread.sleep(700);
+            ui(() -> {handle.getLocationOnScreen(xy);return null;});
+            if(Math.abs(xy[0]+handle.getWidth()/2-960)>2||Math.abs(xy[1])>2)throw new AssertionError("Inset recovery failed");
+            ui(() -> call("close",new Class<?>[0]));Thread.sleep(700);assertNoSplit();
+        } else if(scenario.equals("drag")) {
+            ui(() -> call("open",new Class<?>[]{plan},pair));awaitOpen();Thread.sleep(700);
+            android.view.View handle=(android.view.View)ui(() -> {java.lang.reflect.Field f=split.getClass().getDeclaredField("divider");f.setAccessible(true);return f.get(split);});
+            touch(handle,0,960,286);touch(handle,2,1152,286);Thread.sleep(300);
+            assertPair("vn.tht.fixture","vn.tht.fixtureb",60);
+            int[] xy=new int[2];ui(() -> {handle.getLocationOnScreen(xy);return null;});
+            if(Math.abs(xy[0]+handle.getWidth()/2-1152)>2)throw new AssertionError("Overlay shifted from native boundary: "+xy[0]);
+            snapshot("live_drag60_before_up");Thread.sleep(4000);
+            touch(handle,3,1152,286);Thread.sleep(300);assertPair("vn.tht.fixture","vn.tht.fixtureb",50);snapshot("drag_cancel_restored50");
+            touch(handle,0,960,286);touch(handle,2,576,286);touch(handle,1,576,286);Thread.sleep(300);
+            assertPair("vn.tht.fixture","vn.tht.fixtureb",30);snapshot("drag_up_committed30");
+            ui(() -> call("close",new Class<?>[0]));Thread.sleep(700);assertNoSplit();
+        }
+    }
+    public void onStart() {
+        Bundle result=new Bundle();
+        try {
+            Context c=getTargetContext();
+            c.getSharedPreferences("tht",0).edit().putString("split_backend","native").putBoolean("embed_map",false).apply();
+            activity=startActivitySync(new Intent().setClassName("vn.tht.launcher","vn.tht.launcher.MainActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            split=ui(() -> { Method m=activity.getClass().getDeclaredMethod("getSplitScreen");m.setAccessible(true);return m.invoke(activity); });
+            plan=c.getClassLoader().loadClass("vn.tht.launcher.split.Split");
+            final Object pair=request("vn.tht.fixture","vn.tht.fixtureb",50);
+            if(java.util.Arrays.asList("foreignsplit","mixedbounds","policy","drag","offset","nativegesture").contains(scenario)) {
+                oemScenario(c,pair);
+            } else if(scenario.equals("normal")||scenario.equals("visual")||scenario.equals("settings")) {
+                // Schedule normal fullscreen repairs, then immediately request split: old repairs must not undo it.
+                ui(() -> {
+                    Class<?> launcher=c.getClassLoader().loadClass("vn.tht.launcher.system.ExternalAppLauncher");
+                    Object instance=launcher.getField("INSTANCE").get(null);
+                    launcher.getMethod("launch",Context.class,Intent.class).invoke(instance,c,c.getPackageManager().getLaunchIntentForPackage("vn.tht.fixture"));
+                    return call("open",new Class<?>[]{plan},pair);
+                });
+                awaitOpen(); Thread.sleep(3500);assertPair("vn.tht.fixture","vn.tht.fixtureb",50);snapshot("open50_after_old_fullscreen_timers");
+                if(scenario.equals("visual")) Thread.sleep(6000);
+                if(!(Boolean)ui(() -> call("place",new Class<?>[]{int.class},30)))throw new AssertionError("Resize rejected");
+                Thread.sleep(700);assertPair("vn.tht.fixture","vn.tht.fixtureb",30);snapshot("ratio30");
+                if(scenario.equals("visual")) Thread.sleep(6000);
+                ui(() -> {
+                    Object service=android.app.ActivityManager.class.getMethod("getService").invoke(null);
+                    Class<?> am=Class.forName("android.app.IActivityManager");
+                    am.getMethod("resizeDockedStack",Rect.class,Rect.class,Rect.class,Rect.class,Rect.class).invoke(service,new Rect(0,0,1152,720),null,null,null,null);
+                    Object secondary=stack(4);int id=secondary.getClass().getField("stackId").getInt(secondary);
+                    am.getMethod("resizeStack",int.class,Rect.class,boolean.class,boolean.class,boolean.class,int.class).invoke(service,id,new Rect(1152,0,1920,720),true,false,false,-1);
+                    return null;
+                });
+                Thread.sleep(3000);assertPair("vn.tht.fixture","vn.tht.fixtureb",60);snapshot("native_bounds_refitted60");
+                ui(() -> call("swap",new Class<?>[0]));awaitOpen();Thread.sleep(700);
+                assertPair("vn.tht.fixtureb","vn.tht.fixture",40);snapshot("swapped40");
+                if(scenario.equals("visual")) Thread.sleep(6000);
+                if(scenario.equals("settings"))ui(() -> {activity.getClass().getMethod("openSettings").invoke(activity);return null;});
+                else if(!(Boolean)ui(() -> call("close",new Class<?>[0])))throw new AssertionError("Close rejected");
+                Thread.sleep(700);assertNoSplit();snapshot("closed");
+            } else {
+                final String[] before=new String[1];
+                ui(() -> {
+                    call("open",new Class<?>[]{plan},pair);
+                    before[0]=String.valueOf(call("diagnosticReport",new Class<?>[0]));
+                    if(scenario.equals("release"))return call("release",new Class<?>[0]);
+                    if(scenario.equals("fullscreen")) {
+                        Class<?> launcher=c.getClassLoader().loadClass("vn.tht.launcher.system.ExternalAppLauncher");
+                        return launcher.getMethod("launch",Context.class,Intent.class).invoke(launcher.getField("INSTANCE").get(null),c,c.getPackageManager().getLaunchIntentForPackage("vn.tht.fixture"));
+                    }
+                    return call("close",new Class<?>[0]);
+                });
+                observations.put(new JSONObject().put("phase","before_cancel").put("state",before[0]));
+                Thread.sleep(3500);assertNoSplit();snapshot("cancelled_no_resurrection");
+            }
+            result.putString("result","PASS");
+        } catch(Throwable t) { result.putString("result","FAIL");result.putString("error",t.toString());
+            try { observations.put(new JSONObject().put("diagnostic",ui(() -> call("diagnosticReport",new Class<?>[0])))); } catch(Throwable ignored) {}
+        } finally {
+            try { if(split!=null)ui(() -> call("close",new Class<?>[0])); } catch(Throwable ignored) {}
+            result.putString("scenario",scenario);result.putString("observations",observations.toString());finish(0,result);
+        }
+    }
+}

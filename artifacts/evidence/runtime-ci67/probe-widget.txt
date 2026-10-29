@@ -1,0 +1,4 @@
+INSTRUMENTATION_RESULT: observations=[{"phase":"widget700x400","panes":[{"package":"vn.tht.fixture","display":5,"bounds":"Rect(0, 0 - 700, 400)","width":700,"height":400}]},{"phase":"widget1200x500_same_display","panes":[{"package":"vn.tht.fixture","display":5,"bounds":"Rect(0, 0 - 1200, 500)","width":1200,"height":500}]}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=widget
+INSTRUMENTATION_CODE: 0

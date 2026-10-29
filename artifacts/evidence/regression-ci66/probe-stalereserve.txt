@@ -1,0 +1,4 @@
+INSTRUMENTATION_RESULT: observations=[{"phase":"stale_reservation_reset","panes":[]}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=stalereserve
+INSTRUMENTATION_CODE: 0
