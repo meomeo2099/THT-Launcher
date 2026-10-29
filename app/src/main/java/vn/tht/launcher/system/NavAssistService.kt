@@ -379,8 +379,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
         /** Các nút có thể đặt lên thanh bên (khoá → tên hiển thị), theo thứ tự mặc định. */
         val BAR_ITEMS = linkedMapOf(
             "car" to "Xe (bảng điều khiển)",
-            "temp" to "Nhiệt độ ghế lái",
-            "temp2" to "Nhiệt độ ghế phụ",
+            "temp" to "Nhiệt độ điều hoà",
             "apps" to "Ứng dụng",
             "home" to "Màn hình chính",
             "back" to "Quay lại",
@@ -390,11 +389,11 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
             "split" to "Chia đôi màn hình",
             "collapse" to "Thu gọn thanh",
         )
-        /** Như thanh gốc: nhiệt độ lái · ứng dụng · xe · nhiệt độ phụ · ⌂ · ‹ */
-        val BAR_DEFAULT = listOf("temp", "apps", "car", "temp2", "split", "home", "back")
+        /** Một nhiệt độ chung cho điều hoà một vùng của xe. */
+        val BAR_DEFAULT = listOf("temp", "apps", "car", "split", "home", "back")
 
         fun barItems(p: Prefs): List<String> =
-            p.sp.getString(KEY_BAR_ITEMS, null)?.split(',')?.filter { it in BAR_ITEMS } ?: BAR_DEFAULT
+            p.sp.getString(KEY_BAR_ITEMS, null)?.split(',')?.map { if (it == "temp2") "temp" else it }?.filter { it in BAR_ITEMS }?.distinct() ?: BAR_DEFAULT
         @Volatile var host: Host? = null
         private const val HVAC_PACKAGE = "ecarx.hvac.app"
         @Volatile private var allowStockUntil = 0L

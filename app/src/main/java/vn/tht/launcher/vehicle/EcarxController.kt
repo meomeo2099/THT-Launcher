@@ -157,7 +157,7 @@ class EcarxController(
 
     /** Tăng/giảm nhiệt độ một bước (đọc HVAC_TEMP_STEP, mặc định 0,5 °C), kẹp 16–32 °C. */
     fun tempStep(direction: Int, done: (Result) -> Unit) = run(done) {
-        val zone = if (supported(F.HVAC_TEMP, F.ZONE_ROW_1_LEFT)) F.ZONE_ROW_1_LEFT else F.ZONE_ALL
+        val zone = ecarx.temperatureZone()
         if (!supported(F.HVAC_TEMP, zone)) return@run unsupported()
         val cur = ecarx.getFloat(F.HVAC_TEMP, zone) ?: return@run Result(false, "Không đọc được nhiệt độ")
         val step = ecarx.getFloat(F.HVAC_TEMP_STEP, F.ZONE_ALL)?.takeIf { it in 0.1f..2f } ?: 0.5f
@@ -172,7 +172,7 @@ class EcarxController(
     fun setTemp(target: Float, stillValid: () -> Boolean, done: (Result) -> Unit) = run(done) {
         if (!stillValid()) return@run Result(false, "Lịch tự động đã được hủy")
         if (!target.isFinite()) return@run Result(false, "Nhiệt độ không hợp lệ")
-        val zone = if (supported(F.HVAC_TEMP, F.ZONE_ROW_1_LEFT)) F.ZONE_ROW_1_LEFT else F.ZONE_ALL
+        val zone = ecarx.temperatureZone()
         if (!supported(F.HVAC_TEMP, zone)) return@run unsupported()
         val t = target.coerceIn(F.TEMP_MIN, F.TEMP_MAX)
         setFloatVerified(F.HVAC_TEMP, zone, t, String.format(Locale.US, "Nhiệt độ %.1f°C", t), stillValid)

@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private val bgClimatePoll = object : Runnable {
         override fun run() {
             val f = vn.tht.launcher.vehicle.EcarxFunctions
-            val zone = if (ecarx.isSupported(f.HVAC_TEMP, f.ZONE_ROW_1_LEFT) == true) f.ZONE_ROW_1_LEFT else f.ZONE_ALL
+            val zone = ecarx.temperatureZone()
             val now = Triple(
                 ecarx.getFloat(f.HVAC_TEMP, zone)?.takeIf { it in f.TEMP_MIN..f.TEMP_MAX },
                 f.levelOf(f.HVAC_FAN_SPEED, ecarx.getInt(f.HVAC_FAN_SPEED)),
@@ -186,12 +186,10 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
                 if (!ecarx.connected) return null
                 val f = vn.tht.launcher.vehicle.EcarxFunctions
                 fun temp(zone: Int) = ecarx.getFloat(f.HVAC_TEMP, zone)?.takeIf { it in f.TEMP_MIN..f.TEMP_MAX }
-                val dual = ecarx.isSupported(f.HVAC_TEMP, f.ZONE_ROW_1_LEFT) == true
-                val left = if (dual) temp(f.ZONE_ROW_1_LEFT) else temp(f.ZONE_ALL)
-                val right = if (ecarx.isSupported(f.HVAC_TEMP, f.ZONE_ROW_1_RIGHT) == true) temp(f.ZONE_ROW_1_RIGHT) else left
+                val left = temp(ecarx.temperatureZone())
                 val on = ecarx.getInt(f.HVAC_POWER)?.let { it == f.ON }
                 val fan = if (on == false) 0 else f.levelOf(f.HVAC_FAN_SPEED, ecarx.getInt(f.HVAC_FAN_SPEED))
-                return vn.tht.launcher.system.NavAssistService.Companion.BarClimate(left, right, fan)
+                return vn.tht.launcher.system.NavAssistService.Companion.BarClimate(left, left, fan)
             }
             override fun onBarInset() = runOnUiThread { applyBarInset() }
             override fun quickSplit(current: String?) = runOnUiThread { this@MainActivity.quickSplit(current) }

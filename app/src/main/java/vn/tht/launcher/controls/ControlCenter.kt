@@ -109,11 +109,7 @@ class ControlCenter(
         controller.background({ candidates.filter { t -> t.reads.take(1).all { controller.supported(it.first, it.second) } } }) { ok ->
             if (!showing) return@background
             body.removeAllViews()
-            var list = ok.orEmpty()
-            // Xe có nhiệt độ 2 vùng thì bỏ ô nhiệt độ chung
-            if (list.any { it is StepperTile && it.id == F.HVAC_TEMP && it.zone == F.ZONE_ROW_1_LEFT }) {
-                list = list.filterNot { it is StepperTile && it.id == F.HVAC_TEMP && it.zone == F.ZONE_ALL }
-            }
+            val list = ok.orEmpty()
             tiles = list
             if (list.isEmpty()) {
                 body.addView(Ui.text(c, if (ecarx.connected) "Xe không báo hỗ trợ chức năng nào trong mục này." else "Chưa nối được ECARX AdaptAPI.", 18f, dim = true))
@@ -257,13 +253,8 @@ class ControlCenter(
         ToggleTile(F.HVAC_AC, F.ZONE_ALL, "A/C", "ac"),
         ToggleTile(F.HVAC_AUTO, F.ZONE_ALL, "AUTO", "auto"),
         ToggleTile(F.HVAC_AC_MAX, F.ZONE_ALL, "Lạnh tối đa", "climate"),
-        StepperTile(F.HVAC_TEMP, F.ZONE_ROW_1_LEFT, "Nhiệt độ bên lái", true,
-            { tempLabel(it, F.ZONE_ROW_1_LEFT) }, "thermometer") { d -> controller.tempStepZone(F.ZONE_ROW_1_LEFT, d, ::report) },
-        StepperTile(F.HVAC_TEMP, F.ZONE_ROW_1_RIGHT, "Nhiệt độ bên phụ", true,
-            { tempLabel(it, F.ZONE_ROW_1_RIGHT) }, "thermometer") { d -> controller.tempStepZone(F.ZONE_ROW_1_RIGHT, d, ::report) },
-        StepperTile(F.HVAC_TEMP, F.ZONE_ALL, "Nhiệt độ", true,
-            { tempLabel(it, F.ZONE_ALL) }, "thermometer") { d -> controller.tempStepZone(F.ZONE_ALL, d, ::report) },
-        ToggleTile(F.HVAC_TEMP_DUAL, F.ZONE_ALL, "Tách 2 vùng", "dual"),
+        StepperTile(F.HVAC_TEMP, ecarx.temperatureZone(), "Nhiệt độ toàn xe", true,
+            { tempLabel(it, ecarx.temperatureZone()) }, "thermometer") { d -> controller.tempStep(d, ::report) },
         StepperTile(F.HVAC_FAN_SPEED, F.ZONE_ALL, "Quạt", false,
             { v -> F.levelOf(F.HVAC_FAN_SPEED, v.int(F.HVAC_FAN_SPEED))?.let { if (it == 0) "Tắt" else "Mức $it/7" } ?: "–" }, "fan",
         ) { d -> controller.fanStep(d, ::report) },

@@ -43,3 +43,10 @@ Khi xem ảnh bản CI 64 thấy một vùng trái còn được chừa dù đan
 ## Bổ sung 0.3.66: đặt thanh bên vào đúng vùng đã chừa
 
 Ảnh kiểm chứng cho thấy WindowManager cũng cộng origin overscan vào chính cửa sổ accessibility overlay: thanh bên dự định ở x=0 lại nằm ở x=120. Dùng cùng phép đo/bù `getLocationOnScreen` cho thanh bên mở rộng để đưa nó về mép màn hình; Settings không cần chừa thêm một vùng trống bên trái. Thanh thu gọn vẫn dùng vị trí giữa mép trái như trước.
+
+
+## Cấu hình điều hoà một vùng theo xác nhận chủ xe
+
+Chủ xe xác nhận xe chỉ có một vùng điều hoà. Bản tiếp theo dùng duy nhất nhiệt độ toàn xe trong popup, bảng điều khiển và thanh bên; bỏ nhiệt độ bên phụ và nút tách hai vùng. Danh sách thanh bên cũ có `temp2` được chuyển về `temp` và loại trùng, không cần xoá dữ liệu cài đặt.
+
+Đọc trạng thái, tăng/giảm, đặt nhiệt độ và tự động hoá dùng chung `temperatureZone()`: ưu tiên `ZONE_ALL` khi firmware báo hỗ trợ, còn lại dùng `ZONE_ROW_1_LEFT` (vẫn là một vùng trên giao diện). Kênh bên phải không được đọc hoặc ghi cho nhiệt độ cabin. Điều khiển ghế trái/phải vẫn theo khả năng ghế, độc lập với số vùng điều hoà. Chưa xác minh lệnh điều hoà trên xe thật; không có kết nối xe trong môi trường kiểm tra.
