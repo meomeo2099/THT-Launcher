@@ -53,10 +53,10 @@ class HostedSplitActivity : Activity() {
                 contentDescription = "Điều khiển chia màn hình"
                 setTextColor(0xffffffff.toInt()); setBackgroundColor(0xff202630.toInt())
                 setOnClickListener {
-                    android.widget.PopupMenu(this@HostedSplitActivity, this).apply {
-                        menu.add("Đóng chia màn hình").setOnMenuItemClickListener { finish(); true }
-                        menu.add("Đổi bên hai ứng dụng").setOnMenuItemClickListener { swap(); true }
-                    }.show()
+                    android.app.AlertDialog.Builder(this@HostedSplitActivity)
+                        .setItems(arrayOf("Đóng chia màn hình", "Đổi bên hai ứng dụng")) { _, which ->
+                            if (which == 0) finish() else swap()
+                        }.show()
                 }
                 var downX = 0f; var start = ratio; var dragged = false
                 setOnTouchListener { v, e ->
