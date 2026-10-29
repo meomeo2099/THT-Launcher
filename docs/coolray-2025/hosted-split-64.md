@@ -35,3 +35,7 @@ Các ca local cho lõi thay đổi đã đạt: host 50/50→30/70 không có st
 Mã fixture, dữ liệu trước sửa và local ở [hosted-runtime-64](hosted-runtime-64/). `HostProbe` kiểm tra stack/display/viewport thật; `Probe` ép `split_backend=native` để kiểm tra nhánh tương thích. Không có fixture hoặc stub ActivityView trong sản phẩm.
 
 Chưa có APK Vietmap, dump window/renderer hay kết nối đầu xe để chứng minh engine Vietmap đã hết lỗi. Fixture xác nhận Surface/Display/task đúng kích thước, không thay thế phép thử app bản đồ thực tế. Các app không hỗ trợ embedding, mở Activity ra display khác hoặc giữ renderer riêng có thể cần xử lý tiếp. Chế độ native vẫn chịu giới hạn thanh hệ thống Android/OEM. Chưa tuyên bố giao diện giống từng pixel hoặc giữ được route sau mọi lần đóng/handoff.
+
+## Bổ sung 0.3.65: vùng chừa thanh bên còn sót
+
+Khi xem ảnh bản CI 64 thấy một vùng trái còn được chừa dù đang dùng nút nổi. Service sau khi bị kill/rebind có thể không còn `bar` View, nên điều kiện cleanup cũ `bar != null` bỏ qua overscan đã lưu. Bản bổ sung trả overscan THT về 0 khi khởi động ở mode khác `bar`, và khi service rebuild ở mode đó. Chỉ tác động phần overscan có tracker của THT, không tự xóa cấu hình màn hình không do THT ghi.

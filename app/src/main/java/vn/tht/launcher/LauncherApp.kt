@@ -21,6 +21,8 @@ class LauncherApp : Application() {
         // One-time upgrade to the requested fullscreen-app + persistent THT dock behavior.
         // A later choice of "off" in Settings remains respected.
         val settings = vn.tht.launcher.settings.Prefs(this).sp
+        if (settings.getString("nav_mode", "buttons") != "bar")
+            vn.tht.launcher.system.Overscan.set(this, vn.tht.launcher.settings.Prefs(this), 0)
         if (!settings.getBoolean("external_fullscreen_ui_v1", false)) settings.edit()
             .putString("dock_overlay", "always").putBoolean("external_fullscreen_ui_v1", true).apply()
         vn.tht.launcher.ui.Palette.initialize(this)

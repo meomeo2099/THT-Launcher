@@ -101,6 +101,8 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
     private fun rebuild() {
         removeAll()
         val m = mode()
+        // A killed/rebound service has no bar View, but its persisted overscan can remain.
+        if (m != "bar") Overscan.set(this, prefs, 0)
         if (m == "buttons" || m == "both") addPill()
         if (m == "gestures" || m == "both") addStrip()
         if (m == "bar") addBar()
