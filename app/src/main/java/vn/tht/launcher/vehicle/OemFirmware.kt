@@ -94,9 +94,12 @@ object OemFirmware {
 
     private fun launch(context: Context, intent: Intent?): Boolean =
         intent != null && vn.tht.launcher.system.ExternalAppLauncher.leaveSplit() && runCatching {
+            if (intent.component?.packageName == LAUNCHER_PACKAGE) vn.tht.launcher.system.StockMode.enter(context)
             vn.tht.launcher.system.AppWindowPolicy.restore(context)
             context.startActivity(intent, vn.tht.launcher.system.ExternalAppLauncher.fullscreenOptions(context))
             true
+        }.onFailure {
+            if (intent?.component?.packageName == LAUNCHER_PACKAGE) vn.tht.launcher.system.StockMode.exit(context)
         }.getOrDefault(false)
 
     /** Read-only package report; an OEM package certificate is not the framework certificate. */
