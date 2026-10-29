@@ -177,7 +177,12 @@ class SettingsActivity : Activity() {
         }
 
         section("Khởi động & hệ thống")
-        action("Chọn launcher mặc định", "Mở cài đặt màn hình chính của Android") {
+        val defaultHome = vn.tht.launcher.system.LauncherHome.defaultPackage(this)
+        val homeName = defaultHome?.let { runCatching {
+            packageManager.getApplicationLabel(packageManager.getApplicationInfo(it, 0)).toString()
+        }.getOrNull() }
+        action("Chọn launcher mặc định", if (defaultHome == packageName) "Đang dùng THT Launcher" else
+            "Hiện tại: ${homeName ?: "chưa chọn"} · chọn THT để nút Home hệ thống quay về đây") {
             runCatching { startActivity(Intent(Settings.ACTION_HOME_SETTINGS)) }.onFailure {
                 if (!vn.tht.launcher.vehicle.OemFirmware.openSettings(this)) toast("Ấn Home rồi chọn THT Launcher làm mặc định")
             }

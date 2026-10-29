@@ -324,7 +324,7 @@ class DockBar(
     private fun start(intent: Intent?, label: String) {
         try {
             if (intent == null) throw IllegalStateException("không có intent")
-            context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            check(vn.tht.launcher.system.ExternalAppLauncher.launch(context, intent))
         } catch (t: Throwable) {
             Log.w(TAG, "Không mở được $label: $t")
             toast("Không mở được $label")

@@ -51,7 +51,24 @@ android {
     }
 }
 
+// ActivityView.StateCallback is an abstract framework class, so java.lang.reflect.Proxy cannot
+// implement it. Compile against signatures only; the head unit supplies the real implementation.
+val compilePlatformStubs by tasks.registering(JavaCompile::class) {
+    source("platform-stubs/src")
+    classpath = files(android.bootClasspath)
+    destinationDirectory.set(layout.buildDirectory.dir("platform-stubs/classes"))
+    sourceCompatibility = "8"
+    targetCompatibility = "8"
+}
+val platformStubsJar by tasks.registering(Jar::class) {
+    dependsOn(compilePlatformStubs)
+    from(compilePlatformStubs.flatMap { it.destinationDirectory })
+    archiveFileName.set("platform-stubs.jar")
+    destinationDirectory.set(layout.buildDirectory.dir("platform-stubs"))
+}
+
 dependencies {
+    compileOnly(files(platformStubsJar))
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.recyclerview:recyclerview:1.3.2")

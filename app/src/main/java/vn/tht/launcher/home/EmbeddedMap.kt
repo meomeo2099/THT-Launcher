@@ -20,11 +20,18 @@ class EmbeddedMap(private val c: Context, private val onFail: (String) -> Unit) 
     private var activityView: View? = null
     private var pending: Intent? = null
     private var tries = 0
+    private var ready = false
+    private var released = false
+    private var active = false
 
     /** Tạo ActivityView; false nếu hệ thống không cho. */
     fun create(): Boolean = try {
-        val cls = Class.forName("android.app.ActivityView")
-        val v = cls.getConstructor(Context::class.java).newInstance(c) as View
+        released = false
+        val v = PlatformActivityView.create(c, ready = {
+            if (!released) { ready = true; handler.post { tryStart() } }
+        }, destroyed = {
+            handler.post { if (!released) { ready = false; onFail("Màn hình bản đồ đã đóng") } }
+        })
         addView(v, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
         activityView = v
         true
@@ -35,7 +42,7 @@ class EmbeddedMap(private val c: Context, private val onFail: (String) -> Unit) 
 
     /** Mở app trong ô; ActivityView cần vài trăm ms để sẵn sàng nên thử lại tới khi được. */
     fun start(intent: Intent) {
-        pending = intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+        pending = Intent(intent).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         tries = 0
         handler.removeCallbacksAndMessages(null)
         handler.postDelayed(::tryStart, 300)
@@ -44,6 +51,17 @@ class EmbeddedMap(private val c: Context, private val onFail: (String) -> Unit) 
     private fun tryStart() {
         val v = activityView ?: return
         val i = pending ?: return
+        if (released || !active) return
+        // Wait for the framework callback and a real laid-out surface, not a guessed 300 ms.
+        if (!isAttachedToWindow || !isShown || !hasWindowFocus() || width <= 0 || height <= 0) {
+            handler.postDelayed(::tryStart, 250)
+            return
+        }
+        if (!ready) {
+            if (++tries < 40) handler.postDelayed(::tryStart, 250)
+            else { pending = null; onFail("ActivityView chưa sẵn sàng sau 10 giây") }
+            return
+        }
         try {
             v.javaClass.getMethod("startActivity", Intent::class.java).invoke(v, i)
             Log.i(TAG, "Đã nhúng ${i.component ?: i.`package`}")
@@ -62,9 +80,20 @@ class EmbeddedMap(private val c: Context, private val onFail: (String) -> Unit) 
     }
 
     fun release() {
+        if (released) return
+        released = true
+        ready = false
+        pending = null
         handler.removeCallbacksAndMessages(null)
         activityView?.let { v -> runCatching { v.javaClass.getMethod("release").invoke(v) } }
         activityView = null
+        removeAllViews()
+    }
+
+    fun setActive(value: Boolean) {
+        active = value
+        handler.removeCallbacksAndMessages(null)
+        if (active) handler.post { tryStart() }
     }
 
     override fun onDetachedFromWindow() {

@@ -322,6 +322,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         media.start()
         radio.start()
         if (appearanceDirty) applyAppearance() else { dock.reload(); topBar.reload(); sideRail.reload() }
+        widgets.values.forEach { it.onLauncherVisibility(true) }
         screensaver.setActive(true)
         vn.tht.launcher.system.NavAssistService.setLauncherInFront(true)
         handler.removeCallbacks(tick)
@@ -340,6 +341,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     override fun onPause() {
         inFront = false
+        widgets.values.forEach { it.onLauncherVisibility(false) }
         rememberDockBounds()
         refreshFloatingDock()
         io.removeCallbacks(ecarxPoll)
@@ -405,6 +407,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         w.onVehicle(lastVehicle)
         w.onEcarx(lastEcarx)
         w.onMedia(lastMedia)
+        w.onLauncherVisibility(inFront)
     }
 
     private fun setEditMode(on: Boolean) {
@@ -1091,6 +1094,9 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         appendLine()
         appendLine("== Hợp đồng OEM Coolray")
         appendLine(vn.tht.launcher.vehicle.OemFirmware.diagnosticReport(this@MainActivity))
+        appendLine("Default HOME: ${vn.tht.launcher.system.LauncherHome.defaultPackage(this@MainActivity)}")
+        appendLine("== Mở ứng dụng ngoài")
+        appendLine(vn.tht.launcher.system.ExternalAppLauncher.lastReport)
         appendLine()
         appendLine("== ECARX")
         appendLine("Trạng thái: ${ecarx.status} · ghi=${ecarx.writeAllowed}")
@@ -1227,9 +1233,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     private fun launch(pkg: String) {
         val intent = packageManager.getLaunchIntentForPackage(pkg) ?: return toast("Không tìm thấy ứng dụng")
-        try {
-            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-        } catch (e: Exception) {
+        if (splitScreen.openId != null) splitScreen.close()
+        if (!vn.tht.launcher.system.ExternalAppLauncher.launch(this, intent)) {
             toast("Không mở được ứng dụng")
         }
     }

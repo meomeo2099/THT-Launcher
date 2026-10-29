@@ -135,8 +135,7 @@ object Autostart {
     private fun launch(c: Context, pkg: String): Boolean {
         val intent = c.packageManager.getLaunchIntentForPackage(pkg) ?: return false
         return runCatching {
-            c.startActivity(intent.setPackage(pkg).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-            true
+            ExternalAppLauncher.launch(c, intent.setPackage(pkg))
         }.onFailure { Log.w(TAG, "Không mở được $pkg", it) }.getOrDefault(false)
     }
 

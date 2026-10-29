@@ -98,6 +98,8 @@ abstract class HomeWidget(protected val host: WidgetHost) {
     open fun onMedia(np: NowPlaying?) {}
     /** Gọi mỗi giây (thanh tiến trình nhạc…). */
     open fun onTick() {}
+    /** Activity lifecycle, distinct from a transient focus change or a once-per-second tick. */
+    open fun onLauncherVisibility(front: Boolean) {}
 
     /** Nền thẻ widget: đặc, hoặc kính mờ (Cài đặt → Giao diện → Kiểu thẻ widget). */
     protected fun cardBackground(v: View): android.graphics.drawable.Drawable =

@@ -31,3 +31,7 @@ Không tự cài hoặc thay launcher mặc định trên xe. Nút mở cài đ�
 ## Kiểm chứng
 
 Kết quả build, kiểm thử và ảnh máy ảo được ghi trong [validation.md](validation.md). Máy ảo Android 9 1920×720 dùng để kiểm tra UI và fallback, không mô phỏng ECARX hoặc kết nối xe thật.
+
+## Sửa mở ứng dụng toàn màn hình
+
+[Đối chiếu cơ chế tham chiếu, nguyên nhân và bản sửa bản đồ/Home](map-fullscreen-fix.md), theo phản hồi trên xe ngày 29/10/2026.

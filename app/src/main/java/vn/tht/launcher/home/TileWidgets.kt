@@ -184,7 +184,7 @@ class ClockTile(host: WidgetHost) : HomeWidget(host) {
  * Ô dẫn đường. Có quyền hệ thống (bản ký platform) và bật trong Cài đặt: nhúng app bản đồ ngay trong ô
  * (nút ⤢ mở toàn màn hình). Không thì là nút lớn mở app bản đồ đã chọn (nhấn giữ để chọn app).
  */
-class NavWidget(host: WidgetHost) : HomeWidget(host) {
+class NavWidget(host: WidgetHost) : HomeWidget(host), vn.tht.launcher.system.ExternalAppLauncher.Preview {
     private val label = Ui.text(c, "", 16f, dim = true).apply { gravity = Gravity.CENTER }
     private val fallback = Ui.vbox(c, 18, Gravity.CENTER).apply {
         addView(Ui.header(c, "navigation", "Dẫn đường"), matchW())
@@ -201,6 +201,9 @@ class NavWidget(host: WidgetHost) : HomeWidget(host) {
     private var expand: View? = null
     /** Đã đóng ô nhúng để mở toàn màn hình: nhúng lại khi launcher hiện lại. */
     private var reembed = false
+    private var foreground = false
+    private var embeddedPackage: String? = null
+    private val handoff = PreviewHandoff()
 
     override val view: View = android.widget.FrameLayout(c).apply {
         background = cardBackground(this)
@@ -208,11 +211,25 @@ class NavWidget(host: WidgetHost) : HomeWidget(host) {
         addView(fallback, android.widget.FrameLayout.LayoutParams(-1, -1))
         setOnClickListener { host.openNav() }
         setOnLongClickListener { host.chooseNavApp(); true }
+        addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+            override fun onViewAttachedToWindow(v: View) {
+                vn.tht.launcher.system.ExternalAppLauncher.register(this@NavWidget)
+                if (embedded == null && handoff.mayEmbed) tryEmbed()
+            }
+            override fun onViewDetachedFromWindow(v: View) {
+                vn.tht.launcher.system.ExternalAppLauncher.unregister(this@NavWidget)
+                dropEmbed()
+            }
+        })
     }
 
-    init { tryEmbed() }
+    init {
+        vn.tht.launcher.system.ExternalAppLauncher.register(this)
+        tryEmbed()
+    }
 
     private fun tryEmbed() {
+        if (embedded != null || !handoff.mayEmbed) return
         val intent = host.navLaunchIntent() ?: return
         if (!host.canEmbedMap()) return
         val frame = view as android.widget.FrameLayout
@@ -223,6 +240,8 @@ class NavWidget(host: WidgetHost) : HomeWidget(host) {
         }
         if (!map.create()) return
         embedded = map
+        embeddedPackage = intent.component?.packageName ?: intent.`package`
+        map.setActive(foreground)
         fallback.visibility = View.GONE
         frame.addView(map, android.widget.FrameLayout.LayoutParams(-1, -1))
         // Nút mở toàn màn hình ở góc
@@ -249,15 +268,32 @@ class NavWidget(host: WidgetHost) : HomeWidget(host) {
      * (huỷ màn hình ảo cũng đóng task bên trong), đợi một nhịp rồi mở bản mới toàn màn hình.
      */
     private fun openFull() {
-        dropEmbed()
+        host.openNav()
+    }
+
+    override fun prepareExternal(packageName: String): Boolean {
+        if (packageName != embeddedPackage || embedded == null) return false
+        handoff.begin()
         reembed = true
-        view.postDelayed({ host.openNav() }, 400)
+        dropEmbed()
+        return true
+    }
+
+    override fun externalFailed(packageName: String) {
+        if (packageName == embeddedPackage) handoff.failed()
+    }
+
+    override fun onLauncherVisibility(front: Boolean) {
+        foreground = front
+        handoff.foreground(front)
+        embedded?.setActive(front)
+        if (front) view.post { onTick() }
     }
 
     override fun onTick() {
         label.textIfChanged = host.navAppLabel() ?: "Nhấn giữ để chọn app bản đồ"
         // onTick chỉ chạy khi launcher đang hiện: người dùng đã quay về từ bản đồ
-        if (reembed && view.hasWindowFocus()) { reembed = false; tryEmbed() }
+        if (reembed && foreground && handoff.mayEmbed && view.hasWindowFocus()) { reembed = false; tryEmbed() }
     }
     override fun onVehicle(d: VehicleData?) = onTick()
 }

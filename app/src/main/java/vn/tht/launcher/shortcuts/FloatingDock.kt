@@ -47,8 +47,21 @@ class FloatingDock(private val c: Context, private val actions: DockBar.Actions)
             setPadding(p, 0, p, 0)
             addView(HorizontalScrollView(c).apply {
                 isHorizontalScrollBarEnabled = false
+                isFillViewport = true
                 addView(row, ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT))
-            }, FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT, Gravity.CENTER))
+            }, FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT).apply {
+                marginEnd = Ui.dp(c, 80)
+            })
+            addView(android.widget.ImageView(c).apply {
+                contentDescription = "Về màn hình chính THT"
+                val pad = Ui.dp(c, 14)
+                setPadding(pad, pad, pad, pad)
+                setImageDrawable(vn.tht.launcher.ui.Icons.get(c, "home"))
+                background = Ui.pill(c, Palette.button, 16)
+                setOnClickListener { actions.goHome() }
+            }, FrameLayout.LayoutParams(Ui.dp(c, 64), Ui.dp(c, 64), Gravity.END or Gravity.CENTER_VERTICAL).apply {
+                marginEnd = Ui.dp(c, 8)
+            })
         }
         val lp = WindowManager.LayoutParams(
             bounds.width(), bounds.height(), WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,

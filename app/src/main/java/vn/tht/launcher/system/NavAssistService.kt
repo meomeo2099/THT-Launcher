@@ -143,7 +143,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
             setImageDrawable(Icons.get(c, icon, Color.WHITE))
             val p = Ui.dp(c, 14)
             setPadding(p, p, p, p)
-            setOnClickListener { performGlobalAction(action) }
+            setOnClickListener { if (action == GLOBAL_ACTION_HOME) LauncherHome.open(c) else performGlobalAction(action) }
         }
         val view = LinearLayout(c).apply {
             orientation = LinearLayout.VERTICAL
@@ -269,9 +269,9 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
             for (id in barItems(prefs)) {
                 val v: View = when (id) {
                     "back" -> backSquare(c) { performGlobalAction(GLOBAL_ACTION_BACK) }
-                    "home" -> icon("home", "Màn hình chính") { performGlobalAction(GLOBAL_ACTION_HOME) }
-                    "apps" -> icon("apps", "Ứng dụng") { host?.openAppDrawer() ?: performGlobalAction(GLOBAL_ACTION_HOME) }
-                    "car" -> icon("car", "Xe") { host?.openControlPanel() ?: performGlobalAction(GLOBAL_ACTION_HOME) }
+                    "home" -> icon("home", "Màn hình chính THT") { LauncherHome.open(c) }
+                    "apps" -> icon("apps", "Ứng dụng") { host?.openAppDrawer() ?: LauncherHome.open(c) }
+                    "car" -> icon("car", "Xe") { host?.openControlPanel() ?: LauncherHome.open(c) }
                     "climate" -> icon("climate", "Điều hoà") { host?.openClimate() }
                     "recents" -> icon("chevron-up", "Đa nhiệm") { performGlobalAction(GLOBAL_ACTION_RECENTS) }
                     "notifications" -> icon("chevron-down", "Thông báo") { performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS) }
@@ -316,7 +316,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
                     val dx = ev.rawX - sx
                     val dy = ev.rawY - sy
                     when {
-                        -dy > minMove && abs(dy) > abs(dx) -> performGlobalAction(GLOBAL_ACTION_HOME)
+                        -dy > minMove && abs(dy) > abs(dx) -> LauncherHome.open(this@NavAssistService)
                         abs(dx) > minMove -> performGlobalAction(GLOBAL_ACTION_BACK)
                     }
                 }
