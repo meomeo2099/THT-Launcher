@@ -1,0 +1,15 @@
+{
+  "run_id": 40848692178,
+  "run_attempt": 2,
+  "conclusion": "success",
+  "head_sha": "311e2689a6acc23f2a0a6c74e0870b281a50ed3a",
+  "version": "0.3.62",
+  "apk_artifact_id": 12886278515,
+  "tests_artifact_id": 12886157958,
+  "tests": {
+    "tests": 84,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+}
