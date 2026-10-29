@@ -77,6 +77,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
      * Bỏ qua khi người dùng vừa chủ động mở điều hoà gốc từ launcher.
      */
     override fun onAccessibilityEvent(e: AccessibilityEvent?) {
+        if (StockMode.active(this)) return
         if (e?.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return
         // Nhớ app đang ở trước (cho nút chia đôi): bỏ qua launcher, thanh hệ thống, bàn phím
         e.packageName?.toString()?.let { pkg ->
@@ -100,6 +101,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
 
     private fun rebuild() {
         removeAll()
+        if (StockMode.active(this)) return
         val m = mode()
         // A killed/rebound service has no bar View, but its persisted overscan can remain.
         if (m != "bar") Overscan.set(this, prefs, 0)
@@ -110,6 +112,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
     }
 
     private fun applyVisibility() {
+        if (StockMode.active(this)) return
         if (bar != null && barStyle != style()) return rebuild()
         val v = if (launcherInFront) View.GONE else View.VISIBLE
         pill?.visibility = v
@@ -425,10 +428,10 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
             instance?.applyVisibility()
         }
         fun reserveForExternal() {
-            instance?.let { service ->
-                val width = service.bar?.takeIf { it.visibility == View.VISIBLE && !service.prefs.sp.getBoolean(KEY_BAR_COLLAPSED, false) }?.width ?: 0
-                Overscan.set(service, service.prefs, width)
-            }
+            instance?.let { Overscan.set(it, it.prefs, 0) }
+        }
+        fun stockModeChanged() {
+            instance?.let { it.tempInfo?.remove(); it.rebuild() }
         }
         private const val KEY_X = "nav_pill_x"
         private const val KEY_Y = "nav_pill_y"

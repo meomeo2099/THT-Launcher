@@ -25,6 +25,7 @@ object AppWindowPolicy {
 
     fun apply(context: Context, packages: Set<String>) {
         if (!restore(context)) return
+        if (StockMode.active(context)) return
         if (!Prefs(context).fullScreen) return
         runCatching {
             val base = Settings.Global.getString(context.contentResolver, "policy_control")

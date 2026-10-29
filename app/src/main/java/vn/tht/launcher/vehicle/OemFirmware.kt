@@ -61,7 +61,12 @@ object OemFirmware {
 
     fun available(context: Context, app: App): Boolean = resolve(context, app) != null
     fun open(context: Context, app: App): Boolean = launch(context, resolve(context, app))
-    fun openStockLauncher(context: Context): Boolean = open(context, App.HOME)
+    fun openStockLauncher(context: Context): Boolean {
+        val intent = resolve(context, App.HOME) ?: return false
+        if (!vn.tht.launcher.system.ExternalAppLauncher.leaveSplit()) return false
+        vn.tht.launcher.system.StockMode.enter(context)
+        return launch(context, intent).also { if (!it) vn.tht.launcher.system.StockMode.exit(context) }
+    }
     fun openSettings(context: Context): Boolean = open(context, App.SETTINGS)
 
     /** Package launch fallback, with the same enabled/exported/permission checks. */

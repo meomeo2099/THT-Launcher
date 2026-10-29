@@ -21,11 +21,16 @@ object ExternalAppLauncher {
         fun prepareExternal(packageName: String): Boolean
         fun externalFailed(packageName: String)
     }
-    interface SplitOwner { fun exitForFullscreen(): Boolean }
+    interface SplitOwner {
+        fun exitForFullscreen(): Boolean
+        fun homeWithoutClosing(): Boolean = exitForFullscreen()
+    }
     private var splitOwner: WeakReference<SplitOwner>? = null
     fun registerSplit(owner: SplitOwner) { splitOwner = WeakReference(owner) }
     fun unregisterSplit(owner: SplitOwner) { if (splitOwner?.get() === owner) splitOwner = null }
     fun leaveSplit(): Boolean = splitOwner?.get()?.exitForFullscreen() ?: true
+    fun homeWithoutClosing(): Boolean = splitOwner?.get()?.homeWithoutClosing() ?: true
+    fun cancelRepairs() { generation++; handler.removeCallbacksAndMessages(null) }
     fun beginSplit(context: Context, packages: Set<String>): Set<String> {
         generation++
         handler.removeCallbacksAndMessages(null)
@@ -121,6 +126,7 @@ object ExternalAppLauncher {
     }
 
     private fun repair(context: Context, pkg: String) {
+        if (StockMode.active(context)) return
         if (context.checkSelfPermission(PERMISSION) != PackageManager.PERMISSION_GRANTED) return
         if (!releaseNativeSplit(pkg)) {
             lastReport = (lastReport + "\nnative split restore failed: ${stackReport()}").takeLast(10000)

@@ -32,6 +32,7 @@ class FloatingDock(private val c: Context, private val actions: DockBar.Actions)
 
     /** Hiện dock tại [where] (toạ độ màn hình của thanh dưới); không có quyền overlay thì bỏ qua. */
     fun show(where: Rect) {
+        if (vn.tht.launcher.system.StockMode.active(c)) return
         if (root != null) return
         if (!Settings.canDrawOverlays(c)) {
             Log.w(TAG, "Thiếu quyền hiển thị trên app khác")
@@ -99,6 +100,9 @@ class FloatingDock(private val c: Context, private val actions: DockBar.Actions)
     companion object {
         private const val TAG = "FloatingDock"
         private var visible: java.lang.ref.WeakReference<View>? = null
+        fun stockModeChanged(context: Context) {
+            visible?.get()?.visibility = if (vn.tht.launcher.system.StockMode.active(context)) View.GONE else View.VISIBLE
+        }
         fun coveredBottom(content: View): Int {
             val dock = visible?.get() ?: return 0
             if (!dock.isAttachedToWindow || !dock.isShown || dock.height <= 0) return 0

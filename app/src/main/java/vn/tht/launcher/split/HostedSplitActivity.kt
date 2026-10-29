@@ -29,6 +29,7 @@ class HostedSplitActivity : Activity() {
     private var request: Split? = null
     private var token = ""
     private var ratio = 50
+    private var mirrored = false
     private var released = false
     private var leftReady = false
     private var rightReady = false
@@ -48,6 +49,14 @@ class HostedSplitActivity : Activity() {
         row = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             addView(leftBox, LinearLayout.LayoutParams(0, -1, ratio.toFloat()))
+            addView(LinearLayout(context).apply {
+                orientation = LinearLayout.VERTICAL
+                addView(TextView(context).apply {
+                    text = "×"; textSize = 24f; gravity = Gravity.CENTER
+                    contentDescription = "Đóng chia màn hình"
+                    setTextColor(0xffffffff.toInt()); setBackgroundColor(0xff202630.toInt())
+                    setOnClickListener { finish() }
+                }, LinearLayout.LayoutParams(-1, Ui.dp(context, 48)))
             addView(TextView(context).apply {
                 text = "⋮"; gravity = Gravity.CENTER; textSize = 22f
                 contentDescription = "Điều khiển chia màn hình"
@@ -74,6 +83,7 @@ class HostedSplitActivity : Activity() {
                     }
                     true
                 }
+            }, LinearLayout.LayoutParams(-1, 0, 1f))
             }, LinearLayout.LayoutParams(Ui.dp(this@HostedSplitActivity, 24), -1))
             addView(rightBox, LinearLayout.LayoutParams(0, -1, (100 - ratio).toFloat()))
         }
@@ -108,8 +118,8 @@ class HostedSplitActivity : Activity() {
     private fun failed(why: String) { Toast.makeText(this, why, Toast.LENGTH_LONG).show(); closeNow(); vn.tht.launcher.system.LauncherHome.open(this) }
     fun setRatio(value: Int) {
         ratio = value.coerceIn(20, 80)
-        (leftBox.layoutParams as LinearLayout.LayoutParams).weight = ratio.toFloat()
-        (rightBox.layoutParams as LinearLayout.LayoutParams).weight = (100 - ratio).toFloat()
+        (leftBox.layoutParams as LinearLayout.LayoutParams).weight = (if (mirrored) 100 - ratio else ratio).toFloat()
+        (rightBox.layoutParams as LinearLayout.LayoutParams).weight = (if (mirrored) ratio else 100 - ratio).toFloat()
         row.requestLayout()
     }
     private fun saveRatio() { request?.let { SplitStore.get(this, it.id)?.let { saved -> SplitStore.put(this, saved.copy(ratio = ratio)) } } }
@@ -117,11 +127,11 @@ class HostedSplitActivity : Activity() {
         if (released) return
         val s = request ?: return
         request = s.copy(left = s.right, right = s.left, ratio = 100 - ratio)
-        // closeNow owns task/display teardown; do not detach live panes a second time.
-        closeNow()
+        mirrored = !mirrored
+        row.layoutDirection = if (mirrored) View.LAYOUT_DIRECTION_RTL else View.LAYOUT_DIRECTION_LTR
+        setRatio(100 - ratio)
         val next = request!!
         SplitStore.get(this, next.id)?.let { SplitStore.put(this, next) }
-        pendingSwap?.invoke(next)
     }
     fun closeNow() {
         if (!released) {
@@ -146,6 +156,10 @@ class HostedSplitActivity : Activity() {
             c.checkSelfPermission("android.permission.ACTIVITY_EMBEDDING") == PackageManager.PERMISSION_GRANTED &&
             c.checkSelfPermission("android.permission.REMOVE_TASKS") == PackageManager.PERMISSION_GRANTED &&
             c.checkSelfPermission("android.permission.MANAGE_ACTIVITY_STACKS") == PackageManager.PERMISSION_GRANTED
+        fun resume(token: String): Boolean = active?.get()?.takeIf { it.token == token && !it.released }?.let {
+            it.getSystemService(android.app.ActivityManager::class.java).moveTaskToFront(it.taskId, 0)
+            true
+        } ?: false
         fun close(token: String) { active?.get()?.takeIf { it.token == token }?.closeNow() }
         fun resize(token: String, ratio: Int): Boolean = active?.get()?.takeIf { it.token == token }?.let { it.setRatio(ratio); true } ?: false
     }

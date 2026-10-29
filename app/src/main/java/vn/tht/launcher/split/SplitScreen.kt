@@ -101,8 +101,14 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
             handler.post { if (session.hasWork) session.close() }
         }
     }
-    fun toggle(split: Split) { if (owns(split.id)) close() else open(split) }
+    fun toggle(split: Split) {
+        if (hostRequest?.id == split.id && hostToken?.let { HostedSplitActivity.resume(it) } == true) return
+        if (owns(split.id)) close() else open(split)
+    }
+    override fun homeWithoutClosing(): Boolean = if (hostToken != null) true else close()
     fun open(split: Split) {
+        val same = hostRequest?.let { it.id == split.id || setOf(it.left, it.right) == setOf(split.left, split.right) } == true
+        if (same && hostToken?.let { HostedSplitActivity.resume(it) } == true) return
         val embedded = context.getSharedPreferences("tht", Context.MODE_PRIVATE).getString("split_backend", "auto") != "native" &&
             HostedSplitActivity.supported(context)
         if (!embedded) {

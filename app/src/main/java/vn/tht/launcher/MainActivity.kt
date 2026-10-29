@@ -98,8 +98,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private var todayKmCache = 0f to 0L
     private var appearanceDirty = false
     private var appliedNight: Boolean? = null
-    private val prefsListener = android.content.SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
-        appearanceDirty = true
+    private val prefsListener = android.content.SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        if (key !in setOf("nav_bar_overscan", "stock_mode")) appearanceDirty = true
     }
 
     private val widgets = mutableMapOf<String, HomeWidget>()
@@ -309,6 +309,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     override fun onResume() {
         super.onResume()
+        vn.tht.launcher.system.StockMode.exit(this)
         inFront = true
         val automationPrefs = vn.tht.launcher.automation.AutomationPrefs(prefs)
         gpsSpeed.setEnabled(automationPrefs.enabled && automationPrefs.closeRoofAtSpeed > 0)
@@ -1220,7 +1221,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     /** Hành động cần màn hình launcher (ngăn kéo app, bảng điều khiển): đưa launcher lên trước nếu đang bị che. */
     private fun inLauncher(action: () -> Unit) {
-        if (!vn.tht.launcher.system.ExternalAppLauncher.leaveSplit()) return
+        if (!vn.tht.launcher.system.ExternalAppLauncher.homeWithoutClosing()) return
         if (inFront) return action()
         startActivity(Intent(this, MainActivity::class.java)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT),

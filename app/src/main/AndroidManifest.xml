@@ -3,6 +3,7 @@
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
     <!-- Chia đôi màn hình (API ẩn IActivityManager): chỉ có hiệu lực khi APK ký khoá platform -->
     <uses-permission android:name="android.permission.MANAGE_ACTIVITY_STACKS" />
     <uses-permission android:name="android.permission.REMOVE_TASKS" />
