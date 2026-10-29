@@ -1077,11 +1077,52 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     }.getOrDefault("?")
 
     private fun saveReport() {
-        val name = "tht-chan-doan-" + java.text.SimpleDateFormat("yyyyMMdd-HHmm", java.util.Locale.US).format(java.util.Date()) + ".txt"
-        runCatching {
-            startActivityForResult(Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
-                .setType("text/plain").putExtra(Intent.EXTRA_TITLE, name), REQ_REPORT)
-        }.onFailure { toast("Đầu xe không có trình lưu file") }
+        toast("Đang tạo báo cáo…")
+        io.post {
+            val result = runCatching {
+                val report = buildReport()
+                val dir = java.io.File(getExternalFilesDir(null) ?: filesDir, "reports").apply { mkdirs() }
+                val name = "tht-chan-doan-" + java.text.SimpleDateFormat("yyyyMMdd-HHmmss", java.util.Locale.US).format(java.util.Date()) + ".txt"
+                val file = java.io.File(dir, name).apply { writeText(report, Charsets.UTF_8) }
+                file to report
+            }
+            handler.post {
+                if (isFinishing || isDestroyed) return@post
+                result.onSuccess { (file, report) ->
+                    val content = Ui.text(this, "Đã lưu: ${file.absolutePath}\n\n$report", 14f).apply {
+                        setTextIsSelectable(true)
+                        typeface = android.graphics.Typeface.MONOSPACE
+                    }
+                    Dialogs.show(this, "Báo cáo đầy đủ", content, listOf(
+                        Dialogs.Button("Đóng"),
+                        Dialogs.Button("Sao chép") {
+                            getSystemService(android.content.ClipboardManager::class.java)
+                                .setPrimaryClip(android.content.ClipData.newPlainText("Chẩn đoán THT", report))
+                            toast("Đã sao chép báo cáo")
+                        },
+                        Dialogs.Button("Chia sẻ file", Dialogs.Kind.PRIMARY) {
+                            runCatching {
+                                val uri = androidx.core.content.FileProvider.getUriForFile(this, "$packageName.reports", file)
+                                val share = Intent(Intent.ACTION_SEND).setType("text/plain")
+                                    .putExtra(Intent.EXTRA_STREAM, uri)
+                                    .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION).apply {
+                                        clipData = android.content.ClipData.newRawUri("Báo cáo THT", uri)
+                                    }
+                                if (packageManager.queryIntentActivities(share, 0).isEmpty())
+                                    toast("Không có ứng dụng nhận chia sẻ; dùng Sao chép hoặc chụp nội dung báo cáo")
+                                else startActivity(Intent.createChooser(share, "Gửi báo cáo THT"))
+                            }.onFailure { toast("Không chia sẻ được; dùng Sao chép hoặc chụp nội dung báo cáo") }
+                        },
+                        Dialogs.Button("Chọn nơi lưu khác") {
+                            runCatching {
+                                startActivityForResult(Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                                    .setType("text/plain").putExtra(Intent.EXTRA_TITLE, file.name), REQ_REPORT)
+                            }.onFailure { toast("Không có trình chọn nơi lưu; báo cáo vẫn đã lưu trong THT") }
+                        },
+                    ), widthDp = 1100)
+                }.onFailure { toast("Không tạo được báo cáo: ${it.message}") }
+            }
+        }
     }
 
     /** Báo cáo đầy đủ: máy, chữ ký, ECARX (cả catalog), VHAL, nhạc, radio, lớp nổi, bản đồ nhúng. Chạy trên luồng car-io. */
