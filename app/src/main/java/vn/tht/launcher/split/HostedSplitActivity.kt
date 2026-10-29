@@ -51,8 +51,8 @@ class HostedSplitActivity : Activity() {
             addView(LinearLayout(context).apply {
                 orientation = LinearLayout.VERTICAL
                 setBackgroundColor(0xff202630.toInt())
-                addView(Ui.button(this@HostedSplitActivity, "×") { finish() }, LinearLayout.LayoutParams(-1, Ui.dp(context, 48)))
-                addView(Ui.button(this@HostedSplitActivity, "⇄") { swap() }, LinearLayout.LayoutParams(-1, Ui.dp(context, 48)))
+                addView(control("×", "Đóng chia màn hình") { finish() })
+                addView(control("⇄", "Đổi bên hai ứng dụng") { swap() })
                 addView(TextView(context).apply {
                 text = "⋮"; gravity = Gravity.CENTER; textSize = 24f
                 setTextColor(0xffffffff.toInt()); setBackgroundColor(0xff202630.toInt())
@@ -70,7 +70,7 @@ class HostedSplitActivity : Activity() {
                     true
                 }
                 }, LinearLayout.LayoutParams(-1, 0, 1f))
-            }, LinearLayout.LayoutParams(Ui.dp(this@HostedSplitActivity, 48), -1))
+            }, LinearLayout.LayoutParams(Ui.dp(this@HostedSplitActivity, 64), -1))
             addView(rightBox, LinearLayout.LayoutParams(0, -1, (100 - ratio).toFloat()))
         }
         val canvas = FrameLayout(this).apply {
@@ -90,6 +90,13 @@ class HostedSplitActivity : Activity() {
             right.start(packageManager.getLaunchIntentForPackage(s.right) ?: error("App phải không mở được"))
         } catch (t: Exception) { failed(t.message ?: "Không mở được cặp ứng dụng") }
     }
+    private fun control(symbol: String, label: String, action: () -> Unit) =
+        Ui.button(this, symbol, 26f, action).apply {
+            contentDescription = label
+            minWidth = 0; minHeight = 0
+            setPadding(0, 0, 0, 0)
+            layoutParams = LinearLayout.LayoutParams(-1, Ui.dp(this@HostedSplitActivity, 64))
+        }
     private fun fullscreen() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
             View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
@@ -110,11 +117,10 @@ class HostedSplitActivity : Activity() {
     }
     private fun saveRatio() { request?.let { SplitStore.get(this, it.id)?.let { saved -> SplitStore.put(this, saved.copy(ratio = ratio)) } } }
     private fun swap() {
+        if (released) return
         val s = request ?: return
         request = s.copy(left = s.right, right = s.left, ratio = 100 - ratio)
-        maps = maps.reversed()
-        leftBox.removeAllViews(); rightBox.removeAllViews()
-        // Recreate rather than reattach released SurfaceViews.
+        // closeNow owns task/display teardown; do not detach live panes a second time.
         closeNow()
         val next = request!!
         SplitStore.get(this, next.id)?.let { SplitStore.put(this, next) }

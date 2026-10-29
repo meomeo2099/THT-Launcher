@@ -1,6 +1,5 @@
 package vn.tht.launcher.split
 
-import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.app.ActivityOptions
 import android.content.Context
@@ -16,7 +15,6 @@ import android.os.PowerManager
 import android.provider.Settings
 import android.util.Log
 import android.view.Gravity
-import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
@@ -365,8 +363,7 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
         if (!invoke("resizeStack", arrayOf(INT, RECT, BOOL, BOOL, BOOL, INT), right.id, layout.right.rect(), true, false, false, -1)) return false
         lastLayout = layout
         dividerLp?.let { lp ->
-            lp.height = layout.left.height
-            dividerPosition?.place(layout.divider - lp.width / 2, layout.left.top)
+            dividerPosition?.place(layout.divider + Ui.dp(context, 48), layout.left.top + Ui.dp(context, 12))
         }
         return true
     }
@@ -415,75 +412,41 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
 
     // ---- Thanh kéo giữa hai app ----
 
-    @SuppressLint("ClickableViewAccessibility")
     private fun showDivider(split: Split): Boolean {
         removeDivider()
         val layout = geometry(split.ratio) ?: return false
         val c = context
-        val w = Ui.dp(c, 44)
-        fun button(icon: String, onClick: () -> Unit) = ImageView(c).apply {
-            val p = Ui.dp(c, 8)
+        fun button(icon: String, label: String, onClick: () -> Unit) = ImageView(c).apply {
+            contentDescription = label
+            val p = Ui.dp(c, 12)
             setPadding(p, p, p, p)
-            background = Ui.pill(c, Color.argb(220, 20, 24, 32), 20)
+            background = Ui.pill(c, Color.argb(240, 20, 24, 32), 16)
             setImageDrawable(Icons.get(c, icon, Color.WHITE))
             setOnClickListener { onClick() }
         }
+        // SystemUI's divider owns a touch region above application overlays. Keep the
+        // buttons outside that region; the native handle alone handles native resizing.
+        // A compact window also avoids intercepting an invisible full-height strip.
         val root = FrameLayout(c).apply {
             addView(LinearLayout(c).apply {
                 orientation = LinearLayout.VERTICAL
                 gravity = Gravity.CENTER_HORIZONTAL
-                addView(button("close") { close() }, LinearLayout.LayoutParams(Ui.dp(c, 40), Ui.dp(c, 40)))
-                addView(button("recirc") { swap() }, LinearLayout.LayoutParams(Ui.dp(c, 40), Ui.dp(c, 40)).apply {
+                addView(button("close", "Đóng chia màn hình") { close() }, LinearLayout.LayoutParams(Ui.dp(c, 56), Ui.dp(c, 56)))
+                addView(button("recirc", "Đổi bên hai ứng dụng") { swap() }, LinearLayout.LayoutParams(Ui.dp(c, 56), Ui.dp(c, 56)).apply {
                     topMargin = Ui.dp(c, 8)
                 })
-            }, FrameLayout.LayoutParams(-2, -2, Gravity.TOP or Gravity.CENTER_HORIZONTAL).apply { topMargin = Ui.dp(c, 12) })
-            // Native split already renders its handle. Drawing a second white handle here
-            // creates two controls (with different vertical centres above the THT dock).
+            }, FrameLayout.LayoutParams(-1, -1))
         }
         val lp = WindowManager.LayoutParams(
-            w, layout.left.height, WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+            Ui.dp(c, 56), Ui.dp(c, 120), WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             PixelFormat.TRANSLUCENT,
         ).apply {
             gravity = Gravity.TOP or Gravity.START
-            x = layout.divider - w / 2
-            y = layout.left.top
-            title = "THT split divider"
-        }
-        var downX = 0f
-        var startX = 0
-        var startRatio = split.ratio
-        var lastResizeAt = 0L
-        root.setOnTouchListener { _, e ->
-            when (e.actionMasked) {
-                MotionEvent.ACTION_DOWN -> {
-                    dragging = true; downX = e.rawX
-                    startX = dividerPosition?.x ?: (layout.divider - w / 2)
-                    startRatio = current?.ratio ?: split.ratio
-                    lastResizeAt = 0L
-                }
-                MotionEvent.ACTION_MOVE -> {
-                    val x = (startX + (e.rawX - downX).toInt()).coerceIn(
-                        (geometry(Split.MIN_RATIO)?.divider ?: layout.divider) - w / 2,
-                        (geometry(Split.MAX_RATIO)?.divider ?: layout.divider) - w / 2)
-                    val now = android.os.SystemClock.uptimeMillis()
-                    // Move the native boundary too, rather than dragging an independent overlay
-                    // and leaving the OEM divider at its previous position until ACTION_UP.
-                    if (now - lastResizeAt >= 70) {
-                        lastResizeAt = now
-                        place(SplitGeometry.ratio(area(), x + w / 2))
-                    }
-                }
-                MotionEvent.ACTION_UP -> {
-                    dragging = false
-                    val x = (startX + (e.rawX - downX).toInt()) + w / 2
-                    val ratio = SplitGeometry.ratio(area(), x)
-                    if (place(ratio)) SplitStore.get(c, split.id)?.let { SplitStore.put(c, it.copy(ratio = ratio)) }
-                }
-                MotionEvent.ACTION_CANCEL -> { dragging = false; place(startRatio) }
-            }
-            true
+            x = layout.divider + Ui.dp(c, 48)
+            y = layout.left.top + Ui.dp(c, 12)
+            title = "THT split controls"
         }
         try {
             val position = vn.tht.launcher.ui.ScreenOverlayPosition(root, wm, lp)
