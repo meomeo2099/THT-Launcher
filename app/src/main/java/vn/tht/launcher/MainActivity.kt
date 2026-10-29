@@ -912,7 +912,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     override fun navLaunchIntent(): Intent? = navPackage()?.let { packageManager.getLaunchIntentForPackage(it) }
 
-    override fun canEmbedMap() = prefs.sp.getBoolean("embed_map", true) && PlatformSignature.verify(this)
+    override fun canEmbedMap() = prefs.sp.getBoolean("embed_map", true) && PlatformSignature.verify(this) &&
+        packageManager.hasSystemFeature(android.content.pm.PackageManager.FEATURE_ACTIVITIES_ON_SECONDARY_DISPLAYS)
 
     override fun weather() = vn.tht.launcher.system.Weather.current
 
@@ -1096,6 +1097,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         appendLine(vn.tht.launcher.vehicle.OemFirmware.diagnosticReport(this@MainActivity))
         appendLine("Default HOME: ${vn.tht.launcher.system.LauncherHome.defaultPackage(this@MainActivity)}")
         appendLine("== Mở ứng dụng ngoài")
+        appendLine("Secondary-display activities: ${packageManager.hasSystemFeature(android.content.pm.PackageManager.FEATURE_ACTIVITIES_ON_SECONDARY_DISPLAYS)}")
         appendLine(vn.tht.launcher.system.ExternalAppLauncher.lastReport)
         appendLine()
         appendLine("== ECARX")

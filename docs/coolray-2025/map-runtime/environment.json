@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-29",
+  "api": 28,
+  "resolution": [
+    1920,
+    720
+  ],
+  "density_dpi": 160,
+  "framework_signer": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+  "activities_on_secondary_displays": false,
+  "overlay_permission": "granted for test",
+  "apk": "locally built 0.3.60 release; signed using official public AOSP platform test key",
+  "fixture": "own standard/resizable/allowEmbedded activity; not a vehicle map app",
+  "verified": [
+    "stale stack width 960 -> 1920 after THT app launch",
+    "display remains 0; fullscreen windowing mode",
+    "THT floating dock and explicit Home",
+    "framework callback subclass exists; framework stub implementations absent"
+  ],
+  "not_verified": [
+    "live secondary-display activity handoff: emulator feature absent",
+    "Coolray vendor map rendering and OEM SystemUI policy on physical head unit"
+  ]
+}

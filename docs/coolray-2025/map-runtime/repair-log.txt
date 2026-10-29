@@ -1,0 +1,6 @@
+--------- beginning of system
+--------- beginning of main
+--------- beginning of crash
+10-29 04:30:00.757  6010  6010 I ExternalAppLauncher: Fullscreen stack=11 package=vn.tht.fixture cleared=true
+10-29 04:30:01.083  6010  6010 I ExternalAppLauncher: Fullscreen stack=11 package=vn.tht.fixture cleared=true
+10-29 04:30:01.720  6010  6010 I ExternalAppLauncher: Fullscreen stack=11 package=vn.tht.fixture cleared=true

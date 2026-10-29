@@ -50,7 +50,7 @@
   },
   {
     "name": "vn.tht.launcher.system.ExternalLaunchPolicyTest",
-    "tests": "3",
+    "tests": "6",
     "failures": "0",
     "errors": "0",
     "skipped": "0"

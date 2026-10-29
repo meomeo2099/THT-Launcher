@@ -7,4 +7,12 @@ internal object ExternalLaunchPolicy {
     fun mayClearStack(names: List<String?>, pkg: String): Boolean =
         names.isNotEmpty() && names.all { belongs(it, pkg) }
     fun binderAccepted(result: Any?): Boolean = result != false
+    /** Android 9 StackInfo carries the type inside Configuration, newer variants expose a getter. */
+    fun activityType(info: Any): Int? = runCatching {
+        info.javaClass.getMethod("getActivityType").invoke(info) as? Int
+    }.getOrNull() ?: runCatching {
+        val configuration = info.javaClass.getField("configuration").get(info)
+        val window = configuration.javaClass.getField("windowConfiguration").get(configuration)
+        window.javaClass.getMethod("getActivityType").invoke(window) as? Int
+    }.getOrNull()
 }

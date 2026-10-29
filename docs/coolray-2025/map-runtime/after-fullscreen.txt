@@ -1,0 +1,12 @@
+Stack id=11 bounds=[0,0][1920,720] displayId=0 userId=0
+ configuration={1.0 310mcc260mnc [en_US] ldltr sw720dp w1920dp h648dp 160dpi lrg long land finger qwerty/v/v tball/v winConfig={ mBounds=Rect(0, 0 - 1920, 672) mAppBounds=Rect(0, 0 - 1920, 672) mWindowingMode=fullscreen mActivityType=standard} s.5}
+  taskId=16: vn.tht.fixture/vn.tht.fixture.MainActivity bounds=[0,0][1920,720] userId=0 visible=true topActivity=ComponentInfo{vn.tht.fixture/vn.tht.fixture.MainActivity}
+
+Stack id=12 bounds=[0,0][1920,720] displayId=0 userId=0
+ configuration={1.0 310mcc260mnc [en_US] ldltr sw720dp w1920dp h648dp 160dpi lrg long land finger qwerty/v/v tball/v winConfig={ mBounds=Rect(0, 0 - 1920, 672) mAppBounds=Rect(0, 0 - 1920, 672) mWindowingMode=fullscreen mActivityType=standard} s.5}
+  taskId=17: vn.tht.launcher/vn.tht.launcher.MainActivity bounds=[0,0][1920,720] userId=0 visible=false topActivity=ComponentInfo{vn.tht.launcher/vn.tht.launcher.MainActivity}
+
+Stack id=0 bounds=[0,0][1920,720] displayId=0 userId=0
+ configuration={1.0 310mcc260mnc [en_US] ldltr sw720dp w1920dp h648dp 160dpi lrg long land finger qwerty/v/v tball/v winConfig={ mBounds=Rect(0, 0 - 1920, 672) mAppBounds=Rect(0, 0 - 1920, 672) mWindowingMode=fullscreen mActivityType=home} s.5}
+  taskId=5: com.android.launcher3/com.android.launcher3.Launcher bounds=[0,0][1920,720] userId=0 visible=false topActivity=ComponentInfo{com.android.launcher3/com.android.launcher3.Launcher}
+

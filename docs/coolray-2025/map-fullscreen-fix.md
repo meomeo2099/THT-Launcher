@@ -28,7 +28,7 @@ Nguồn đọc từ hồ sơ REA đã công bố, không dùng văn bản đính
 - Sau mở kiểm tra lại ở 350/1100/3000 ms; chỉ sửa task đang hiển thị ở display 0 và đúng package. Chỉ xóa stack override khi mọi task trong stack thuộc package đó và stack là standard, không phải HOME.
 - Mọi repair tự hủy khi có yêu cầu mở app khác; không tự đưa task nền lên trước.
 - Preview chỉ nhúng lại sau một chu kỳ pause → resume thực sự; lỗi mở app thì cho khôi phục preview. Không dùng focus/tick làm bằng chứng đã rời và quay lại launcher.
-- ActivityView đợi callback ready, có kích thước và window focus. Bridge chỉ compile against API signatures; APK không chứa implementation giả của framework.
+- Chỉ nhúng nếu firmware báo hỗ trợ Activity trên secondary display; không chỉ kiểm tra chữ ký. ActivityView đợi callback ready, có kích thước và window focus. Bridge chỉ compile against API signatures; APK không chứa implementation giả của framework.
 - Nút Home THT ở pill/thanh bên/cử chỉ mở explicit MainActivity. Dock nổi thêm nút Home riêng, không phụ thuộc thứ tự shortcuts của người dùng.
 - Bản cập nhật bật dock trên app một lần theo lựa chọn người dùng. Người dùng có thể tắt lại trong Cài đặt; không ghi đè lựa chọn này trong các lần khởi động sau.
 - Cài đặt hiển thị launcher mặc định hiện tại. Nút Home vật lý hoặc nút OEM vẫn thuộc firmware/launcher mặc định: cần chọn THT trong cài đặt Home để thay đường này; không giả lập hoặc vô hiệu hóa OEM power/eCall/camera.
@@ -37,4 +37,21 @@ Dock là cửa sổ overlay trên Activity toàn màn hình của app; đây kh�
 
 ## Kiểm chứng
 
-Bổ sung 7 kiểm thử cho handoff pause/resume, lỗi mở app, nhiều chu kỳ, match package chính xác, stack trộn và Binder void/false. Test thuần không chứng minh giao thức firmware Coolray. Build debug/release cục bộ thành công; tổng [37 kiểm thử](map-handoff-tests.json), không lỗi. Thử runtime sẽ được ghi riêng sau khi có APK ký platform.
+Bổ sung 10 kiểm thử cho handoff pause/resume, lỗi mở app, nhiều chu kỳ, match package chính xác, stack trộn, Binder void/false và cấu trúc WindowConfiguration của Android 9. Test thuần không chứng minh giao thức firmware Coolray. Build debug/release cục bộ thành công; tổng [40 kiểm thử](map-handoff-tests.json), không lỗi. Kết quả runtime ở phần dưới.
+
+### Runtime Android 9, APK 0.3.60 ký platform
+
+Máy ảo không có feature `android.software.activities_on_secondary_displays`. Khi chỉ gọi ActivityView.startActivity trên máy này, Android đưa app sang display 0 dù virtual display đã được tạo. Đã thêm capability guard để dùng nút mở toàn màn hình trên cấu hình này; không khẳng định đã thử thành công handoff từ một Activity thực sự chạy trên secondary display.
+
+Thử bằng [fixture tự viết](map-runtime/fixture/), không dùng app điều khiển xe:
+
+1. Đặt stack riêng của fixture ở chiều rộng 960 px bằng `am stack resize`. [Trước mở](map-runtime/before-half-width.txt): task 16, stack 11, display 0, bounds 960×720.
+2. Trở về THT và chạm ô Dẫn đường đã chọn fixture. [Sau mở](map-runtime/after-fullscreen.txt): đúng task/stack đó có bounds 1920×720, mode fullscreen, display 0. [Log](map-runtime/repair-log.txt) xác nhận `cleared=true`.
+3. [Ảnh app toàn màn hình cùng dock/Home THT](map-runtime/fullscreen-dock.png). Chạm Home ở dock: [task THT visible=true](map-runtime/after-home.txt), fixture visible=false; [ảnh trở về THT](map-runtime/home-after.png).
+4. [Kiểm tra DEX](map-runtime/apk-framework-bridge-check.json): không có định nghĩa `android.app.ActivityView`/StateCallback giả trong APK; có callback subclass của THT. [Chữ ký APK cục bộ](map-runtime/local-platform-signature.txt) trùng framework máy ảo và hai mẫu OEM. Khóa dùng để thử là khóa test AOSP công khai chính thức, không lấy signing secrets của GitHub về máy.
+
+Bài thử đầu phát hiện Android 9 không có getter activityType trực tiếp trên StackInfo, nên điều kiện an toàn đã bỏ qua resizeStack. Đã thêm fallback đọc Configuration.windowConfiguration và ba test hồi quy. Không dùng resizeTask để xóa bounds của task fullscreen, vì Android 9 từ chối lệnh đó; xóa stack override thuộc độc quyền đúng package rồi đặt windowing mode của task.
+
+GitHub run #59 ban đầu không chạy do Actions budget. Sau khi người dùng chuyển repository sang PUBLIC, chạy lại đã thành công. Bản sửa Android 9/capability và bằng chứng này được đưa vào lượt build tiếp theo.
+
+Chưa chạy bản đồ OEM/Vietmap hoặc thử trên đầu xe Coolray thật. Kích thước task, chữ ký và đường Home đã kiểm chứng trên máy ảo không chứng minh mọi SDK bản đồ/vendor SystemUI đều xử lý giống nhau.

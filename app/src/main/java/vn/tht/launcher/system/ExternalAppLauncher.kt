@@ -78,20 +78,20 @@ object ExternalAppLauncher {
     private fun repair(context: Context, pkg: String) {
         if (context.checkSelfPermission(PERMISSION) != PackageManager.PERMISSION_GRANTED) return
         stacks().filter { it.display == 0 && it.visible && it.top?.packageName == pkg }.forEach { stack ->
-            stack.tasks.filter { ExternalLaunchPolicy.belongs(it.second, pkg) }.forEach { (id, _) ->
-                val mode = invoke("setTaskWindowingMode", arrayOf(Int::class.javaPrimitiveType!!,
-                    Int::class.javaPrimitiveType!!, Boolean::class.javaPrimitiveType!!), id, 1, false)
-                val bounds = invoke("resizeTask", arrayOf(Int::class.javaPrimitiveType!!, Rect::class.java,
-                    Int::class.javaPrimitiveType!!), id, null, 0)
-                lastReport = (lastReport + "\nrepair task=$id display=0 mode=$mode bounds=$bounds").takeLast(6000)
-            }
-            // A stack override can retain the old widget width. Only clear a stack exclusively
-            // occupied by the requested app, excluding HOME and other special activity types.
+            // Clear a stale stack override first. resizeTask is not permitted on an Android 9
+            // fullscreen task, and changing its windowing mode alone leaves that override intact.
             if (stack.standard && ExternalLaunchPolicy.mayClearStack(stack.tasks.map { it.second }, pkg)) {
-                invoke("resizeStack", arrayOf(Int::class.javaPrimitiveType!!, Rect::class.java,
+                val cleared = invoke("resizeStack", arrayOf(Int::class.javaPrimitiveType!!, Rect::class.java,
                     Boolean::class.javaPrimitiveType!!, Boolean::class.javaPrimitiveType!!,
                     Boolean::class.javaPrimitiveType!!, Int::class.javaPrimitiveType!!),
                     stack.id, null, false, false, false, -1)
+                lastReport = (lastReport + "\nclear stack=${stack.id} bounds=$cleared").takeLast(6000)
+                Log.i(TAG, "Fullscreen stack=${stack.id} package=$pkg cleared=$cleared")
+            }
+            stack.tasks.filter { ExternalLaunchPolicy.belongs(it.second, pkg) }.forEach { (id, _) ->
+                val mode = invoke("setTaskWindowingMode", arrayOf(Int::class.javaPrimitiveType!!,
+                    Int::class.javaPrimitiveType!!, Boolean::class.javaPrimitiveType!!), id, 1, false)
+                lastReport = (lastReport + "\nrepair task=$id display=0 mode=$mode").takeLast(6000)
             }
         }
     }
@@ -114,7 +114,7 @@ object ExternalAppLauncher {
                 val names = cls.getField("taskNames").get(value) as Array<*>
                 Stack(cls.getField("stackId").getInt(value), cls.getField("displayId").getInt(value),
                     cls.getField("visible").getBoolean(value),
-                    runCatching { cls.getMethod("getActivityType").invoke(value) == 1 }.getOrDefault(false),
+                    ExternalLaunchPolicy.activityType(value) == 1,
                     cls.getField("topActivity").get(value) as? ComponentName,
                     ids.mapIndexed { index, id -> id to (names.getOrNull(index) as? String) })
             }.getOrNull()
