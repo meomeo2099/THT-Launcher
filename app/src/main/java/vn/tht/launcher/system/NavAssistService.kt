@@ -173,7 +173,12 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
                         runCatching { wm.updateViewLayout(view, lp) }
                     }
                 }
-                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> if (dragging) {
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> if (!dragging && ev.actionMasked == MotionEvent.ACTION_UP &&
+                    (sy - ev.rawY > Ui.dp(c, 48) || kotlin.math.abs(ev.rawX - sx) > Ui.dp(c, 48))) {
+                    if (sy - ev.rawY > kotlin.math.abs(ev.rawX - sx)) LauncherHome.open(c)
+                    else performGlobalAction(GLOBAL_ACTION_BACK)
+                    return@OnTouchListener true
+                } else if (dragging) {
                     prefs.sp.edit().putInt(KEY_X, lp.x).putInt(KEY_Y, lp.y).apply()
                     dragging = false
                     return@OnTouchListener true
@@ -337,7 +342,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
         }
         val lp = params(Ui.dp(c, 400), Ui.dp(c, 40)).apply {
             gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
-            y = Ui.dp(c, 2)
+            y = Ui.dp(c, 24)
         }
         runCatching { wm.addView(view, lp) }.onSuccess { strip = view }
     }
