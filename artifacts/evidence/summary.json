@@ -1,0 +1,14 @@
+{
+  "build": "local release, Gradle 8.9/JDK17",
+  "version": "0.3.76",
+  "source": "73b7bb0e1d55f5a908eb58c8228112c9a556a149",
+  "counts": {
+    "tests": 100,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "apk_sha256": "fa8cc0eadfd38b9dfe50ce1e82ee27c6a8a5abcf4c0157a667abc338264f849e",
+  "runtime": "Not run; no connected emulator/car this turn",
+  "ci": "Blocked before execution by Actions budget"
+}

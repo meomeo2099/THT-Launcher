@@ -1,0 +1,185 @@
+Picked up JAVA_TOOL_OPTIONS:  -Dhttps.proxyHost=proxy -Dhttps.proxyPort=8080 -Dhttp.proxyHost=proxy -Dhttp.proxyPort=8080 -Dhttp.nonProxyHosts=localhost|127.* -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts
+> Task :app:checkKotlinGradlePluginConfigurationErrors
+> Task :app:compilePlatformStubs UP-TO-DATE
+> Task :app:platformStubsJar UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:processDebugMainManifest
+> Task :app:processDebugManifest
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :app:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :app:preReleaseBuild UP-TO-DATE
+> Task :app:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :app:mergeReleaseNativeLibs NO-SOURCE
+> Task :app:processDebugManifestForPackage
+> Task :app:stripReleaseDebugSymbols NO-SOURCE
+> Task :app:extractReleaseNativeSymbolTables NO-SOURCE
+> Task :app:mergeReleaseNativeDebugMetadata NO-SOURCE
+> Task :app:buildKotlinToolingMetadata UP-TO-DATE
+> Task :app:checkReleaseDuplicateClasses UP-TO-DATE
+> Task :app:checkReleaseAarMetadata UP-TO-DATE
+> Task :app:generateReleaseResValues UP-TO-DATE
+> Task :app:mapReleaseSourceSetPaths
+> Task :app:generateReleaseResources
+> Task :app:processDebugResources
+> Task :app:mergeReleaseResources
+> Task :app:packageReleaseResources
+> Task :app:createReleaseCompatibleScreenManifests
+> Task :app:extractDeepLinksRelease UP-TO-DATE
+> Task :app:parseReleaseLocalResources
+> Task :app:processReleaseMainManifest
+> Task :app:processReleaseManifest
+> Task :app:javaPreCompileRelease UP-TO-DATE
+> Task :app:mergeReleaseArtProfile UP-TO-DATE
+> Task :app:extractProguardFiles UP-TO-DATE
+> Task :app:mergeReleaseStartupProfile UP-TO-DATE
+> Task :app:mergeReleaseShaders UP-TO-DATE
+> Task :app:compileReleaseShaders NO-SOURCE
+> Task :app:generateReleaseAssets UP-TO-DATE
+> Task :app:mergeReleaseAssets UP-TO-DATE
+> Task :app:compressReleaseAssets UP-TO-DATE
+> Task :app:processReleaseManifestForPackage
+> Task :app:extractReleaseVersionControlInfo
+> Task :app:collectReleaseDependencies UP-TO-DATE
+> Task :app:sdkReleaseDependencyData UP-TO-DATE
+> Task :app:validateSigningRelease UP-TO-DATE
+> Task :app:writeReleaseAppMetadata UP-TO-DATE
+> Task :app:writeReleaseSigningConfigVersions UP-TO-DATE
+> Task :app:processReleaseResources
+> Task :app:optimizeReleaseResources
+> Task :app:compileDebugKotlin
+> Task :app:compileReleaseKotlin
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/MainActivity.kt:558:17 Variable 'x' is never used
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/MainActivity.kt:1076:86 'versionCode: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/MainActivity.kt:1090:55 There is more than one label with such a name in this scope
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/MainActivity.kt:1118:33 'startActivityForResult(Intent, Int): Unit' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/MainActivity.kt:1173:70 'getter for defaultDisplay: Display!' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/MainActivity.kt:1173:85 'getRealSize(Point!): Unit' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/MainActivity.kt:1174:69 'getter for defaultDisplay: Display!' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/MainActivity.kt:1174:84 'getSize(Point!): Unit' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/MainActivity.kt:1213:58 'getter for stableInsetLeft: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/controls/ClimatePopup.kt:59:21 Condition 'v == null' is always 'false'
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/controls/ClimatePopup.kt:223:17 Condition 'r == null' is always 'false'
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/controls/ControlCenter.kt:65:60 Condition 'v != null' is always 'true'
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/home/AppWidgets.kt:112:71 'updateAppWidgetSize(Bundle!, Int, Int, Int, Int): Unit' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/home/EmbeddedMap.kt:79:72 'getRealSize(Point!): Unit' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/settings/SettingsActivity.kt:39:43 'ProgressDialog' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/settings/SettingsActivity.kt:79:48 'setter for systemUiVisibility: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/settings/SettingsActivity.kt:79:74 'SYSTEM_UI_FLAG_IMMERSIVE_STICKY: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/settings/SettingsActivity.kt:80:18 'SYSTEM_UI_FLAG_FULLSCREEN: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/settings/SettingsActivity.kt:80:52 'SYSTEM_UI_FLAG_HIDE_NAVIGATION: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/settings/SettingsActivity.kt:80:91 'SYSTEM_UI_FLAG_LAYOUT_STABLE: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/settings/SettingsActivity.kt:81:18 'SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/settings/SettingsActivity.kt:81:59 'SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/HostedSplitActivity.kt:46:52 'FLAG_FULLSCREEN: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/HostedSplitActivity.kt:108:26 'setter for systemUiVisibility: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/HostedSplitActivity.kt:108:52 'SYSTEM_UI_FLAG_FULLSCREEN: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/HostedSplitActivity.kt:108:86 'SYSTEM_UI_FLAG_HIDE_NAVIGATION: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/HostedSplitActivity.kt:109:18 'SYSTEM_UI_FLAG_IMMERSIVE_STICKY: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/HostedSplitActivity.kt:109:58 'SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/HostedSplitActivity.kt:110:18 'SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/HostedSplitActivity.kt:110:64 'SYSTEM_UI_FLAG_LAYOUT_STABLE: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/SplitScreen.kt:203:41 Unnecessary non-null assertion (!!) on a non-null receiver of type Any
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/SplitScreen.kt:352:53 'getter for defaultDisplay: Display!' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/SplitScreen.kt:352:68 'getRealSize(Point!): Unit' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/SplitScreen.kt:376:26 Parameter 'lp' is never used, could be renamed to _
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/SplitUi.kt:30:42 There is more than one label with such a name in this scope
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/system/NavAssistService.kt:221:20 'getter for defaultDisplay: Display!' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/system/NavAssistService.kt:222:54 'getRealSize(Point!): Unit' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/system/NavAssistService.kt:223:53 'getSize(Point!): Unit' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/system/NavAssistService.kt:268:17 Variable 'rail' is never used
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/system/Overscan.kt:22:13 Parameter 'c' is never used
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/ui/Bitmaps.kt:18:55 'getter for defaultDisplay: Display!' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/ui/Bitmaps.kt:18:70 'getRealMetrics(DisplayMetrics!): Unit' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/ui/ContentInsets.kt:13:46 'getter for systemWindowInsetTop: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/ui/Dialogs.kt:70:120 'SOFT_INPUT_ADJUST_RESIZE: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/vehicle/DemoCarFunction.kt:37:38 Parameter 'zone' is never used
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/vehicle/DemoCarFunction.kt:44:35 Parameter 'id' is never used
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/vehicle/DemoCarFunction.kt:44:44 Parameter 'zone' is never used
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/vehicle/OemFirmware.kt:102:23 Unnecessary safe call on a non-null receiver of type Intent?
+
+> Task :app:compileReleaseJavaWithJavac NO-SOURCE
+> Task :app:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :app:processReleaseJavaRes UP-TO-DATE
+> Task :app:mergeReleaseJavaResource UP-TO-DATE
+> Task :app:expandReleaseArtProfileWildcards
+
+> Task :app:compileDebugKotlin
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/MainActivity.kt:558:17 Variable 'x' is never used
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/MainActivity.kt:1076:86 'versionCode: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/MainActivity.kt:1090:55 There is more than one label with such a name in this scope
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/MainActivity.kt:1118:33 'startActivityForResult(Intent, Int): Unit' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/MainActivity.kt:1173:70 'getter for defaultDisplay: Display!' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/MainActivity.kt:1173:85 'getRealSize(Point!): Unit' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/MainActivity.kt:1174:69 'getter for defaultDisplay: Display!' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/MainActivity.kt:1174:84 'getSize(Point!): Unit' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/MainActivity.kt:1213:58 'getter for stableInsetLeft: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/controls/ClimatePopup.kt:59:21 Condition 'v == null' is always 'false'
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/controls/ClimatePopup.kt:223:17 Condition 'r == null' is always 'false'
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/controls/ControlCenter.kt:65:60 Condition 'v != null' is always 'true'
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/home/AppWidgets.kt:112:71 'updateAppWidgetSize(Bundle!, Int, Int, Int, Int): Unit' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/home/EmbeddedMap.kt:79:72 'getRealSize(Point!): Unit' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/settings/SettingsActivity.kt:39:43 'ProgressDialog' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/settings/SettingsActivity.kt:79:48 'setter for systemUiVisibility: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/settings/SettingsActivity.kt:79:74 'SYSTEM_UI_FLAG_IMMERSIVE_STICKY: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/settings/SettingsActivity.kt:80:18 'SYSTEM_UI_FLAG_FULLSCREEN: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/settings/SettingsActivity.kt:80:52 'SYSTEM_UI_FLAG_HIDE_NAVIGATION: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/settings/SettingsActivity.kt:80:91 'SYSTEM_UI_FLAG_LAYOUT_STABLE: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/settings/SettingsActivity.kt:81:18 'SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/settings/SettingsActivity.kt:81:59 'SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/HostedSplitActivity.kt:46:52 'FLAG_FULLSCREEN: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/HostedSplitActivity.kt:108:26 'setter for systemUiVisibility: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/HostedSplitActivity.kt:108:52 'SYSTEM_UI_FLAG_FULLSCREEN: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/HostedSplitActivity.kt:108:86 'SYSTEM_UI_FLAG_HIDE_NAVIGATION: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/HostedSplitActivity.kt:109:18 'SYSTEM_UI_FLAG_IMMERSIVE_STICKY: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/HostedSplitActivity.kt:109:58 'SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/HostedSplitActivity.kt:110:18 'SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/HostedSplitActivity.kt:110:64 'SYSTEM_UI_FLAG_LAYOUT_STABLE: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/SplitScreen.kt:203:41 Unnecessary non-null assertion (!!) on a non-null receiver of type Any
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/SplitScreen.kt:352:53 'getter for defaultDisplay: Display!' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/SplitScreen.kt:352:68 'getRealSize(Point!): Unit' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/SplitScreen.kt:376:26 Parameter 'lp' is never used, could be renamed to _
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/split/SplitUi.kt:30:42 There is more than one label with such a name in this scope
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/system/NavAssistService.kt:221:20 'getter for defaultDisplay: Display!' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/system/NavAssistService.kt:222:54 'getRealSize(Point!): Unit' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/system/NavAssistService.kt:223:53 'getSize(Point!): Unit' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/system/NavAssistService.kt:268:17 Variable 'rail' is never used
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/system/Overscan.kt:22:13 Parameter 'c' is never used
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/ui/Bitmaps.kt:18:55 'getter for defaultDisplay: Display!' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/ui/Bitmaps.kt:18:70 'getRealMetrics(DisplayMetrics!): Unit' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/ui/ContentInsets.kt:13:46 'getter for systemWindowInsetTop: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/ui/Dialogs.kt:70:120 'SOFT_INPUT_ADJUST_RESIZE: Int' is deprecated. Deprecated in Java
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/vehicle/DemoCarFunction.kt:37:38 Parameter 'zone' is never used
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/vehicle/DemoCarFunction.kt:44:35 Parameter 'id' is never used
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/vehicle/DemoCarFunction.kt:44:44 Parameter 'zone' is never used
+w: file:///workspace/THT-Launcher/app/src/main/java/vn/tht/launcher/vehicle/OemFirmware.kt:102:23 Unnecessary safe call on a non-null receiver of type Intent?
+
+> Task :app:compileDebugJavaWithJavac NO-SOURCE
+> Task :app:bundleDebugClassesToCompileJar
+> Task :app:bundleDebugClassesToRuntimeJar
+> Task :app:processDebugJavaRes UP-TO-DATE
+> Task :app:minifyReleaseWithR8
+> Task :app:compileDebugUnitTestKotlin
+> Task :app:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :app:processDebugUnitTestJavaRes UP-TO-DATE
+
+> Task :app:testDebugUnitTest
+Picked up JAVA_TOOL_OPTIONS:  -Dhttps.proxyHost=proxy -Dhttps.proxyPort=8080 -Dhttp.proxyHost=proxy -Dhttp.proxyPort=8080 -Dhttp.nonProxyHosts=localhost|127.* -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts
+
+> Task :app:compileReleaseArtProfile
+> Task :app:packageRelease
+> Task :app:createReleaseApkListingFileRedirect
+> Task :app:assembleRelease
+
+BUILD SUCCESSFUL in 3m 8s
+64 actionable tasks: 29 executed, 35 up-to-date

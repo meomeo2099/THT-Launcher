@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="vn.tht.launcher.split.SplitSessionTest" tests="24" skipped="0" failures="0" errors="0" timestamp="2026-10-30T03:14:46" hostname="c88c6e4f8844" time="0.051">
+  <properties/>
+  <testcase name="lateNativeTransitionGetsBoundedResizeRetryBeforeCommit" classname="vn.tht.launcher.split.SplitSessionTest" time="0.007"/>
+  <testcase name="resizeFailureRollsBackInsteadOfAnnouncingActive" classname="vn.tht.launcher.split.SplitSessionTest" time="0.037"/>
+  <testcase name="missingPrimaryConfirmationIsBoundedAndDoesNotMoveSecondary" classname="vn.tht.launcher.split.SplitSessionTest" time="0.0"/>
+  <testcase name="invalidReplacementPreservesExistingActivePairAndControls" classname="vn.tht.launcher.split.SplitSessionTest" time="0.0"/>
+  <testcase name="failedPendingRollbackRetainsRecoveryOwnershipAndRejectsStaleWork" classname="vn.tht.launcher.split.SplitSessionTest" time="0.0"/>
+  <testcase name="failedSecondaryMoveRollsBackAndNeverCommits" classname="vn.tht.launcher.split.SplitSessionTest" time="0.0"/>
+  <testcase name="bothTasksExistBeforeAnyWindowMutationAndActivationWaitsForResize" classname="vn.tht.launcher.split.SplitSessionTest" time="0.0"/>
+  <testcase name="failedPrimaryMoveStillRollsBackPossibleBinderMutation" classname="vn.tht.launcher.split.SplitSessionTest" time="0.0"/>
+  <testcase name="sameTaskIsRejectedBeforeMutation" classname="vn.tht.launcher.split.SplitSessionTest" time="0.001"/>
+  <testcase name="releaseRollsBackAnIncompletePrimaryAndCancelsSecondary" classname="vn.tht.launcher.split.SplitSessionTest" time="0.0"/>
+  <testcase name="validReplacementClosesOldPairBeforePreparingNext" classname="vn.tht.launcher.split.SplitSessionTest" time="0.0"/>
+  <testcase name="closeCancelsEveryPendingStageIncludingCallbacksAlreadyDequeued" classname="vn.tht.launcher.split.SplitSessionTest" time="0.005"/>
+  <testcase name="taskTimeoutNeverMovesPrimaryAndReleasesPreparedResources" classname="vn.tht.launcher.split.SplitSessionTest" time="0.0"/>
+  <testcase name="missingPairConfirmationIsBoundedAndRollsBack" classname="vn.tht.launcher.split.SplitSessionTest" time="0.0"/>
+  <testcase name="delayedTaskAppearanceContinuesInRightThenLeftOrder" classname="vn.tht.launcher.split.SplitSessionTest" time="0.0"/>
+  <testcase name="adoptedOwnershipRetriesOnlyCleanupWithoutOpeningOrCommitting" classname="vn.tht.launcher.split.SplitSessionTest" time="0.001"/>
+  <testcase name="invalidNewRequestStillCancelsAnOlderPendingAttempt" classname="vn.tht.launcher.split.SplitSessionTest" time="0.0"/>
+  <testcase name="adoptionCannotOverwritePendingOrActiveWork" classname="vn.tht.launcher.split.SplitSessionTest" time="0.0"/>
+  <testcase name="abandonNeverRollsBackAndStaleCallbacksCannotResurrectOwnership" classname="vn.tht.launcher.split.SplitSessionTest" time="0.0"/>
+  <testcase name="acceptedResizeWhoseBoundsNeverSettleRollsBack" classname="vn.tht.launcher.split.SplitSessionTest" time="0.0"/>
+  <testcase name="prepareAndLaunchFailuresFinishWithoutRollback" classname="vn.tht.launcher.split.SplitSessionTest" time="0.0"/>
+  <testcase name="adoptedCleanupFailureRemainsRetryableWithoutTasks" classname="vn.tht.launcher.split.SplitSessionTest" time="0.0"/>
+  <testcase name="cleanupFailurePreservesOwnershipAndBlocksReplacementUntilRetry" classname="vn.tht.launcher.split.SplitSessionTest" time="0.0"/>
+  <testcase name="pendingReplacementCannotBeOvertakenByStaleCallbacks" classname="vn.tht.launcher.split.SplitSessionTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

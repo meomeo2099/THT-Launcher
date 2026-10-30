@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="vn.tht.launcher.home.PreviewHandoffTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-30T03:14:46" hostname="c88c6e4f8844" time="0.001">
+  <properties/>
+  <testcase name="failedLaunchDoesNotLeavePreviewPermanentlySuspended" classname="vn.tht.launcher.home.PreviewHandoffTest" time="0.0"/>
+  <testcase name="onlyAPauseFollowedByResumeRestoresPreview" classname="vn.tht.launcher.home.PreviewHandoffTest" time="0.0"/>
+  <testcase name="aNewHandoffCannotReuseDepartureFromAnOldCycle" classname="vn.tht.launcher.home.PreviewHandoffTest" time="0.0"/>
+  <testcase name="focusAndTicksBeforeDepartureCannotReembed" classname="vn.tht.launcher.home.PreviewHandoffTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

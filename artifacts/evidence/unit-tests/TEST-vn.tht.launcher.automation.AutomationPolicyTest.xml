@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="vn.tht.launcher.automation.AutomationPolicyTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-30T03:14:45" hostname="c88c6e4f8844" time="0.002">
+  <properties/>
+  <testcase name="delayedActionRequiresSameCycleConfigurationAndFreshRunningVehicle" classname="vn.tht.launcher.automation.AutomationPolicyTest" time="0.0"/>
+  <testcase name="roofRejectsDisabledAndInvalidSpeeds" classname="vn.tht.launcher.automation.AutomationPolicyTest" time="0.0"/>
+  <testcase name="temperatureFallbackRejectsStaleAndInvalidMeasurements" classname="vn.tht.launcher.automation.AutomationPolicyTest" time="0.001"/>
+  <testcase name="roofRearmsOnlyBelowHysteresisOrAfterNewCycle" classname="vn.tht.launcher.automation.AutomationPolicyTest" time="0.001"/>
+  <testcase name="roofDoesNotFloodCommandsAndRetriesOnlyAfterCooldown" classname="vn.tht.launcher.automation.AutomationPolicyTest" time="0.0"/>
+  <testcase name="newBootIsFreshEvenWithoutCleanEngineOffButActivityRestartIsNot" classname="vn.tht.launcher.automation.AutomationPolicyTest" time="0.0"/>
+  <testcase name="parkedIntervalDoesNotTreatUnknownOrReversedClockAsLongParking" classname="vn.tht.launcher.automation.AutomationPolicyTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="vn.tht.launcher.system.StartupPolicyTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-30T03:14:46" hostname="c88c6e4f8844" time="0.06">
+  <properties/>
+  <testcase name="startupListHasABoundedNumberOfUniquePackages" classname="vn.tht.launcher.system.StartupPolicyTest" time="0.023"/>
+  <testcase name="missingBootCounterFallsBackToBoundedBootWallTime" classname="vn.tht.launcher.system.StartupPolicyTest" time="0.0"/>
+  <testcase name="bootCounterSurvivesWallClockChangesAndRejectsAnOlderBoot" classname="vn.tht.launcher.system.StartupPolicyTest" time="0.001"/>
+  <testcase name="selectedPackagesAcceptNormalDottedNamesButRejectSelfAndMalformedInput" classname="vn.tht.launcher.system.StartupPolicyTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
