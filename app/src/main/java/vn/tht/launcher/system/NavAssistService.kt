@@ -107,7 +107,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
         if (m != "bar") Overscan.set(this, prefs, 0)
         if (m == "buttons" || m == "both") addPill()
         if (m == "gestures" || m == "both") addStrip()
-        if (m == "bar") { addBar(); addStrip() }
+        if (m == "bar") { addBar(); addPill(); addStrip() }
         applyVisibility()
     }
 
@@ -118,7 +118,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
         pill?.visibility = v
         strip?.visibility = v
         // Đã thu hẹp màn hình cho thanh: luôn hiện (kể cả màn chính), nếu không sẽ còn dải trống
-        bar?.visibility = if (launcherInFront && !barEverywhere && !prefs.sp.getBoolean(KEY_BAR_HOME, false)) View.GONE else View.VISIBLE
+        bar?.visibility = if (launcherInFront) View.VISIBLE else View.GONE
     }
 
     private fun removeAll() {

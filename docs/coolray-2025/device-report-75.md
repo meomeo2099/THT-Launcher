@@ -1,0 +1,7 @@
+# Coolray report findings and compatibility defaults
+
+Evidence from owner report 0.3.74: physical display 1920x720, app display metrics 1760x720, density 160, THT overscan=0, estimated OEM reservation 160px, THT rail 120px. Platform signing matches. Secondary-display feature true; a previous embedded display did start at 888x720. Report was captured after opening ecarx.settings, not at the failed split; no failed-secondary-launch exception or requested pair is recorded. Thus the feature is insufficient evidence of activity compatibility, and the exact rejected activity is unknown. Raw owner report is retained locally, not copied into the public repository.
+
+Change: automatic split on confirmed Coolray hardware uses native display-0 split; explicit hosted is a labelled experimental option. Generic devices retain capable hosted auto. Full-width THT rail is shown only while THT is foreground; external apps get compact floating Home/Back plus gestures, removing rail overlay over app controls. No positive overscan or arbitrary stack offset is introduced. Stock-mode isolation still takes priority.
+
+Limits: native split needs app multi-window support and firmware divider remains managed by SystemUI. An already configured home map preview may still use a secondary display; this change addresses split routing, not all app-internal redirects from previews. Native and experimental hosted are separate options. Actual vehicle validation remains necessary; no claim that its secondary-display restriction has been removed.

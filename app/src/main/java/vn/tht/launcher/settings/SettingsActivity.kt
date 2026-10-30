@@ -103,7 +103,8 @@ class SettingsActivity : Activity() {
         slider("Tỉ lệ giao diện", 75, 150, "%", { prefs.uiScale }) { prefs.uiScale = it }
 
         section("Dock")
-        choice("Cách chia hai ứng dụng", mapOf("auto" to "Trong THT (nếu thiết bị hỗ trợ)",
+        choice("Cách chia hai ứng dụng", mapOf("auto" to "Tự động (Coolray: chia đôi hệ thống)",
+            "hosted" to "Trong THT (thử nghiệm, cần app hỗ trợ màn hình phụ)",
             "native" to "Chia đôi hệ thống"), { prefs.sp.getString("split_backend", "auto") ?: "auto" }) {
             prefs.sp.edit().putString("split_backend", it).apply()
         }

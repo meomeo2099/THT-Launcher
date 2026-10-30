@@ -109,8 +109,9 @@ class SplitScreen(private val context: Context, private val toast: (String) -> U
     fun open(split: Split) {
         val same = hostRequest?.let { it.id == split.id || setOf(it.left, it.right) == setOf(split.left, split.right) } == true
         if (same && hostToken?.let { HostedSplitActivity.resume(it) } == true) return
-        val embedded = context.getSharedPreferences("tht", Context.MODE_PRIVATE).getString("split_backend", "auto") != "native" &&
-            HostedSplitActivity.supported(context)
+        val embedded = SplitBackend.hosted(
+            context.getSharedPreferences("tht", Context.MODE_PRIVATE).getString("split_backend", "auto") ?: "auto",
+            HostedSplitActivity.supported(context), vn.tht.launcher.vehicle.Profiles.COOLRAY_2025.matches())
         if (!embedded) {
             closeHost()
             session.open(SplitSession.Request(split.id, split.left, split.right, split.ratio))
