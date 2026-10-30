@@ -1,0 +1,1 @@
+Owner confirmed failed pair: YouTube + Google Maps. Google Maps package observed in earlier report: app.morphe.android.apps.maps. Exact rejected activity was not recorded.
