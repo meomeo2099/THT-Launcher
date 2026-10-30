@@ -1,0 +1,8 @@
+{
+  "apk": "THT-Launcher-0.3.60-release.apk",
+  "sha256": "2ed0fcc9b77c35a856292eda41576223ef35b705f37fcd2a972e9111b2877960",
+  "framework_stub_definitions": [],
+  "callback_subclasses": [
+    "Lvn/tht/launcher/home/PlatformActivityView$create$1$1;"
+  ]
+}

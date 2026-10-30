@@ -1,0 +1,13 @@
+{
+  "kind": "local static bytecode cross-check, not a new REA evidence record",
+  "saved_package_evidence": "ev_9dc712001f967a6c18968a5f14477fd87e7af710b6320f49f7e170384b04527a",
+  "class": "za",
+  "method": "a",
+  "ui_callback_argument": 15,
+  "switch_code_unit": "0x16",
+  "payload_file_offset": "0x61044",
+  "first_key": 0,
+  "entry_count": 29,
+  "target_code_unit": "0x3b8",
+  "target_action": "android.settings.HOME_SETTINGS"
+}

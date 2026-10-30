@@ -1,0 +1,808 @@
+[
+  {
+    "kind": "activity",
+    "line": 36,
+    "name": "ecarx.launcher3.Launcher",
+    "exported_declared": null,
+    "enabled_declared": true,
+    "permission": null,
+    "actions": [
+      "android.intent.action.MAIN"
+    ],
+    "categories": [
+      "android.intent.category.HOME",
+      "android.intent.category.DEFAULT",
+      "android.intent.category.MONKEY"
+    ]
+  },
+  {
+    "kind": "activity",
+    "line": 44,
+    "name": "ecarx.launcher3.widget.WidgetEditActivity",
+    "exported_declared": true,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 45,
+    "name": "ecarx.launcher3.AppPane",
+    "exported_declared": true,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 46,
+    "name": "ecarx.launcher3.psd.LauncherForPsd",
+    "exported_declared": true,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 47,
+    "name": "ecarx.launcher3.psd.AppPaneForPsd",
+    "exported_declared": true,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 48,
+    "name": "ecarx.launcher3.apppane.AppPaneAssistActivity",
+    "exported_declared": true,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 49,
+    "name": "ecarx.launcher3.SettingsActivity",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 50,
+    "name": "com.tencent.bugly.beta.ui.BetaActivity",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 51,
+    "name": "ecarx.launcher3.psd.PsdWebViewActivity",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "service",
+    "line": 52,
+    "name": "ecarx.launcher3.apppane.AppPaneService",
+    "exported_declared": true,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [
+      "ecarx.launcher3.ACTION_APP_PANE_SERVICE"
+    ],
+    "categories": []
+  },
+  {
+    "kind": "service",
+    "line": 57,
+    "name": "ecarx.multiwindow.SplitService",
+    "exported_declared": true,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [
+      "ecarx.launcher3.ACTION_SPLITE_SCREEN_SERVICE"
+    ],
+    "categories": []
+  },
+  {
+    "kind": "service",
+    "line": 62,
+    "name": "ecarx.launcher3.app.KeepAliveService",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [
+      "com.ecarx.action.launcher3.KeepAliveService"
+    ],
+    "categories": []
+  },
+  {
+    "kind": "receiver",
+    "line": 67,
+    "name": "ecarx.launcher3.AppWidgetsRestoredReceiver",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [
+      "android.appwidget.action.APPWIDGET_HOST_RESTORED"
+    ],
+    "categories": []
+  },
+  {
+    "kind": "provider",
+    "line": 72,
+    "name": "ecarx.launcher3.apppane.AppPanePreProvider",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "provider",
+    "line": 73,
+    "name": "ecarx.launcher3.psd.WebPreProvider",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "provider",
+    "line": 74,
+    "name": "ecarx.launcher3.apppane.AppPaneProvider",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "provider",
+    "line": 75,
+    "name": "ecarx.launcher3.LauncherProvider",
+    "exported_declared": true,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "provider",
+    "line": 76,
+    "name": "androidx.core.content.FileProvider",
+    "exported_declared": false,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 85,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$STDStub_00",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 86,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$STDStub_01",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 87,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$STDStub_02",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 88,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$STDStub_03",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 89,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$STDStub_04",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 90,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$STDStub_05",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 91,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$STDStub_06",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 92,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$STDStub_07",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 93,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$STDStub_08",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 94,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$STDStub_09",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 95,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$STDStub_00_T",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 96,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$STDStub_01_T",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 97,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$STDStub_02_T",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 98,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTStub_00",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 99,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTStub_01",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 100,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTStub_02",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 101,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTStub_03",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 102,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTStub_04",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 103,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTStub_05",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 104,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTStub_06",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 105,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTStub_07",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 106,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTStub_08",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 107,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTStub_09",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 108,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTStub_00_T",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 109,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTStub_01_T",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 110,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTStub_02_T",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 111,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTKStub_00",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 112,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTKStub_01",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 113,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTKStub_02",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 114,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTKStub_03",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 115,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTKStub_04",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 116,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTKStub_05",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 117,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTKStub_06",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 118,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTKStub_07",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 119,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTKStub_08",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 120,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTKStub_09",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 121,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTKStub_00_T",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 122,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTKStub_01_T",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 123,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SGTKStub_02_T",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 124,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SIStub_00",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 125,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SIStub_01",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 126,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SIStub_02",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 127,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SIStub_03",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 128,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SIStub_04",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 129,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SIStub_05",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 130,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SIStub_06",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 131,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SIStub_07",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 132,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SIStub_08",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 133,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SIStub_09",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 134,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SIStub_00_T",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 135,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SIStub_01_T",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 136,
+    "name": "com.tencent.tinker.loader.hotplug.ActivityStubs$SIStub_02_T",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 138,
+    "name": "ecarx.launcher3.smartcard.view.activity.ManualModeForCsd",
+    "exported_declared": true,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 139,
+    "name": "ecarx.launcher3.smartcard.view.activity.ManualModeForPsd",
+    "exported_declared": true,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "service",
+    "line": 140,
+    "name": "com.tencent.tinker.lib.service.TinkerPatchService",
+    "exported_declared": false,
+    "enabled_declared": null,
+    "permission": "android.permission.BIND_JOB_SERVICE",
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "service",
+    "line": 141,
+    "name": "com.tencent.tinker.lib.service.TinkerPatchService$InnerService",
+    "exported_declared": false,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "service",
+    "line": 142,
+    "name": "com.tencent.tinker.lib.service.DefaultTinkerResultService",
+    "exported_declared": false,
+    "enabled_declared": null,
+    "permission": "android.permission.BIND_JOB_SERVICE",
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 143,
+    "name": "com.blankj.utilcode.util.UtilsTransActivity4MainProcess",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "activity",
+    "line": 144,
+    "name": "com.blankj.utilcode.util.UtilsTransActivity",
+    "exported_declared": null,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "provider",
+    "line": 145,
+    "name": "com.blankj.utilcode.util.UtilsFileProvider",
+    "exported_declared": false,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [],
+    "categories": []
+  },
+  {
+    "kind": "service",
+    "line": 148,
+    "name": "com.blankj.utilcode.util.MessengerUtils$ServerService",
+    "exported_declared": false,
+    "enabled_declared": null,
+    "permission": null,
+    "actions": [
+      "ecarx.launcher3.messenger"
+    ],
+    "categories": []
+  }
+]

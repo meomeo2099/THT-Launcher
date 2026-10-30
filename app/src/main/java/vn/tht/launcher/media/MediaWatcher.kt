@@ -69,7 +69,7 @@ class MediaWatcher(
         val enabled = Settings.Secure.getString(
             context.contentResolver, "enabled_notification_listeners"
         ) ?: return false
-        return enabled.contains(context.packageName)
+        return enabled.split(':').any { ComponentName.unflattenFromString(it) == listenerComponent }
     }
 
     fun start() {
@@ -167,5 +167,24 @@ class MediaWatcher(
     fun previous() {
         if (showingCar || controller == null) key(android.view.KeyEvent.KEYCODE_MEDIA_PREVIOUS)
         else controller?.transportControls?.skipToPrevious()
+    }
+
+    /** Scrubbing is available only when the selected session advertises it. */
+    fun canSeek(): Boolean {
+        if (showingCar) return false
+        val selected = controller ?: return false
+        val state = selected.playbackState ?: return false
+        return state.actions and PlaybackState.ACTION_SEEK_TO != 0L &&
+            (selected.metadata?.getLong(MediaMetadata.METADATA_KEY_DURATION) ?: 0L) > 0L
+    }
+
+    fun seekTo(positionMs: Long): Boolean {
+        if (!canSeek()) return false
+        val selected = controller ?: return false
+        val duration = selected.metadata?.getLong(MediaMetadata.METADATA_KEY_DURATION) ?: return false
+        return runCatching {
+            selected.transportControls.seekTo(positionMs.coerceIn(0L, duration))
+            true
+        }.getOrDefault(false)
     }
 }

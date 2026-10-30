@@ -71,7 +71,14 @@ class EcarxController(
     // ---- Thao tác tổng quát (dùng cho Trung tâm điều khiển) ----
 
     fun setValue(id: Int, zone: Int, value: Int, okMsg: String, safety: Safety = Safety.SAFE, done: (Result) -> Unit) =
-        run(done) { safetyBlock(safety) ?: setIntVerified(id, zone, value, okMsg) }
+        setValue(id, zone, value, okMsg, safety, stillValid = { true }, done = done)
+
+    /** Check an automation cycle on the worker again, immediately before the SDK write. */
+    fun setValue(id: Int, zone: Int, value: Int, okMsg: String, safety: Safety = Safety.SAFE,
+                 stillValid: () -> Boolean, done: (Result) -> Unit) = run(done) {
+        if (!stillValid()) return@run Result(false, "Lịch tự động đã được hủy")
+        safetyBlock(safety) ?: setIntVerified(id, zone, value, okMsg, stillValid)
+    }
 
     fun toggleFn(id: Int, zone: Int, name: String, safety: Safety = Safety.SAFE, done: (Result) -> Unit) = run(done) {
         safetyBlock(safety)?.let { return@run it }
@@ -112,8 +119,9 @@ class EcarxController(
     }
 
     /** Ghi int rồi đọc lại tới khi khớp (tối đa ~1,2 s). */
-    private fun setIntVerified(id: Int, zone: Int, value: Int, okMsg: String): Result {
+    private fun setIntVerified(id: Int, zone: Int, value: Int, okMsg: String, stillValid: (() -> Boolean)? = null): Result {
         if (!supported(id, zone)) return unsupported()
+        if (stillValid?.invoke() == false) return Result(false, "Lịch tự động đã được hủy")
         if (!ecarx.setInt(id, zone, value)) return Result(false, "Xe không nhận lệnh")
         repeat(4) {
             Thread.sleep(VERIFY_DELAY_MS)
@@ -122,8 +130,9 @@ class EcarxController(
         return Result(false, "Đã gửi lệnh nhưng đọc lại chưa thấy đổi")
     }
 
-    private fun setFloatVerified(id: Int, zone: Int, value: Float, okMsg: String): Result {
+    private fun setFloatVerified(id: Int, zone: Int, value: Float, okMsg: String, stillValid: (() -> Boolean)? = null): Result {
         if (!supported(id, zone)) return unsupported()
+        if (stillValid?.invoke() == false) return Result(false, "Lịch tự động đã được hủy")
         if (!ecarx.setFloat(id, zone, value)) return Result(false, "Xe không nhận lệnh")
         repeat(4) {
             Thread.sleep(VERIFY_DELAY_MS)
@@ -148,7 +157,7 @@ class EcarxController(
 
     /** Tăng/giảm nhiệt độ một bước (đọc HVAC_TEMP_STEP, mặc định 0,5 °C), kẹp 16–32 °C. */
     fun tempStep(direction: Int, done: (Result) -> Unit) = run(done) {
-        val zone = if (supported(F.HVAC_TEMP, F.ZONE_ROW_1_LEFT)) F.ZONE_ROW_1_LEFT else F.ZONE_ALL
+        val zone = ecarx.temperatureZone()
         if (!supported(F.HVAC_TEMP, zone)) return@run unsupported()
         val cur = ecarx.getFloat(F.HVAC_TEMP, zone) ?: return@run Result(false, "Không đọc được nhiệt độ")
         val step = ecarx.getFloat(F.HVAC_TEMP_STEP, F.ZONE_ALL)?.takeIf { it in 0.1f..2f } ?: 0.5f
@@ -158,11 +167,15 @@ class EcarxController(
     }
 
     /** Đặt nhiệt độ (cùng vùng với [tempStep]). */
-    fun setTemp(target: Float, done: (Result) -> Unit) = run(done) {
-        val zone = if (supported(F.HVAC_TEMP, F.ZONE_ROW_1_LEFT)) F.ZONE_ROW_1_LEFT else F.ZONE_ALL
+    fun setTemp(target: Float, done: (Result) -> Unit) = setTemp(target, stillValid = { true }, done = done)
+
+    fun setTemp(target: Float, stillValid: () -> Boolean, done: (Result) -> Unit) = run(done) {
+        if (!stillValid()) return@run Result(false, "Lịch tự động đã được hủy")
+        if (!target.isFinite()) return@run Result(false, "Nhiệt độ không hợp lệ")
+        val zone = ecarx.temperatureZone()
         if (!supported(F.HVAC_TEMP, zone)) return@run unsupported()
         val t = target.coerceIn(F.TEMP_MIN, F.TEMP_MAX)
-        setFloatVerified(F.HVAC_TEMP, zone, t, String.format(Locale.US, "Nhiệt độ %.1f°C", t))
+        setFloatVerified(F.HVAC_TEMP, zone, t, String.format(Locale.US, "Nhiệt độ %.1f°C", t), stillValid)
     }
 
     /** Tăng/giảm quạt một mức, kẹp 1–7. */

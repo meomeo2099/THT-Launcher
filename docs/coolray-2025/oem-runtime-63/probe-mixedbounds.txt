@@ -1,0 +1,4 @@
+INSTRUMENTATION_RESULT: observations=[{"phase":"mixed_stack_half_bounds","names":"[vn.tht.fixtureb\/vn.tht.fixtureb.MainActivity, vn.tht.fixture\/vn.tht.fixture.MainActivity]","bounds":"Rect(0, 0 - 960, 720)"},{"phase":"mixed_stack_restored_fullscreen","mode3":null,"mode4":null,"state":"id=null starting=false active=false tasks=null layout=null error="}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=mixedbounds
+INSTRUMENTATION_CODE: 0

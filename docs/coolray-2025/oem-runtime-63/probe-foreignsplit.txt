@@ -1,0 +1,4 @@
+INSTRUMENTATION_RESULT: observations=[{"phase":"unmanaged_native_split","mode3":{"bounds":"Rect(0, 0 - 960, 572)","display":0,"visible":true,"names":["vn.tht.launcher\/vn.tht.launcher.MainActivity","vn.tht.fixture\/vn.tht.fixture.MainActivity"]},"mode4":{"bounds":"Rect(960, 0 - 1920, 572)","display":0,"visible":true,"names":["vn.tht.fixtureb\/vn.tht.fixtureb.MainActivity"]},"state":"id=null starting=false active=false tasks=null layout=null error="},{"phase":"unmanaged_split_restored_fullscreen","mode3":null,"mode4":null,"state":"id=null starting=false active=false tasks=null layout=null error="}]
+INSTRUMENTATION_RESULT: result=PASS
+INSTRUMENTATION_RESULT: scenario=foreignsplit
+INSTRUMENTATION_CODE: 0

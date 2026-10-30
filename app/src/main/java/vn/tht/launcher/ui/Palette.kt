@@ -11,6 +11,13 @@ import vn.tht.launcher.settings.Prefs
  * gọi [apply] khi đổi cài đặt hoặc đổi ngày/đêm rồi dựng lại giao diện.
  */
 object Palette {
+    private var application: Context? = null
+
+    /** Application context only; drawables never retain an Activity. */
+    fun initialize(context: Context) { application = context.applicationContext }
+
+    /** Widget surfaces measured from the reference renderer, in design dp. */
+    const val CARD_RADIUS_DP = 26
     var night = true; private set
     var bg = 0; private set
     var card = 0; private set
@@ -25,8 +32,8 @@ object Palette {
 
     /** Màu nhấn chọn được. */
     val ACCENTS = linkedMapOf(
-        "blue" to ("Xanh dương" to 0xFF2F80ED.toInt()),
-        "teal" to ("Xanh ngọc" to 0xFF14B8A6.toInt()),
+        "blue" to ("Xanh dương" to 0xFF0A84FF.toInt()),
+        "teal" to ("Xanh băng" to 0xFF63D7EB.toInt()),
         "green" to ("Xanh lá" to 0xFF22C55E.toInt()),
         "orange" to ("Cam" to 0xFFF97316.toInt()),
         "red" to ("Đỏ" to 0xFFEF4444.toInt()),
@@ -37,23 +44,23 @@ object Palette {
         night = isNight
         val cardA = (prefs.cardOpacity.coerceIn(0, 100) * 255 / 100)
         val dockA = (prefs.dockOpacity.coerceIn(0, 100) * 255 / 100)
-        accent = ACCENTS[prefs.accent]?.second ?: ACCENTS.getValue("blue").second
+        accent = ACCENTS[prefs.accent]?.second ?: ACCENTS.getValue("teal").second
         if (isNight) {
-            bg = 0xFF0E1116.toInt()
-            card = withAlpha(0xFF1A1F27.toInt(), cardA)
-            text = 0xFFF2F4F7.toInt()
-            textDim = 0xFF8B95A5.toInt()
-            button = withAlpha(0xFF2A313C.toInt(), maxOf(cardA, 160))
-            dock = withAlpha(0xFF12161C.toInt(), dockA)
-            scrim = 0xFA0E1116.toInt()
+            bg = 0xFF0A0F15.toInt()
+            card = withAlpha(0xFF2E3542.toInt(), cardA)
+            text = 0xFFE8EBF0.toInt()
+            textDim = 0x9EEBF0FA.toInt()
+            button = withAlpha(0xFF202631.toInt(), maxOf(cardA, 160))
+            dock = withAlpha(0xFF202631.toInt(), dockA)
+            scrim = 0xFA0A0F15.toInt()
         } else {
-            bg = 0xFFE9EEF4.toInt()
-            card = withAlpha(0xFFFFFFFF.toInt(), cardA)
-            text = 0xFF111827.toInt()
-            textDim = 0xFF5B6472.toInt()
-            button = withAlpha(0xFFE2E8F0.toInt(), maxOf(cardA, 160))
-            dock = withAlpha(0xFFF8FAFC.toInt(), dockA)
-            scrim = 0xFAE9EEF4.toInt()
+            bg = 0xFFD9E4EF.toInt()
+            card = withAlpha(0xFFF8FAFD.toInt(), cardA)
+            text = 0xFF30343B.toInt()
+            textDim = 0xFF303E50.toInt()
+            button = withAlpha(0xFFDEE4ED.toInt(), maxOf(cardA, 160))
+            dock = withAlpha(0xFFF8FAFD.toInt(), dockA)
+            scrim = 0xFAD9E4EF.toInt()
         }
     }
 
@@ -61,6 +68,8 @@ object Palette {
 
     /** Nền dựng sẵn: tên hiển thị + các màu gradient (vẽ bằng code, không dùng ảnh ngoài). */
     val BACKGROUNDS = linkedMapOf(
+        "waterfront_day" to ("Bến nước — ngày" to intArrayOf()),
+        "waterfront_night" to ("Bến nước — đêm" to intArrayOf()),
         "mountains_dusk" to ("Núi hoàng hôn" to intArrayOf()),
         "mountains_night" to ("Núi đêm" to intArrayOf()),
         "mountains_day" to ("Núi ban ngày" to intArrayOf()),
@@ -80,6 +89,9 @@ object Palette {
 
     fun background(key: String): Drawable {
         when (key) {
+            "waterfront_day", "waterfront_night" -> application?.let {
+                return ReferenceWallpaperDrawable(it, key == "waterfront_night")
+            }
             "mountains_dusk" -> return LandscapeDrawable.dusk()
             "mountains_night" -> return LandscapeDrawable.night()
             "mountains_day" -> return LandscapeDrawable.day()
@@ -89,6 +101,12 @@ object Palette {
         val colors = BACKGROUNDS[key]?.second
         return if (colors == null || colors.isEmpty()) GradientDrawable().apply { setColor(bg) }
         else GradientDrawable(GradientDrawable.Orientation.TL_BR, colors)
+    }
+
+    /** Chooses a legible foreground for the selected accent, including pale cyan. */
+    fun onAccent(): Int {
+        val luminance = (Color.red(accent) * 299 + Color.green(accent) * 587 + Color.blue(accent) * 114) / 1000
+        return if (luminance >= 160) 0xFF10242D.toInt() else Color.WHITE
     }
 
     /** Ngày/đêm hệ thống (khi không đọc được đèn xe). */

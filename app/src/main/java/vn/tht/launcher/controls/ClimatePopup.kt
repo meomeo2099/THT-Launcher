@@ -43,8 +43,6 @@ class ClimatePopup(
 
     private val power = Ui.tile(c, "power", "Bật/tắt điều hoà", 56) { ctl.toggleHvacPower(::report) }
     private val tempL = Ui.text(c, "--°", 44f).apply { gravity = Gravity.CENTER }
-    private val tempR = Ui.text(c, "--°", 44f).apply { gravity = Gravity.CENTER }
-    private lateinit var rightZone: View
     private val fanLabel = Ui.text(c, "Quạt", 15f, dim = true)
     private val fan = FanDots(c) { lvl -> ctl.setValue(F.HVAC_FAN_SPEED, F.ZONE_ALL, F.level(F.HVAC_FAN_SPEED, lvl), "Quạt mức $lvl", done = ::report) }
 
@@ -53,16 +51,14 @@ class ClimatePopup(
             if (!showing) return
             val list = bound.toList()
             ctl.background({
-                Triple(
+                Pair(
                     list.associate { (it.id to it.zone) to ecarx.getInt(it.id, it.zone) },
-                    ecarx.getFloat(F.HVAC_TEMP, F.ZONE_ROW_1_LEFT) ?: ecarx.getFloat(F.HVAC_TEMP, F.ZONE_ALL),
-                    ecarx.getFloat(F.HVAC_TEMP, F.ZONE_ROW_1_RIGHT),
+                    ecarx.getFloat(F.HVAC_TEMP, ecarx.temperatureZone()),
                 )
             }) { v ->
                 if (v == null || !showing) return@background
                 list.forEach { b -> b.bind(v.first[b.id to b.zone]) }
                 tempL.text = v.second?.let { String.format(Locale.US, "%.1f°", it) } ?: "--°"
-                tempR.text = v.third?.let { String.format(Locale.US, "%.1f°", it) } ?: "--°"
             }
             handler.postDelayed(this, 1500)
         }
@@ -87,9 +83,7 @@ class ClimatePopup(
         card.addView(Ui.hbox(c).apply {
             setPadding(0, Ui.dp(c, 16), 0, 0)
             addView(section("Nhiệt độ", Ui.hbox(c).apply {
-                addView(zoneBox("Bên lái", tempL, F.ZONE_ROW_1_LEFT), Ui.weight())
-                rightZone = zoneBox("Bên phụ", tempR, F.ZONE_ROW_1_RIGHT)
-                addView(rightZone, Ui.weight().apply { marginStart = Ui.dp(c, 12) })
+                addView(zoneBox("Toàn xe", tempL), Ui.weight())
             }), Ui.weight(1.1f).apply { marginEnd = Ui.dp(c, 16) })
             addView(section(null, Ui.vbox(c).apply {
                 addView(fanLabel)
@@ -178,17 +172,15 @@ class ClimatePopup(
         views.forEach { addView(it, LinearLayout.LayoutParams(0, Ui.dp(c, 64), 1f).apply { marginEnd = Ui.dp(c, 10) }) }
     }
 
-    private fun zoneBox(label: String, value: TextView, zone: Int) = Ui.vbox(c, gravity = Gravity.CENTER).apply {
+    private fun zoneBox(label: String, value: TextView) = Ui.vbox(c, gravity = Gravity.CENTER).apply {
         addView(Ui.text(c, label, 13f, dim = true))
         addView(Ui.hbox(c, Gravity.CENTER).apply {
-            addView(Ui.tile(c, "minus", "Giảm nhiệt độ", 52) { ctl.tempStepZone(zoneOrAll(zone), -1, ::report) })
+            addView(Ui.tile(c, "minus", "Giảm nhiệt độ", 52) { ctl.tempStep(-1, ::report) })
             addView(value, Ui.weight())
-            addView(Ui.tile(c, "plus", "Tăng nhiệt độ", 52) { ctl.tempStepZone(zoneOrAll(zone), +1, ::report) })
+            addView(Ui.tile(c, "plus", "Tăng nhiệt độ", 52) { ctl.tempStep(+1, ::report) })
         }, matchW())
     }
 
-    private var dualZone = true
-    private fun zoneOrAll(zone: Int) = if (dualZone) zone else F.ZONE_ALL
 
     private fun toggle(id: Int, zone: Int, icon: String, label: String): ImageView {
         val v = Ui.tile(c, icon, label) { ctl.toggleFn(id, zone, label, done = ::report) }
@@ -222,19 +214,14 @@ class ClimatePopup(
         return b
     }
 
-    /** Ẩn nút xe không hỗ trợ; nếu không có nhiệt độ 2 vùng thì dùng một vùng. */
+    /** Ẩn nút xe không hỗ trợ; nhiệt độ luôn là một vùng chung. */
     private fun hideUnsupported() {
         val list = bound.toList()
         ctl.background({
-            Pair(
-                list.associate { (it.id to it.zone) to ctl.supported(it.id, it.zone) },
-                ctl.supported(F.HVAC_TEMP, F.ZONE_ROW_1_LEFT),
-            )
+            list.associate { (it.id to it.zone) to ctl.supported(it.id, it.zone) }
         }) { r ->
             if (r == null || !showing) return@background
-            list.forEach { b -> if (r.first[b.id to b.zone] == false && b.view !== power) b.view.visibility = View.GONE }
-            dualZone = r.second
-            if (!dualZone) rightZone.visibility = View.GONE
+            list.forEach { b -> if (r[b.id to b.zone] == false && b.view !== power) b.view.visibility = View.GONE }
             // Quạt: hiện mức
             bound += Bound(F.HVAC_FAN_SPEED, F.ZONE_ALL, fan) { raw ->
                 val lvl = F.levelOf(F.HVAC_FAN_SPEED, raw) ?: 0

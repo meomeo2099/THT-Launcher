@@ -10,22 +10,14 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.Parcel
 import android.util.Log
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
- * Mở màn hình điều hoà gốc của đầu ECARX.
- *
- * Cách làm: bind vào service của app điều hoà (mặc định package `ecarx.hvac.app`) rồi gọi
- * transaction đầu tiên (FIRST_CALL_TRANSACTION = 1) – lệnh "mở giao diện điều hoà".
- * Interface descriptor lấy ngay từ binder (getInterfaceDescriptor) nên không phải đoán tên AIDL.
- *
- * Không cần quyền hệ thống. Mọi lỗi (không có app, service không export, transact lỗi,
- * quá thời gian) đều bị nuốt: thử mở app điều hoà bằng launch intent, cuối cùng báo false.
- *
- * Tên service thật trên xe CHƯA kiểm chứng: nếu không truyền [serviceClass], class sẽ tự dò
- * và in danh sách service của package ra logcat (tag "HvacOpener") để điền vào cấu hình.
+ * Opens the stock climate UI using the previously observed HVAC AIDL contract.
+ * Transaction 1 toggles that UI; it is never used to guess a power-service protocol.
+ * Unknown services/descriptors fall back to an explicitly resolved launcher activity.
  */
 class HvacOpener(private val context: Context) {
-
     private val handler = Handler(Looper.getMainLooper())
 
     fun open(
@@ -33,12 +25,11 @@ class HvacOpener(private val context: Context) {
         serviceClass: String? = null,
         onResult: (Boolean) -> Unit = {},
     ) {
-        val component = try {
-            resolveService(pkg, serviceClass)
-        } catch (t: Throwable) {
-            Log.w(TAG, "Không dò được service điều hoà: $t")
-            null
+        if (Looper.myLooper() != Looper.getMainLooper()) {
+            handler.post { open(pkg, serviceClass, onResult) }
+            return
         }
+        val component = resolveService(pkg, serviceClass)
         if (component == null) {
             onResult(fallback(pkg))
             return
@@ -47,64 +38,55 @@ class HvacOpener(private val context: Context) {
     }
 
     private fun bindAndOpen(component: ComponentName, pkg: String, onResult: (Boolean) -> Unit) {
-        var done = false
+        val done = AtomicBoolean(false)
+        val transactionStarted = AtomicBoolean(false)
+        val deadline = android.os.SystemClock.uptimeMillis() + TIMEOUT_MS
         lateinit var conn: ServiceConnection
-
-        fun finish(ok: Boolean) {
-            if (done) return
-            done = true
+        fun finish(ok: Boolean, allowFallback: Boolean = true) {
+            if (!done.compareAndSet(false, true)) return
             handler.removeCallbacksAndMessages(conn)
             runCatching { context.unbindService(conn) }
-            onResult(if (ok) true else fallback(pkg))
+            onResult(ok || (allowFallback && fallback(pkg)))
         }
-
         conn = object : ServiceConnection {
             override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-                if (service == null) {
-                    finish(false)
-                    return
-                }
-                // transact là IPC đồng bộ: chạy ngoài main thread cho chắc.
-                Thread {
+                if (service == null) { finish(false); return }
+                Thread({
+                    if (done.get() || android.os.SystemClock.uptimeMillis() >= deadline) return@Thread
+                    transactionStarted.set(true)
+                    if (done.get()) return@Thread
                     val ok = transactOpen(service)
                     handler.post { finish(ok) }
-                }.start()
+                }, "tht-stock-climate").start()
             }
-
-            override fun onServiceDisconnected(name: ComponentName?) {}
-
+            override fun onServiceDisconnected(name: ComponentName?) = finish(false)
             override fun onBindingDied(name: ComponentName?) = finish(false)
-
             override fun onNullBinding(name: ComponentName?) = finish(false)
         }
-
-        val bound = try {
+        val bound = runCatching {
             context.bindService(Intent().setComponent(component), conn, Context.BIND_AUTO_CREATE)
-        } catch (t: Throwable) {
-            Log.w(TAG, "bindService $component lỗi: $t")
+        }.getOrElse {
+            Log.w(TAG, "Không bind được điều hòa gốc: $component", it)
             false
         }
-        if (!bound) {
-            Log.w(TAG, "Không bind được $component")
-            finish(false)
-            return
-        }
-        handler.postAtTime({ finish(false) }, conn, android.os.SystemClock.uptimeMillis() + TIMEOUT_MS)
+        if (!bound) { finish(false); return }
+        // Binder calls cannot be cancelled. If one is in flight, do not also launch a
+        // fallback UI on timeout and risk toggling/launching the climate screen twice.
+        handler.postAtTime({ finish(false, !transactionStarted.get()) }, conn, deadline)
     }
 
     private fun transactOpen(binder: IBinder): Boolean {
         val data = Parcel.obtain()
         val reply = Parcel.obtain()
         return try {
-            val descriptor = runCatching { binder.interfaceDescriptor }.getOrNull()
-            Log.i(TAG, "Service điều hoà: descriptor=$descriptor")
-            if (!descriptor.isNullOrEmpty()) data.writeInterfaceToken(descriptor)
-            val ok = binder.transact(IBinder.FIRST_CALL_TRANSACTION, data, reply, 0)
-            if (ok) reply.readException()
-            Log.i(TAG, "transact mở điều hoà: $ok")
-            ok
-        } catch (t: Throwable) {
-            Log.w(TAG, "transact mở điều hoà lỗi: $t")
+            // Check the known interface instead of transacting with the first exported service.
+            if (binder.interfaceDescriptor != HVAC_DESCRIPTOR) return false
+            data.writeInterfaceToken(HVAC_DESCRIPTOR)
+            if (!binder.transact(IBinder.FIRST_CALL_TRANSACTION, data, reply, 0)) return false
+            reply.readException()
+            true
+        } catch (error: Exception) {
+            Log.w(TAG, "Không mở được giao diện điều hòa theo AIDL đã biết", error)
             false
         } finally {
             data.recycle()
@@ -112,39 +94,33 @@ class HvacOpener(private val context: Context) {
         }
     }
 
-    /** Service để bind: lấy từ cấu hình nếu có, không thì dò trong package. */
     private fun resolveService(pkg: String, serviceClass: String?): ComponentName? {
-        if (!serviceClass.isNullOrBlank()) {
-            val cls = if (serviceClass.startsWith(".")) pkg + serviceClass else serviceClass
-            return ComponentName(pkg, cls)
+        val candidate = if (!serviceClass.isNullOrBlank()) {
+            ComponentName(pkg, if (serviceClass.startsWith(".")) pkg + serviceClass else serviceClass)
+        } else {
+            // Other packages require an explicit component and must still expose the known AIDL.
+            if (pkg != DEFAULT_PACKAGE) return null
+            ComponentName(DEFAULT_PACKAGE, HVAC_SERVICE)
         }
-        val services = context.packageManager
-            .getPackageInfo(pkg, PackageManager.GET_SERVICES)
-            .services.orEmpty()
-            .filter { it.exported }
-        services.forEach { Log.i(TAG, "Service exported của $pkg: ${it.name} (permission=${it.permission})") }
-        val pick = services.firstOrNull { it.permission == null && it.name.contains("hvac", true) }
-            ?: services.firstOrNull { it.permission == null && it.name.contains("open", true) }
-            ?: services.singleOrNull { it.permission == null }
-        if (pick == null) Log.w(TAG, "Không chọn được service điều hoà trong $pkg – điền \"service\" trong shortcuts.json")
-        return pick?.let { ComponentName(pkg, it.name) }
+        return runCatching {
+            val info = context.packageManager.getServiceInfo(candidate, 0)
+            if (!info.enabled || !info.applicationInfo.enabled || !info.exported) return null
+            val permission = info.permission
+            if (!permission.isNullOrEmpty() && context.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) return null
+            candidate
+        }.getOrNull()
     }
 
-    /** Dự phòng: mở app điều hoà như một app thường. */
-    private fun fallback(pkg: String): Boolean = try {
-        val intent = context.packageManager.getLaunchIntentForPackage(pkg)
-        if (intent != null) {
-            context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-            true
-        } else false
-    } catch (t: Throwable) {
-        Log.w(TAG, "Mở app $pkg lỗi: $t")
-        false
+    private fun fallback(pkg: String): Boolean {
+        val intent = OemFirmware.resolvePackage(context, pkg) ?: return false
+        return runCatching { context.startActivity(intent, vn.tht.launcher.system.ExternalAppLauncher.fullscreenOptions(context)); true }.getOrDefault(false)
     }
 
     companion object {
         private const val TAG = "HvacOpener"
         private const val TIMEOUT_MS = 3000L
         const val DEFAULT_PACKAGE = "ecarx.hvac.app"
+        const val HVAC_SERVICE = "ecarx.hvac.app.service.HvacAppService"
+        const val HVAC_DESCRIPTOR = "ecarx.hvac.app.IOpenHvacAidlInterface"
     }
 }

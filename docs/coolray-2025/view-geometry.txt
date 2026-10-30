@@ -1,0 +1,14 @@
+Android 9 emulator; dumpsys activity top; reference preset after fullscreen fix
+android.widget.FrameLayout{d640378 V.E...... ........ 0,0-1920,720 #7f0800ec app:id/root}
+android.widget.FrameLayout{de7b2b6 V.E...... ........ 0,0-1920,720 #7f080062 app:id/canvas_container}
+vn.tht.launcher.home.HomeCanvas{2debbb7 V.ED...L. ........ 0,0-1920,720}
+vn.tht.launcher.home.HomeCanvas$WidgetFrame{e4c809e V.E...... ........ 60,40-156,556}
+vn.tht.launcher.home.HomeCanvas$WidgetFrame{4fc08aa V.E...... ........ 174,40-270,556}
+vn.tht.launcher.home.HomeCanvas$WidgetFrame{36a0576 V.E...... ........ 294,40-800,556}
+vn.tht.launcher.home.HomeCanvas$WidgetFrame{59e1805 V.E...... ........ 824,40-1329,556}
+vn.tht.launcher.home.HomeCanvas$WidgetFrame{b59e298 V.E...... ........ 1353,40-1860,290}
+vn.tht.launcher.home.HomeCanvas$WidgetFrame{138404f V.E...... ........ 1353,306-1595,423}
+vn.tht.launcher.home.HomeCanvas$WidgetFrame{935e39d V.E...... ........ 1619,306-1860,423}
+vn.tht.launcher.home.HomeCanvas$WidgetFrame{70ec5b V.E...... ........ 1353,439-1595,556}
+vn.tht.launcher.home.HomeCanvas$WidgetFrame{8ce0310 V.E...... ........ 1619,439-1860,556}
+vn.tht.launcher.home.HomeCanvas$WidgetFrame{c91df24 V.E...... ........ 60,572-1860,700}

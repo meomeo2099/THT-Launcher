@@ -1,0 +1,14 @@
+10-29 11:46:17.222  2174  2185 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0 in tid 2185 (Binder:2174_1), pid 2174 (cmd)
+10-29 11:56:55.586  1809  1885 E AndroidRuntime: *** FATAL EXCEPTION IN SYSTEM PROCESS: android.anim
+10-29 11:56:55.586  1809  1885 E AndroidRuntime: java.lang.NullPointerException: Attempt to invoke virtual method 'int android.view.Display.getDisplayId()' on a null object reference
+10-29 11:56:55.586  1809  1885 E AndroidRuntime: 	at android.view.ViewRootImpl$ViewRootHandler.handleMessage(ViewRootImpl.java:4115)
+10-29 11:56:55.586  1809  1885 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+10-29 11:56:55.586  1809  1885 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:193)
+10-29 11:56:55.586  1809  1885 E AndroidRuntime: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+10-29 11:56:55.586  1809  1885 E AndroidRuntime: 	at com.android.server.ServiceThread.run(ServiceThread.java:44)
+10-29 11:56:58.832  3356  3356 E AndroidRuntime: FATAL EXCEPTION: main
+10-29 11:56:58.832  3356  3356 E AndroidRuntime: Process: vn.tht.fixture, PID: 3356
+10-29 11:56:58.832  3356  3356 E AndroidRuntime: DeadSystemException: The system died; earlier logs will point to the root cause
+10-29 11:56:58.835  3322  3322 E AndroidRuntime: FATAL EXCEPTION: main
+10-29 11:56:58.835  3322  3322 E AndroidRuntime: Process: vn.tht.launcher, PID: 3322
+10-29 11:56:58.835  3322  3322 E AndroidRuntime: DeadSystemException: The system died; earlier logs will point to the root cause

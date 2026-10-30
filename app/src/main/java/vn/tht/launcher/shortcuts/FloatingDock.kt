@@ -7,6 +7,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.Gravity
 import android.view.ViewGroup
+import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.HorizontalScrollView
@@ -31,6 +32,7 @@ class FloatingDock(private val c: Context, private val actions: DockBar.Actions)
 
     /** Hiện dock tại [where] (toạ độ màn hình của thanh dưới); không có quyền overlay thì bỏ qua. */
     fun show(where: Rect) {
+        if (vn.tht.launcher.system.StockMode.active(c)) return
         if (root != null) return
         if (!Settings.canDrawOverlays(c)) {
             Log.w(TAG, "Thiếu quyền hiển thị trên app khác")
@@ -47,8 +49,21 @@ class FloatingDock(private val c: Context, private val actions: DockBar.Actions)
             setPadding(p, 0, p, 0)
             addView(HorizontalScrollView(c).apply {
                 isHorizontalScrollBarEnabled = false
+                isFillViewport = true
                 addView(row, ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT))
-            }, FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT, Gravity.CENTER))
+            }, FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT).apply {
+                marginEnd = Ui.dp(c, 80)
+            })
+            addView(android.widget.ImageView(c).apply {
+                contentDescription = "Về màn hình chính THT"
+                val pad = Ui.dp(c, 14)
+                setPadding(pad, pad, pad, pad)
+                setImageDrawable(vn.tht.launcher.ui.Icons.get(c, "home"))
+                background = Ui.pill(c, Palette.button, 16)
+                setOnClickListener { actions.goHome() }
+            }, FrameLayout.LayoutParams(Ui.dp(c, 64), Ui.dp(c, 64), Gravity.END or Gravity.CENTER_VERTICAL).apply {
+                marginEnd = Ui.dp(c, 8)
+            })
         }
         val lp = WindowManager.LayoutParams(
             bounds.width(), bounds.height(), WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
@@ -63,8 +78,10 @@ class FloatingDock(private val c: Context, private val actions: DockBar.Actions)
         }
         try {
             bar = DockBar(c, row, actions, editable = false).also { it.reload() }
+            vn.tht.launcher.ui.ScreenOverlayPosition(box, wm, lp)
             wm.addView(box, lp)
             root = box
+            visible = java.lang.ref.WeakReference(box)
         } catch (t: Throwable) {
             Log.w(TAG, "Không hiện được dock nổi: $t")
             bar = null
@@ -72,6 +89,7 @@ class FloatingDock(private val c: Context, private val actions: DockBar.Actions)
     }
 
     fun hide() {
+        if (visible?.get() === root) visible = null
         root?.let { runCatching { wm.removeView(it) } }
         root = null
         bar = null
@@ -79,7 +97,19 @@ class FloatingDock(private val c: Context, private val actions: DockBar.Actions)
 
     fun update(s: DockBar.Status) = bar?.update(s)
 
-    private companion object {
-        const val TAG = "FloatingDock"
+    companion object {
+        private const val TAG = "FloatingDock"
+        private var visible: java.lang.ref.WeakReference<View>? = null
+        fun stockModeChanged(context: Context) {
+            visible?.get()?.visibility = if (vn.tht.launcher.system.StockMode.active(context)) View.GONE else View.VISIBLE
+        }
+        fun coveredBottom(content: View): Int {
+            val dock = visible?.get() ?: return 0
+            if (!dock.isAttachedToWindow || !dock.isShown || dock.height <= 0) return 0
+            val d = IntArray(2).also(dock::getLocationOnScreen)
+            val c = IntArray(2).also(content::getLocationOnScreen)
+            if (d[0] >= c[0] + content.width || d[0] + dock.width <= c[0]) return 0
+            return (c[1] + content.height - d[1]).coerceIn(0, content.height.coerceAtLeast(0))
+        }
     }
 }

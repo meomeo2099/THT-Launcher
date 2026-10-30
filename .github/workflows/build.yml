@@ -46,6 +46,7 @@ jobs:
           APKSIGNER=$(ls "$SDK"/build-tools/*/apksigner 2>/dev/null | sort -V | tail -1)
           echo "::notice::apksigner=$APKSIGNER"
           for f in $(find app/build/outputs/apk -name '*.apk'); do
+            "$APKSIGNER" verify "$f"
             info=$("$APKSIGNER" verify --print-certs "$f" 2>&1 | grep -E "certificate DN|SHA-256" | tr '\n' ' ')
             echo "::notice::$(basename "$f"): ${info:-KHÔNG ĐỌC ĐƯỢC CHỮ KÝ}"
           done
@@ -61,10 +62,18 @@ jobs:
         run: |
           TAG="build-${{ github.run_number }}"
           APK=$(ls app/build/outputs/apk/release/THT-Launcher-*-release.apk | head -1)
+          VERSION=$(basename "$APK" | sed 's/^THT-Launcher-//; s/-release.apk$//')
           gh release create "$TAG" "$APK" --target "${{ github.sha }}" \
-            --title "THT Launcher 0.2.${{ github.run_number }}" \
+            --title "THT Launcher $VERSION" \
             --notes "Bản build tự động từ ${{ github.ref_name }} @ ${GITHUB_SHA::7}. Launcher tự cập nhật từ đây (Cài đặt → Cập nhật)."
       - uses: actions/upload-artifact@v4
         with:
           name: tht-launcher-apk
           path: app/build/outputs/apk/**/*.apk
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tht-launcher-test-results
+          path: |
+            app/build/test-results/testDebugUnitTest/
+            app/build/reports/tests/testDebugUnitTest/

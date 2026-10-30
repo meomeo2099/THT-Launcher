@@ -65,16 +65,20 @@ class SplitUi(private val c: Context, private val host: Host) {
                 1 -> host.pickApp { pkg -> update(s.copy(right = pkg)) }
                 2 -> IconList.show(c, "Tỉ lệ trái : phải",
                     Split.PRESETS.map { r -> IconList.Item("$r : ${100 - r}", "dual") }, columns = 2) { r ->
-                    update(s.copy(ratio = Split.PRESETS[r]))
-                    if (open) host.splitScreen.place(Split.PRESETS[r])
+                    val ratio = Split.PRESETS[r]
+                    if (!host.splitScreen.owns(s.id) || host.splitScreen.place(ratio)) update(s.copy(ratio = ratio))
                 }
-                3 -> update(s.copy(left = s.right, right = s.left, ratio = 100 - s.ratio))
+                3 -> {
+                    val swapped = s.copy(left = s.right, right = s.left, ratio = 100 - s.ratio)
+                    update(swapped)
+                    if (host.splitScreen.owns(s.id)) host.splitScreen.open(swapped)
+                }
                 4 -> host.splitScreen.toggle(s)
                 5 -> host.addSplitWidget(s.id)
                 6 -> host.addSplitToDock(s)
                 7 -> Dialogs.confirm(c, "Xoá cặp chia đôi",
                     "Xoá cặp ${label(s)}? Widget và nút của cặp này sẽ không còn dùng được.", okLabel = "Xoá", danger = true) {
-                    if (open) host.splitScreen.close()
+                    if (host.splitScreen.owns(s.id) && !host.splitScreen.close()) return@confirm
                     SplitStore.delete(c, s.id)
                     host.splitsChanged()
                 }

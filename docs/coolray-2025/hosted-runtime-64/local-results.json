@@ -1,0 +1,138 @@
+{
+  "stage": "core hosted/VD fixes, before final dock-inset/stale-owner guard polish",
+  "physical_coolray_tested": false,
+  "scenarios": [
+    {
+      "observations": [
+        {
+          "phase": "host50",
+          "panes": [
+            {
+              "package": "vn.tht.fixture",
+              "display": 1,
+              "bounds": "Rect(0, 0 - 936, 620)",
+              "width": 936,
+              "height": 620
+            },
+            {
+              "package": "vn.tht.fixtureb",
+              "display": 2,
+              "bounds": "Rect(0, 0 - 936, 620)",
+              "width": 936,
+              "height": 620
+            }
+          ]
+        },
+        {
+          "phase": "host30_resized",
+          "panes": [
+            {
+              "package": "vn.tht.fixture",
+              "display": 1,
+              "bounds": "Rect(0, 0 - 561, 620)",
+              "width": 561,
+              "height": 620
+            },
+            {
+              "package": "vn.tht.fixtureb",
+              "display": 2,
+              "bounds": "Rect(0, 0 - 1311, 620)",
+              "width": 1311,
+              "height": 620
+            }
+          ]
+        },
+        {
+          "phase": "host_closed",
+          "panes": []
+        }
+      ],
+      "result": "PASS",
+      "scenario": "host"
+    },
+    {
+      "observations": [
+        {
+          "phase": "widget700x400",
+          "panes": [
+            {
+              "package": "vn.tht.fixture",
+              "display": 3,
+              "bounds": "Rect(0, 0 - 700, 400)",
+              "width": 700,
+              "height": 400
+            }
+          ]
+        },
+        {
+          "phase": "widget1200x500_same_display",
+          "panes": [
+            {
+              "package": "vn.tht.fixture",
+              "display": 3,
+              "bounds": "Rect(0, 0 - 1200, 500)",
+              "width": 1200,
+              "height": 500
+            }
+          ]
+        }
+      ],
+      "result": "PASS",
+      "scenario": "widget"
+    },
+    {
+      "observations": [
+        {
+          "phase": "host_closed",
+          "panes": []
+        }
+      ],
+      "result": "PASS",
+      "scenario": "hostcancel"
+    },
+    {
+      "observations": [
+        {
+          "phase": "host50",
+          "panes": [
+            {
+              "package": "vn.tht.fixture",
+              "display": 4,
+              "bounds": "Rect(0, 0 - 936, 620)",
+              "width": 936,
+              "height": 620
+            },
+            {
+              "package": "vn.tht.fixtureb",
+              "display": 5,
+              "bounds": "Rect(0, 0 - 936, 620)",
+              "width": 936,
+              "height": 620
+            }
+          ]
+        },
+        {
+          "phase": "host_closed",
+          "panes": []
+        }
+      ],
+      "result": "PASS",
+      "scenario": "hostexternal"
+    },
+    {
+      "observations": [
+        {
+          "phase": "settings_clear_of_rail",
+          "railRight": 240,
+          "menuLeft": 272
+        },
+        {
+          "phase": "settings_insets",
+          "panes": []
+        }
+      ],
+      "result": "PASS",
+      "scenario": "insets"
+    }
+  ]
+}

@@ -35,7 +35,7 @@ class HomeCanvas(context: Context) : ViewGroup(context) {
 
     /** Tỉ lệ giao diện (Cài đặt → 75–150%): phóng to/thu nhỏ nội dung widget, giữ nguyên vị trí. */
     var uiScale = 1f
-        set(v) { field = v; requestLayout() }
+        set(v) { field = if (v.isFinite()) v.coerceIn(0.75f, 1.5f) else 1f; requestLayout() }
 
     private val density = resources.displayMetrics.density
     private val frames = mutableListOf<WidgetFrame>()
@@ -58,6 +58,9 @@ class HomeCanvas(context: Context) : ViewGroup(context) {
     fun specs(): List<WidgetSpec> = frames.map { it.spec }
 
     fun add(spec: WidgetSpec, content: View) {
+        HomeLayout.bounded(spec).let { valid ->
+            spec.x = valid.x; spec.y = valid.y; spec.w = valid.w; spec.h = valid.h
+        }
         val f = WidgetFrame(context, spec, content)
         frames += f
         addView(f)
@@ -110,10 +113,10 @@ class HomeCanvas(context: Context) : ViewGroup(context) {
             val x = pxX(f.spec.x)
             val y = pxY(f.spec.y)
             f.layout(x, y, x + f.measuredWidth, y + f.measuredHeight)
-            f.pivotX = 0f
-            f.pivotY = 0f
-            f.scaleX = uiScale
-            f.scaleY = uiScale
+            // Thu/phóng mật độ nội dung trong khung, giữ nguyên vùng chạm và khoảng cách các ô.
+            // Phóng chính WidgetFrame sẽ làm ô tràn sang hàng xóm khi uiScale > 1.
+            f.scaleX = 1f
+            f.scaleY = 1f
         }
     }
 
@@ -158,11 +161,33 @@ class HomeCanvas(context: Context) : ViewGroup(context) {
         private var tracking = false
 
         init {
+            clipChildren = true
+            clipToPadding = true
             addView(content, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
             addView(remove, LayoutParams(Ui.dp(c, 44), Ui.dp(c, 44), Gravity.TOP or Gravity.END))
             addView(handle, LayoutParams(Ui.dp(c, 28), Ui.dp(c, 28), Gravity.BOTTOM or Gravity.END))
             // Nhấn giữ trên nền widget (không phải nút) cũng vào chế độ sửa
             content.setOnLongClickListener { if (!editing) onLongPress(); true }
+        }
+
+        override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+            // Layout ở mật độ tương ứng, sau đó scale về đúng kích thước ô. Auto-size và weight
+            // vẫn được tính ở không gian nội dung mới, còn nút sửa/xóa giữ nguyên kích thước.
+            val zoom = uiScale
+            content.measure(
+                MeasureSpec.makeMeasureSpec((measuredWidth / zoom).roundToInt().coerceAtLeast(1), MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec((measuredHeight / zoom).roundToInt().coerceAtLeast(1), MeasureSpec.EXACTLY),
+            )
+        }
+
+        override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+            super.onLayout(changed, left, top, right, bottom)
+            content.layout(0, 0, content.measuredWidth, content.measuredHeight)
+            content.pivotX = 0f
+            content.pivotY = 0f
+            content.scaleX = uiScale
+            content.scaleY = uiScale
         }
 
         fun setEditing(on: Boolean) {

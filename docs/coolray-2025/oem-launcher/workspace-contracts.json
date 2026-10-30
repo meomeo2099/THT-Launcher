@@ -1,0 +1,1562 @@
+[
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.autonavi.amapauto",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.multimedia",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.btphone",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.membercenter",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.smartcloud",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.settings",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.thememanager",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.appstore",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.magicbook.ui.MagicActivity"
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.xiaoka.XKMainActivity"
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.gallery",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.autosecure",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.autosecure",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "net.easyconn",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.news",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.calendar",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.mycar",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xcvehicle",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.violationinquiry",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.camera.dvr",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "com.autonavi.amapauto",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.multimedia",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.btphone",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "ecarx.membercenter",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.smartcloud",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.settings",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.thememanager",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.appstore",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.magicbook.ui.MagicActivity"
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.parking",
+    "class": "com.ecarx.park2.MainAvmActivity"
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.xiaoka.XKMainActivity"
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "ecarx.gallery",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "ecarx.autosecure",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.autosecure",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "net.easyconn",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "ecarx.news",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "ecarx.calendar",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.mycar",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xcvehicle",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "ecarx.violationinquiry",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_avm.xml",
+    "kind": "favorite",
+    "package": "ecarx.camera.dvr",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "com.autonavi.amapauto",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.multimedia",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.btphone",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "ecarx.membercenter",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.smartcloud",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.settings",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.thememanager",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.appstore",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.magicbook.ui.MagicActivity"
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.parking",
+    "class": "com.ecarx.park2.MainPacActivity"
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.xiaoka.XKMainActivity"
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "ecarx.gallery",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "ecarx.autosecure",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.autosecure",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "net.easyconn",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "ecarx.news",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "ecarx.calendar",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.mycar",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xcvehicle",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "ecarx.violationinquiry",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_ecarx_workspace_4x2_pac.xml",
+    "kind": "favorite",
+    "package": "ecarx.camera.dvr",
+    "class": null
+  },
+  {
+    "resource": "res/xml/dcy11_widgetpage_default.xml",
+    "kind": "appwidget",
+    "package": "ecarx.xsf.mediacenter",
+    "class": "ecarx.xsf.mediacenter.widget.MediaWidgetProviderSecond1x2"
+  },
+  {
+    "resource": "res/xml/dcy11_widgetpage_default.xml",
+    "kind": "appwidget",
+    "package": "ecarx.naviservice",
+    "class": "ecarx.naviservice.widget.BaseWidgetProvider"
+  },
+  {
+    "resource": "res/xml/dcy11_widgetpage_default.xml",
+    "kind": "appwidget",
+    "package": "com.ecarx.smartcloud",
+    "class": "ecarx.home.module.widget.WeatherWidgetProvider1X1"
+  },
+  {
+    "resource": "res/xml/dcy11_widgetpage_default.xml",
+    "kind": "appwidget",
+    "package": "ecarx.calendar",
+    "class": "ecarx.calendar.widget.WidgetDynamicProvider"
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.autonavi.amapauto",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.multimedia",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.btphone",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.membercenter",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.smartcloud",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.desay_svautomotive.settings",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.thememanager",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.calendar",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.xiaoka.XKMainActivity"
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.magicbook.ui.MagicActivity"
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.appstore",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.violationinquiry",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.video",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.photo",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.news",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.desaysv.dvr",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.autonavi.amapauto",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.multimedia",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.btphone",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.membercenter",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.smartcloud",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.desay_svautomotive.settings",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.thememanager",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.calendar",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.xiaoka.XKMainActivity"
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.magicbook.ui.MagicActivity"
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.appstore",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.violationinquiry",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.video",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.photo",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.news",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.desaysv.avm",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.desaysv.dvr",
+    "class": null
+  },
+  {
+    "resource": "res/xml/desay_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.xcgoncall",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.autonavi.amapauto",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.multimedia",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.btphone",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.membercenter",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.smartcloud",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.settings",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.thememanager",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.calendar",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.xiaoka.XKMainActivity"
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.magicbook.ui.MagicActivity"
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.appstore",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.violationinquiry",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.video",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.photo",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.news",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xcusermanual",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.mycar",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.autosecure",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.autosecure",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.eline",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.multimedia",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.btphone",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.neusoft.ssp.ces.c4.car.assistant",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.camera.calibration",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.settings",
+    "class": "ecarx.settings.setting.CarSettingActivity"
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.gallery",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.debugtools",
+    "class": "ecarx.debugtools.tbox.tBoxActMain"
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.debugtools",
+    "class": "ecarx.debugtools.MainActivity"
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.neusoft.nsapa",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.hvac.app",
+    "class": null
+  },
+  {
+    "resource": "res/xml/ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.camera.dvr",
+    "class": null
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.autonavi.amapauto",
+    "class": null
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.multimedia",
+    "class": null
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.btphone",
+    "class": null
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.membercenter",
+    "class": null
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.smartcloud",
+    "class": null
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.neusoft.optimus.wheeljack.setting",
+    "class": null
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.thememanager",
+    "class": null
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.calendar",
+    "class": null
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.xiaoka.XKMainActivity"
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.magicbook.ui.MagicActivity"
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.appstore",
+    "class": null
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.violationinquiry",
+    "class": null
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.video",
+    "class": null
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.photo",
+    "class": null
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.mycar",
+    "class": null
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.autosecure",
+    "class": null
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.autosecure",
+    "class": null
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.news",
+    "class": null
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.neusoft.avm",
+    "class": null
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.neusoft.dvrlogin",
+    "class": null
+  },
+  {
+    "resource": "res/xml/neu_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.neusoft.shockwave.tboxclient",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.autonavi.amapauto",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.multimedia",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.btphone",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.membercenter",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.smartcloud",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.settings",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.thememanager",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.calendar",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.xiaoka.XKMainActivity"
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.magicbook.ui.MagicActivity"
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.appstore",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.violationinquiry",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.video",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.photo",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.news",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.camera.dvr",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.camera.calibration",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.xcgoncall",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "caocaokeji.vehicle.driver",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2.xml",
+    "kind": "favorite",
+    "package": "com.baidu.iov.aiapps",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "com.autonavi.amapauto",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.multimedia",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.btphone",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "ecarx.membercenter",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.smartcloud",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "ecarx.settings",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.thememanager",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "ecarx.calendar",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.xiaoka.XKMainActivity"
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.magicbook.ui.MagicActivity"
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.appstore",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "ecarx.violationinquiry",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "ecarx.video",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "ecarx.photo",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "ecarx.news",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "ecarx.camera.dvr",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "ecarx.camera.calibration",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "ecarx.xcgoncall",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "caocaokeji.vehicle.driver",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_ah.xml",
+    "kind": "favorite",
+    "package": "com.baidu.iov.aiapps",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "com.autonavi.amapauto",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.multimedia",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.btphone",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "ecarx.membercenter",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.smartcloud",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "ecarx.settings",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.thememanager",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "ecarx.calendar",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.xiaoka.XKMainActivity"
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.magicbook.ui.MagicActivity"
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.appstore",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "ecarx.violationinquiry",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "ecarx.video",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "ecarx.photo",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "ecarx.news",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "ecarx.camera.dvr",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "ecarx.camera.calibration",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "ecarx.xcgoncall",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "caocaokeji.vehicle.driver",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_al.xml",
+    "kind": "favorite",
+    "package": "com.baidu.iov.aiapps",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_offline.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.multimedia",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_offline.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.btphone",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_offline.xml",
+    "kind": "favorite",
+    "package": "ecarx.settings",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_offline.xml",
+    "kind": "favorite",
+    "package": "ecarx.video",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_offline.xml",
+    "kind": "favorite",
+    "package": "ecarx.photo",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_offline.xml",
+    "kind": "favorite",
+    "package": "ecarx.camera.calibration",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_ecarx_workspace_4x2_offline.xml",
+    "kind": "favorite",
+    "package": "net.easyconn",
+    "class": null
+  },
+  {
+    "resource": "res/xml/nl3b_widgetpage_default.xml",
+    "kind": "appwidget",
+    "package": "ecarx.membercenter",
+    "class": "ecarx.membercenter.widget.GidWidget2"
+  },
+  {
+    "resource": "res/xml/nl3b_widgetpage_default.xml",
+    "kind": "appwidget",
+    "package": "ecarx.xsf.mediacenter",
+    "class": "ecarx.xsf.mediacenter.widget.MediaWidgetProviderSecond1x2"
+  },
+  {
+    "resource": "res/xml/nl3b_widgetpage_default.xml",
+    "kind": "appwidget",
+    "package": "ecarx.naviservice",
+    "class": "ecarx.naviservice.widget.BaseWidgetProvider"
+  },
+  {
+    "resource": "res/xml/nl3b_widgetpage_default.xml",
+    "kind": "appwidget",
+    "package": "com.ecarx.smartcloud",
+    "class": "ecarx.home.module.widget.WeatherWidgetProvider1X2"
+  },
+  {
+    "resource": "res/xml/nl3b_widgetpage_default.xml",
+    "kind": "appwidget",
+    "package": "caocaokeji.vehicle.driver",
+    "class": "caocaokeji.vehicle.driver.ui.widget.WindDriverWidget"
+  },
+  {
+    "resource": "res/xml/nl3b_widgetpage_default_ah.xml",
+    "kind": "appwidget",
+    "package": "ecarx.xsf.mediacenter",
+    "class": "ecarx.xsf.mediacenter.widget.MediaWidgetProviderSecond1x2"
+  },
+  {
+    "resource": "res/xml/nl3b_widgetpage_default_ah.xml",
+    "kind": "appwidget",
+    "package": "ecarx.naviservice",
+    "class": "ecarx.naviservice.widget.BaseWidgetProvider"
+  },
+  {
+    "resource": "res/xml/nl3b_widgetpage_default_ah.xml",
+    "kind": "appwidget",
+    "package": "com.ecarx.smartcloud",
+    "class": "ecarx.home.module.widget.WeatherWidgetProvider1X2"
+  },
+  {
+    "resource": "res/xml/nl3b_widgetpage_default_ah.xml",
+    "kind": "appwidget",
+    "package": "ecarx.calendar",
+    "class": "ecarx.calendar.widget.WidgetDynamicProvider"
+  },
+  {
+    "resource": "res/xml/nl3b_widgetpage_default_ah.xml",
+    "kind": "appwidget",
+    "package": "ecarx.autosecure",
+    "class": "ecarx.autosecure.widget.CleanWidgetProviderBesom"
+  },
+  {
+    "resource": "res/xml/nl3b_widgetpage_default_al.xml",
+    "kind": "appwidget",
+    "package": "ecarx.membercenter",
+    "class": "ecarx.membercenter.widget.GidWidget2"
+  },
+  {
+    "resource": "res/xml/nl3b_widgetpage_default_al.xml",
+    "kind": "appwidget",
+    "package": "ecarx.xsf.mediacenter",
+    "class": "ecarx.xsf.mediacenter.widget.MediaWidgetProviderSecond1x2"
+  },
+  {
+    "resource": "res/xml/nl3b_widgetpage_default_al.xml",
+    "kind": "appwidget",
+    "package": "ecarx.naviservice",
+    "class": "ecarx.naviservice.widget.BaseWidgetProvider"
+  },
+  {
+    "resource": "res/xml/nl3b_widgetpage_default_al.xml",
+    "kind": "appwidget",
+    "package": "com.ecarx.smartcloud",
+    "class": "ecarx.home.module.widget.WeatherWidgetProvider1X2"
+  },
+  {
+    "resource": "res/xml/nl3b_widgetpage_default_al.xml",
+    "kind": "appwidget",
+    "package": "caocaokeji.vehicle.driver",
+    "class": "caocaokeji.vehicle.driver.ui.widget.WindDriverWidget"
+  },
+  {
+    "resource": "res/xml/nl3b_widgetpage_default_offline.xml",
+    "kind": "appwidget",
+    "package": "ecarx.xsf.mediacenter",
+    "class": "ecarx.xsf.mediacenter.widget.MediaWidgetProvider1x2"
+  },
+  {
+    "resource": "res/xml/nl3b_widgetpage_default_offline.xml",
+    "kind": "appwidget",
+    "package": "ecarx.autosecure",
+    "class": "ecarx.autosecure.widget.CleanWidgetProviderBesom"
+  },
+  {
+    "resource": "res/xml/pvetec_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.autonavi.amapauto",
+    "class": null
+  },
+  {
+    "resource": "res/xml/pvetec_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.multimedia",
+    "class": null
+  },
+  {
+    "resource": "res/xml/pvetec_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.btphone",
+    "class": null
+  },
+  {
+    "resource": "res/xml/pvetec_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.membercenter",
+    "class": null
+  },
+  {
+    "resource": "res/xml/pvetec_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.smartcloud",
+    "class": null
+  },
+  {
+    "resource": "res/xml/pvetec_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.settings",
+    "class": null
+  },
+  {
+    "resource": "res/xml/pvetec_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.thememanager",
+    "class": null
+  },
+  {
+    "resource": "res/xml/pvetec_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.calendar",
+    "class": null
+  },
+  {
+    "resource": "res/xml/pvetec_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.xiaoka.XKMainActivity"
+  },
+  {
+    "resource": "res/xml/pvetec_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.xiaoka",
+    "class": "com.ecarx.magicbook.ui.MagicActivity"
+  },
+  {
+    "resource": "res/xml/pvetec_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "com.ecarx.appstore",
+    "class": null
+  },
+  {
+    "resource": "res/xml/pvetec_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.video",
+    "class": null
+  },
+  {
+    "resource": "res/xml/pvetec_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.photo",
+    "class": null
+  },
+  {
+    "resource": "res/xml/pvetec_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.violationinquiry",
+    "class": null
+  },
+  {
+    "resource": "res/xml/pvetec_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.news",
+    "class": null
+  },
+  {
+    "resource": "res/xml/pvetec_ecarx_workspace_3x2.xml",
+    "kind": "favorite",
+    "package": "ecarx.autosecure",
+    "class": null
+  },
+  {
+    "resource": "res/xml/widgetpage_default.xml",
+    "kind": "appwidget",
+    "package": "ecarx.xsf.widget",
+    "class": "ecarx.xsf.widget.MediaWidgetProvider3x1"
+  },
+  {
+    "resource": "res/xml/widgetpage_default.xml",
+    "kind": "appwidget",
+    "package": "ecarx.settings",
+    "class": "ecarx.settings.vehicle.setting.widget.CarSettingWidget"
+  },
+  {
+    "resource": "res/xml/widgetpage_default.xml",
+    "kind": "appwidget",
+    "package": "com.ecarx.naviwidget",
+    "class": "com.ecarx.naviwidget.widget.BaseWidgetProvider1x2"
+  },
+  {
+    "resource": "res/xml/widgetpage_default.xml",
+    "kind": "appwidget",
+    "package": "com.ecarx.smartcloud",
+    "class": "ecarx.home.module.widget.WeatherWidgetProvider1X2"
+  },
+  {
+    "resource": "res/xml/widgetpage_default.xml",
+    "kind": "appwidget",
+    "package": "com.tencent.wecarwidget",
+    "class": "com.tencent.wecarwidget.WecarWidgetProvider"
+  },
+  {
+    "resource": "res/xml/widgetpage_default_3x2.xml",
+    "kind": "appwidget",
+    "package": "ecarx.membercenter",
+    "class": "ecarx.membercenter.widget.GidWidget2"
+  },
+  {
+    "resource": "res/xml/widgetpage_default_3x2.xml",
+    "kind": "appwidget",
+    "package": "ecarx.xsf.mediacenter",
+    "class": "ecarx.xsf.mediacenter.widget.MediaWidgetProviderSecond1x2"
+  },
+  {
+    "resource": "res/xml/widgetpage_default_3x2.xml",
+    "kind": "appwidget",
+    "package": "ecarx.naviservice",
+    "class": "ecarx.naviservice.widget.BaseWidgetProvider"
+  }
+]

@@ -14,7 +14,7 @@ android {
         // Số bản = số lần chạy CI, để bản sau luôn lớn hơn (tự cập nhật so sánh số này)
         val build = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: 1
         versionCode = build
-        versionName = "0.2.$build"
+        versionName = "0.3.$build"
     }
 
     // Ký release bằng keystore từ GitHub Secrets (THT_SIGN_*); không có thì dùng khóa debug
@@ -51,7 +51,24 @@ android {
     }
 }
 
+// ActivityView.StateCallback is an abstract framework class, so java.lang.reflect.Proxy cannot
+// implement it. Compile against signatures only; the head unit supplies the real implementation.
+val compilePlatformStubs by tasks.registering(JavaCompile::class) {
+    source("platform-stubs/src")
+    classpath = files(android.bootClasspath)
+    destinationDirectory.set(layout.buildDirectory.dir("platform-stubs/classes"))
+    sourceCompatibility = "8"
+    targetCompatibility = "8"
+}
+val platformStubsJar by tasks.registering(Jar::class) {
+    dependsOn(compilePlatformStubs)
+    from(compilePlatformStubs.flatMap { it.destinationDirectory })
+    archiveFileName.set("platform-stubs.jar")
+    destinationDirectory.set(layout.buildDirectory.dir("platform-stubs"))
+}
+
 dependencies {
+    compileOnly(files(platformStubsJar))
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.recyclerview:recyclerview:1.3.2")

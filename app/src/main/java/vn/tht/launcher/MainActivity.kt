@@ -98,14 +98,15 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private var todayKmCache = 0f to 0L
     private var appearanceDirty = false
     private var appliedNight: Boolean? = null
-    private val prefsListener = android.content.SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
-        appearanceDirty = true
+    private val prefsListener = android.content.SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        if (key !in setOf("nav_bar_overscan", "stock_mode")) appearanceDirty = true
     }
 
     private val widgets = mutableMapOf<String, HomeWidget>()
     private var lastVehicle: VehicleData? = null
     private var lastEcarx: EcarxInfo? = null
     private var lastMedia: NowPlaying? = null
+    private val gpsSpeed by lazy { vn.tht.launcher.vehicle.GpsSpeedSource(applicationContext) }
     private var allApps: List<AppEntry> = emptyList()
 
     private val handler = Handler(Looper.getMainLooper())
@@ -119,7 +120,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private val bgClimatePoll = object : Runnable {
         override fun run() {
             val f = vn.tht.launcher.vehicle.EcarxFunctions
-            val zone = if (ecarx.isSupported(f.HVAC_TEMP, f.ZONE_ROW_1_LEFT) == true) f.ZONE_ROW_1_LEFT else f.ZONE_ALL
+            val zone = ecarx.temperatureZone()
             val now = Triple(
                 ecarx.getFloat(f.HVAC_TEMP, zone)?.takeIf { it in f.TEMP_MIN..f.TEMP_MAX },
                 f.levelOf(f.HVAC_FAN_SPEED, ecarx.getInt(f.HVAC_FAN_SPEED)),
@@ -149,6 +150,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
                 widgets.values.forEach { it.onEcarx(info) }
                 if (::climateMini.isInitialized) climateMini.bind(info)
                 if (::fanMini.isInitialized) fanMini.bind(info)
+                updateDockStatus(lastVehicle)
             }
             io.postDelayed(this, ECARX_POLL_MS)
         }
@@ -157,6 +159,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private val tick = object : Runnable {
         override fun run() {
             widgets.values.forEach { it.onTick() }
+            updateDockStatus(lastVehicle)
             // Thời tiết: kiểm tra mỗi phút, chỉ tải khi dữ liệu cũ hơn 30 phút
             if (tickCount++ % 60 == 0) vn.tht.launcher.system.Weather.refreshIfStale(this@MainActivity) {
                 runOnUiThread { widgets.values.forEach { it.onTick() } }
@@ -175,6 +178,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        findViewById<View>(R.id.root).addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> applyBarInset() }
         vn.tht.launcher.system.NavAssistService.host = object : vn.tht.launcher.system.NavAssistService.Companion.Host {
             override fun openAppDrawer() = this@MainActivity.openAppDrawer()
             override fun openClimate() = this@MainActivity.openClimate()
@@ -183,12 +187,10 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
                 if (!ecarx.connected) return null
                 val f = vn.tht.launcher.vehicle.EcarxFunctions
                 fun temp(zone: Int) = ecarx.getFloat(f.HVAC_TEMP, zone)?.takeIf { it in f.TEMP_MIN..f.TEMP_MAX }
-                val dual = ecarx.isSupported(f.HVAC_TEMP, f.ZONE_ROW_1_LEFT) == true
-                val left = if (dual) temp(f.ZONE_ROW_1_LEFT) else temp(f.ZONE_ALL)
-                val right = if (ecarx.isSupported(f.HVAC_TEMP, f.ZONE_ROW_1_RIGHT) == true) temp(f.ZONE_ROW_1_RIGHT) else left
+                val left = temp(ecarx.temperatureZone())
                 val on = ecarx.getInt(f.HVAC_POWER)?.let { it == f.ON }
                 val fan = if (on == false) 0 else f.levelOf(f.HVAC_FAN_SPEED, ecarx.getInt(f.HVAC_FAN_SPEED))
-                return vn.tht.launcher.system.NavAssistService.Companion.BarClimate(left, right, fan)
+                return vn.tht.launcher.system.NavAssistService.Companion.BarClimate(left, left, fan)
             }
             override fun onBarInset() = runOnUiThread { applyBarInset() }
             override fun quickSplit(current: String?) = runOnUiThread { this@MainActivity.quickSplit(current) }
@@ -224,7 +226,14 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
             }
         }
         controller = EcarxController(ecarx, { lastVehicle?.speedKmh }, { lastVehicle?.gearText })
-        automation = vn.tht.launcher.automation.AutomationEngine(prefs, controller, vn.tht.launcher.automation.AutomationEngine::defaultLog)
+        automation = vn.tht.launcher.automation.AutomationEngine(prefs, controller,
+            vn.tht.launcher.automation.AutomationEngine::defaultLog,
+            readValue = { id, zone -> ecarx.getInt(id, zone) },
+            bootCount = runCatching { Settings.Global.getInt(contentResolver, Settings.Global.BOOT_COUNT, -1) }
+                .getOrNull()?.takeIf { it >= 0 },
+            onApps = { current -> Autostart.runForEngine(applicationContext, current) },
+            onCancelApps = { Autostart.cancelEngine() },
+            gpsSpeedKmh = { gpsSpeed.speedKmh() })
         requestCarPermissions()
         media = MediaWatcher(this) { np ->
             runOnUiThread {
@@ -300,7 +309,11 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     override fun onResume() {
         super.onResume()
+        vn.tht.launcher.system.StockMode.exit(this)
         inFront = true
+        val automationPrefs = vn.tht.launcher.automation.AutomationPrefs(prefs)
+        gpsSpeed.setEnabled(automationPrefs.enabled && automationPrefs.closeRoofAtSpeed > 0)
+        if (::ecarx.isInitialized && !ecarx.connected) ecarx.start()
         refreshFloatingDock()
         // Khi ẩn chỉ ghi chuyến đi/tự động hoá; giờ hiện lại thì cập nhật giao diện theo dữ liệu mới nhất
         refreshVehicleUi(lastVehicle)
@@ -309,6 +322,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         media.start()
         radio.start()
         if (appearanceDirty) applyAppearance() else { dock.reload(); topBar.reload(); sideRail.reload() }
+        widgets.values.forEach { it.onLauncherVisibility(true) }
         screensaver.setActive(true)
         vn.tht.launcher.system.NavAssistService.setLauncherInFront(true)
         handler.removeCallbacks(tick)
@@ -327,6 +341,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     override fun onPause() {
         inFront = false
+        widgets.values.forEach { it.onLauncherVisibility(false) }
         rememberDockBounds()
         refreshFloatingDock()
         io.removeCallbacks(ecarxPoll)
@@ -349,11 +364,13 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         floatingDock.hide()
         handler.removeCallbacksAndMessages(null)
         io.removeCallbacksAndMessages(null)
+        automation.stop()
+        Autostart.cancel()
+        gpsSpeed.stop()
         carIo.quitSafely()
         carSource.stop()
         ecarx.stop()
         controller.shutdown()
-        automation.stop()
         unregisterReceiver(packageReceiver)
         prefs.sp.unregisterOnSharedPreferenceChangeListener(prefsListener)
         super.onDestroy()
@@ -390,6 +407,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         w.onVehicle(lastVehicle)
         w.onEcarx(lastEcarx)
         w.onMedia(lastMedia)
+        w.onLauncherVisibility(inFront)
     }
 
     private fun setEditMode(on: Boolean) {
@@ -491,7 +509,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
         findViewById<View>(R.id.root).setBackgroundColor(Palette.bg)
         val wp = findViewById<ImageView>(R.id.wallpaper)
-        val custom = Wallpapers.load(this, if (night) SettingsActivity.NIGHT else SettingsActivity.DAY)
+        val which = if (night) SettingsActivity.NIGHT else SettingsActivity.DAY
+        val custom = if (prefs.sp.getBoolean("use_wallpaper_$which", true)) Wallpapers.load(this, which) else null
         if (custom != null) wp.setImageBitmap(custom)
         else wp.setImageDrawable(Palette.background(if (night) prefs.backgroundNight else prefs.backgroundDay))
 
@@ -537,7 +556,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         val root = findViewById<View>(R.id.root)
         root.post {
             val x = IntArray(2).also { root.getLocationOnScreen(it) }[0]
-            val pad = (vn.tht.launcher.system.NavAssistService.homeInset - x).coerceAtLeast(0)
+            val pad = vn.tht.launcher.system.NavAssistService.contentInsetLeft(root)
             for (id in intArrayOf(R.id.canvas_container, R.id.drawer)) {
                 val v = findViewById<View>(id)
                 if (v.paddingLeft != pad) v.setPadding(pad, v.paddingTop, v.paddingRight, v.paddingBottom)
@@ -549,7 +568,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private fun applyFullScreen() {
         window.decorView.systemUiVisibility = if (prefs.fullScreen) {
             View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_FULLSCREEN or
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         } else 0
         if (prefs.fullScreen) window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         else window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -559,19 +579,19 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     /**
      * Thanh hệ thống của ECARX không chịu ẩn theo cờ của cửa sổ. Android 9 còn `policy_control` (cần
-     * WRITE_SECURE_SETTINGS, chỉ có ở bản ký platform): ép chế độ toàn màn hình cho riêng gói launcher.
-     * Không đè cấu hình của người khác: chỉ ghi khi trống hoặc đang là của mình.
+     * WRITE_SECURE_SETTINGS): policy theo từng package, có khôi phục và giữ cấu hình khác.
      */
     private fun applyPolicyControl(on: Boolean) {
-        val mine = "immersive.full=$packageName"
-        runCatching {
-            val cur = Settings.Global.getString(contentResolver, "policy_control")
-            when {
-                on && cur.isNullOrEmpty() -> Settings.Global.putString(contentResolver, "policy_control", mine)
-                !on && cur == mine -> Settings.Global.putString(contentResolver, "policy_control", null)
-                else -> Unit
+        if (!on) {
+            vn.tht.launcher.system.AppWindowPolicy.restore(this)
+            // Migrate the launcher-only policy written by older versions as well.
+            runCatching {
+                if (Settings.Global.getString(contentResolver, "policy_control") == "immersive.full=$packageName")
+                    Settings.Global.putString(contentResolver, "policy_control", null)
             }
-        }.onFailure { Log.w("THT", "policy_control: $it") }
+        }
+        else if (inFront && !splitScreen.hasWork)
+            vn.tht.launcher.system.AppWindowPolicy.apply(this, setOf(packageName))
     }
 
     // ---- Ngăn kéo ứng dụng ----
@@ -647,8 +667,12 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     override fun mediaPlayPause() { media.playPause() }
     override fun mediaNext() { media.next() }
     override fun mediaPrevious() { media.previous() }
+    override fun canSeekMedia(): Boolean = media.canSeek()
+    override fun mediaSeekTo(positionMs: Long): Boolean = media.seekTo(positionMs)
     override fun hasMediaPermission() = media.hasPermission()
-    override fun requestMediaPermission() = startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+    override fun requestMediaPermission() {
+        vn.tht.launcher.system.ExternalAppLauncher.launch(this, Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+    }
 
     override fun openApp(pkg: String) = launch(pkg)
 
@@ -684,8 +708,26 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         3, "Sưởi ghế lái",
     ) { toast((if (it.ok) "✔ " else "✖ ") + it.message) }
 
+    override fun runDockAction(action: String) {
+        val f = vn.tht.launcher.vehicle.EcarxFunctions
+        val report: (vn.tht.launcher.vehicle.EcarxController.Result) -> Unit = {
+            if (!it.ok) toast(it.message)
+        }
+        when {
+            action == "seat_heat_passenger" -> controller.cycleLevel(
+                f.HVAC_SEAT_HEATING, f.ZONE_ROW_1_RIGHT, 3, "Sưởi ghế phụ", report)
+            action.startsWith("temp_set_") -> action.removePrefix("temp_set_").toFloatOrNull()
+                ?.takeIf { it.isFinite() && it in f.TEMP_MIN..f.TEMP_MAX }?.let { controller.setTemp(it, report) }
+            action.startsWith("fan_set_") -> action.removePrefix("fan_set_").toIntOrNull()
+                ?.takeIf { it in 0..f.FAN_MAX }?.let {
+                    controller.setValue(f.HVAC_FAN_SPEED, f.ZONE_ALL, f.level(f.HVAC_FAN_SPEED, it), "Quạt mức $it", done = report)
+                }
+            else -> runImageAction(action)
+        }
+    }
+
     override fun openWifiSettings() {
-        runCatching { startActivity(Intent(Settings.ACTION_WIFI_SETTINGS)) }
+        vn.tht.launcher.system.ExternalAppLauncher.launch(this, Intent(Settings.ACTION_WIFI_SETTINGS))
     }
 
     private var lastStatusAt = 0L
@@ -696,18 +738,17 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         if (now - lastStatusAt < 1000) return
         lastStatusAt = now
         val tank = prefs.tankLiters.toFloat()
-        val seat = lastEcarx?.let {
-            vn.tht.launcher.vehicle.EcarxFunctions.levelOf(
-                vn.tht.launcher.vehicle.EcarxFunctions.HVAC_SEAT_HEATING,
-                ecarx.getInt(vn.tht.launcher.vehicle.EcarxFunctions.HVAC_SEAT_HEATING, vn.tht.launcher.vehicle.EcarxFunctions.ZONE_ROW_1_LEFT),
-            )
-        }
+        val seat = lastEcarx?.seatHeatLeft
         val status = DockBar.Status(
             wifi = wifiConnected(),
             coolantC = d?.coolantTempC,
             fuelL = d?.fuelLiters ?: if (tank > 0f) d?.fuelPercent?.let { it / 100f * tank } else null,
             voltage = supplyVoltage(),
             seatHeatLevel = seat,
+            passengerSeatHeatLevel = lastEcarx?.seatHeatRight,
+            temperatureC = lastEcarx?.tempC,
+            fanLevel = lastEcarx?.fanLevel,
+            hvacOn = lastEcarx?.hvacOn,
         )
         lastStatus = status
         dock.update(status)
@@ -849,11 +890,11 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     override fun lastStatus() = lastStatus
 
     override fun openSystemSettings(action: String) {
-        runCatching { startActivity(Intent(action)) }.onFailure { toast("Không mở được cài đặt") }
+        if (!vn.tht.launcher.system.ExternalAppLauncher.launch(this, Intent(action))) toast("Không mở được cài đặt")
     }
 
     private val navCandidates = listOf(
-        "vn.vietmap.live", "com.google.android.apps.maps", "com.waze", "ru.yandex.yandexnavi", "ru.yandex.yandexmaps",
+        "com.autonavi.amapauto", "vn.vietmap.live", "com.google.android.apps.maps", "com.waze", "ru.yandex.yandexnavi", "ru.yandex.yandexmaps",
     )
 
     /** Gói + tên app đã dò; giữ lại vì widget hỏi mỗi giây (mỗi lần dò là vài lời gọi PackageManager). */
@@ -873,7 +914,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     override fun navLaunchIntent(): Intent? = navPackage()?.let { packageManager.getLaunchIntentForPackage(it) }
 
-    override fun canEmbedMap() = prefs.sp.getBoolean("embed_map", true) && PlatformSignature.verify(this)
+    override fun canEmbedMap() = prefs.sp.getBoolean("embed_map", true) && PlatformSignature.verify(this) &&
+        packageManager.hasSystemFeature(android.content.pm.PackageManager.FEATURE_ACTIVITIES_ON_SECONDARY_DISPLAYS)
 
     override fun weather() = vn.tht.launcher.system.Weather.current
 
@@ -936,7 +978,9 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     override fun openClimate() = vn.tht.launcher.controls.ClimatePopup(this, ecarx, controller, overlay = !inFront).show()
 
-    override fun openStats() = startActivity(Intent(this, vn.tht.launcher.stats.StatsActivity::class.java))
+    override fun openStats() {
+        vn.tht.launcher.system.ExternalAppLauncher.launch(this, Intent(this, vn.tht.launcher.stats.StatsActivity::class.java))
+    }
 
     override fun currentTrip() = (application as LauncherApp).recorder.current
 
@@ -968,7 +1012,9 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     @Suppress("DEPRECATION")
     override fun openSettings() {
-        startActivityForResult(Intent(this, SettingsActivity::class.java), REQ_SETTINGS)
+        if (!vn.tht.launcher.system.ExternalAppLauncher.leaveSplit()) return
+        startActivityForResult(Intent(this, SettingsActivity::class.java), REQ_SETTINGS,
+            vn.tht.launcher.system.ExternalAppLauncher.fullscreenOptions(this))
     }
 
     @Deprecated("Deprecated in Java")
@@ -1031,11 +1077,52 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     }.getOrDefault("?")
 
     private fun saveReport() {
-        val name = "tht-chan-doan-" + java.text.SimpleDateFormat("yyyyMMdd-HHmm", java.util.Locale.US).format(java.util.Date()) + ".txt"
-        runCatching {
-            startActivityForResult(Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
-                .setType("text/plain").putExtra(Intent.EXTRA_TITLE, name), REQ_REPORT)
-        }.onFailure { toast("Đầu xe không có trình lưu file") }
+        toast("Đang tạo báo cáo…")
+        io.post {
+            val result = runCatching {
+                val report = buildReport()
+                val dir = java.io.File(getExternalFilesDir(null) ?: filesDir, "reports").apply { mkdirs() }
+                val name = "tht-chan-doan-" + java.text.SimpleDateFormat("yyyyMMdd-HHmmss", java.util.Locale.US).format(java.util.Date()) + ".txt"
+                val file = java.io.File(dir, name).apply { writeText(report, Charsets.UTF_8) }
+                file to report
+            }
+            handler.post {
+                if (isFinishing || isDestroyed) return@post
+                result.onSuccess { (file, report) ->
+                    val content = Ui.text(this, "Đã lưu: ${file.absolutePath}\n\n$report", 14f).apply {
+                        setTextIsSelectable(true)
+                        typeface = android.graphics.Typeface.MONOSPACE
+                    }
+                    Dialogs.show(this, "Báo cáo đầy đủ", content, listOf(
+                        Dialogs.Button("Đóng"),
+                        Dialogs.Button("Sao chép") {
+                            getSystemService(android.content.ClipboardManager::class.java)
+                                .setPrimaryClip(android.content.ClipData.newPlainText("Chẩn đoán THT", report))
+                            toast("Đã sao chép báo cáo")
+                        },
+                        Dialogs.Button("Chia sẻ file", Dialogs.Kind.PRIMARY) {
+                            runCatching {
+                                val uri = androidx.core.content.FileProvider.getUriForFile(this, "$packageName.reports", file)
+                                val share = Intent(Intent.ACTION_SEND).setType("text/plain")
+                                    .putExtra(Intent.EXTRA_STREAM, uri)
+                                    .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION).apply {
+                                        clipData = android.content.ClipData.newRawUri("Báo cáo THT", uri)
+                                    }
+                                if (packageManager.queryIntentActivities(share, 0).isEmpty())
+                                    toast("Không có ứng dụng nhận chia sẻ; dùng Sao chép hoặc chụp nội dung báo cáo")
+                                else startActivity(Intent.createChooser(share, "Gửi báo cáo THT"))
+                            }.onFailure { toast("Không chia sẻ được; dùng Sao chép hoặc chụp nội dung báo cáo") }
+                        },
+                        Dialogs.Button("Chọn nơi lưu khác") {
+                            runCatching {
+                                startActivityForResult(Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                                    .setType("text/plain").putExtra(Intent.EXTRA_TITLE, file.name), REQ_REPORT)
+                            }.onFailure { toast("Không có trình chọn nơi lưu; báo cáo vẫn đã lưu trong THT") }
+                        },
+                    ), widthDp = 1100)
+                }.onFailure { toast("Không tạo được báo cáo: ${it.message}") }
+            }
+        }
     }
 
     /** Báo cáo đầy đủ: máy, chữ ký, ECARX (cả catalog), VHAL, nhạc, radio, lớp nổi, bản đồ nhúng. Chạy trên luồng car-io. */
@@ -1052,6 +1139,18 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
         appendLine("Khớp platform: ${PlatformSignature.verify(this@MainActivity)}")
         appendLine("Firmware: ${PlatformSignature.certSha256(this@MainActivity, "android")}")
         appendLine("App: ${PlatformSignature.certSha256(this@MainActivity, packageName)}")
+        appendLine()
+        appendLine("== Hợp đồng OEM Coolray")
+        appendLine(vn.tht.launcher.vehicle.OemFirmware.diagnosticReport(this@MainActivity))
+        appendLine("Default HOME: ${vn.tht.launcher.system.LauncherHome.defaultPackage(this@MainActivity)}")
+        appendLine("== Mở ứng dụng ngoài")
+        appendLine("Secondary-display activities: ${packageManager.hasSystemFeature(android.content.pm.PackageManager.FEATURE_ACTIVITIES_ON_SECONDARY_DISPLAYS)}")
+        appendLine(vn.tht.launcher.system.ExternalAppLauncher.lastReport)
+        appendLine(vn.tht.launcher.system.AppWindowPolicy.lastReport)
+        appendLine(vn.tht.launcher.system.ExternalAppLauncher.stackReport())
+        appendLine(vn.tht.launcher.home.EmbeddedMap.lastReport)
+        appendLine("== Chia đôi màn hình")
+        appendLine(splitScreen.diagnosticReport())
         appendLine()
         appendLine("== ECARX")
         appendLine("Trạng thái: ${ecarx.status} · ghi=${ecarx.writeAllowed}")
@@ -1097,7 +1196,25 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     private val splitScreen by lazy {
         SplitScreen(this, ::toast).apply {
-            bottomInset = { if (floatingDock.shown) Bitmaps.screen(this@MainActivity).second - floatingDock.top else 0 }
+            bottomInset = {
+                val height = Bitmaps.screen(this@MainActivity).second
+                if (prefs.dockOverlay != "off") height - (dockBounds?.top ?: height - Ui.dp(this@MainActivity, 100)) else 0
+            }
+            usableBounds = {
+                val root = findViewById<View>(R.id.root)
+                val size = Bitmaps.screen(this@MainActivity)
+                val inset = runCatching {
+                    val result = Rect()
+                    val service = Class.forName("android.view.WindowManagerGlobal")
+                        .getMethod("getWindowManagerService").invoke(null)
+                    Class.forName("android.view.IWindowManager").getMethod("getStableInsets",
+                        Int::class.javaPrimitiveType!!, Rect::class.java).invoke(service, 0, result)
+                    result.left
+                }.getOrNull() ?: (root.rootWindowInsets?.stableInsetLeft ?: 0)
+                // The launcher itself can be moved into the secondary pane while the pair opens.
+                // Its live window rectangle is then half a display, not the area we are splitting.
+                Rect(maxOf(inset, vn.tht.launcher.system.NavAssistService.homeInset), 0, size.first, size.second)
+            }
             onStateChanged = { refreshFloatingDock() }
         }
     }
@@ -1107,7 +1224,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
      * hai). Đang chia đôi thì bấm lần nữa để thoát. Cặp không lưu; muốn lưu dùng widget/nút "Chia đôi".
      */
     private fun quickSplit(current: String?) {
-        if (splitScreen.openId != null) return splitScreen.close()
+        if (splitScreen.hasWork) { splitScreen.close(); return }
         inLauncher {
             fun open(left: String) = pickApp { right -> splitScreen.open(vn.tht.launcher.split.Split.new(left, right)) }
             if (current != null) open(current) else { toast("Chọn app bên trái"); pickApp { open(it) } }
@@ -1133,7 +1250,7 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
     private fun refreshFloatingDock() {
         val want = !inFront && when (prefs.dockOverlay) {
             "always" -> true
-            "split" -> splitScreen.openId != null
+            "split" -> splitScreen.hasWork
             else -> false
         }
         if (!want) return floatingDock.hide()
@@ -1145,9 +1262,11 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     /** Hành động cần màn hình launcher (ngăn kéo app, bảng điều khiển): đưa launcher lên trước nếu đang bị che. */
     private fun inLauncher(action: () -> Unit) {
+        if (!vn.tht.launcher.system.ExternalAppLauncher.homeWithoutClosing()) return
         if (inFront) return action()
         startActivity(Intent(this, MainActivity::class.java)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT),
+            vn.tht.launcher.system.ExternalAppLauncher.fullscreenOptions(this))
         handler.postDelayed(action, 350)
     }
 
@@ -1188,9 +1307,8 @@ class MainActivity : AppCompatActivity(), WidgetHost, DockBar.Actions {
 
     private fun launch(pkg: String) {
         val intent = packageManager.getLaunchIntentForPackage(pkg) ?: return toast("Không tìm thấy ứng dụng")
-        try {
-            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-        } catch (e: Exception) {
+        if (splitScreen.hasWork && !splitScreen.close()) return
+        if (!vn.tht.launcher.system.ExternalAppLauncher.launch(this, intent)) {
             toast("Không mở được ứng dụng")
         }
     }

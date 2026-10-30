@@ -1,0 +1,5 @@
+INSTRUMENTATION_RESULT: error=java.lang.AssertionError: Wrong geometry: Rect(965, 0 - 1442, 572) Rect(1442, 0 - 1920, 572)
+INSTRUMENTATION_RESULT: observations=[{"diagnostic":"id=regression starting=false active=true tasks=Tasks(left=19, right=20) layout=Layout(left=Bounds(left=965, top=0, right=1442, bottom=572), right=Bounds(left=1442, top=0, right=1920, bottom=572)) error="}]
+INSTRUMENTATION_RESULT: result=FAIL
+INSTRUMENTATION_RESULT: scenario=normal
+INSTRUMENTATION_CODE: 0

@@ -11,6 +11,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.SeekBar
 import android.widget.TextClock
 import android.widget.TextView
 import vn.tht.launcher.R
@@ -19,6 +20,7 @@ import vn.tht.launcher.ui.Icons
 import vn.tht.launcher.ui.textIfChanged
 import vn.tht.launcher.ui.Palette
 import vn.tht.launcher.ui.Ui
+import vn.tht.launcher.ui.Fonts
 import vn.tht.launcher.vehicle.EcarxController
 import vn.tht.launcher.vehicle.EcarxInfo
 import vn.tht.launcher.vehicle.VehicleData
@@ -33,6 +35,9 @@ interface WidgetHost {
     fun mediaPlayPause()
     fun mediaNext()
     fun mediaPrevious()
+    /** Chỉ bật thanh tua khi nguồn hiện tại xác nhận hỗ trợ seek. */
+    fun canSeekMedia(): Boolean = false
+    fun mediaSeekTo(positionMs: Long): Boolean = false
     fun hasMediaPermission(): Boolean
     fun requestMediaPermission()
     fun openApp(pkg: String)
@@ -93,10 +98,12 @@ abstract class HomeWidget(protected val host: WidgetHost) {
     open fun onMedia(np: NowPlaying?) {}
     /** Gọi mỗi giây (thanh tiến trình nhạc…). */
     open fun onTick() {}
+    /** Activity lifecycle, distinct from a transient focus change or a once-per-second tick. */
+    open fun onLauncherVisibility(front: Boolean) {}
 
     /** Nền thẻ widget: đặc, hoặc kính mờ (Cài đặt → Giao diện → Kiểu thẻ widget). */
     protected fun cardBackground(v: View): android.graphics.drawable.Drawable =
-        if (host.prefs.cardStyle == "frosted") vn.tht.launcher.ui.Frosted.CardDrawable(v, Ui.dp(c, 24).toFloat(), Ui.card(c))
+        if (host.prefs.cardStyle == "frosted") vn.tht.launcher.ui.Frosted.CardDrawable(v, Ui.dp(c, 26).toFloat(), Ui.card(c))
         else Ui.card(c)
 
     protected fun base(padDp: Int = 22, gravity: Int = Gravity.START) =
@@ -165,7 +172,7 @@ class ClockWidget(host: WidgetHost) : HomeWidget(host) {
             includeFontPadding = false
             setTextColor(Color.WHITE)
             setShadowLayer(12f, 0f, 2f, 0x66000000)
-            typeface = android.graphics.Typeface.create("sans-serif-light", android.graphics.Typeface.NORMAL)
+            typeface = Fonts.display(c)
         }, 40, 260), fill(3f))
         if (host.prefs.clockShowDate) addView(auto(date.apply {
             setTextColor(Color.WHITE)
@@ -192,6 +199,7 @@ class ClockWidget(host: WidgetHost) : HomeWidget(host) {
 /** Thẻ nhạc gọn: ảnh bìa trái; phải là nguồn, tên bài, tiến trình, điều khiển. */
 class MediaWidget(host: WidgetHost, private val vertical: Boolean = false) : HomeWidget(host) {
     private var np: NowPlaying? = null
+    private var seeking = false
     private val art = ImageView(c).apply {
         scaleType = ImageView.ScaleType.CENTER_CROP
         background = Ui.pill(c, Palette.button, 18)
@@ -204,18 +212,43 @@ class MediaWidget(host: WidgetHost, private val vertical: Boolean = false) : Hom
     private val source = Ui.text(c, "", 14f, dim = true).apply { maxLines = 1 }
     private val title = auto(Ui.text(c, "", 22f, bold = true), 14, 30).apply { ellipsize = android.text.TextUtils.TruncateAt.END }
     private val artist = Ui.text(c, "", 16f, dim = true).apply { maxLines = 1; ellipsize = android.text.TextUtils.TruncateAt.END }
-    private val progress = ProgressBar(c, null, android.R.attr.progressBarStyleHorizontal).apply {
+    private val progress = SeekBar(c).apply {
         max = 1000
         progressTintList = android.content.res.ColorStateList.valueOf(Palette.text)
-        progressBackgroundTintList = android.content.res.ColorStateList.valueOf(Palette.textDim)
+        progressBackgroundTintList = android.content.res.ColorStateList.valueOf(Palette.withAlpha(Palette.textDim, 70))
+        thumbTintList = android.content.res.ColorStateList.valueOf(Palette.text)
+        setPadding(0, 0, 0, 0)
+        contentDescription = "Tiến trình phát nhạc"
+        setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onStartTrackingTouch(seekBar: SeekBar) { seeking = true }
+            override fun onProgressChanged(seekBar: SeekBar, value: Int, fromUser: Boolean) {
+                if (fromUser) pos.textIfChanged = time((np?.durationMs ?: 0L) * value / 1000)
+            }
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                val duration = np?.durationMs ?: 0L
+                if (duration > 0L && !host.mediaSeekTo(duration * seekBar.progress / 1000)) {
+                    host.toast("Nguồn nhạc hiện tại không cho phép tua")
+                }
+                seeking = false
+            }
+        })
     }
     private val pos = Ui.text(c, "", 12f, dim = true)
     private val dur = Ui.text(c, "", 12f, dim = true)
     private val play = ctrl("play") { host.mediaPlayPause() }
 
-    private fun artBox() = FrameLayout(c).apply {
+    private fun artBox() = object : FrameLayout(c) {
+        override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+            super.onLayout(changed, left, top, right, bottom)
+            val side = minOf(width, height)
+            val x = (width - side) / 2
+            val y = (height - side) / 2
+            art.layout(x, y, x + side, y + side)
+        }
+    }.apply {
         addView(art, FrameLayout.LayoutParams(-1, -1))
         addView(placeholder, FrameLayout.LayoutParams(Ui.dp(c, 64), Ui.dp(c, 64), Gravity.CENTER))
+        setOnClickListener { openPlayer() }
     }
 
     private fun controls() = Ui.hbox(c, Gravity.CENTER).apply {
@@ -227,7 +260,7 @@ class MediaWidget(host: WidgetHost, private val vertical: Boolean = false) : Hom
     }
 
     private fun progressBlock() = Ui.vbox(c).apply {
-        addView(progress, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Ui.dp(c, 6)))
+        addView(progress, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Ui.dp(c, 28)))
         addView(Ui.hbox(c).apply { addView(pos, Ui.weight()); addView(dur) }, matchW())
     }
 
@@ -240,7 +273,7 @@ class MediaWidget(host: WidgetHost, private val vertical: Boolean = false) : Hom
         addView(artist, matchW())
         addView(progressBlock(), matchW().apply { topMargin = Ui.dp(c, 6) })
         addView(controls(), matchW())
-        setOnClickListener { if (!host.hasMediaPermission()) host.requestMediaPermission() }
+        setOnClickListener { openPlayer() }
     } else Ui.hbox(c).apply {
         background = cardBackground(this)
         val p = Ui.dp(c, 14)
@@ -256,7 +289,7 @@ class MediaWidget(host: WidgetHost, private val vertical: Boolean = false) : Hom
             addView(progressBlock(), matchW())
             addView(controls(), matchW())
         }, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0.58f))
-        setOnClickListener { if (!host.hasMediaPermission()) host.requestMediaPermission() }
+        setOnClickListener { openPlayer() }
     }
 
     private fun ctrl(key: String, onClick: () -> Unit) = ImageView(c).apply {
@@ -265,15 +298,22 @@ class MediaWidget(host: WidgetHost, private val vertical: Boolean = false) : Hom
         setPadding(p, p, p, p)
         layoutParams = LinearLayout.LayoutParams(Ui.dp(c, 56), Ui.dp(c, 56))
         background = c.getDrawable(R.drawable.ripple)
+        contentDescription = when (key) { "previous" -> "Bài trước"; "next" -> "Bài tiếp theo"; else -> "Phát hoặc tạm dừng" }
         setOnClickListener { onClick() }
     }
 
     private fun time(ms: Long) = String.format(Locale.US, "%d:%02d", ms / 60000, ms / 1000 % 60)
 
+    private fun openPlayer() {
+        val pkg = np?.pkg
+        if (!pkg.isNullOrBlank()) host.openApp(pkg)
+        else if (!host.hasMediaPermission()) host.requestMediaPermission()
+    }
+
     override fun onMedia(np: NowPlaying?) {
         this.np = np
         if (np == null) {
-            source.textIfChanged = ""
+            source.textIfChanged = "NHẠC"
             title.textIfChanged = c.getString(if (host.hasMediaPermission()) R.string.no_media else R.string.grant_media)
             artist.textIfChanged = ""
             art.setImageDrawable(null)
@@ -294,11 +334,14 @@ class MediaWidget(host: WidgetHost, private val vertical: Boolean = false) : Hom
         val n = np
         val d = n?.durationMs ?: 0
         val visible = n != null && d > 0
+        progress.isEnabled = visible && host.canSeekMedia()
         progress.visibility = if (visible) View.VISIBLE else View.INVISIBLE
         if (!visible) { pos.textIfChanged = ""; dur.textIfChanged = ""; return }
         val p = n!!.currentPosition()
-        progress.progress = (p * 1000 / d).toInt()
-        pos.textIfChanged = time(p)
+        if (!seeking) {
+            progress.progress = (p.coerceIn(0L, d) * 1000 / d).toInt()
+            pos.textIfChanged = time(p.coerceIn(0L, d))
+        }
         dur.textIfChanged = time(d)
     }
 }
@@ -376,7 +419,7 @@ class FanDots(c: Context, private val ramp: Boolean = true, private val onSet: (
 class SpeedWidget(host: WidgetHost) : HomeWidget(host) {
     private val speed = auto(Ui.text(c, "--", 96f).apply {
         includeFontPadding = false
-        typeface = android.graphics.Typeface.create("sans-serif-medium", android.graphics.Typeface.NORMAL)
+        typeface = Fonts.display(c)
     }, 30, 160)
     private val gears = listOf("P", "R", "N", "D").associateWith { g ->
         Ui.text(c, g, 22f, bold = true).apply {
@@ -400,7 +443,7 @@ class SpeedWidget(host: WidgetHost) : HomeWidget(host) {
         gears.forEach { (k, v) ->
             val on = k == g || (k == "D" && g == "M")
             v.background = Ui.pill(c, if (on) Palette.accent else Palette.button, 12)
-            v.setTextColor(if (on) Color.WHITE else Palette.textDim)
+            v.setTextColor(if (on) Palette.onAccent() else Palette.textDim)
         }
         brakeRow.visibility = if (d?.parkingBrake == true) View.VISIBLE else View.INVISIBLE
     }

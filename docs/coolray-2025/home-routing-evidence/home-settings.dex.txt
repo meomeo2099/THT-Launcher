@@ -1,0 +1,7 @@
+060264: 2b01 f006 0000                         |0016: packed-switch v1, 00000706 // +000006f0
+0609a8: 2200 4800                              |03b8: new-instance v0, Landroid/content/Intent; // type@0048
+0609ac: 1a01 1109                              |03ba: const-string v1, "android.settings.HOME_SETTINGS" // string@0911
+0609b0: 7020 d300 1000                         |03bc: invoke-direct {v0, v1}, Landroid/content/Intent;.<init>:(Ljava/lang/String;)V // method@00d3
+0609b6: 6e20 470c 0600                         |03bf: invoke-virtual {v6, v0}, Lorg/reference/panel/MainActivity;.Q:(Landroid/content/Intent;)V // method@0c47
+0609bc: 1110                                   |03c2: return-object v16
+061044: 0001 1d00 0000 0000 e306 0000 d606 ... |0706: packed-switch-data (62 units)

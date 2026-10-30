@@ -2,6 +2,14 @@
 
 Launcher Android cho màn hình trung tâm trên ô tô, tối ưu cho Geely Coolray 2025 (đầu ECARX `SX11-LA` / `IHU730P`, Android 9, 1920×720 @160dpi). Một bộ mã dùng chung, mỗi đời xe là một *profile* riêng.
 
+## Bản 0.3: bố cục tham chiếu và Coolray 2025
+
+Bản cài mới dùng bố cục tham chiếu: hai thanh trượt dọc, dẫn đường, nhạc, đồng hồ/thời tiết, bốn ô trạng thái và dock bảy mục. Bố cục cũ đã lưu được giữ nguyên; chọn **Cài đặt → Giao diện → Bố cục tham chiếu** để chuyển. Có nền ngày/đêm, font Manrope, đồng hồ Elastre và bộ icon đóng gói.
+
+Sao lưu ZIP v2 gồm bố cục, cài đặt và tài nguyên tùy chỉnh; vẫn đọc bản JSON v1. Tự động hóa có hủy lệnh theo chu kỳ động cơ, kiểm tra lại trước khi ghi và tốc độ GPS dự phòng tùy chọn. Cài đặt có lối mở launcher/cài đặt OEM và trình chọn Home mặc định.
+
+[Xem bằng chứng OEM, phạm vi triển khai và kiểm thử](docs/coolray-2025/README.md). Hai APK OEM không chứa DEX: phần nguồn/ngủ/thức độc quyền chưa thể phân tích đầy đủ. Chưa kiểm thử trên đầu xe thật và chưa xác nhận mọi màn hình khớp hoàn toàn ứng dụng tham chiếu.
+
 ## Tính năng
 
 **Màn hình chính dạng lưới, sửa được ở bất kỳ đâu**

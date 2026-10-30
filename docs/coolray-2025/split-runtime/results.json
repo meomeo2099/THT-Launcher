@@ -1,0 +1,243 @@
+{
+  "version": "0.3.62",
+  "platform": "AOSP API 28 emulator, 1920x720@160dpi",
+  "runtime_scenarios": [
+    {
+      "observations": [
+        {
+          "phase": "open50_after_old_fullscreen_timers",
+          "mode3": {
+            "bounds": "Rect(0, 0 - 960, 572)",
+            "display": 0,
+            "visible": true,
+            "names": [
+              "vn.tht.launcher/vn.tht.launcher.MainActivity",
+              "vn.tht.fixture/vn.tht.fixture.MainActivity"
+            ]
+          },
+          "mode4": {
+            "bounds": "Rect(960, 0 - 1920, 572)",
+            "display": 0,
+            "visible": true,
+            "names": [
+              "vn.tht.fixtureb/vn.tht.fixtureb.MainActivity"
+            ]
+          },
+          "state": "id=regression starting=false active=true tasks=Tasks(left=26, right=27) layout=Layout(left=Bounds(left=0, top=0, right=960, bottom=572), right=Bounds(left=960, top=0, right=1920, bottom=572)) error="
+        },
+        {
+          "phase": "ratio30",
+          "mode3": {
+            "bounds": "Rect(0, 0 - 576, 572)",
+            "display": 0,
+            "visible": true,
+            "names": [
+              "vn.tht.launcher/vn.tht.launcher.MainActivity",
+              "vn.tht.fixture/vn.tht.fixture.MainActivity"
+            ]
+          },
+          "mode4": {
+            "bounds": "Rect(576, 0 - 1920, 572)",
+            "display": 0,
+            "visible": true,
+            "names": [
+              "vn.tht.fixtureb/vn.tht.fixtureb.MainActivity"
+            ]
+          },
+          "state": "id=regression starting=false active=true tasks=Tasks(left=26, right=27) layout=Layout(left=Bounds(left=0, top=0, right=576, bottom=572), right=Bounds(left=576, top=0, right=1920, bottom=572)) error="
+        },
+        {
+          "phase": "native_bounds_refitted60",
+          "mode3": {
+            "bounds": "Rect(0, 0 - 1152, 572)",
+            "display": 0,
+            "visible": true,
+            "names": [
+              "vn.tht.launcher/vn.tht.launcher.MainActivity",
+              "vn.tht.fixture/vn.tht.fixture.MainActivity"
+            ]
+          },
+          "mode4": {
+            "bounds": "Rect(1152, 0 - 1920, 572)",
+            "display": 0,
+            "visible": true,
+            "names": [
+              "vn.tht.fixtureb/vn.tht.fixtureb.MainActivity"
+            ]
+          },
+          "state": "id=regression starting=false active=true tasks=Tasks(left=26, right=27) layout=Layout(left=Bounds(left=0, top=0, right=1152, bottom=572), right=Bounds(left=1152, top=0, right=1920, bottom=572)) error="
+        },
+        {
+          "phase": "swapped40",
+          "mode3": {
+            "bounds": "Rect(0, 0 - 768, 572)",
+            "display": 0,
+            "visible": true,
+            "names": [
+              "vn.tht.fixtureb/vn.tht.fixtureb.MainActivity"
+            ]
+          },
+          "mode4": {
+            "bounds": "Rect(768, 0 - 1920, 572)",
+            "display": 0,
+            "visible": true,
+            "names": [
+              "vn.tht.fixture/vn.tht.fixture.MainActivity"
+            ]
+          },
+          "state": "id=regression starting=false active=true tasks=Tasks(left=27, right=26) layout=Layout(left=Bounds(left=0, top=0, right=768, bottom=572), right=Bounds(left=768, top=0, right=1920, bottom=572)) error="
+        },
+        {
+          "phase": "closed",
+          "mode3": null,
+          "mode4": null,
+          "state": "id=null starting=false active=false tasks=null layout=null error="
+        }
+      ],
+      "result": "PASS",
+      "scenario": "visual"
+    },
+    {
+      "observations": [
+        {
+          "phase": "before_cancel",
+          "state": "id=regression starting=true active=false tasks=null layout=null error="
+        },
+        {
+          "phase": "cancelled_no_resurrection",
+          "mode3": null,
+          "mode4": null,
+          "state": "id=null starting=false active=false tasks=null layout=null error="
+        }
+      ],
+      "result": "PASS",
+      "scenario": "cancel"
+    },
+    {
+      "observations": [
+        {
+          "phase": "before_cancel",
+          "state": "id=regression starting=true active=false tasks=null layout=null error="
+        },
+        {
+          "phase": "cancelled_no_resurrection",
+          "mode3": null,
+          "mode4": null,
+          "state": "id=null starting=false active=false tasks=null layout=null error="
+        }
+      ],
+      "result": "PASS",
+      "scenario": "release"
+    },
+    {
+      "observations": [
+        {
+          "phase": "before_cancel",
+          "state": "id=regression starting=true active=false tasks=null layout=null error="
+        },
+        {
+          "phase": "cancelled_no_resurrection",
+          "mode3": null,
+          "mode4": null,
+          "state": "id=null starting=false active=false tasks=null layout=null error="
+        }
+      ],
+      "result": "PASS",
+      "scenario": "fullscreen"
+    },
+    {
+      "observations": [
+        {
+          "phase": "open50_after_old_fullscreen_timers",
+          "mode3": {
+            "bounds": "Rect(0, 0 - 960, 572)",
+            "display": 0,
+            "visible": true,
+            "names": [
+              "vn.tht.fixture/vn.tht.fixture.MainActivity"
+            ]
+          },
+          "mode4": {
+            "bounds": "Rect(960, 0 - 1920, 572)",
+            "display": 0,
+            "visible": true,
+            "names": [
+              "vn.tht.fixtureb/vn.tht.fixtureb.MainActivity"
+            ]
+          },
+          "state": "id=regression starting=false active=true tasks=Tasks(left=26, right=27) layout=Layout(left=Bounds(left=0, top=0, right=960, bottom=572), right=Bounds(left=960, top=0, right=1920, bottom=572)) error="
+        },
+        {
+          "phase": "ratio30",
+          "mode3": {
+            "bounds": "Rect(0, 0 - 576, 572)",
+            "display": 0,
+            "visible": true,
+            "names": [
+              "vn.tht.fixture/vn.tht.fixture.MainActivity"
+            ]
+          },
+          "mode4": {
+            "bounds": "Rect(576, 0 - 1920, 572)",
+            "display": 0,
+            "visible": true,
+            "names": [
+              "vn.tht.fixtureb/vn.tht.fixtureb.MainActivity"
+            ]
+          },
+          "state": "id=regression starting=false active=true tasks=Tasks(left=26, right=27) layout=Layout(left=Bounds(left=0, top=0, right=576, bottom=572), right=Bounds(left=576, top=0, right=1920, bottom=572)) error="
+        },
+        {
+          "phase": "native_bounds_refitted60",
+          "mode3": {
+            "bounds": "Rect(0, 0 - 1152, 572)",
+            "display": 0,
+            "visible": true,
+            "names": [
+              "vn.tht.fixture/vn.tht.fixture.MainActivity"
+            ]
+          },
+          "mode4": {
+            "bounds": "Rect(1152, 0 - 1920, 572)",
+            "display": 0,
+            "visible": true,
+            "names": [
+              "vn.tht.fixtureb/vn.tht.fixtureb.MainActivity"
+            ]
+          },
+          "state": "id=regression starting=false active=true tasks=Tasks(left=26, right=27) layout=Layout(left=Bounds(left=0, top=0, right=1152, bottom=572), right=Bounds(left=1152, top=0, right=1920, bottom=572)) error="
+        },
+        {
+          "phase": "swapped40",
+          "mode3": {
+            "bounds": "Rect(0, 0 - 768, 572)",
+            "display": 0,
+            "visible": true,
+            "names": [
+              "vn.tht.fixtureb/vn.tht.fixtureb.MainActivity"
+            ]
+          },
+          "mode4": {
+            "bounds": "Rect(768, 0 - 1920, 572)",
+            "display": 0,
+            "visible": true,
+            "names": [
+              "vn.tht.fixture/vn.tht.fixture.MainActivity"
+            ]
+          },
+          "state": "id=regression starting=false active=true tasks=Tasks(left=27, right=26) layout=Layout(left=Bounds(left=0, top=0, right=768, bottom=572), right=Bounds(left=768, top=0, right=1920, bottom=572)) error="
+        },
+        {
+          "phase": "closed",
+          "mode3": null,
+          "mode4": null,
+          "state": "id=null starting=false active=false tasks=null layout=null error="
+        }
+      ],
+      "result": "PASS",
+      "scenario": "settings"
+    }
+  ],
+  "emulator_signed_apk_sha256": "89ec414e7b7be5fa976449dbbe2fda577a8eeef67f2aaa6df6d734fb11a5cf6f",
+  "physical_coolray_tested": false
+}

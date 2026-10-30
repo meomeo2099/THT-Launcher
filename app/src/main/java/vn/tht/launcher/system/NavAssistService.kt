@@ -77,6 +77,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
      * Bỏ qua khi người dùng vừa chủ động mở điều hoà gốc từ launcher.
      */
     override fun onAccessibilityEvent(e: AccessibilityEvent?) {
+        if (StockMode.active(this)) return
         if (e?.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return
         // Nhớ app đang ở trước (cho nút chia đôi): bỏ qua launcher, thanh hệ thống, bàn phím
         e.packageName?.toString()?.let { pkg ->
@@ -100,20 +101,24 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
 
     private fun rebuild() {
         removeAll()
+        if (StockMode.active(this)) return
         val m = mode()
+        // A killed/rebound service has no bar View, but its persisted overscan can remain.
+        if (m != "bar") Overscan.set(this, prefs, 0)
         if (m == "buttons" || m == "both") addPill()
         if (m == "gestures" || m == "both") addStrip()
-        if (m == "bar") addBar()
+        if (m == "bar") { addBar(); addPill(); addStrip() }
         applyVisibility()
     }
 
     private fun applyVisibility() {
+        if (StockMode.active(this)) return
         if (bar != null && barStyle != style()) return rebuild()
         val v = if (launcherInFront) View.GONE else View.VISIBLE
         pill?.visibility = v
         strip?.visibility = v
         // Đã thu hẹp màn hình cho thanh: luôn hiện (kể cả màn chính), nếu không sẽ còn dải trống
-        bar?.visibility = if (launcherInFront && !barEverywhere && !prefs.sp.getBoolean(KEY_BAR_HOME, false)) View.GONE else View.VISIBLE
+        bar?.visibility = if (launcherInFront) View.VISIBLE else View.GONE
     }
 
     private fun removeAll() {
@@ -143,7 +148,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
             setImageDrawable(Icons.get(c, icon, Color.WHITE))
             val p = Ui.dp(c, 14)
             setPadding(p, p, p, p)
-            setOnClickListener { performGlobalAction(action) }
+            setOnClickListener { if (action == GLOBAL_ACTION_HOME) LauncherHome.open(c) else performGlobalAction(action) }
         }
         val view = LinearLayout(c).apply {
             orientation = LinearLayout.VERTICAL
@@ -168,7 +173,12 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
                         runCatching { wm.updateViewLayout(view, lp) }
                     }
                 }
-                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> if (dragging) {
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> if (!dragging && ev.actionMasked == MotionEvent.ACTION_UP &&
+                    (sy - ev.rawY > Ui.dp(c, 48) || kotlin.math.abs(ev.rawX - sx) > Ui.dp(c, 48))) {
+                    if (sy - ev.rawY > kotlin.math.abs(ev.rawX - sx)) LauncherHome.open(c)
+                    else performGlobalAction(GLOBAL_ACTION_BACK)
+                    return@OnTouchListener true
+                } else if (dragging) {
                     prefs.sp.edit().putInt(KEY_X, lp.x).putInt(KEY_Y, lp.y).apply()
                     dragging = false
                     return@OnTouchListener true
@@ -256,8 +266,11 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
             // Xe có thanh trái riêng: nằm đè đúng chỗ đó (app đã chừa sẵn). Không có: thu hẹp màn hình bên
             // trái bằng overscan để MỌI app lùi vào, thanh vẽ vào phần được chừa.
             val rail = systemRailWidth()
-            val w = if (rail > 0) rail else Ui.dp(c, 120)
-            val shifted = rail == 0 && Overscan.set(c, prefs, w)
+            val w = Ui.dp(c, 120)
+            // Immersive apps can remove the OEM rail after we measured it. Reserve our own
+            // rail in fullscreen mode rather than drawing over app/settings content.
+            Overscan.set(c, prefs, 0)
+            val shifted = true
             val col = LinearLayout(c).apply {
                 orientation = LinearLayout.VERTICAL
                 gravity = Gravity.CENTER_HORIZONTAL
@@ -269,9 +282,9 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
             for (id in barItems(prefs)) {
                 val v: View = when (id) {
                     "back" -> backSquare(c) { performGlobalAction(GLOBAL_ACTION_BACK) }
-                    "home" -> icon("home", "Màn hình chính") { performGlobalAction(GLOBAL_ACTION_HOME) }
-                    "apps" -> icon("apps", "Ứng dụng") { host?.openAppDrawer() ?: performGlobalAction(GLOBAL_ACTION_HOME) }
-                    "car" -> icon("car", "Xe") { host?.openControlPanel() ?: performGlobalAction(GLOBAL_ACTION_HOME) }
+                    "home" -> icon("home", "Màn hình chính THT") { LauncherHome.open(c) }
+                    "apps" -> icon("apps", "Ứng dụng") { host?.openAppDrawer() ?: LauncherHome.open(c) }
+                    "car" -> icon("car", "Xe") { host?.openControlPanel() ?: LauncherHome.open(c) }
                     "climate" -> icon("climate", "Điều hoà") { host?.openClimate() }
                     "recents" -> icon("chevron-up", "Đa nhiệm") { performGlobalAction(GLOBAL_ACTION_RECENTS) }
                     "notifications" -> icon("chevron-down", "Thông báo") { performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS) }
@@ -292,6 +305,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
             barEverywhere = shifted
             homeInset = if (shifted || prefs.sp.getBoolean(KEY_BAR_HOME, false)) w else 0
         }
+        if (!collapsed) vn.tht.launcher.ui.ScreenOverlayPosition(view, wm, lp)
         runCatching { wm.addView(view, lp) }.onSuccess {
             bar = view
             if (tempBlocks.isNotEmpty()) { barIo.removeCallbacks(tempPoll); barIo.post(tempPoll) }
@@ -305,8 +319,11 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
     private fun addStrip() {
         val c: Context = this
         val minMove = Ui.dp(c, 40)
-        val view = View(c).apply {
-            background = GradientDrawable().apply { cornerRadius = Ui.dp(c, 3).toFloat(); setColor(0x66FFFFFF) }
+        val view = android.widget.FrameLayout(c).apply {
+            contentDescription = "Vuốt lên về THT; vuốt ngang để quay lại"
+            addView(View(c).apply {
+                background = GradientDrawable().apply { cornerRadius = Ui.dp(c, 3).toFloat(); setColor(0x66FFFFFF) }
+            }, android.widget.FrameLayout.LayoutParams(Ui.dp(c, 160), Ui.dp(c, 4), Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL))
         }
         var sx = 0f; var sy = 0f
         view.setOnTouchListener { _, ev ->
@@ -316,16 +333,16 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
                     val dx = ev.rawX - sx
                     val dy = ev.rawY - sy
                     when {
-                        -dy > minMove && abs(dy) > abs(dx) -> performGlobalAction(GLOBAL_ACTION_HOME)
+                        -dy > minMove && abs(dy) > abs(dx) -> LauncherHome.open(this@NavAssistService)
                         abs(dx) > minMove -> performGlobalAction(GLOBAL_ACTION_BACK)
                     }
                 }
             }
             true
         }
-        val lp = params(Ui.dp(c, 320), Ui.dp(c, 14)).apply {
+        val lp = params(Ui.dp(c, 400), Ui.dp(c, 40)).apply {
             gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
-            y = Ui.dp(c, 2)
+            y = Ui.dp(c, 24)
         }
         runCatching { wm.addView(view, lp) }.onSuccess { strip = view }
     }
@@ -356,6 +373,14 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
         @Volatile var homeInset = 0
             private set
 
+        fun contentInsetLeft(content: View): Int {
+            val overlay = instance?.bar ?: return 0
+            if (!overlay.isAttachedToWindow || overlay.visibility != View.VISIBLE) return 0
+            val barXY = IntArray(2).also(overlay::getLocationOnScreen)
+            val windowXY = IntArray(2).also(content::getLocationOnScreen)
+            return (barXY[0] + overlay.width - windowXY[0]).coerceIn(0, content.width.coerceAtLeast(0))
+        }
+
         /** App đang ở trước (không phải launcher), null nếu đang ở launcher hoặc chưa biết. */
         @Volatile var foregroundApp: String? = null
             private set
@@ -366,8 +391,7 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
         /** Các nút có thể đặt lên thanh bên (khoá → tên hiển thị), theo thứ tự mặc định. */
         val BAR_ITEMS = linkedMapOf(
             "car" to "Xe (bảng điều khiển)",
-            "temp" to "Nhiệt độ ghế lái",
-            "temp2" to "Nhiệt độ ghế phụ",
+            "temp" to "Nhiệt độ điều hoà",
             "apps" to "Ứng dụng",
             "home" to "Màn hình chính",
             "back" to "Quay lại",
@@ -377,11 +401,11 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
             "split" to "Chia đôi màn hình",
             "collapse" to "Thu gọn thanh",
         )
-        /** Như thanh gốc: nhiệt độ lái · ứng dụng · xe · nhiệt độ phụ · ⌂ · ‹ */
-        val BAR_DEFAULT = listOf("temp", "apps", "car", "temp2", "split", "home", "back")
+        /** Một nhiệt độ chung cho điều hoà một vùng của xe. */
+        val BAR_DEFAULT = listOf("temp", "apps", "car", "split", "home", "back")
 
         fun barItems(p: Prefs): List<String> =
-            p.sp.getString(KEY_BAR_ITEMS, null)?.split(',')?.filter { it in BAR_ITEMS } ?: BAR_DEFAULT
+            p.sp.getString(KEY_BAR_ITEMS, null)?.split(',')?.map { if (it == "temp2") "temp" else it }?.filter { it in BAR_ITEMS }?.distinct() ?: BAR_DEFAULT
         @Volatile var host: Host? = null
         private const val HVAC_PACKAGE = "ecarx.hvac.app"
         @Volatile private var allowStockUntil = 0L
@@ -391,7 +415,9 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
 
         /** Hiện khung nhiệt độ nổi; false nếu dịch vụ trợ năng chưa chạy. */
         fun showTempInfo(temp: String, fan: String, airKey: String?, preview: Boolean = false): Boolean {
-            val t = instance?.tempInfo ?: return false
+            val service = instance ?: return false
+            if (StockMode.active(service)) return false
+            val t = service.tempInfo ?: return false
             t.show(temp, fan, airKey, if (preview) 8000 else 3500, draggable = preview)
             return true
         }
@@ -405,7 +431,14 @@ class NavAssistService : AccessibilityService(), SharedPreferences.OnSharedPrefe
 
         fun setLauncherInFront(front: Boolean) {
             launcherInFront = front
+            if (front) instance?.let { Overscan.set(it, it.prefs, 0); host?.onBarInset() }
             instance?.applyVisibility()
+        }
+        fun reserveForExternal() {
+            instance?.let { Overscan.set(it, it.prefs, 0) }
+        }
+        fun stockModeChanged() {
+            instance?.let { it.tempInfo?.remove(); it.rebuild() }
         }
         private const val KEY_X = "nav_pill_x"
         private const val KEY_Y = "nav_pill_y"

@@ -1,6 +1,7 @@
 package vn.tht.launcher.vehicle
 
 import android.os.Build
+import java.util.Locale
 
 /**
  * Mỗi đời xe/đầu xe là một profile. Phần lõi của launcher dùng chung,
@@ -17,8 +18,14 @@ data class VehicleProfile(
     /** Xe điện: hiển thị % pin thay cho xăng. */
     val isEv: Boolean = false,
 ) {
-    fun matches(): Boolean =
-        Build.MODEL in models || Build.PRODUCT in products || Build.DEVICE in products
+    fun matches(): Boolean = matches(Build.MODEL, Build.PRODUCT, Build.DEVICE)
+
+    /** Pure matcher for diagnostics/tests. Package presence alone never identifies a car. */
+    fun matches(model: String, product: String, device: String): Boolean =
+        models.any { hardwareId(it) == hardwareId(model) } ||
+            products.any { hardwareId(it) == hardwareId(product) || hardwareId(it) == hardwareId(device) }
+
+    private fun hardwareId(value: String) = value.trim().uppercase(Locale.ROOT)
 }
 
 object Profiles {
@@ -47,5 +54,9 @@ object Profiles {
 
     private val all = listOf(COOLRAY_2025, EX2)
 
-    fun detect(): VehicleProfile = all.firstOrNull { it.matches() } ?: GENERIC
+    fun detect(): VehicleProfile = detect(Build.MODEL, Build.PRODUCT, Build.DEVICE)
+
+    /** OEM APKs can be installed elsewhere; retain explicit hardware identification. */
+    fun detect(model: String, product: String, device: String): VehicleProfile =
+        all.firstOrNull { it.matches(model, product, device) } ?: GENERIC
 }
